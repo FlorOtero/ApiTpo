@@ -1,2 +1,2 @@
 # api-tpo
-Trabajo Práctico Obligatorio - Aplicaciones Distribuidas UADE
+Trabajo Práctico Obligatorio - Aplicaciones Interactivas UADE
