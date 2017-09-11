@@ -33,7 +33,6 @@ public class PersistenceModule {
         config.addDataSourceProperty("elideSetAutoCommits", "true");
         config.addDataSourceProperty("maintainTimeStats", "false");
         config.addDataSourceProperty("serverTimezone", "GMT-3");
-        config.setAutoCommit(false);
         config.setMinimumIdle(5);
         config.setMaximumPoolSize(10);
         config.setConnectionTimeout(5000);
