@@ -2,11 +2,11 @@ package edu.uade.api.tpo.model;
 
 import java.util.Date;
 
-public class Transaccion {
-	String id;
-	Publicacion publicacion;
-	char estado;
-	Date fecha;
+public abstract class Transaccion {
+	private String id;
+	private Publicacion publicacion;
+	private char estado;
+	private Date fecha;
 	public String getId() {
 		return id;
 	}

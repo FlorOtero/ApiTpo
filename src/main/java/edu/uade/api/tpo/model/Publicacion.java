@@ -3,12 +3,12 @@ package edu.uade.api.tpo.model;
 import java.util.Date;
 
 public class Publicacion {
-	String id;
-	Date fechaDesde;
-	Date fechaHasta;
-	float precio;
-	char estado;
-	float comision;
+	private String id;
+	private Date fechaDesde;
+	private Date fechaHasta;
+	private float precio;
+	private char estado;
+	private float comision;
 	public String getId() {
 		return id;
 	}

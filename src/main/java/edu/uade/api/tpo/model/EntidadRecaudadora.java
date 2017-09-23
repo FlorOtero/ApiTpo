@@ -1,6 +1,6 @@
 package edu.uade.api.tpo.model;
 
-public class EntidadRecaudadora {
+public abstract class EntidadRecaudadora {
 	public void cobrar(){
 		
 	}

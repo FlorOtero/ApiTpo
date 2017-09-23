@@ -3,8 +3,8 @@ package edu.uade.api.tpo.model;
 import java.util.Date;
 
 public class Oferta {
-	float monto;
-	Date fecha;
+	private float monto;
+	private Date fecha;
 	public float getMonto() {
 		return monto;
 	}

@@ -1,8 +1,8 @@
 package edu.uade.api.tpo.model;
 
 public class CompraTarjetaCredito extends Transaccion{
-	EntidadRecaudadora entidad;
-	String numeroTarjeta;
+	private EntidadRecaudadora entidad;
+	private String numeroTarjeta;
 	public EntidadRecaudadora getEntidad() {
 		return entidad;
 	}
