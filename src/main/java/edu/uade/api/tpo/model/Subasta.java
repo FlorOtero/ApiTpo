@@ -1,12 +1,13 @@
 package edu.uade.api.tpo.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class Subasta extends Publicacion {
 	private float precioMin;
 	private int diasVigencia;
 	private float precioInicial;
-	private Oferta[] ofertas;
+	private List<Oferta> ofertas;
 	public float getPrecioMin() {
 		return precioMin;
 	}

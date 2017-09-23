@@ -31,4 +31,7 @@ public abstract class Transaccion {
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
+	public abstract void pagar();
+		
+	}
 }
