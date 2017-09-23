@@ -33,5 +33,4 @@ public abstract class Transaccion {
 	}
 	public abstract void pagar();
 		
-	}
 }
