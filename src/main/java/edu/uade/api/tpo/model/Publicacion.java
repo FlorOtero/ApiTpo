@@ -1,14 +1,17 @@
 package edu.uade.api.tpo.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Publicacion {
+public class Publicacion implements Serializable {
 	private String id;
 	private Date fechaDesde;
 	private Date fechaHasta;
 	private float precio;
 	private char estado;
 	private float comision;
+	private Usuario usuario;
+	private Articulo articulo;
 
 	public String getId() {
 		return id;
@@ -56,6 +59,22 @@ public class Publicacion {
 
 	public void setComision(float comision) {
 		this.comision = comision;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public Articulo getArticulo() {
+		return articulo;
+	}
+
+	public void setArticulo(Articulo articulo) {
+		this.articulo = articulo;
 	}
 
 	public void ofertar(float monto, Date fecha, String nombreUsuario) {

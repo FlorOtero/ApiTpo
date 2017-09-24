@@ -12,6 +12,7 @@ import java.sql.SQLException;
 public abstract class AbstractBaseDao<T extends Serializable> implements BaseDao<T> {
 
     private DataSource dataSource;
+    protected String schema = "apitpo";
 
     public AbstractBaseDao() {
         this.dataSource = PersistenceModule.getInstance().getDataSource();
@@ -21,13 +22,16 @@ public abstract class AbstractBaseDao<T extends Serializable> implements BaseDao
     public final void create(T t) throws SQLException {
         try (Connection conn = this.getConnection(); PreparedStatement ps = create(t, conn)) {
             ps.execute();
+            conn.commit();
         }
     }
 
     @Override
     public final T findById(String id) throws SQLException {
         try (Connection conn = this.getConnection(); PreparedStatement ps = findById(id, conn); ResultSet rs = ps.executeQuery()) {
-            return map(rs);
+            T t = map(rs);
+            conn.commit();
+            return t;
         }
     }
 
@@ -35,6 +39,7 @@ public abstract class AbstractBaseDao<T extends Serializable> implements BaseDao
     public final void update(T t) throws SQLException {
         try (Connection conn = this.getConnection(); PreparedStatement ps = update(t, conn)) {
             ps.executeUpdate();
+            conn.commit();
         }
     }
 
