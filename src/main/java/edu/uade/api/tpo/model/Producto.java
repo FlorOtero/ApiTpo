@@ -6,8 +6,8 @@ public class Producto extends Articulo {
 
     private Garantia garantia;
 
-    public Producto(String nombre, String descripcion, Collection<String> imagenes) {
-        super(nombre, descripcion, imagenes);
+    public Producto(String id, String nombre, String descripcion, Collection<String> imagenes) {
+        super(id, nombre, descripcion, imagenes);
     }
 
     public Garantia getGarantia() {

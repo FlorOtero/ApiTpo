@@ -4,13 +4,15 @@ import java.util.Collection;
 
 public abstract class Articulo {
 
+    private String id;
     private String nombre;
     private String descripcion;
     private Collection<String> imagenes;
 
 
-    public Articulo(String nombre, String descripcion, Collection<String> imagenes) {
+    public Articulo(String id, String nombre, String descripcion, Collection<String> imagenes) {
         super();
+        this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.imagenes = imagenes;
@@ -32,5 +34,11 @@ public abstract class Articulo {
         this.descripcion = descripcion;
     }
 
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
 }
