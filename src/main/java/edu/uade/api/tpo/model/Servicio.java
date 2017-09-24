@@ -7,7 +7,7 @@ public class Servicio extends Articulo {
     private Collection<String> certificados;
     private TipoContratacion contratacion;
 
-    public Servicio (String id, String nombre, String descripcion, Collection<String> imagenes) {
+    public Servicio(String id, String nombre, String descripcion, Collection<String> imagenes) {
         super(id, nombre, descripcion, imagenes);
     }
 
@@ -26,6 +26,5 @@ public class Servicio extends Articulo {
     public void setContratacion(TipoContratacion contratacion) {
         this.contratacion = contratacion;
     }
-
-
+    
 }

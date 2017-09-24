@@ -13,6 +13,7 @@ public abstract class Articulo implements Serializable {
 
     public Articulo(String id, String nombre, String descripcion, Collection<String> imagenes) {
         super();
+        this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.imagenes = imagenes;
