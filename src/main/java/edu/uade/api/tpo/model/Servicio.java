@@ -26,5 +26,5 @@ public class Servicio extends Articulo {
     public void setContratacion(TipoContratacion contratacion) {
         this.contratacion = contratacion;
     }
-    
+
 }
