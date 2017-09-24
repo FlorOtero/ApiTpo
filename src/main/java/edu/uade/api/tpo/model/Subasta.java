@@ -1,6 +1,5 @@
 package edu.uade.api.tpo.model;
 
-import java.util.Date;
 import java.util.List;
 
 public class Subasta extends Publicacion {
@@ -8,6 +7,7 @@ public class Subasta extends Publicacion {
 	private int diasVigencia;
 	private float precioInicial;
 	private List<Oferta> ofertas;
+	
 	public float getPrecioMin() {
 		return precioMin;
 	}
@@ -26,13 +26,12 @@ public class Subasta extends Publicacion {
 	public void setPrecioInicial(float precioInicial) {
 		this.precioInicial = precioInicial;
 	}
-	public Oferta[] getOfertas() {
+	public List<Oferta> getOfertas() {
 		return ofertas;
 	}
-	public void setOfertas(Oferta[] ofertas) {
+	public void setOfertas(List<Oferta> ofertas) {
 		this.ofertas = ofertas;
 	}
-	public void ofertar(float monto, Date fecha, String nombreUsuario){
-		
-	}
+	
+	
 }
