@@ -1,18 +1,22 @@
 package edu.uade.api.tpo.model;
 
-public class Producto extends Articulo{
-	
-	private Garantia garantia;
+import java.util.Collection;
 
-	public Garantia getGarantia() {
-		return garantia;
-	}
+public class Producto extends Articulo {
 
-	public void setGarantia(Garantia garantia) {
-		this.garantia = garantia;
-	}
-	
-	
-	
-	
+    private Garantia garantia;
+
+    public Producto(String nombre, String descripcion, Collection<String> imagenes) {
+        super(nombre, descripcion, imagenes);
+    }
+
+    public Garantia getGarantia() {
+        return garantia;
+    }
+
+    public void setGarantia(Garantia garantia) {
+        this.garantia = garantia;
+    }
+
+
 }
