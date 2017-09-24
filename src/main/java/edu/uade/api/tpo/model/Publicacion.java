@@ -9,6 +9,7 @@ public class Publicacion {
 	private float precio;
 	private char estado;
 	private float comision;
+	private Articulo articulo;
 
 	public String getId() {
 		return id;
@@ -61,4 +62,14 @@ public class Publicacion {
 	public void ofertar(float monto, Date fecha, String nombreUsuario) {
 
 	}
+
+	public Articulo getArticulo() {
+		return articulo;
+	}
+
+	public void setArticulo(Articulo articulo) {
+		this.articulo = articulo;
+	}
+	
+	
 }
