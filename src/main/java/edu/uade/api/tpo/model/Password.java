@@ -1,3 +1,4 @@
+package edu.uade.api.tpo.model;
 import java.util.Calendar;
 
 public class Password {
