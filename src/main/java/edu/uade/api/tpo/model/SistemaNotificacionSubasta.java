@@ -1,18 +1,28 @@
 package edu.uade.api.tpo.model;
 
+import java.util.Collection;
+
 public class SistemaNotificacionSubasta {
 
-	public SistemaNotificacionSubasta() {
-		public void notificarUsuarioGanador(String nombreUsuario, Subasta s){
-			Usuario.sosGanador(s);
+	private static SistemaNotificacionSubasta instance;
+
+	public static SistemaNotificacionSubasta getInstance() {
+		if(instance == null){
+			instance = new SistemaNotificacionSubasta();
 		}
+		return instance;
+	}
+	
+	public void notificarUsuarioGanador(String nombreUsuario, Subasta s) {
+		Usuario.isGanador(s);
+	}
 		
-		public void notificarUsuarios(collection nombreUsuarios, Subasta s){
-			for(int i=0; i< nombreUsuarios.size(); i++) {
-	            notificar(nombreUsuario.get(i), s);
-	        }
-		}
-		
+	public void notificarUsuarios(Collection<String> nombreUsuarios, Subasta s) {
+		// SistemaUsuarios su = SistemaUsuarios.getInstance();
+		for(int i=0; i< nombreUsuarios.size(); i++) {
+			// Usuario u = su.buscarUsuario(nombreUsuarios);
+            // notificar(u, s);
+        }
 	}
 
 }
