@@ -4,6 +4,7 @@ import java.util.Date;
 
 public abstract class Transaccion {
 	private String id;
+	private Usuario contraparte;
 	private Publicacion publicacion;
 	private char estado;
 	private Date fecha;
@@ -16,6 +17,14 @@ public abstract class Transaccion {
 		this.id = id;
 	}
 
+	public Usuario getContraparte() {
+		return contraparte;
+	}
+	
+	public void setContraparte(Usuario contraparte) {
+		this.contraparte = contraparte;
+	}
+	
 	public Publicacion getPublicacion() {
 		return publicacion;
 	}
