@@ -1,13 +1,26 @@
 package edu.uade.api.tpo.model;
 
-public abstract class EntidadRecaudadora {
-	public abstract void cobrar();
+import java.io.Serializable;
 
-	public void notificar() {
+public abstract class EntidadRecaudadora implements Serializable {
 
-	}
+    private String id;
 
-	public void efectuarCobro() {
+    public abstract void cobrar();
 
-	}
+    public void notificar() {
+
+    }
+
+    public void efectuarCobro() {
+
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

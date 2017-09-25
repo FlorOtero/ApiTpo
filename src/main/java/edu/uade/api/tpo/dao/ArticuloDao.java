@@ -6,10 +6,10 @@ import java.sql.SQLException;
 
 public interface ArticuloDao {
 
-    public void create(Articulo publicacion) throws SQLException;
+    public void create(Articulo articulo) throws SQLException;
 
     public Articulo findById(String id) throws SQLException;
 
-    public void update(Articulo publicacion) throws SQLException;
+    public void update(Articulo articulo) throws SQLException;
 
 }

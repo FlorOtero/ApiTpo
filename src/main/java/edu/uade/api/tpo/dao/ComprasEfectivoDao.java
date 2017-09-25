@@ -6,10 +6,10 @@ import java.sql.SQLException;
 
 public interface ComprasEfectivoDao {
 
-    public void create(CompraEfectivo publicacion) throws SQLException;
+    public void create(CompraEfectivo compra) throws SQLException;
 
     public CompraEfectivo findById(String id) throws SQLException;
 
-    public void update(CompraEfectivo publicacion) throws SQLException;
+    public void update(CompraEfectivo compra) throws SQLException;
 
 }
