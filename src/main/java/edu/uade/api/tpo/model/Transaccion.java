@@ -1,12 +1,14 @@
 package edu.uade.api.tpo.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public abstract class Transaccion {
+public abstract class Transaccion implements Serializable{
 	private String id;
 	private Publicacion publicacion;
 	private char estado;
 	private Date fecha;
+	private Usuario contraparte;
 
 	public String getId() {
 		return id;
@@ -38,6 +40,14 @@ public abstract class Transaccion {
 
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
+	}
+
+	public Usuario getContraparte() {
+		return contraparte;
+	}
+
+	public void setContraparte(Usuario contraparte) {
+		this.contraparte = contraparte;
 	}
 
 	public abstract void pagar();
