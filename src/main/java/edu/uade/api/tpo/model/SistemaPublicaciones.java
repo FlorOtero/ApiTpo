@@ -14,13 +14,13 @@ public class SistemaPublicaciones {
         return instance;
     }
 	
-	public Publicacion crearPublicacion(Usuario u, Date fechaDesde, Date fechaHasta, float precio, String articulo) {
+	public Publicacion crearPublicacion(Usuario u, Date fechaDesde, Date fechaHasta, float precio, Articulo articulo) {
 		Publicacion p = new Publicacion();
 		p.setFechaDesde(fechaDesde);
 		p.setFechaHasta(fechaHasta);
 		p.setPrecio(precio);
+		p.setArticulo(articulo);
 		this.publicaciones.add(p);
-		// TODO: update setArticulo() when available
 		return p;
 	}
 	
@@ -28,21 +28,19 @@ public class SistemaPublicaciones {
 		this.publicaciones.remove(publicacion);
 	}
 	
-	public void modificarPublicacion(Publicacion p, Date fechaDesde, Date fechaHasta, float precio, String articulo) {
+	public void modificarPublicacion(Publicacion p, Date fechaDesde, Date fechaHasta, float precio, Articulo articulo) {
 		p.setFechaDesde(fechaDesde);
 		p.setFechaHasta(fechaHasta);
 		p.setPrecio(precio);
-		// TODO: update setArticulo() when available
+		p.setArticulo(articulo);
 	}
 	
-	public Subasta crearSubasta(Usuario u, String a, float precioMin, int diasVigencia, float precioInicial) {
-		// TODO: update Articulo when available
+	public Subasta crearSubasta(Usuario u, Articulo a, float precioMin, int diasVigencia, float precioInicial) {
 		Subasta s = null;
 		return s;
 	}
 	
 	public Subasta convertirPublicacionSubasta(Publicacion p, float precioMin, int diasVigencia, float pInicial) {
-		// TODO: finish method
 		Subasta s = null;
 		return s;
 	}
