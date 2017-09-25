@@ -1,10 +1,13 @@
 package edu.uade.api.tpo.model;
 
+import java.util.List;
 import java.util.ArrayList;
 
 public class SistemaTransacciones {
-	ArrayList<Transaccion>transacciones;
-	private static SistemaTransacciones instance;
+	List<Transaccion>transacciones;
+	private static SistemaTransacciones instance = null;
+	
+	private SistemaTransacciones() {}
 
 	public static SistemaTransacciones getInstance() {
 		if(instance == null){

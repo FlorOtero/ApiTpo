@@ -1,10 +1,13 @@
 package edu.uade.api.tpo.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SistemaUsuarios {
-	private static SistemaUsuarios instance;
-	private ArrayList<Usuario> usuarios; 
+	private static SistemaUsuarios instance = null;
+	private List<Usuario> usuarios; 
+	
+	private SistemaUsuarios() {}
 	
 	public static SistemaUsuarios getInstance() {
         if(instance == null){

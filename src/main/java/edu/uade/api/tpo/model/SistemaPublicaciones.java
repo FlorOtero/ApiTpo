@@ -1,11 +1,14 @@
 package edu.uade.api.tpo.model;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class SistemaPublicaciones {
-	private static SistemaPublicaciones instance;
-	private ArrayList<Publicacion> publicaciones; 
+	private static SistemaPublicaciones instance = null;
+	private List<Publicacion> publicaciones; 
+	
+	private SistemaPublicaciones() {}
 	
 	public static SistemaPublicaciones getInstance() {
         if(instance == null){

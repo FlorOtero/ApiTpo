@@ -4,7 +4,9 @@ import java.util.Collection;
 
 public class SistemaNotificacionSubasta {
 
-	private static SistemaNotificacionSubasta instance;
+	private static SistemaNotificacionSubasta instance = null;
+	
+	private SistemaNotificacionSubasta() {}
 
 	public static SistemaNotificacionSubasta getInstance() {
 		if(instance == null){
@@ -14,7 +16,8 @@ public class SistemaNotificacionSubasta {
 	}
 	
 	public void notificarUsuarioGanador(String nombreUsuario, Subasta s) {
-		Usuario.isGanador(s);
+		// TODO: implement method
+		// Usuario.isGanador(s);
 	}
 		
 	public void notificarUsuarios(Collection<String> nombreUsuarios, Subasta s) {
