@@ -7,6 +7,7 @@ public abstract class Transaccion {
 	private Publicacion publicacion;
 	private char estado;
 	private Date fecha;
+	private Usuario contraparte;
 
 	public String getId() {
 		return id;
@@ -38,6 +39,14 @@ public abstract class Transaccion {
 
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
+	}
+
+	public Usuario getContraparte() {
+		return contraparte;
+	}
+
+	public void setContraparte(Usuario contraparte) {
+		this.contraparte = contraparte;
 	}
 
 	public abstract void pagar();
