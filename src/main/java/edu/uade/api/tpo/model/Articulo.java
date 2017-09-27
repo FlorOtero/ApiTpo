@@ -41,4 +41,8 @@ public abstract class Articulo {
     public void setId(String id) {
         this.id = id;
     }
+
+    public Collection<String> getImagenes() {
+        return imagenes;
+    }
 }
