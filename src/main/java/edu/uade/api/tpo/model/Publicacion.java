@@ -10,8 +10,12 @@ public class Publicacion implements Serializable {
     private float precio;
     private char estado;
     private float comision;
-    private Usuario usuario;
     private Articulo articulo;
+    private Usuario usuario;
+
+    public void ofertar(float monto, String nombreUsuario) {
+
+    }
 
     public String getId() {
         return id;
@@ -61,8 +65,12 @@ public class Publicacion implements Serializable {
         this.comision = comision;
     }
 
-    public void ofertar(float monto, Date fecha, String nombreUsuario) {
+    public Articulo getArticulo() {
+        return articulo;
+    }
 
+    public void setArticulo(Articulo articulo) {
+        this.articulo = articulo;
     }
 
     public Usuario getUsuario() {
@@ -73,11 +81,7 @@ public class Publicacion implements Serializable {
         this.usuario = usuario;
     }
 
-    public Articulo getArticulo() {
-        return articulo;
-    }
+    public void ofertar(float monto, Date fecha, String nombreUsuario) {
 
-    public void setArticulo(Articulo articulo) {
-        this.articulo = articulo;
     }
 }

@@ -8,6 +8,10 @@ public class Subasta extends Publicacion {
 	private float precioInicial;
 	private List<Oferta> ofertas;
 
+	public void ofertar(float monto, String nombreUsuario) {
+
+	}
+
 	public float getPrecioMin() {
 		return precioMin;
 	}

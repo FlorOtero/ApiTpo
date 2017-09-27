@@ -17,7 +17,7 @@ public abstract class Transaccion implements Serializable{
 	public void setId(String id) {
 		this.id = id;
 	}
-
+	
 	public Publicacion getPublicacion() {
 		return publicacion;
 	}

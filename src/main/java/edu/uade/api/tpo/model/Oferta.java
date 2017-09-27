@@ -5,6 +5,7 @@ import java.util.Date;
 public class Oferta {
 	private float monto;
 	private Date fecha;
+	private Usuario usuario;
 
 	public float getMonto() {
 		return monto;
@@ -20,5 +21,13 @@ public class Oferta {
 
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 }
