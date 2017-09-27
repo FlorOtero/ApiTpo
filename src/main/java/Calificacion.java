@@ -1,14 +1,14 @@
-import java.util.Calendar;
+import java.util.Date;
 
 public class Calificacion {
 
 	private Transaccion transaccion;
 	private int calificacion;
 	private String observaciones;
-	private Calendar fecha;
+	private Date fecha;
 	private char estado;
 	
-	public Calificacion(Transaccion transaccion, int calificacion, String observaciones, Calendar fecha, char estado) {
+	public Calificacion(Transaccion transaccion, int calificacion, String observaciones, Date fecha, char estado) {
 		super();
 		this.transaccion = transaccion;
 		this.calificacion = calificacion;
@@ -41,11 +41,11 @@ public class Calificacion {
 		this.observaciones = observaciones;
 	}
 
-	public Calendar getFecha() {
+	public Date getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Calendar fecha) {
+	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
 

@@ -1,11 +1,11 @@
-import java.util.Calendar;
+import java.util.Date;
 
 public class Password {
 	
 	private String valor;
-	private Calendar fechaModificacion;
+	private Date fechaModificacion;
 	
-	public Password(String valor, Calendar fechaModificacion) {
+	public Password(String valor, Date fechaModificacion) {
 		super();
 		this.valor = valor;
 		this.fechaModificacion = fechaModificacion;
@@ -19,11 +19,11 @@ public class Password {
 		this.valor = valor;
 	}
 
-	public Calendar getFechaModificacion() {
+	public Date getFechaModificacion() {
 		return fechaModificacion;
 	}
 
-	public void setFechaModificacion(Calendar fechaModificacion) {
+	public void setFechaModificacion(Date fechaModificacion) {
 		this.fechaModificacion = fechaModificacion;
 	}
 
