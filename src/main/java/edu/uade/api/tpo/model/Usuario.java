@@ -14,9 +14,10 @@ public class Usuario implements Serializable{
     private CuentaCorriente cuentaCorriente;
     private List<String> publicaciones;
     private String mail;
+    private Reputacion reputacion;
 
     public Usuario(String nombreUsuario, String nombre, String apellido, String mail, Domicilio domicilio, Password password,
-                   CuentaCorriente cuentaCorriente, List<String> publicaciones) {
+                   CuentaCorriente cuentaCorriente, List<String> publicaciones, Reputacion reputacion) {
         super();
         this.nombreUsuario = nombreUsuario;
         this.nombre = nombre;
@@ -26,6 +27,7 @@ public class Usuario implements Serializable{
         this.cuentaCorriente = cuentaCorriente;
         this.publicaciones = publicaciones;
         this.mail = mail;
+        this.reputacion = reputacion;
     }
 
     public String getNombreUsuario() {
@@ -94,5 +96,21 @@ public class Usuario implements Serializable{
 
     public void setMail(String mail) {
         this.mail = mail;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Reputacion getReputacion() {
+        return reputacion;
+    }
+
+    public void setReputacion(Reputacion reputacion) {
+        this.reputacion = reputacion;
     }
 }

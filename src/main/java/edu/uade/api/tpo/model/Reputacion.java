@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Reputacion {
 
+    private String id;
     private List<Calificacion> calificaciones;
 
     public Reputacion() {
@@ -43,4 +44,11 @@ public class Reputacion {
         return (rep / calificaciones.size());
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }
