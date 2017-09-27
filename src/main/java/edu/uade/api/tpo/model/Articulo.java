@@ -10,9 +10,8 @@ public abstract class Articulo {
     private Collection<String> imagenes;
 
 
-    public Articulo(String id, String nombre, String descripcion, Collection<String> imagenes) {
+    public Articulo(String nombre, String descripcion, Collection<String> imagenes) {
         super();
-        this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.imagenes = imagenes;
@@ -44,5 +43,9 @@ public abstract class Articulo {
 
     public Collection<String> getImagenes() {
         return imagenes;
+    }
+
+    public void setImagenes(Collection<String> imagenes) {
+        this.imagenes = imagenes;
     }
 }

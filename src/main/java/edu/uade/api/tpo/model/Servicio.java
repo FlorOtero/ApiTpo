@@ -1,21 +1,24 @@
 package edu.uade.api.tpo.model;
 
 import java.util.Collection;
+import java.util.List;
 
 public class Servicio extends Articulo {
 
-    private Collection<String> certificados;
+    private List<String> certificados;
     private TipoContratacion contratacion;
 
-    public Servicio(String id, String nombre, String descripcion, Collection<String> imagenes) {
-        super(id, nombre, descripcion, imagenes);
+    public Servicio(String nombre, String descripcion, Collection<String> imagenes, List<String> certificados, TipoContratacion contratacion) {
+        super(nombre, descripcion, imagenes);
+        this.certificados = certificados;
+        this.contratacion = contratacion;
     }
 
-    public Collection<String> getCertificados() {
+    public List<String> getCertificados() {
         return certificados;
     }
 
-    public void setCertificados(Collection<String> certificados) {
+    public void setCertificados(List<String> certificados) {
         this.certificados = certificados;
     }
 
@@ -26,6 +29,5 @@ public class Servicio extends Articulo {
     public void setContratacion(TipoContratacion contratacion) {
         this.contratacion = contratacion;
     }
-
 
 }
