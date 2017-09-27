@@ -11,8 +11,9 @@ public class Usuario {
     private Password password;
     private CuentaCorriente cuentaCorriente;
     private List<String> publicaciones;
+    private String mail;
 
-    public Usuario(String nombreUsuario, String nombre, String apellido, Domicilio domicilio, Password password,
+    public Usuario(String nombreUsuario, String nombre, String apellido, String mail, Domicilio domicilio, Password password,
                    CuentaCorriente cuentaCorriente, List<String> publicaciones) {
         super();
         this.nombreUsuario = nombreUsuario;
@@ -22,6 +23,7 @@ public class Usuario {
         this.password = password;
         this.cuentaCorriente = cuentaCorriente;
         this.publicaciones = publicaciones;
+        this.mail = mail;
     }
 
     public String getNombreUsuario() {
@@ -82,5 +84,13 @@ public class Usuario {
 
     public void setPublicacion(String publicacion) {
         this.publicaciones.add(publicacion);
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 }
