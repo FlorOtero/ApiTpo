@@ -1,3 +1,5 @@
+package edu.uade.api.tpo.model;
+
 import java.util.Date;
 
 public class Password {

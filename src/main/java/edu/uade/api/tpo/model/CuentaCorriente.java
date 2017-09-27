@@ -1,9 +1,12 @@
+package edu.uade.api.tpo.model;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class CuentaCorriente {
 	
 	private float saldo;
-	private ArrayList<Transaccion> transacciones;
+	private List<Transaccion> transacciones;
 	
 	public CuentaCorriente() {
 		super();
@@ -19,7 +22,7 @@ public class CuentaCorriente {
 		this.saldo = saldo;
 	}
 
-	public ArrayList<Transaccion> getTransacciones() {
+	public List<Transaccion> getTransacciones() {
 		return transacciones;
 	}
 

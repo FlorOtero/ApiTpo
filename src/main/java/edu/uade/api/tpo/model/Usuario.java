@@ -1,4 +1,6 @@
-import java.util.ArrayList;
+package edu.uade.api.tpo.model;
+
+import java.util.List;
 
 public class Usuario {
 	
@@ -8,10 +10,10 @@ public class Usuario {
 	private Domicilio domicilio;
 	private Password password;
 	private CuentaCorriente cuentaCorriente;
-	private ArrayList<String> publicaciones;
+	private List<String> publicaciones;
 	
 	public Usuario(String nombreUsuario, String nombre, String apellido, Domicilio domicilio, Password password,
-			CuentaCorriente cuentaCorriente, ArrayList<String> publicaciones) {
+			CuentaCorriente cuentaCorriente, List<String> publicaciones) {
 		super();
 		this.nombreUsuario = nombreUsuario;
 		this.nombre = nombre;
@@ -70,7 +72,7 @@ public class Usuario {
 		this.cuentaCorriente = cuentaCorriente;
 	}
 
-	public ArrayList<String> getPublicaciones() {
+	public List<String> getPublicaciones() {
 		return publicaciones;
 	}
 
