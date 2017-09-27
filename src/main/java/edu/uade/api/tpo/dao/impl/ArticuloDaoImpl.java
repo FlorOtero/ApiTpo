@@ -1,7 +1,7 @@
 package edu.uade.api.tpo.dao.impl;
 
-import edu.uade.api.tpo.dao.AbstractBaseDao;
-import edu.uade.api.tpo.dao.ArticuloDao;
+import edu.uade.api.tpo.dao.AbstractGenericDao;
+import edu.uade.api.tpo.dao.GenericDao;
 import edu.uade.api.tpo.model.Articulo;
 
 import java.sql.Connection;
@@ -9,15 +9,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ArticuloDaoImpl extends AbstractBaseDao<Articulo> implements ArticuloDao {
+public class ArticuloDaoImpl extends AbstractGenericDao<Articulo>  {
 
-    private static ArticuloDao instance;
+    private static GenericDao<Articulo> instance;
 
     private ArticuloDaoImpl() {
 
     }
 
-    public static ArticuloDao getInstance() {
+    public static GenericDao<Articulo> getInstance() {
         if (instance == null) {
             instance = new ArticuloDaoImpl();
         }

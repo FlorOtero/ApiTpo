@@ -1,22 +1,22 @@
 package edu.uade.api.tpo.dao.impl;
 
-import edu.uade.api.tpo.dao.AbstractBaseDao;
-import edu.uade.api.tpo.dao.CompraTransferenciaBancariaDao;
+import edu.uade.api.tpo.dao.AbstractGenericDao;
+import edu.uade.api.tpo.dao.GenericDao;
 import edu.uade.api.tpo.model.CompraTransferenciaBancaria;
 import edu.uade.api.tpo.model.Publicacion;
 import edu.uade.api.tpo.util.UUIDUtils;
 
 import java.sql.*;
 
-public class CompraTransferenciaBancariaDaoImpl extends AbstractBaseDao<CompraTransferenciaBancaria> implements CompraTransferenciaBancariaDao {
+public class CompraTransferenciaBancariaDaoImpl extends AbstractGenericDao<CompraTransferenciaBancaria> {
 
-    private static CompraTransferenciaBancariaDao instance;
+    private static GenericDao<CompraTransferenciaBancaria> instance;
 
     private CompraTransferenciaBancariaDaoImpl() {
 
     }
 
-    public static CompraTransferenciaBancariaDao getInstance() {
+    public static GenericDao<CompraTransferenciaBancaria> getInstance() {
         if (instance == null) {
             instance = new CompraTransferenciaBancariaDaoImpl();
         }

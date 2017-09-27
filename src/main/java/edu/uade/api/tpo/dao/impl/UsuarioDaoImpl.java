@@ -1,7 +1,7 @@
 package edu.uade.api.tpo.dao.impl;
 
-import edu.uade.api.tpo.dao.AbstractBaseDao;
-import edu.uade.api.tpo.dao.UsuarioDao;
+import edu.uade.api.tpo.dao.AbstractGenericDao;
+import edu.uade.api.tpo.dao.GenericDao;
 import edu.uade.api.tpo.model.Usuario;
 import edu.uade.api.tpo.util.UUIDUtils;
 
@@ -10,14 +10,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UsuarioDaoImpl extends AbstractBaseDao<Usuario> implements UsuarioDao {
+public class UsuarioDaoImpl extends AbstractGenericDao<Usuario> {
 
-    private static UsuarioDao instance;
+    private static GenericDao<Usuario> instance;
 
     private UsuarioDaoImpl() {
     }
 
-    public static UsuarioDao getInstance() {
+    public static GenericDao<Usuario> getInstance() {
         if (instance == null) {
             instance = new UsuarioDaoImpl();
         }
@@ -45,12 +45,21 @@ public class UsuarioDaoImpl extends AbstractBaseDao<Usuario> implements UsuarioD
         ps.setString(7, usuario.getPassword().getId());
         ps.setString(8, usuario.getCuentaCorriente().getId());
         ps.setString(9, usuario.getReputacion().getId());
-        return null;
+        return ps;
     }
 
     @Override
     public Usuario map(ResultSet rs) throws SQLException {
-        return null;
+        Usuario usuario = null;
+        if(rs.first()) {
+            usuario = new Usuario();
+            usuario.setId(rs.getString("usuario_id"));
+            usuario.setNombreUsuario(rs.getString("nombre_usuario"));
+            usuario.setNombre(rs.getString("nombre"));
+            usuario.setApellido(rs.getString("apellido"));
+        }
+
+        return usuario;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package edu.uade.api.tpo.dao.impl;
 
-import edu.uade.api.tpo.dao.AbstractBaseDao;
-import edu.uade.api.tpo.dao.EntidadRecaudadoraDao;
+import edu.uade.api.tpo.dao.AbstractGenericDao;
+import edu.uade.api.tpo.dao.GenericDao;
 import edu.uade.api.tpo.model.Banco;
 import edu.uade.api.tpo.model.EntidadRecaudadora;
 import edu.uade.api.tpo.model.MercadoPago;
@@ -11,15 +11,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class EntidadRecaudadoraDaoImpl extends AbstractBaseDao<EntidadRecaudadora> implements EntidadRecaudadoraDao {
+public class EntidadRecaudadoraDaoImpl extends AbstractGenericDao<EntidadRecaudadora> {
 
-    private static EntidadRecaudadoraDao instance;
+    private static GenericDao<EntidadRecaudadora> instance;
 
     private EntidadRecaudadoraDaoImpl() {
 
     }
 
-    public static EntidadRecaudadoraDao getInstance() {
+    public static GenericDao<EntidadRecaudadora> getInstance() {
         if (instance == null) {
             instance = new EntidadRecaudadoraDaoImpl();
         }

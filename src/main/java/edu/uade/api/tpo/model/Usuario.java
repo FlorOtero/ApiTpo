@@ -16,6 +16,10 @@ public class Usuario implements Serializable{
     private String mail;
     private Reputacion reputacion;
 
+    public Usuario() {
+
+    }
+
     public Usuario(String nombreUsuario, String nombre, String apellido, String mail, Domicilio domicilio, Password password,
                    CuentaCorriente cuentaCorriente, List<String> publicaciones, Reputacion reputacion) {
         super();

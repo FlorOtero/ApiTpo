@@ -1,21 +1,21 @@
 package edu.uade.api.tpo.dao.impl;
 
-import edu.uade.api.tpo.dao.AbstractBaseDao;
-import edu.uade.api.tpo.dao.SubastaDao;
+import edu.uade.api.tpo.dao.AbstractGenericDao;
+import edu.uade.api.tpo.dao.GenericDao;
 import edu.uade.api.tpo.model.Subasta;
 import edu.uade.api.tpo.util.UUIDUtils;
 
 import java.sql.*;
 
-public class SubastaDaoImpl extends AbstractBaseDao<Subasta> implements SubastaDao {
+public class SubastaDaoImpl extends AbstractGenericDao<Subasta> {
 
-    private static SubastaDao instance;
+    private static GenericDao<Subasta> instance;
 
     private SubastaDaoImpl() {
 
     }
 
-    public static SubastaDao getInstance() {
+    public static GenericDao<Subasta> getInstance() {
         if (instance == null) {
             instance = new SubastaDaoImpl();
         }
