@@ -16,7 +16,7 @@ public abstract class Transaccion {
 	public void setId(String id) {
 		this.id = id;
 	}
-
+	
 	public Publicacion getPublicacion() {
 		return publicacion;
 	}
