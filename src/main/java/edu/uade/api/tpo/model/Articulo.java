@@ -1,16 +1,16 @@
 package edu.uade.api.tpo.model;
 
-import java.util.Collection;
+import java.util.List;
 
 public abstract class Articulo {
 
     private String id;
     private String nombre;
     private String descripcion;
-    private Collection<String> imagenes;
+    private List<String> imagenes;
 
 
-    public Articulo(String nombre, String descripcion, Collection<String> imagenes) {
+    public Articulo(String nombre, String descripcion, List<String> imagenes) {
         super();
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -41,11 +41,11 @@ public abstract class Articulo {
         this.id = id;
     }
 
-    public Collection<String> getImagenes() {
+    public List<String> getImagenes() {
         return imagenes;
     }
 
-    public void setImagenes(Collection<String> imagenes) {
+    public void setImagenes(List<String> imagenes) {
         this.imagenes = imagenes;
     }
 }
