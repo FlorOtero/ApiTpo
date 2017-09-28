@@ -3,6 +3,7 @@ package edu.uade.api.tpo.dao.impl;
 import edu.uade.api.tpo.dao.AbstractDao;
 import edu.uade.api.tpo.dao.GenericDao;
 import edu.uade.api.tpo.model.CuentaCorriente;
+import edu.uade.api.tpo.util.UUIDUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,21 +26,38 @@ public class CuentaCorrienteDaoImpl extends AbstractDao<CuentaCorriente> {
 
     @Override
     public PreparedStatement findById(String id, Connection conn) throws SQLException {
-        return null;
+        String query = "SELECT * FROM " + schema + ".cuentas_corrientes WHERE cuenta_corriente_id = ?";
+        PreparedStatement ps = conn.prepareStatement(query);
+        ps.setString(1, id);
+        return ps;
     }
 
     @Override
     public PreparedStatement create(CuentaCorriente cuentaCorriente, Connection conn) throws SQLException {
-        return null;
+        String query = "INSERT INTO " + schema + ".cuentas_corrientes VALUES(?,?)";
+        PreparedStatement ps = conn.prepareStatement(query);
+        ps.setString(1, UUIDUtils.generate());
+        ps.setFloat(2, cuentaCorriente.getSaldo());
+        return ps;
     }
 
     @Override
     public PreparedStatement update(CuentaCorriente cuentaCorriente, Connection conn) throws SQLException {
-        return null;
+        String query = "UPDATE " + schema + ".cuentas_corrientes SET saldo = ? WHERE cuenta_corriente_id = ?";
+        PreparedStatement ps = conn.prepareStatement(query);
+        ps.setFloat(1, cuentaCorriente.getSaldo());
+        ps.setString(2, cuentaCorriente.getId());
+        return ps;
     }
 
     @Override
     public CuentaCorriente map(ResultSet rs) throws SQLException {
-        return null;
+        CuentaCorriente cuentaCorriente = null;
+        if (rs.first()) {
+            cuentaCorriente = new CuentaCorriente();
+            cuentaCorriente.setId(rs.getString("cuenta_corriente_id"));
+            cuentaCorriente.setSaldo(rs.getFloat("saldo"));
+        }
+        return cuentaCorriente;
     }
 }
