@@ -4519,7 +4519,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "+ofertar(ifloat monto, Date fecha, String nombreUsuario): void",
+											"text": "+ofertar(ifloat monto, String nombreUsuario): void",
 											"horizontalAlignment": 0,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -10227,7 +10227,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "+ofertar(float monto, Date fecha, String nombreUsuario): void",
+											"text": "+ofertar(float monto, String nombreUsuario): void",
 											"horizontalAlignment": 0,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -26830,7 +26830,6 @@
 									"visibility": "public",
 									"isStatic": false,
 									"isLeaf": false,
-									"type": "",
 									"isReadOnly": false,
 									"isOrdered": false,
 									"isUnique": false,
@@ -26857,27 +26856,10 @@
 									"_parent": {
 										"$ref": "AAAAAAFekWtJVdRdZr4="
 									},
-									"name": "Date fecha",
-									"visibility": "public",
-									"isStatic": false,
-									"isLeaf": false,
-									"type": "",
-									"isReadOnly": false,
-									"isOrdered": false,
-									"isUnique": false,
-									"direction": "in"
-								},
-								{
-									"_type": "UMLParameter",
-									"_id": "AAAAAAFekWx2vtyfVKc=",
-									"_parent": {
-										"$ref": "AAAAAAFekWtJVdRdZr4="
-									},
 									"name": "String nombreUsuario",
 									"visibility": "public",
 									"isStatic": false,
 									"isLeaf": false,
-									"type": "",
 									"isReadOnly": false,
 									"isOrdered": false,
 									"isUnique": false,
@@ -27850,7 +27832,6 @@
 									"visibility": "public",
 									"isStatic": false,
 									"isLeaf": false,
-									"type": "",
 									"isReadOnly": false,
 									"isOrdered": false,
 									"isUnique": false,
@@ -27862,27 +27843,10 @@
 									"_parent": {
 										"$ref": "AAAAAAFeJhEzJ/uZIH4="
 									},
-									"name": "Date fecha",
-									"visibility": "public",
-									"isStatic": false,
-									"isLeaf": false,
-									"type": "",
-									"isReadOnly": false,
-									"isOrdered": false,
-									"isUnique": false,
-									"direction": "in"
-								},
-								{
-									"_type": "UMLParameter",
-									"_id": "AAAAAAFeJhJT6PyhrJs=",
-									"_parent": {
-										"$ref": "AAAAAAFeJhEzJ/uZIH4="
-									},
 									"name": "String nombreUsuario",
 									"visibility": "public",
 									"isStatic": false,
 									"isLeaf": false,
-									"type": "",
 									"isReadOnly": false,
 									"isOrdered": false,
 									"isUnique": false,

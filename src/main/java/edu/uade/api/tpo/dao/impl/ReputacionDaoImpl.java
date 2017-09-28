@@ -2,24 +2,24 @@ package edu.uade.api.tpo.dao.impl;
 
 import edu.uade.api.tpo.dao.AbstractDao;
 import edu.uade.api.tpo.dao.GenericDao;
-import edu.uade.api.tpo.model.Articulo;
+import edu.uade.api.tpo.model.Reputacion;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ArticuloDaoImpl extends AbstractDao<Articulo> {
+public class ReputacionDaoImpl extends AbstractDao<Reputacion> {
 
-    private static GenericDao<Articulo> instance;
+    private static GenericDao<Reputacion> instance;
 
-    private ArticuloDaoImpl() {
+    private ReputacionDaoImpl() {
 
     }
 
-    public static GenericDao<Articulo> getInstance() {
+    public static GenericDao<Reputacion> getInstance() {
         if (instance == null) {
-            instance = new ArticuloDaoImpl();
+            instance = new ReputacionDaoImpl();
         }
         return instance;
     }
@@ -30,17 +30,17 @@ public class ArticuloDaoImpl extends AbstractDao<Articulo> {
     }
 
     @Override
-    public PreparedStatement create(Articulo articulo, Connection conn) throws SQLException {
+    public PreparedStatement create(Reputacion reputacion, Connection conn) throws SQLException {
         return null;
     }
 
     @Override
-    public PreparedStatement update(Articulo articulo, Connection conn) throws SQLException {
+    public PreparedStatement update(Reputacion reputacion, Connection conn) throws SQLException {
         return null;
     }
 
     @Override
-    public Articulo map(ResultSet rs) throws SQLException {
+    public Reputacion map(ResultSet rs) throws SQLException {
         return null;
     }
 }

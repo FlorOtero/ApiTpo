@@ -2,24 +2,24 @@ package edu.uade.api.tpo.dao.impl;
 
 import edu.uade.api.tpo.dao.AbstractDao;
 import edu.uade.api.tpo.dao.GenericDao;
-import edu.uade.api.tpo.model.Articulo;
+import edu.uade.api.tpo.model.Domicilio;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ArticuloDaoImpl extends AbstractDao<Articulo> {
+public class DomicilioDaoImpl extends AbstractDao<Domicilio> {
 
-    private static GenericDao<Articulo> instance;
+    private static GenericDao<Domicilio> instance;
 
-    private ArticuloDaoImpl() {
+    private DomicilioDaoImpl() {
 
     }
 
-    public static GenericDao<Articulo> getInstance() {
+    public static GenericDao<Domicilio> getInstance() {
         if (instance == null) {
-            instance = new ArticuloDaoImpl();
+            instance = new DomicilioDaoImpl();
         }
         return instance;
     }
@@ -30,17 +30,17 @@ public class ArticuloDaoImpl extends AbstractDao<Articulo> {
     }
 
     @Override
-    public PreparedStatement create(Articulo articulo, Connection conn) throws SQLException {
+    public PreparedStatement create(Domicilio domicilio, Connection conn) throws SQLException {
         return null;
     }
 
     @Override
-    public PreparedStatement update(Articulo articulo, Connection conn) throws SQLException {
+    public PreparedStatement update(Domicilio domicilio, Connection conn) throws SQLException {
         return null;
     }
 
     @Override
-    public Articulo map(ResultSet rs) throws SQLException {
+    public Domicilio map(ResultSet rs) throws SQLException {
         return null;
     }
 }

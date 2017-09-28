@@ -1,6 +1,6 @@
 package edu.uade.api.tpo.dao.impl;
 
-import edu.uade.api.tpo.dao.AbstractGenericDao;
+import edu.uade.api.tpo.dao.AbstractDao;
 import edu.uade.api.tpo.dao.GenericDao;
 import edu.uade.api.tpo.model.Banco;
 import edu.uade.api.tpo.model.EntidadRecaudadora;
@@ -11,7 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class EntidadRecaudadoraDaoImpl extends AbstractGenericDao<EntidadRecaudadora> {
+public class EntidadRecaudadoraDaoImpl extends AbstractDao<EntidadRecaudadora> {
 
     private static GenericDao<EntidadRecaudadora> instance;
 

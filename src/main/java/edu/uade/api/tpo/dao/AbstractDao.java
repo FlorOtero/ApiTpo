@@ -9,12 +9,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public abstract class AbstractGenericDao<T extends Serializable> implements GenericDao<T> {
+public abstract class AbstractDao<T extends Serializable> implements GenericDao<T> {
 
     private DataSource dataSource;
     protected String schema = "apitpo";
 
-    public AbstractGenericDao() {
+    public AbstractDao() {
         this.dataSource = PersistenceModule.getInstance().getDataSource();
     }
 

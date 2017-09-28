@@ -1,6 +1,6 @@
 package edu.uade.api.tpo.dao.impl;
 
-import edu.uade.api.tpo.dao.AbstractGenericDao;
+import edu.uade.api.tpo.dao.AbstractDao;
 import edu.uade.api.tpo.dao.GenericDao;
 import edu.uade.api.tpo.model.CompraEfectivo;
 import edu.uade.api.tpo.model.Publicacion;
@@ -8,17 +8,17 @@ import edu.uade.api.tpo.util.UUIDUtils;
 
 import java.sql.*;
 
-public class ComprasEfectivoDaoImpl extends AbstractGenericDao<CompraEfectivo> {
+public class CompraEfectivoDaoImpl extends AbstractDao<CompraEfectivo> {
 
     private static GenericDao<CompraEfectivo> instance;
 
-    private ComprasEfectivoDaoImpl() {
+    private CompraEfectivoDaoImpl() {
 
     }
 
     public static GenericDao<CompraEfectivo> getInstance() {
         if (instance == null) {
-            instance = new ComprasEfectivoDaoImpl();
+            instance = new CompraEfectivoDaoImpl();
         }
         return instance;
     }

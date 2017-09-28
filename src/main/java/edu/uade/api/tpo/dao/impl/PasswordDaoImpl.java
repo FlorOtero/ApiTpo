@@ -2,24 +2,24 @@ package edu.uade.api.tpo.dao.impl;
 
 import edu.uade.api.tpo.dao.AbstractDao;
 import edu.uade.api.tpo.dao.GenericDao;
-import edu.uade.api.tpo.model.Articulo;
+import edu.uade.api.tpo.model.Password;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ArticuloDaoImpl extends AbstractDao<Articulo> {
+public class PasswordDaoImpl extends AbstractDao<Password> {
 
-    private static GenericDao<Articulo> instance;
+    private static GenericDao<Password> instance;
 
-    private ArticuloDaoImpl() {
+    private PasswordDaoImpl() {
 
     }
 
-    public static GenericDao<Articulo> getInstance() {
+    public static GenericDao<Password> getInstance() {
         if (instance == null) {
-            instance = new ArticuloDaoImpl();
+            instance = new PasswordDaoImpl();
         }
         return instance;
     }
@@ -30,17 +30,17 @@ public class ArticuloDaoImpl extends AbstractDao<Articulo> {
     }
 
     @Override
-    public PreparedStatement create(Articulo articulo, Connection conn) throws SQLException {
+    public PreparedStatement create(Password password, Connection conn) throws SQLException {
         return null;
     }
 
     @Override
-    public PreparedStatement update(Articulo articulo, Connection conn) throws SQLException {
+    public PreparedStatement update(Password password, Connection conn) throws SQLException {
         return null;
     }
 
     @Override
-    public Articulo map(ResultSet rs) throws SQLException {
+    public Password map(ResultSet rs) throws SQLException {
         return null;
     }
 }

@@ -1,6 +1,6 @@
 package edu.uade.api.tpo.dao.impl;
 
-import edu.uade.api.tpo.dao.AbstractGenericDao;
+import edu.uade.api.tpo.dao.AbstractDao;
 import edu.uade.api.tpo.dao.GenericDao;
 import edu.uade.api.tpo.model.CompraTransferenciaBancaria;
 import edu.uade.api.tpo.model.Publicacion;
@@ -8,7 +8,7 @@ import edu.uade.api.tpo.util.UUIDUtils;
 
 import java.sql.*;
 
-public class CompraTransferenciaBancariaDaoImpl extends AbstractGenericDao<CompraTransferenciaBancaria> {
+public class CompraTransferenciaBancariaDaoImpl extends AbstractDao<CompraTransferenciaBancaria> {
 
     private static GenericDao<CompraTransferenciaBancaria> instance;
 

@@ -1,9 +1,10 @@
 package edu.uade.api.tpo.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Reputacion {
+public class Reputacion implements Serializable {
 
     private String id;
     private List<Calificacion> calificaciones;

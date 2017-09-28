@@ -1,13 +1,13 @@
 package edu.uade.api.tpo.dao.impl;
 
-import edu.uade.api.tpo.dao.AbstractGenericDao;
+import edu.uade.api.tpo.dao.AbstractDao;
 import edu.uade.api.tpo.dao.GenericDao;
 import edu.uade.api.tpo.model.Publicacion;
 import edu.uade.api.tpo.util.UUIDUtils;
 
 import java.sql.*;
 
-public class PublicacionDaoImpl extends AbstractGenericDao<Publicacion> {
+public class PublicacionDaoImpl extends AbstractDao<Publicacion> {
 
     private static GenericDao<Publicacion> instance;
 
