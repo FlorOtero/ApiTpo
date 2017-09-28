@@ -28,7 +28,7 @@ public class EntidadRecaudadoraDaoImpl extends AbstractDao<EntidadRecaudadora> {
 
     @Override
     public PreparedStatement findById(String id, Connection conn) throws SQLException {
-        String query = "SELECT * FROM entidades_recaudadoras WHERE entidad_recaudadora_id = ?";
+        String query = "SELECT * FROM " + schema + ".entidades_recaudadoras WHERE entidad_recaudadora_id = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, id);
         return ps;
