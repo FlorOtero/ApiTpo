@@ -5,37 +5,41 @@ import java.util.Date;
 
 public class Password implements Serializable {
 
-	private String id;
-	private String valor;
-	private Date fechaModificacion;
-	
-	public Password(String valor, Date fechaModificacion) {
-		super();
-		this.valor = valor;
-		this.fechaModificacion = fechaModificacion;
-	}
+    private String id;
+    private String valor;
+    private Date fechaModificacion;
 
-	public String getValor() {
-		return valor;
-	}
+    public Password() {
 
-	public void setValor(String valor) {
-		this.valor = valor;
-	}
+    }
 
-	public Date getFechaModificacion() {
-		return fechaModificacion;
-	}
+    public Password(String valor, Date fechaModificacion) {
+        super();
+        this.valor = valor;
+        this.fechaModificacion = fechaModificacion;
+    }
 
-	public void setFechaModificacion(Date fechaModificacion) {
-		this.fechaModificacion = fechaModificacion;
-	}
+    public String getValor() {
+        return valor;
+    }
 
-	public String getId() {
-		return id;
-	}
+    public void setValor(String valor) {
+        this.valor = valor;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public Date getFechaModificacion() {
+        return fechaModificacion;
+    }
+
+    public void setFechaModificacion(Date fechaModificacion) {
+        this.fechaModificacion = fechaModificacion;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }
