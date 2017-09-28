@@ -11,6 +11,10 @@ public class Domicilio implements Serializable {
     private String ciudad;
     private String provincia;
 
+    public Domicilio() {
+
+    }
+
     public Domicilio(String linea1, String linea2, String cp, String ciudad, String provincia) {
         super();
         this.linea1 = linea1;
