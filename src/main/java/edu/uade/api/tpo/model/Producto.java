@@ -1,12 +1,16 @@
 package edu.uade.api.tpo.model;
 
-import java.util.Collection;
+import java.util.List;
 
 public class Producto extends Articulo {
 
     private Garantia garantia;
 
-    public Producto(String nombre, String descripcion, Collection<String> imagenes, Garantia garantia) {
+    public Producto () {
+
+    }
+
+    public Producto(String nombre, String descripcion, List<String> imagenes, Garantia garantia) {
         super(nombre, descripcion, imagenes);
         this.garantia = garantia;
     }

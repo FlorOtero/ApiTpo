@@ -26,6 +26,9 @@ public class ArticuloDaoImpl extends AbstractDao<Articulo> {
 
     @Override
     public PreparedStatement findById(String id, Connection conn) throws SQLException {
+
+
+
         return null;
     }
 

@@ -1,7 +1,10 @@
 package edu.uade.api.tpo.model;
 
-public class Garantia {
+import java.io.Serializable;
 
+public class Garantia implements Serializable {
+
+    private String id;
     private int cantidad;
     private TipoPeriodo tipo;
 
@@ -21,5 +24,11 @@ public class Garantia {
         this.tipo = tipo;
     }
 
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
 }
