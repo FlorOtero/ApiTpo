@@ -1,15 +1,13 @@
 package edu.uade.api.tpo.dao.impl;
 
-import edu.uade.api.tpo.dao.AbstractDao;
 import edu.uade.api.tpo.dao.GenericDao;
 import edu.uade.api.tpo.model.Articulo;
+import edu.uade.api.tpo.model.Producto;
+import edu.uade.api.tpo.model.Servicio;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ArticuloDaoImpl extends AbstractDao<Articulo> {
+public class ArticuloDaoImpl implements GenericDao<Articulo> {
 
     private static GenericDao<Articulo> instance;
 
@@ -25,25 +23,29 @@ public class ArticuloDaoImpl extends AbstractDao<Articulo> {
     }
 
     @Override
-    public PreparedStatement findById(String id, Connection conn) throws SQLException {
-
-
-
-        return null;
+    public Articulo findById(String id) throws SQLException {
+        Articulo articulo = ProductoDaoImpl.getInstance().findById(id);
+        if (articulo == null) {
+            articulo = ServicioDaoImpl.getInstance().findById(id);
+        }
+        return articulo;
     }
 
     @Override
-    public PreparedStatement create(Articulo articulo, Connection conn) throws SQLException {
-        return null;
+    public void create(Articulo articulo) throws SQLException {
+        if (articulo instanceof Producto) {
+            ProductoDaoImpl.getInstance().create((Producto) articulo);
+        } else if (articulo instanceof Servicio) {
+            ServicioDaoImpl.getInstance().create((Servicio) articulo);
+        }
     }
 
     @Override
-    public PreparedStatement update(Articulo articulo, Connection conn) throws SQLException {
-        return null;
-    }
-
-    @Override
-    public Articulo map(ResultSet rs) throws SQLException {
-        return null;
+    public void update(Articulo articulo) throws SQLException {
+        if (articulo instanceof Producto) {
+            ProductoDaoImpl.getInstance().update((Producto) articulo);
+        } else if (articulo instanceof Servicio) {
+            ServicioDaoImpl.getInstance().update((Servicio) articulo);
+        }
     }
 }
