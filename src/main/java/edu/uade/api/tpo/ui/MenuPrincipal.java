@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.Color;
+import javax.swing.JRadioButton;
 
 public class MenuPrincipal {
 
@@ -74,7 +75,7 @@ public class MenuPrincipal {
 		JMenuItem mntmEstadoCuentaCorriente = new JMenuItem("Estado Cuenta Corriente");
 		mnMiCuenta.add(mntmEstadoCuentaCorriente);
 		
-		JMenuItem mntmReputacion = new JMenuItem("Reputacion");
+		JMenuItem mntmReputacion = new JMenuItem("Reputacion/Calificaciones");
 		mnMiCuenta.add(mntmReputacion);
 		
 		JMenuItem mntmCerrarSesion = new JMenuItem("Cerrar Sesion");
@@ -110,17 +111,25 @@ public class MenuPrincipal {
 		JMenuItem mntmMovimientosCuentaCorriente = new JMenuItem("Movimientos Cuenta Corriente");
 		mnPagos.add(mntmMovimientosCuentaCorriente);
 		
-		JLabel lblIngresarProducto = new JLabel("Ingresar producto:");
-		lblIngresarProducto.setBounds(95, 85, 91, 14);
+		JLabel lblIngresarProducto = new JLabel("Ingresar producto/subasta:");
+		lblIngresarProducto.setBounds(84, 139, 133, 14);
 		panel.add(lblIngresarProducto);
 		
 		textField = new JTextField();
-		textField.setBounds(211, 82, 86, 20);
+		textField.setBounds(227, 136, 86, 20);
 		panel.add(textField);
 		textField.setColumns(10);
 		
 		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.setBounds(163, 153, 89, 23);
+		btnBuscar.setBounds(170, 188, 89, 23);
 		panel.add(btnBuscar);
+		
+		JRadioButton rdbtnNewRadioButton = new JRadioButton("Producto");
+		rdbtnNewRadioButton.setBounds(112, 87, 72, 23);
+		panel.add(rdbtnNewRadioButton);
+		
+		JRadioButton rdbtnSubasta = new JRadioButton("Subasta");
+		rdbtnSubasta.setBounds(226, 87, 72, 23);
+		panel.add(rdbtnSubasta);
 	}
 }
