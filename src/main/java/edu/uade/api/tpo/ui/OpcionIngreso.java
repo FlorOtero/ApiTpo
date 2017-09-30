@@ -10,9 +10,9 @@ import com.jgoodies.forms.layout.RowSpec;
 import javax.swing.JPanel;
 import java.awt.Color;
 
-public class Login {
+public class OpcionIngreso {
 
-	private JFrame Login;
+	private JFrame OpcionIngreso;
 
 	/**
 	 * Launch the application.
@@ -21,8 +21,8 @@ public class Login {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Login window = new Login();
-					window.Login.setVisible(true);
+					OpcionIngreso window = new OpcionIngreso();
+					window.OpcionIngreso.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -33,7 +33,7 @@ public class Login {
 	/**
 	 * Create the application.
 	 */
-	public Login() {
+	public OpcionIngreso() {
 		initialize();
 	}
 
@@ -41,17 +41,17 @@ public class Login {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		Login = new JFrame();
-		Login.setTitle("Login");
-		Login.setBounds(100, 100, 450, 300);
-		Login.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		Login.getContentPane().setLayout(null);
+		OpcionIngreso = new JFrame();
+		OpcionIngreso.setTitle("Opciones de Ingreso");
+		OpcionIngreso.setBounds(100, 100, 450, 300);
+		OpcionIngreso.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		OpcionIngreso.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 224));
 		panel.setForeground(new Color(0, 0, 0));
 		panel.setBounds(0, 0, 434, 261);
-		Login.getContentPane().add(panel);
+		OpcionIngreso.getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		JButton btnRegistrarse = new JButton("Registrarse");
