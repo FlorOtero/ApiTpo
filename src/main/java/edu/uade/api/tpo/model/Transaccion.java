@@ -9,6 +9,7 @@ public abstract class Transaccion implements Serializable{
 	private char estado;
 	private Date fecha;
 	private Usuario contraparte;
+	private String cuentaCorrienteId;
 
 	public String getId() {
 		return id;
@@ -48,6 +49,14 @@ public abstract class Transaccion implements Serializable{
 
 	public void setContraparte(Usuario contraparte) {
 		this.contraparte = contraparte;
+	}
+
+	public String getCuentaCorrienteId() {
+		return cuentaCorrienteId;
+	}
+
+	public void setCuentaCorrienteId(String cuentaCorrienteId) {
+		this.cuentaCorrienteId = cuentaCorrienteId;
 	}
 
 	public abstract void pagar();

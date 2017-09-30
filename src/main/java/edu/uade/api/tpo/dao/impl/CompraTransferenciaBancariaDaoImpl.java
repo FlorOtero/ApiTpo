@@ -1,22 +1,24 @@
 package edu.uade.api.tpo.dao.impl;
 
-import edu.uade.api.tpo.dao.AbstractDao;
-import edu.uade.api.tpo.dao.GenericDao;
+import edu.uade.api.tpo.dao.AbstractManyToOneDao;
+import edu.uade.api.tpo.dao.ManyToOneDao;
 import edu.uade.api.tpo.model.CompraTransferenciaBancaria;
 import edu.uade.api.tpo.model.Publicacion;
 import edu.uade.api.tpo.util.UUIDUtils;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class CompraTransferenciaBancariaDaoImpl extends AbstractDao<CompraTransferenciaBancaria> {
+public class CompraTransferenciaBancariaDaoImpl extends AbstractManyToOneDao<CompraTransferenciaBancaria> {
 
-    private static GenericDao<CompraTransferenciaBancaria> instance;
+    private static ManyToOneDao<CompraTransferenciaBancaria> instance;
 
     private CompraTransferenciaBancariaDaoImpl() {
 
     }
 
-    public static GenericDao<CompraTransferenciaBancaria> getInstance() {
+    public static ManyToOneDao<CompraTransferenciaBancaria> getInstance() {
         if (instance == null) {
             instance = new CompraTransferenciaBancariaDaoImpl();
         }
@@ -33,7 +35,7 @@ public class CompraTransferenciaBancariaDaoImpl extends AbstractDao<CompraTransf
 
     @Override
     public PreparedStatement create(CompraTransferenciaBancaria compraTransferenciaBancaria, Connection conn) throws SQLException {
-        String query = "INSERT INTO " + schema + ".compras_transf_bancarias VALUES(?,?,?,?,?,?,?)";
+        String query = "INSERT INTO " + schema + ".compras_transf_bancarias VALUES(?,?,?,?,?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, UUIDUtils.generate());
         ps.setString(2, compraTransferenciaBancaria.getContraparte().getId());
@@ -42,13 +44,14 @@ public class CompraTransferenciaBancariaDaoImpl extends AbstractDao<CompraTransf
         ps.setTimestamp(5, new Timestamp(compraTransferenciaBancaria.getFecha().getTime()));
         ps.setString(6, compraTransferenciaBancaria.getEntidad().getId());
         ps.setString(7, compraTransferenciaBancaria.getNumeroCta());
+        ps.setString(8, compraTransferenciaBancaria.getCuentaCorrienteId());
 
         return ps;
     }
 
     @Override
     public PreparedStatement update(CompraTransferenciaBancaria compraTransferenciaBancaria, Connection conn) throws SQLException {
-        String query = "UPDATE " + schema + ".compras_transf_bancarias SET contraparte_id = ?, publicacion_id = ?, estado = ?, fecha = ?, entidad_recaudadora_id = ?, numero_cuenta = ? where compra_transf_bancaria_id = ?";
+        String query = "UPDATE " + schema + ".compras_transf_bancarias SET contraparte_id = ?, publicacion_id = ?, estado = ?, fecha = ?, entidad_recaudadora_id = ?, numero_cuenta = ?, cuenta_corriente_id = ? where compra_transf_bancaria_id = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, compraTransferenciaBancaria.getContraparte().getId());
         ps.setString(2, compraTransferenciaBancaria.getPublicacion().getId());
@@ -57,6 +60,7 @@ public class CompraTransferenciaBancariaDaoImpl extends AbstractDao<CompraTransf
         ps.setString(5, compraTransferenciaBancaria.getEntidad().getId());
         ps.setString(6, compraTransferenciaBancaria.getNumeroCta());
         ps.setString(7, compraTransferenciaBancaria.getId());
+        ps.setString(8, compraTransferenciaBancaria.getCuentaCorrienteId());
 
         return ps;
     }
@@ -65,20 +69,42 @@ public class CompraTransferenciaBancariaDaoImpl extends AbstractDao<CompraTransf
     public CompraTransferenciaBancaria map(ResultSet rs) throws SQLException {
         CompraTransferenciaBancaria compra = null;
         if (rs.first()) {
-            compra = new CompraTransferenciaBancaria();
-            compra.setId(rs.getString("compra_transf_bancaria_id"));
-            compra.setContraparte(UsuarioDaoImpl.getInstance().findById(rs.getString("contraparte_id")));
-            Publicacion pub = PublicacionDaoImpl.getInstance().findById(rs.getString("publicacion_id"));
-            if (pub == null) {
-                pub = SubastaDaoImpl.getInstance().findById(rs.getString("publicacion_id"));
-            }
-            compra.setPublicacion(pub);
-            compra.setEstado(rs.getString("estado").charAt(0));
-            compra.setFecha(rs.getTimestamp("fecha"));
-            compra.setEntidad(EntidadRecaudadoraDaoImpl.getInstance().findById(rs.getString("entidad_recaudadora_id")));
-            compra.setNumeroCta(rs.getString("numero_cuenta"));
+            compra = mapRow(rs);
         }
+        return compra;
+    }
 
+    @Override
+    public PreparedStatement findManyBy(String field, String value, Connection conn) throws SQLException {
+        String query = "SELECT * FROM " + schema + ".compras_transf_bancarias WHERE " + field + " = ?";
+        PreparedStatement ps = conn.prepareStatement(query);
+        ps.setString(1, value);
+        return ps;
+    }
+
+    @Override
+    public List<CompraTransferenciaBancaria> mapMany(ResultSet rs) throws SQLException {
+        List<CompraTransferenciaBancaria> compras = new ArrayList<>();
+        while (rs.next()) {
+            compras.add(mapRow(rs));
+        }
+        return compras;
+    }
+
+    private CompraTransferenciaBancaria mapRow(ResultSet rs) throws SQLException {
+        CompraTransferenciaBancaria compra = new CompraTransferenciaBancaria();
+        compra.setId(rs.getString("compra_transf_bancaria_id"));
+        compra.setContraparte(UsuarioDaoImpl.getInstance().findById(rs.getString("contraparte_id")));
+        Publicacion pub = PublicacionDaoImpl.getInstance().findById(rs.getString("publicacion_id"));
+        if (pub == null) {
+            pub = SubastaDaoImpl.getInstance().findById(rs.getString("publicacion_id"));
+        }
+        compra.setPublicacion(pub);
+        compra.setEstado(rs.getString("estado").charAt(0));
+        compra.setFecha(rs.getTimestamp("fecha"));
+        compra.setEntidad(EntidadRecaudadoraDaoImpl.getInstance().findById(rs.getString("entidad_recaudadora_id")));
+        compra.setNumeroCta(rs.getString("numero_cuenta"));
+        compra.setCuentaCorrienteId(rs.getString("cuenta_corriente_id"));
         return compra;
     }
 }

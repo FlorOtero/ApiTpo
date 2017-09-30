@@ -1,28 +1,31 @@
 package edu.uade.api.tpo.dao.impl;
 
-import edu.uade.api.tpo.dao.GenericDao;
 import edu.uade.api.tpo.model.CompraEfectivo;
 import edu.uade.api.tpo.model.CompraTarjetaCredito;
 import edu.uade.api.tpo.model.CompraTransferenciaBancaria;
 import edu.uade.api.tpo.model.Transaccion;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-public class TransaccionDaoImpl implements GenericDao<Transaccion> {
+public class TransaccionDaoImpl {
 
-    private static GenericDao<Transaccion> instance;
+    private static final String CTA_CTE_FIELD_NAME = "cuenta_corriente_id";
+
+    private static TransaccionDaoImpl instance;
 
     private TransaccionDaoImpl() {
     }
 
-    public static GenericDao<Transaccion> getInstance() {
+    public static TransaccionDaoImpl getInstance() {
         if (instance == null) {
             instance = new TransaccionDaoImpl();
         }
         return instance;
     }
 
-    @Override
     public Transaccion findById(String id) throws SQLException {
         Transaccion transaccion = CompraEfectivoDaoImpl.getInstance().findById(id);
         if (transaccion == null) {
@@ -34,7 +37,6 @@ public class TransaccionDaoImpl implements GenericDao<Transaccion> {
         return transaccion;
     }
 
-    @Override
     public void create(Transaccion transaccion) throws SQLException {
         if (transaccion instanceof CompraEfectivo) {
             CompraEfectivoDaoImpl.getInstance().create((CompraEfectivo) transaccion);
@@ -45,7 +47,6 @@ public class TransaccionDaoImpl implements GenericDao<Transaccion> {
         }
     }
 
-    @Override
     public void update(Transaccion transaccion) throws SQLException {
         if (transaccion instanceof CompraEfectivo) {
             CompraEfectivoDaoImpl.getInstance().update((CompraEfectivo) transaccion);
@@ -54,5 +55,13 @@ public class TransaccionDaoImpl implements GenericDao<Transaccion> {
         } else if (transaccion instanceof CompraTransferenciaBancaria) {
             CompraTransferenciaBancariaDaoImpl.getInstance().update((CompraTransferenciaBancaria) transaccion);
         }
+    }
+
+    public List<Transaccion> findByCuentaCorriente(String cuentaCorrienteId) throws SQLException {
+        List<Transaccion> result = new ArrayList<>();
+        result.addAll(Collections.unmodifiableList(CompraEfectivoDaoImpl.getInstance().findManyBy(CTA_CTE_FIELD_NAME, cuentaCorrienteId)));
+        result.addAll(Collections.unmodifiableList(CompraTarjetaCreditoDaoImpl.getInstance().findManyBy(CTA_CTE_FIELD_NAME, cuentaCorrienteId)));
+        result.addAll(Collections.unmodifiableList(CompraTransferenciaBancariaDaoImpl.getInstance().findManyBy(CTA_CTE_FIELD_NAME, cuentaCorrienteId)));
+        return result;
     }
 }

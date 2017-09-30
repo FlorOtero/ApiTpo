@@ -43,7 +43,7 @@ public abstract class AbstractDao<T extends Serializable> implements GenericDao<
         }
     }
 
-    private Connection getConnection() throws SQLException {
+    protected Connection getConnection() throws SQLException {
         return this.dataSource.getConnection();
     }
 
