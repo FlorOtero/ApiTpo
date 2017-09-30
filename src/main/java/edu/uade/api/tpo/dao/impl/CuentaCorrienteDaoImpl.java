@@ -57,6 +57,7 @@ public class CuentaCorrienteDaoImpl extends AbstractDao<CuentaCorriente> {
             cuentaCorriente = new CuentaCorriente();
             cuentaCorriente.setId(rs.getString("cuenta_corriente_id"));
             cuentaCorriente.setSaldo(rs.getFloat("saldo"));
+            cuentaCorriente.setTransacciones(TransaccionDaoImpl.getInstance().findByCuentaCorriente(cuentaCorriente.getId()));
         }
         return cuentaCorriente;
     }

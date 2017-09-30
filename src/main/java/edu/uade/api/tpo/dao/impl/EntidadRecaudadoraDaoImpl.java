@@ -49,11 +49,11 @@ public class EntidadRecaudadoraDaoImpl extends AbstractDao<EntidadRecaudadora> {
 
     @Override
     public PreparedStatement update(EntidadRecaudadora entidadRecaudadora, Connection conn) throws SQLException {
-        return null;
+        throw new UnsupportedOperationException("Unsupported operation update EntidadRecaudadora!");
     }
 
     @Override
     public PreparedStatement create(EntidadRecaudadora entidadRecaudadora, Connection conn) throws SQLException {
-        return null;
+        throw new UnsupportedOperationException("Unsupported operation create EntidadRecaudadora!");
     }
 }
