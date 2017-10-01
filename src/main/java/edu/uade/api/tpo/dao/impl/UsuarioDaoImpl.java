@@ -34,7 +34,7 @@ public class UsuarioDaoImpl extends AbstractDao<Usuario> {
 
     @Override
     public PreparedStatement create(Usuario usuario, Connection conn) throws SQLException {
-        String query = "INSERT INTO " + schema + ".usuarios VALUES(?,?,?,?,?,?,?,?,?)";
+        String query = "INSERT INTO " + schema + ".usuarios VALUES(?,?,?,?,?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, UUIDUtils.generate());
         ps.setString(2, usuario.getNombreUsuario());
@@ -44,7 +44,6 @@ public class UsuarioDaoImpl extends AbstractDao<Usuario> {
         ps.setString(6, usuario.getMail());
         ps.setString(7, usuario.getPassword().getId());
         ps.setString(8, usuario.getCuentaCorriente().getId());
-        ps.setString(9, usuario.getReputacion().getId());
         return ps;
     }
 
@@ -61,7 +60,7 @@ public class UsuarioDaoImpl extends AbstractDao<Usuario> {
             usuario.setMail(rs.getString("mail"));
             usuario.setPassword(PasswordDaoImpl.getInstance().findById(rs.getString("password_id")));
             usuario.setCuentaCorriente(CuentaCorrienteDaoImpl.getInstance().findById(rs.getString("cuenta_corriente_id")));
-            usuario.setReputacion(ReputacionDaoImpl.getInstance().findById(rs.getString("reputacion_id")));
+            usuario.setCalificaciones(CalificacionDaoImpl.getInstance().findManyBy("usuario_id", usuario.getId()));
         }
 
         return usuario;
@@ -69,7 +68,7 @@ public class UsuarioDaoImpl extends AbstractDao<Usuario> {
 
     @Override
     public PreparedStatement update(Usuario usuario, Connection conn) throws SQLException {
-        String query = "UPDATE " + schema + ".usuarios SET nombre_usuario = ?, nombre = ?, apellido = ?, domicilio_id = ?, mail = ?, password_id = ?, cuenta_corriente_id = ?, reputacion_id = ? WHERE usuario_id = ?";
+        String query = "UPDATE " + schema + ".usuarios SET nombre_usuario = ?, nombre = ?, apellido = ?, domicilio_id = ?, mail = ?, password_id = ?, cuenta_corriente_id = ? WHERE usuario_id = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, usuario.getNombreUsuario());
         ps.setString(2, usuario.getNombre());
@@ -78,8 +77,7 @@ public class UsuarioDaoImpl extends AbstractDao<Usuario> {
         ps.setString(5, usuario.getMail());
         ps.setString(6, usuario.getPassword().getId());
         ps.setString(7, usuario.getCuentaCorriente().getId());
-        ps.setString(8, usuario.getReputacion().getId());
-        ps.setString(9, usuario.getId());
+        ps.setString(8, usuario.getId());
 
         return ps;
     }
