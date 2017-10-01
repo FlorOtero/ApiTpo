@@ -11,4 +11,6 @@ public interface GenericDao<T extends Serializable> {
 
     public void update(T t) throws SQLException;
 
+    public T findBy(String field, String value) throws SQLException;
+
 }

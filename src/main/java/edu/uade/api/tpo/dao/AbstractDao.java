@@ -43,6 +43,15 @@ public abstract class AbstractDao<T extends Serializable> implements GenericDao<
         }
     }
 
+    @Override
+    public T findBy(String field, String value) throws SQLException {
+        try (Connection conn = this.getConnection(); PreparedStatement ps = findBy(field, value, conn); ResultSet rs = ps.executeQuery()) {
+            T t = map(rs);
+            conn.commit();
+            return t;
+        }
+    }
+
     protected Connection getConnection() throws SQLException {
         return this.dataSource.getConnection();
     }
@@ -54,5 +63,7 @@ public abstract class AbstractDao<T extends Serializable> implements GenericDao<
     public abstract T map(ResultSet rs) throws SQLException;
 
     public abstract PreparedStatement update(T t, Connection conn) throws SQLException;
+
+    public abstract PreparedStatement findBy(String field, String value, Connection conn) throws SQLException;
 
 }

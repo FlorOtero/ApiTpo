@@ -48,4 +48,9 @@ public class ArticuloDaoImpl implements GenericDao<Articulo> {
             ServicioDaoImpl.getInstance().update((Servicio) articulo);
         }
     }
+
+    @Override
+    public Articulo findBy(String field, String value) throws SQLException {
+        throw new UnsupportedOperationException("Find by is not supported on class Articulo!");
+    }
 }

@@ -111,4 +111,9 @@ public class SubastaDaoImpl extends AbstractManyToOneDao<Subasta> {
         subasta.setPrecioInicial(rs.getFloat("precio_inicial"));
         return subasta;
     }
+
+    @Override
+    public PreparedStatement findBy(String field, String value, Connection conn) throws SQLException {
+        throw new UnsupportedOperationException("Find by is not supported on class Subasta!");
+    }
 }

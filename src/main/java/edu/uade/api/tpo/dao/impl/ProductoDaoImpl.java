@@ -70,4 +70,9 @@ public class ProductoDaoImpl extends AbstractDao<Producto> {
         }
         return producto;
     }
+
+    @Override
+    public PreparedStatement findBy(String field, String value, Connection conn) throws SQLException {
+        throw new UnsupportedOperationException("Find by is not supported on class Producto!");
+    }
 }

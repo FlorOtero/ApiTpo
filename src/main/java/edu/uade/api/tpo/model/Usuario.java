@@ -15,6 +15,7 @@ public class Usuario implements Serializable {
     private List<Publicacion> publicaciones;
     private String mail;
     private List<Calificacion> calificaciones;
+    private Estado estado;
 
     public Usuario() {
 
@@ -32,6 +33,7 @@ public class Usuario implements Serializable {
         this.publicaciones = publicaciones;
         this.mail = mail;
         this.calificaciones = calificaciones;
+        this.estado = Estado.ACTIVO;
     }
 
     public String getNombreUsuario() {
@@ -112,6 +114,14 @@ public class Usuario implements Serializable {
 
     public List<Calificacion> getCalificaciones() {
         return calificaciones;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
     }
 
     public void setCalificaciones(List<Calificacion> calificaciones) {
