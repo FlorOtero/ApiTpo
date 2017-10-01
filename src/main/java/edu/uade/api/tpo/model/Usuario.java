@@ -1,8 +1,9 @@
 package edu.uade.api.tpo.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Usuario {
+public class Usuario implements Serializable {
 
     private String id;
     private String nombreUsuario;
@@ -11,12 +12,16 @@ public class Usuario {
     private Domicilio domicilio;
     private Password password;
     private CuentaCorriente cuentaCorriente;
-    private List<String> publicaciones;
+    private List<Publicacion> publicaciones;
     private String mail;
-    private Reputacion reputacion;
+    private List<Calificacion> calificaciones;
+
+    public Usuario() {
+
+    }
 
     public Usuario(String nombreUsuario, String nombre, String apellido, String mail, Domicilio domicilio, Password password,
-                   CuentaCorriente cuentaCorriente, List<String> publicaciones, Reputacion reputacion) {
+                   CuentaCorriente cuentaCorriente, List<Publicacion> publicaciones, List<Calificacion> calificaciones) {
         super();
         this.nombreUsuario = nombreUsuario;
         this.nombre = nombre;
@@ -26,7 +31,7 @@ public class Usuario {
         this.cuentaCorriente = cuentaCorriente;
         this.publicaciones = publicaciones;
         this.mail = mail;
-        this.reputacion = reputacion;
+        this.calificaciones = calificaciones;
     }
 
     public String getNombreUsuario() {
@@ -77,15 +82,15 @@ public class Usuario {
         this.cuentaCorriente = cuentaCorriente;
     }
 
-    public List<String> getPublicaciones() {
+    public List<Publicacion> getPublicaciones() {
         return publicaciones;
     }
 
-    public void setPublicaciones(List<String> publicaciones) {
+    public void setPublicaciones(List<Publicacion> publicaciones) {
         this.publicaciones = publicaciones;
     }
 
-    public void setPublicacion(String publicacion) {
+    public void addPublicacion(Publicacion publicacion) {
         this.publicaciones.add(publicacion);
     }
 
@@ -105,11 +110,11 @@ public class Usuario {
         this.id = id;
     }
 
-    public Reputacion getReputacion() {
-        return reputacion;
+    public List<Calificacion> getCalificaciones() {
+        return calificaciones;
     }
 
-    public void setReputacion(Reputacion reputacion) {
-        this.reputacion = reputacion;
+    public void setCalificaciones(List<Calificacion> calificaciones) {
+        this.calificaciones = calificaciones;
     }
 }
