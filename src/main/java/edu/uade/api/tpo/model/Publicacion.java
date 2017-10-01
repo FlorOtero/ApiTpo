@@ -11,7 +11,7 @@ public class Publicacion implements Serializable {
     private char estado;
     private float comision;
     private Articulo articulo;
-    private Usuario usuario;
+    private String usuarioId;
 
     public void ofertar(float monto, String nombreUsuario) {
 
@@ -73,15 +73,15 @@ public class Publicacion implements Serializable {
         this.articulo = articulo;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
     public void ofertar(float monto, Date fecha, String nombreUsuario) {
 
+    }
+
+    public String getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(String usuarioId) {
+        this.usuarioId = usuarioId;
     }
 }

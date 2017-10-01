@@ -2,6 +2,7 @@ package edu.uade.api.tpo.dao.impl;
 
 import edu.uade.api.tpo.dao.AbstractDao;
 import edu.uade.api.tpo.dao.GenericDao;
+import edu.uade.api.tpo.model.Publicacion;
 import edu.uade.api.tpo.model.Usuario;
 import edu.uade.api.tpo.util.UUIDUtils;
 
@@ -9,6 +10,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class UsuarioDaoImpl extends AbstractDao<Usuario> {
 
@@ -61,6 +65,9 @@ public class UsuarioDaoImpl extends AbstractDao<Usuario> {
             usuario.setPassword(PasswordDaoImpl.getInstance().findById(rs.getString("password_id")));
             usuario.setCuentaCorriente(CuentaCorrienteDaoImpl.getInstance().findById(rs.getString("cuenta_corriente_id")));
             usuario.setCalificaciones(CalificacionDaoImpl.getInstance().findManyBy("usuario_id", usuario.getId()));
+            List<Publicacion> publicaciones = new ArrayList<>();
+            publicaciones.addAll(Collections.unmodifiableList(PublicacionDaoImpl.getInstance().findManyBy("usuario_id", usuario.getId())));
+            publicaciones.addAll(Collections.unmodifiableList(SubastaDaoImpl.getInstance().findManyBy("usuario_id", usuario.getId())));
         }
 
         return usuario;
