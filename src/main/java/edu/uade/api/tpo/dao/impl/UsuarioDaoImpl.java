@@ -68,6 +68,7 @@ public class UsuarioDaoImpl extends AbstractDao<Usuario> {
             List<Publicacion> publicaciones = new ArrayList<>();
             publicaciones.addAll(Collections.unmodifiableList(PublicacionDaoImpl.getInstance().findManyBy("usuario_id", usuario.getId())));
             publicaciones.addAll(Collections.unmodifiableList(SubastaDaoImpl.getInstance().findManyBy("usuario_id", usuario.getId())));
+            usuario.setPublicaciones(publicaciones);
         }
 
         return usuario;
