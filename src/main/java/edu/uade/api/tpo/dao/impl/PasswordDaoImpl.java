@@ -3,10 +3,10 @@ package edu.uade.api.tpo.dao.impl;
 import edu.uade.api.tpo.dao.AbstractDao;
 import edu.uade.api.tpo.dao.GenericDao;
 import edu.uade.api.tpo.model.Password;
+import edu.uade.api.tpo.util.Encriptacion;
 import edu.uade.api.tpo.util.UUIDUtils;
 
 import java.sql.*;
-
 public class PasswordDaoImpl extends AbstractDao<Password> {
 
     private static GenericDao<Password> instance;
@@ -32,10 +32,11 @@ public class PasswordDaoImpl extends AbstractDao<Password> {
 
     @Override
     public PreparedStatement create(Password password, Connection conn) throws SQLException {
-        String query = "INSERT INTO " + schema + ".passwords VALUES(?,?,?)";
+        String passCifrada = Encriptacion.cifrarBase64(password.getValor());
+    	String query = "INSERT INTO " + schema + ".passwords VALUES(?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, UUIDUtils.generate());
-        ps.setString(2, password.getValor());
+        ps.setString(2, passCifrada);
         ps.setTimestamp(3, new Timestamp(password.getFechaModificacion().getTime()));
         return ps;
     }
@@ -56,7 +57,7 @@ public class PasswordDaoImpl extends AbstractDao<Password> {
         if (rs.first()) {
             password = new Password();
             password.setId(rs.getString("password_id"));
-            password.setValor(rs.getString("valor"));
+            password.setValor(Encriptacion.descifrarBase64(rs.getString("valor")));
             password.setFechaModificacion(rs.getTimestamp("fecha_modificacion"));
         }
         return password;
@@ -66,4 +67,6 @@ public class PasswordDaoImpl extends AbstractDao<Password> {
     public PreparedStatement findBy(String field, String value, Connection conn) throws SQLException {
         throw new UnsupportedOperationException("Find by is not supported on class Password!");
     }
+    
+    
 }
