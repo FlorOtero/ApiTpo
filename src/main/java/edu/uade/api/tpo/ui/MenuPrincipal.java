@@ -13,7 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.Color;
-import javax.swing.JRadioButton;
 
 public class MenuPrincipal {
 
@@ -75,8 +74,8 @@ public class MenuPrincipal {
 		JMenuItem mntmEstadoCuentaCorriente = new JMenuItem("Estado Cuenta Corriente");
 		mnMiCuenta.add(mntmEstadoCuentaCorriente);
 		
-		JMenuItem mntmReputacionCalificaciones = new JMenuItem("Reputacion / Calificaciones");
-		mnMiCuenta.add(mntmReputacionCalificaciones);
+		JMenuItem mntmReputacion = new JMenuItem("Reputacion");
+		mnMiCuenta.add(mntmReputacion);
 		
 		JMenuItem mntmCerrarSesion = new JMenuItem("Cerrar Sesion");
 		mnMiCuenta.add(mntmCerrarSesion);
@@ -96,29 +95,32 @@ public class MenuPrincipal {
 		JMenuItem mntmConsultaDeComisiones = new JMenuItem("Consulta de comisiones pagadas");
 		mnPublicaciones.add(mntmConsultaDeComisiones);
 		
-		JLabel lblIngresarProducto = new JLabel("Ingresar producto/subasta:");
-		lblIngresarProducto.setBounds(84, 139, 133, 14);
+		JMenu mnPagos = new JMenu("Consultas");
+		menuBar.add(mnPagos);
+		
+		JMenuItem mntmCalificaciones = new JMenuItem("Calificaciones");
+		mnPagos.add(mntmCalificaciones);
+		
+		JMenuItem mntmNewMenuItem = new JMenuItem("Transacciones Confirmadas");
+		mnPagos.add(mntmNewMenuItem);
+		
+		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Transacciones Canceladas");
+		mnPagos.add(mntmNewMenuItem_1);
+		
+		JMenuItem mntmMovimientosCuentaCorriente = new JMenuItem("Movimientos Cuenta Corriente");
+		mnPagos.add(mntmMovimientosCuentaCorriente);
+		
+		JLabel lblIngresarProducto = new JLabel("Ingresar producto:");
+		lblIngresarProducto.setBounds(95, 85, 91, 14);
 		panel.add(lblIngresarProducto);
 		
 		textField = new JTextField();
-		textField.setBounds(227, 136, 86, 20);
+		textField.setBounds(211, 82, 86, 20);
 		panel.add(textField);
 		textField.setColumns(10);
 		
 		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.setBounds(170, 188, 89, 23);
+		btnBuscar.setBounds(163, 153, 89, 23);
 		panel.add(btnBuscar);
-		
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("Producto");
-		rdbtnNewRadioButton.setBounds(112, 87, 72, 23);
-		panel.add(rdbtnNewRadioButton);
-		
-		JRadioButton rdbtnSubasta = new JRadioButton("Subasta");
-		rdbtnSubasta.setBounds(226, 87, 72, 23);
-		panel.add(rdbtnSubasta);
-		
-		JButton btnSalir = new JButton("Salir");
-		btnSalir.setBounds(320, 227, 89, 23);
-		panel.add(btnSalir);
 	}
 }
