@@ -2,7 +2,6 @@ package edu.uade.api.tpo.model;
 
 import edu.uade.api.tpo.dao.GenericDao;
 import edu.uade.api.tpo.dao.impl.UsuarioDaoImpl;
-import edu.uade.api.tpo.exception.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +32,7 @@ public class SistemaUsuarios {
         return usuario;
     }
 
-    public void eliminarUsuario(String nombreUsuario) throws EntityNotFoundException {
+    public void eliminarUsuario(String nombreUsuario) {
         Usuario usuario = this.buscarUsuario(nombreUsuario);
         usuario.setEstado(Estado.INACTIVO);
         try {
@@ -43,7 +42,7 @@ public class SistemaUsuarios {
         }
     }
 
-    public void modificarUsuario(Usuario usuario) throws EntityNotFoundException {
+    public void modificarUsuario(Usuario usuario) {
         try {
             usuarioDao.update(usuario);
         } catch (SQLException e) {
@@ -51,13 +50,10 @@ public class SistemaUsuarios {
         }
     }
 
-    public Usuario buscarUsuario(String nombreUsuario) throws EntityNotFoundException {
+    public Usuario buscarUsuario(String nombreUsuario) {
         Usuario u = null;
         try {
             u = usuarioDao.findBy("nombre_usuario", nombreUsuario);
-            if (u == null) {
-                throw new EntityNotFoundException("Usuario " + nombreUsuario + " no encontrado!");
-            }
         } catch (SQLException e) {
             logger.error("Error buscando usuario :" + nombreUsuario, e);
         }
