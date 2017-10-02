@@ -1,21 +1,9 @@
 package edu.uade.api.tpo.ui;
 
-import java.awt.EventQueue;
-
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-
-import java.awt.Color;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.*;
-import java.io.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class NuevaSubasta {
 	/**
@@ -125,9 +113,9 @@ public class NuevaSubasta {
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/* MenuPrincipal menuP= new MenuPrincipal();
-				 menuP.setVisible(true);
-				 dispose();*/				
+				MenuPrincipal menuP = new MenuPrincipal();
+				menuP.setVisible(true);
+				frmNuevaSubasta.dispose();
 			}
 		});
 		btnCancelar.setBounds(301, 431, 117, 29);

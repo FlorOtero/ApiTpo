@@ -1,18 +1,7 @@
 package edu.uade.api.tpo.ui;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JMenuItem;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import java.awt.Color;
+import javax.swing.*;
+import java.awt.*;
 
 public class MenuPrincipal {
 
@@ -123,4 +112,9 @@ public class MenuPrincipal {
 		btnBuscar.setBounds(163, 153, 89, 23);
 		panel.add(btnBuscar);
 	}
+
+	public void setVisible(boolean isVisible) {
+		this.frmMenuPrincipal.setVisible(isVisible);
+	}
+
 }
