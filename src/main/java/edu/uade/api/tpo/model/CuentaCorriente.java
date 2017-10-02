@@ -11,6 +11,7 @@ public class CuentaCorriente implements Serializable {
     private List<Transaccion> transacciones;
 
     public CuentaCorriente() {
+        this.saldo = 0;
         this.transacciones = new ArrayList<>();
     }
 
