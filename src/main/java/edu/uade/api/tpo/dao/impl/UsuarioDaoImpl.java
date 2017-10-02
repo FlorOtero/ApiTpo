@@ -49,6 +49,10 @@ public class UsuarioDaoImpl extends AbstractDao<Usuario> {
 
     @Override
     public PreparedStatement create(Usuario usuario, Connection conn) throws SQLException {
+        //Cascade domicilio & password before create user
+        DomicilioDaoImpl.getInstance().create(usuario.getDomicilio());
+        PasswordDaoImpl.getInstance().create(usuario.getPassword());
+
         String query = "INSERT INTO " + schema + ".usuarios VALUES(?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, UUIDUtils.generate());
