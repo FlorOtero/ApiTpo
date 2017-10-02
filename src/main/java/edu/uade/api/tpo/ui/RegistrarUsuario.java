@@ -8,15 +8,20 @@ import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import edu.uade.api.tpo.db.PersistenceModule;
 import edu.uade.api.tpo.model.Domicilio;
+import edu.uade.api.tpo.model.Password;
+import edu.uade.api.tpo.model.SistemaUsuarios;
+import edu.uade.api.tpo.model.Usuario;
 
 import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 
 public class RegistrarUsuario {
-
+	private Domicilio domicilio;
 	private JFrame frmRegistrarse;
 	private JTextField textField;
 	private JTextField textField_2;
@@ -31,6 +36,7 @@ public class RegistrarUsuario {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					PersistenceModule.getInstance();
 					RegistrarUsuario window = new RegistrarUsuario();
 					window.frmRegistrarse.setVisible(true);
 				} catch (Exception e) {
@@ -105,7 +111,17 @@ public class RegistrarUsuario {
 		JButton btnRegistrarse = new JButton("Registrarse");
 		btnRegistrarse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				Usuario user = new Usuario();
+				Password password = new Password();
+				user.setNombre(textField.getText());
+				user.setApellido(textField_1.getText());
+				user.setDomicilio(domicilio);
+				user.setMail(textField_2.getText());
+				password.setValor(textField_4.getText());
+				password.setFechaModificacion(new Date());
+				user.setPassword(password);
+				user.setNombreUsuario(textField_3.getText());
+				SistemaUsuarios.getInstance().altaUsuario(user);
 			}
 		});
 		btnRegistrarse.setBounds(232, 341, 117, 29);
@@ -114,8 +130,10 @@ public class RegistrarUsuario {
 		JButton btnCargarDomicilio = new JButton("Cargar domicilio");
 		btnCargarDomicilio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CargarDomicilio domicilioUser = new CargarDomicilio(new Domicilio());
+				domicilio= new Domicilio();
+				CargarDomicilio domicilioUser = new CargarDomicilio(domicilio);
 				domicilioUser.setVisible(true);
+				
 			}
 		});
 		btnCargarDomicilio.setBounds(178, 130, 134, 29);

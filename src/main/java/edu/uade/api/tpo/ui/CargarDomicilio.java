@@ -24,6 +24,7 @@ public class CargarDomicilio {
 	private Domicilio domicilio;
 	
 	public CargarDomicilio(Domicilio domicilio) {
+		this();
 		this.domicilio = domicilio;
 	}
 
