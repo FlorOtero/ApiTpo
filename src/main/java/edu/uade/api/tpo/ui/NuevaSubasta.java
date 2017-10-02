@@ -104,6 +104,10 @@ public class NuevaSubasta {
 		JButton btnPublicar = new JButton("Publicar");
 		btnPublicar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showConfirmDialog(null, "Se ha publicado con exito");
+				MenuPrincipal menuP = new MenuPrincipal();
+				menuP.setVisible(true);
+				frmNuevaSubasta.dispose();
 				
 			}
 		});
@@ -122,7 +126,7 @@ public class NuevaSubasta {
 		frmNuevaSubasta.getContentPane().add(btnCancelar);
 		
 		textField_3 = new JTextField();
-		textField_3.setBounds(208, 240, 130, 26);
+		textField_3.setBounds(221, 240, 130, 26);
 		frmNuevaSubasta.getContentPane().add(textField_3);
 		textField_3.setColumns(10);
 		

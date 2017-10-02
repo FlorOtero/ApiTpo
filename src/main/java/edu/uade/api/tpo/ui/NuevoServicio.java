@@ -7,7 +7,12 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class NuevoServicio {
 
@@ -45,8 +50,8 @@ public class NuevoServicio {
 	private void initialize() {
 		frmNuevoServicio = new JFrame();
 		frmNuevoServicio.getContentPane().setBackground(new Color(255, 255, 224));
-		frmNuevoServicio.setTitle("Publicar producto");
-		frmNuevoServicio.setBounds(100, 100, 529, 434);
+		frmNuevoServicio.setTitle("Publicar servicio");
+		frmNuevoServicio.setBounds(100, 100, 544, 565);
 		frmNuevoServicio.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmNuevoServicio.getContentPane().setLayout(null);
 		
@@ -102,12 +107,29 @@ public class NuevoServicio {
 		frmNuevoServicio.getContentPane().add(chckbxTransferenciaBancaria);
 		
 		JButton btnPublicar = new JButton("Publicar");
-		btnPublicar.setBounds(123, 377, 117, 29);
+		btnPublicar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showConfirmDialog(null, "Se ha publicado con exito");
+				MenuPrincipal menuP = new MenuPrincipal();
+				menuP.setVisible(true);
+				frmNuevoServicio.dispose();
+			}
+		});
+		btnPublicar.setBounds(109, 508, 117, 29);
 		frmNuevoServicio.getContentPane().add(btnPublicar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(293, 377, 117, 29);
+		btnCancelar.setBounds(313, 508, 117, 29);
 		frmNuevoServicio.getContentPane().add(btnCancelar);
+		
+		JLabel lblTipoDeContratacion = new JLabel("Tipo de contratacion");
+		lblTipoDeContratacion.setBounds(34, 379, 136, 16);
+		frmNuevoServicio.getContentPane().add(lblTipoDeContratacion);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Abono", "Unica vez"}));
+		comboBox.setBounds(221, 374, 142, 29);
+		frmNuevoServicio.getContentPane().add(comboBox);
 	}
 }
 

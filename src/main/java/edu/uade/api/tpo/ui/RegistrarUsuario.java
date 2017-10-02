@@ -6,19 +6,23 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 import javax.swing.JTextField;
+
+import edu.uade.api.tpo.model.Domicilio;
+
 import javax.swing.JButton;
 import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class RegistrarUsuario {
 
 	private JFrame frmRegistrarse;
 	private JTextField textField;
-	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTextField textField_4;
+	private JTextField textField_1;
 
 	/**
 	 * Launch the application.
@@ -59,11 +63,11 @@ public class RegistrarUsuario {
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Nombre");
-		lblNewLabel.setBounds(91, 97, 61, 16);
+		lblNewLabel.setBounds(91, 66, 61, 16);
 		panel.add(lblNewLabel);
 		
 		textField = new JTextField();
-		textField.setBounds(182, 92, 130, 26);
+		textField.setBounds(182, 61, 130, 26);
 		panel.add(textField);
 		textField.setColumns(10);
 		
@@ -83,11 +87,6 @@ public class RegistrarUsuario {
 		lblContrasea.setBounds(75, 257, 94, 16);
 		panel.add(lblContrasea);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(182, 130, 130, 26);
-		panel.add(textField_1);
-		textField_1.setColumns(10);
-		
 		textField_2 = new JTextField();
 		textField_2.setBounds(182, 164, 130, 26);
 		panel.add(textField_2);
@@ -104,7 +103,35 @@ public class RegistrarUsuario {
 		textField_4.setColumns(10);
 		
 		JButton btnRegistrarse = new JButton("Registrarse");
-		btnRegistrarse.setBounds(324, 343, 117, 29);
+		btnRegistrarse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		btnRegistrarse.setBounds(232, 341, 117, 29);
 		panel.add(btnRegistrarse);
+		
+		JButton btnCargarDomicilio = new JButton("Cargar domicilio");
+		btnCargarDomicilio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CargarDomicilio domicilioUser = new CargarDomicilio(new Domicilio());
+				domicilioUser.setVisible(true);
+			}
+		});
+		btnCargarDomicilio.setBounds(178, 130, 134, 29);
+		panel.add(btnCargarDomicilio);
+		
+		JLabel lblApellido = new JLabel("Apellido");
+		lblApellido.setBounds(91, 108, 61, 16);
+		panel.add(lblApellido);
+		
+		textField_1 = new JTextField();
+		textField_1.setBounds(182, 99, 130, 26);
+		panel.add(textField_1);
+		textField_1.setColumns(10);
+		
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.setBounds(379, 341, 117, 29);
+		panel.add(btnCancelar);
 	}
 }
