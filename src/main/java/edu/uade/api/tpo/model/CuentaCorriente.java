@@ -1,10 +1,12 @@
 package edu.uade.api.tpo.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CuentaCorriente {
+public class CuentaCorriente implements Serializable {
 
+    private String id;
     private float saldo;
     private List<Transaccion> transacciones;
 
@@ -42,5 +44,13 @@ public class CuentaCorriente {
 
     public boolean hasTransaccion(Transaccion transaccion) {
         return this.transacciones.contains(transaccion);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
