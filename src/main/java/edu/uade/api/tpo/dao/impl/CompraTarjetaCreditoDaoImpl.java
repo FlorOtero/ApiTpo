@@ -104,4 +104,9 @@ public class CompraTarjetaCreditoDaoImpl extends AbstractManyToOneDao<CompraTarj
         compra.setCuentaCorrienteId(rs.getString("cuenta_corriente_id"));
         return compra;
     }
+
+    @Override
+    public PreparedStatement findBy(String field, String value, Connection conn) throws SQLException {
+        throw new UnsupportedOperationException("Find by is not supported on class CompraTarjetaCredito!");
+    }
 }

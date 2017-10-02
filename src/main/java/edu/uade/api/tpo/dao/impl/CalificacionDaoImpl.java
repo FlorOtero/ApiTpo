@@ -97,4 +97,9 @@ public class CalificacionDaoImpl extends AbstractManyToOneDao<Calificacion> {
         calificacion.setUsuarioId(rs.getString("usuario_id"));
         return calificacion;
     }
+
+    @Override
+    public PreparedStatement findBy(String field, String value, Connection conn) throws SQLException {
+        throw new UnsupportedOperationException("Find by is not supported on class Calificacion!");
+    }
 }
