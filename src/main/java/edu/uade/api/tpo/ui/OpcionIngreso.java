@@ -9,6 +9,7 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 import javax.swing.JPanel;
 import java.awt.Color;
+import javax.swing.JTextArea;
 
 public class OpcionIngreso {
 

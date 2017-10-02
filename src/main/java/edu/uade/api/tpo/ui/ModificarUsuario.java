@@ -115,11 +115,11 @@ public class ModificarUsuario {
 		panel.add(dtrpnmostrarContrasea);
 		
 		JButton btnConfirmarModificacion = new JButton("Confirmar Modificacion");
-		btnConfirmarModificacion.setBounds(82, 252, 154, 23);
+		btnConfirmarModificacion.setBounds(69, 252, 154, 23);
 		panel.add(btnConfirmarModificacion);
 		
 		JButton btnAceptar = new JButton("Cancelar");
-		btnAceptar.setBounds(308, 252, 89, 23);
+		btnAceptar.setBounds(290, 252, 89, 23);
 		panel.add(btnAceptar);
 	}
 }

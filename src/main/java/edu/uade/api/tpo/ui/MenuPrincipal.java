@@ -75,8 +75,8 @@ public class MenuPrincipal {
 		JMenuItem mntmEstadoCuentaCorriente = new JMenuItem("Estado Cuenta Corriente");
 		mnMiCuenta.add(mntmEstadoCuentaCorriente);
 		
-		JMenuItem mntmReputacion = new JMenuItem("Reputacion/Calificaciones");
-		mnMiCuenta.add(mntmReputacion);
+		JMenuItem mntmReputacionCalificaciones = new JMenuItem("Reputacion / Calificaciones");
+		mnMiCuenta.add(mntmReputacionCalificaciones);
 		
 		JMenuItem mntmCerrarSesion = new JMenuItem("Cerrar Sesion");
 		mnMiCuenta.add(mntmCerrarSesion);
@@ -95,21 +95,6 @@ public class MenuPrincipal {
 		
 		JMenuItem mntmConsultaDeComisiones = new JMenuItem("Consulta de comisiones pagadas");
 		mnPublicaciones.add(mntmConsultaDeComisiones);
-		
-		JMenu mnPagos = new JMenu("Consultas");
-		menuBar.add(mnPagos);
-		
-		JMenuItem mntmCalificaciones = new JMenuItem("Calificaciones");
-		mnPagos.add(mntmCalificaciones);
-		
-		JMenuItem mntmNewMenuItem = new JMenuItem("Transacciones Confirmadas");
-		mnPagos.add(mntmNewMenuItem);
-		
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Transacciones Canceladas");
-		mnPagos.add(mntmNewMenuItem_1);
-		
-		JMenuItem mntmMovimientosCuentaCorriente = new JMenuItem("Movimientos Cuenta Corriente");
-		mnPagos.add(mntmMovimientosCuentaCorriente);
 		
 		JLabel lblIngresarProducto = new JLabel("Ingresar producto/subasta:");
 		lblIngresarProducto.setBounds(84, 139, 133, 14);
@@ -131,5 +116,9 @@ public class MenuPrincipal {
 		JRadioButton rdbtnSubasta = new JRadioButton("Subasta");
 		rdbtnSubasta.setBounds(226, 87, 72, 23);
 		panel.add(rdbtnSubasta);
+		
+		JButton btnSalir = new JButton("Salir");
+		btnSalir.setBounds(320, 227, 89, 23);
+		panel.add(btnSalir);
 	}
 }
