@@ -31,7 +31,6 @@ public class PersistenceModule {
         config.addDataSourceProperty("rewriteBatchedStatements", "true");
         config.addDataSourceProperty("cacheResultSetMetadata", "true");
         config.addDataSourceProperty("cacheServerConfiguration", "true");
-        config.addDataSourceProperty("elideSetAutoCommits", "true");
         config.addDataSourceProperty("maintainTimeStats", "false");
         config.addDataSourceProperty("serverTimezone", "GMT-3");
         config.setMinimumIdle(5);
