@@ -62,10 +62,6 @@ public class NuevaSubasta {
 		lblPrecio.setBounds(34, 134, 107, 16);
 		frmNuevaSubasta.getContentPane().add(lblPrecio);
 		
-		JLabel lblFechaDePublicacion = new JLabel("Fecha de publicacion");
-		lblFechaDePublicacion.setBounds(34, 217, 158, 16);
-		frmNuevaSubasta.getContentPane().add(lblFechaDePublicacion);
-		
 		JLabel lblFechaHasta = new JLabel("Dias de vigencia");
 		lblFechaHasta.setBounds(34, 245, 136, 16);
 		frmNuevaSubasta.getContentPane().add(lblFechaHasta);

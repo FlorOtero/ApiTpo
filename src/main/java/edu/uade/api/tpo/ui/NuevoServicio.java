@@ -67,10 +67,6 @@ public class NuevoServicio {
 		lblPrecio.setBounds(34, 134, 61, 16);
 		frmNuevoServicio.getContentPane().add(lblPrecio);
 		
-		JLabel lblFechaDePublicacion = new JLabel("Fecha de publicacion");
-		lblFechaDePublicacion.setBounds(34, 181, 158, 16);
-		frmNuevoServicio.getContentPane().add(lblFechaDePublicacion);
-		
 		JLabel lblFechaHasta = new JLabel("Fecha hasta");
 		lblFechaHasta.setBounds(34, 215, 88, 16);
 		frmNuevoServicio.getContentPane().add(lblFechaHasta);

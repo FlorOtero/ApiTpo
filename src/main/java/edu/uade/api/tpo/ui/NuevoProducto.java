@@ -65,12 +65,8 @@ public class NuevoProducto {
 		lblPrecio.setBounds(34, 134, 61, 16);
 		frmNuevoProducto.getContentPane().add(lblPrecio);
 		
-		JLabel lblFechaDePublicacion = new JLabel("Fecha de publicacion");
-		lblFechaDePublicacion.setBounds(34, 181, 158, 16);
-		frmNuevoProducto.getContentPane().add(lblFechaDePublicacion);
-		
 		JLabel lblFechaHasta = new JLabel("Fecha hasta");
-		lblFechaHasta.setBounds(34, 215, 88, 16);
+		lblFechaHasta.setBounds(34, 184, 88, 16);
 		frmNuevoProducto.getContentPane().add(lblFechaHasta);
 		
 		JLabel lblNewLabel = new JLabel("Formas de pago");
