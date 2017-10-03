@@ -100,8 +100,8 @@ public class ModificacionServicio {
 		chckbxTransferenciaBancaria.setBounds(221, 311, 197, 23);
 		frmModificarServicio.getContentPane().add(chckbxTransferenciaBancaria);
 		
-		JButton btnPublicar = new JButton("Modificar");
-		btnPublicar.addActionListener(new ActionListener() {
+		JButton btnModificar = new JButton("Modificar");
+		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showConfirmDialog(null, "Se ha modificado con exito");
 				MenuPrincipal menuP = new MenuPrincipal();
@@ -109,8 +109,8 @@ public class ModificacionServicio {
 				frmModificarServicio.dispose();
 			}
 		});
-		btnPublicar.setBounds(109, 508, 117, 29);
-		frmModificarServicio.getContentPane().add(btnPublicar);
+		btnModificar.setBounds(109, 508, 117, 29);
+		frmModificarServicio.getContentPane().add(btnModificar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(313, 508, 117, 29);
