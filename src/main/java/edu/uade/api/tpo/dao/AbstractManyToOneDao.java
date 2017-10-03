@@ -13,7 +13,6 @@ public abstract class AbstractManyToOneDao<T extends Serializable> extends Abstr
     public List<T> findManyBy(String field, String value) throws SQLException {
         try (Connection conn = this.getConnection(); PreparedStatement ps = findManyBy(field, value, conn); ResultSet rs = ps.executeQuery()) {
             List<T> result = mapMany(rs);
-            conn.commit();
             return result;
         }
     }
