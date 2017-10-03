@@ -118,8 +118,8 @@ public class NuevoProducto {
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MenuPrincipal menuP = new MenuPrincipal();
-				menuP.setVisible(true);
+				NuevaPublicacion nuevaP = new NuevaPublicacion();
+				nuevaP.setVisible(true);
 				frmNuevoProducto.dispose();
 			}
 		});
@@ -133,5 +133,8 @@ public class NuevoProducto {
 		JButton btnAgregar = new JButton("Agregar ");
 		btnAgregar.setBounds(396, 364, 89, 23);
 		frmNuevoProducto.getContentPane().add(btnAgregar);
+	}
+	public void setVisible(boolean isVisible) {
+		this.frmNuevoProducto.setVisible(isVisible);
 	}
 }
