@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import com.toedter.calendar.JCalendar;
 
 public class NuevoProducto {
 
@@ -89,15 +90,15 @@ public class NuevoProducto {
 		textField_2.setColumns(10);
 		
 		JCheckBox chckbxEfectivo = new JCheckBox("Efectivo");
-		chckbxEfectivo.setBounds(221, 252, 128, 23);
+		chckbxEfectivo.setBounds(34, 279, 128, 23);
 		frmNuevoProducto.getContentPane().add(chckbxEfectivo);
 		
 		JCheckBox chckbxTarjetaDeCredito = new JCheckBox("Tarjeta de credito");
-		chckbxTarjetaDeCredito.setBounds(221, 283, 142, 23);
+		chckbxTarjetaDeCredito.setBounds(34, 305, 142, 23);
 		frmNuevoProducto.getContentPane().add(chckbxTarjetaDeCredito);
 		
 		JCheckBox chckbxTransferenciaBancaria = new JCheckBox("Transferencia bancaria");
-		chckbxTransferenciaBancaria.setBounds(221, 311, 197, 23);
+		chckbxTransferenciaBancaria.setBounds(34, 331, 197, 23);
 		frmNuevoProducto.getContentPane().add(chckbxTransferenciaBancaria);
 		
 	
@@ -111,7 +112,7 @@ public class NuevoProducto {
 				frmNuevoProducto.dispose();
 			}
 		});
-		btnPublicar.setBounds(123, 377, 117, 29);
+		btnPublicar.setBounds(121, 361, 117, 29);
 		frmNuevoProducto.getContentPane().add(btnPublicar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
@@ -122,7 +123,15 @@ public class NuevoProducto {
 				frmNuevoProducto.dispose();
 			}
 		});
-		btnCancelar.setBounds(293, 377, 117, 29);
+		btnCancelar.setBounds(263, 361, 117, 29);
 		frmNuevoProducto.getContentPane().add(btnCancelar);
+		
+		JCalendar calendar = new JCalendar();
+		calendar.setBounds(231, 166, 198, 153);
+		frmNuevoProducto.getContentPane().add(calendar);
+		
+		JButton btnAgregar = new JButton("Agregar ");
+		btnAgregar.setBounds(396, 364, 89, 23);
+		frmNuevoProducto.getContentPane().add(btnAgregar);
 	}
 }
