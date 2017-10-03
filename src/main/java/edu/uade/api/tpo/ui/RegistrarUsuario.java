@@ -1,24 +1,27 @@
 package edu.uade.api.tpo.ui;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Date;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import edu.uade.api.tpo.db.PersistenceModule;
+import edu.uade.api.tpo.exceptions.BusinessException;
 import edu.uade.api.tpo.model.Domicilio;
 import edu.uade.api.tpo.model.Password;
 import edu.uade.api.tpo.model.SistemaUsuarios;
 import edu.uade.api.tpo.model.Usuario;
-
-import javax.swing.JButton;
-import java.awt.Color;
-import java.awt.event.ActionListener;
-import java.util.Date;
-import java.awt.event.ActionEvent;
 
 public class RegistrarUsuario {
 	private Domicilio domicilio;
@@ -121,7 +124,12 @@ public class RegistrarUsuario {
 				password.setFechaModificacion(new Date());
 				user.setPassword(password);
 				user.setNombreUsuario(textField_3.getText());
-				SistemaUsuarios.getInstance().altaUsuario(user);
+				try {
+					SistemaUsuarios.getInstance().altaUsuario(user);
+				} catch(BusinessException e1) {
+					//TODO Manejar la exception y mostrar un mensaje de error cuando existe el usuario
+				}
+				
 			}
 		});
 		btnRegistrarse.setBounds(232, 341, 117, 29);
