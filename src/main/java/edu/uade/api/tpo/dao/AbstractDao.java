@@ -22,7 +22,6 @@ public abstract class AbstractDao<T extends Serializable> implements GenericDao<
     public final void create(T t) throws SQLException {
         try (Connection conn = this.getConnection(); PreparedStatement ps = create(t, conn)) {
             ps.execute();
-            conn.commit();
         }
     }
 
@@ -30,7 +29,6 @@ public abstract class AbstractDao<T extends Serializable> implements GenericDao<
     public final T findById(String id) throws SQLException {
         try (Connection conn = this.getConnection(); PreparedStatement ps = findById(id, conn); ResultSet rs = ps.executeQuery()) {
             T t = map(rs);
-            conn.commit();
             return t;
         }
     }
@@ -39,7 +37,6 @@ public abstract class AbstractDao<T extends Serializable> implements GenericDao<
     public final void update(T t) throws SQLException {
         try (Connection conn = this.getConnection(); PreparedStatement ps = update(t, conn)) {
             ps.executeUpdate();
-            conn.commit();
         }
     }
 
@@ -47,7 +44,6 @@ public abstract class AbstractDao<T extends Serializable> implements GenericDao<
     public T findBy(String field, String value) throws SQLException {
         try (Connection conn = this.getConnection(); PreparedStatement ps = findBy(field, value, conn); ResultSet rs = ps.executeQuery()) {
             T t = map(rs);
-            conn.commit();
             return t;
         }
     }

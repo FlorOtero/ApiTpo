@@ -1,27 +1,24 @@
 package edu.uade.api.tpo.ui;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
-import java.awt.List;
-import java.awt.Choice;
-import java.awt.Color;
-import java.awt.TextArea;
-import java.awt.Label;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import java.awt.ScrollPane;
-import java.awt.Button;
-import javax.swing.JMenuItem;
+import javax.swing.JCheckBox;
+import javax.swing.JButton;
+import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
-public class ModificarProducto extends JFrame {
+public class ModificarProducto {
 
-	private JPanel contentPane;
-	private JTextField textField;
+	private JFrame frmModificarProducto;
+	private JTextField textField_1;
+	private JTextField textField_2;
 
 	/**
 	 * Launch the application.
@@ -30,8 +27,8 @@ public class ModificarProducto extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ModificarProducto frame = new ModificarProducto();
-					frame.setVisible(true);
+					ModificarProducto window = new ModificarProducto();
+					window.frmModificarProducto.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -40,50 +37,97 @@ public class ModificarProducto extends JFrame {
 	}
 
 	/**
-	 * Create the frame.
+	 * Create the application.
 	 */
 	public ModificarProducto() {
-		setTitle("Modificar Producto");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frmModificarProducto = new JFrame();
+		frmModificarProducto.getContentPane().setBackground(new Color(255, 255, 224));
+		frmModificarProducto.setTitle("Modificar producto");
+		frmModificarProducto.setBounds(100, 100, 529, 434);
+		frmModificarProducto.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmModificarProducto.getContentPane().setLayout(null);
 		
-		JLabel lblSeleccioneElProducto = new JLabel("Seleccione el producto que desea modificar");
-		lblSeleccioneElProducto.setBounds(0, 6, 348, 16);
-		contentPane.add(lblSeleccioneElProducto);
+		JLabel lblNombre = new JLabel("Buscar Producto");
+		lblNombre.setBounds(34, 53, 117, 16);
+		frmModificarProducto.getContentPane().add(lblNombre);
 		
-		JLabel ModificarDescripcion = new JLabel("Modificar Descripcion");
-		ModificarDescripcion.setBounds(0, 109, 284, 16);
-		contentPane.add(ModificarDescripcion);
-		
-		TextArea textArea = new TextArea();
-		textArea.setBounds(10, 128, 293, 47);
-		contentPane.add(textArea);
+		JLabel lblDescripcion = new JLabel("Descripcion");
+		lblDescripcion.setBounds(34, 93, 88, 16);
+		frmModificarProducto.getContentPane().add(lblDescripcion);
 		
 		JLabel lblPrecio = new JLabel("Precio");
-		lblPrecio.setBounds(6, 206, 61, 16);
-		contentPane.add(lblPrecio);
+		lblPrecio.setBounds(34, 134, 61, 16);
+		frmModificarProducto.getContentPane().add(lblPrecio);
 		
-		textField = new JTextField();
-		textField.setToolTipText("Nuevo Precio\n");
-		textField.setBounds(79, 201, 176, 26);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		JLabel lblFechaDePublicacion = new JLabel("Fecha de publicacion");
+		lblFechaDePublicacion.setBounds(34, 181, 158, 16);
+		frmModificarProducto.getContentPane().add(lblFechaDePublicacion);
 		
-		Button btnAccept = new Button("Aceptar");
-		btnAccept.setBounds(167, 249, 117, 29);
-		contentPane.add(btnAccept);
+		JLabel lblFechaHasta = new JLabel("Fecha hasta");
+		lblFechaHasta.setBounds(34, 215, 88, 16);
+		frmModificarProducto.getContentPane().add(lblFechaHasta);
 		
-		Button btnCancel = new Button("Cancelar");
-		btnCancel.setBounds(290, 249, 117, 29);
-		contentPane.add(btnCancel);
+		JLabel lblNewLabel = new JLabel("Formas de pago");
+		lblNewLabel.setBounds(34, 256, 136, 16);
+		frmModificarProducto.getContentPane().add(lblNewLabel);
 		
-		List list = new List();
-		list.setBounds(20, 28, 235, 76);
-		contentPane.add(list);
+		textField_1 = new JTextField();
+		textField_1.setBounds(221, 88, 130, 26);
+		frmModificarProducto.getContentPane().add(textField_1);
+		textField_1.setColumns(10);
+		
+		textField_2 = new JTextField();
+		textField_2.setBounds(221, 129, 130, 26);
+		frmModificarProducto.getContentPane().add(textField_2);
+		textField_2.setColumns(10);
+		
+		JCheckBox chckbxEfectivo = new JCheckBox("Efectivo");
+		chckbxEfectivo.setBounds(221, 252, 128, 23);
+		frmModificarProducto.getContentPane().add(chckbxEfectivo);
+		
+		JCheckBox chckbxTarjetaDeCredito = new JCheckBox("Tarjeta de credito");
+		chckbxTarjetaDeCredito.setBounds(221, 283, 142, 23);
+		frmModificarProducto.getContentPane().add(chckbxTarjetaDeCredito);
+		
+		JCheckBox chckbxTransferenciaBancaria = new JCheckBox("Transferencia bancaria");
+		chckbxTransferenciaBancaria.setBounds(221, 311, 197, 23);
+		frmModificarProducto.getContentPane().add(chckbxTransferenciaBancaria);
+		
+	
+		
+		JButton btnPublicar = new JButton("Modificar");
+		btnPublicar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showConfirmDialog(null, "Se ha modificado con exito");
+				MenuPrincipal menuP = new MenuPrincipal();
+				menuP.setVisible(true);
+				frmModificarProducto.dispose();
+			}
+		});
+		btnPublicar.setBounds(123, 377, 117, 29);
+		frmModificarProducto.getContentPane().add(btnPublicar);
+		
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MenuPrincipal menuP = new MenuPrincipal();
+				menuP.setVisible(true);
+				frmModificarProducto.dispose();
+			}
+		});
+		btnCancelar.setBounds(293, 377, 117, 29);
+		frmModificarProducto.getContentPane().add(btnCancelar);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"aca todos los productos"}));
+		comboBox.setBounds(226, 49, 125, 27);
+		frmModificarProducto.getContentPane().add(comboBox);
 	}
-		
 }

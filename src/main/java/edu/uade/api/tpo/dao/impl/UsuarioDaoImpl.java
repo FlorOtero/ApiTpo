@@ -2,7 +2,6 @@ package edu.uade.api.tpo.dao.impl;
 
 import edu.uade.api.tpo.dao.AbstractDao;
 import edu.uade.api.tpo.dao.GenericDao;
-import edu.uade.api.tpo.model.CuentaCorriente;
 import edu.uade.api.tpo.model.Estado;
 import edu.uade.api.tpo.model.Publicacion;
 import edu.uade.api.tpo.model.Usuario;
@@ -53,7 +52,7 @@ public class UsuarioDaoImpl extends AbstractDao<Usuario> {
         //Cascade domicilio & password before create user
         DomicilioDaoImpl.getInstance().create(usuario.getDomicilio());
         PasswordDaoImpl.getInstance().create(usuario.getPassword());
-        CuentaCorrienteDaoImpl.getInstance().create(new CuentaCorriente());
+        CuentaCorrienteDaoImpl.getInstance().create(usuario.getCuentaCorriente());
 
         String query = "INSERT INTO " + schema + ".usuarios VALUES(?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
