@@ -18,21 +18,7 @@ public class Usuario implements Serializable {
     private Estado estado;
 
     public Usuario() {
-
-    }
-
-    public Usuario(String nombreUsuario, String nombre, String apellido, String mail, Domicilio domicilio, Password password,
-                   CuentaCorriente cuentaCorriente, List<Publicacion> publicaciones, List<Calificacion> calificaciones) {
-        super();
-        this.nombreUsuario = nombreUsuario;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.domicilio = domicilio;
-        this.password = password;
-        this.cuentaCorriente = cuentaCorriente;
-        this.publicaciones = publicaciones;
-        this.mail = mail;
-        this.calificaciones = calificaciones;
+        this.cuentaCorriente = new CuentaCorriente();
         this.estado = Estado.ACTIVO;
     }
 
