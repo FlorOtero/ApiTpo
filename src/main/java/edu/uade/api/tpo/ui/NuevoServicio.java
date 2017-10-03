@@ -105,7 +105,7 @@ public class NuevoServicio {
 		JButton btnPublicar = new JButton("Publicar");
 		btnPublicar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showConfirmDialog(null, "Se ha publicado con exito");
+				JOptionPane.showMessageDialog(null, "Se ha publicado con exito");
 				MenuPrincipal menuP = new MenuPrincipal();
 				menuP.setVisible(true);
 				frmNuevoServicio.dispose();
@@ -115,6 +115,13 @@ public class NuevoServicio {
 		frmNuevoServicio.getContentPane().add(btnPublicar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				NuevaPublicacion nuevaP = new NuevaPublicacion();
+				nuevaP.setVisible(true);
+				frmNuevoServicio.dispose();	
+			}
+		});
 		btnCancelar.setBounds(313, 508, 117, 29);
 		frmNuevoServicio.getContentPane().add(btnCancelar);
 		
@@ -126,6 +133,9 @@ public class NuevoServicio {
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Abono", "Unica vez"}));
 		comboBox.setBounds(221, 374, 142, 29);
 		frmNuevoServicio.getContentPane().add(comboBox);
+	}
+	public void setVisible(boolean isVisible) {
+		this.frmNuevoServicio.setVisible(isVisible);
 	}
 }
 

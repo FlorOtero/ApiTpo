@@ -113,9 +113,9 @@ public class NuevaSubasta {
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MenuPrincipal menuP = new MenuPrincipal();
-				menuP.setVisible(true);
-				frmNuevaSubasta.dispose();
+				NuevaPublicacion nuevaP = new NuevaPublicacion();
+				nuevaP.setVisible(true);
+				frmNuevaSubasta.dispose();				
 			}
 		});
 		btnCancelar.setBounds(301, 431, 117, 29);
@@ -135,5 +135,7 @@ public class NuevaSubasta {
 		frmNuevaSubasta.getContentPane().add(textField_4);
 		textField_4.setColumns(10);
 	}
-
+	public void setVisible(boolean isVisible) {
+		this.frmNuevaSubasta.setVisible(isVisible);
+	}
 }

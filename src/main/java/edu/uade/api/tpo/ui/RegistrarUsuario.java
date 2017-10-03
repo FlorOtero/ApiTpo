@@ -10,6 +10,7 @@ import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -126,6 +127,7 @@ public class RegistrarUsuario {
 				user.setNombreUsuario(textField_3.getText());
 				try {
 					SistemaUsuarios.getInstance().altaUsuario(user);
+					JOptionPane.showMessageDialog(null, "Se ha creado su usuario con exito");
 				} catch(BusinessException e1) {
 					//TODO Manejar la exception y mostrar un mensaje de error cuando existe el usuario
 				}
@@ -157,6 +159,16 @@ public class RegistrarUsuario {
 		textField_1.setColumns(10);
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int rta= JOptionPane.showConfirmDialog(null,"Seguro que quiere salir?");
+				if (JOptionPane.OK_OPTION == rta) {
+					MenuPrincipal menu = new MenuPrincipal();
+					menu.setVisible(true);
+					frmRegistrarse.dispose();
+				}
+			}
+		});
 		btnCancelar.setBounds(379, 341, 117, 29);
 		panel.add(btnCancelar);
 	}

@@ -117,12 +117,15 @@ public class NuevoProducto {
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MenuPrincipal menuP = new MenuPrincipal();
-				menuP.setVisible(true);
+				NuevaPublicacion nuevaP = new NuevaPublicacion();
+				nuevaP.setVisible(true);
 				frmNuevoProducto.dispose();
 			}
 		});
 		btnCancelar.setBounds(293, 377, 117, 29);
 		frmNuevoProducto.getContentPane().add(btnCancelar);
+	}
+	public void setVisible(boolean isVisible) {
+		this.frmNuevoProducto.setVisible(isVisible);
 	}
 }
