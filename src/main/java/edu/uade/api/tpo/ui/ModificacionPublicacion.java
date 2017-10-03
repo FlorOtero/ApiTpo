@@ -86,4 +86,7 @@ public class ModificacionPublicacion extends JFrame {
 		
 
 	}
+	public void setVisible(boolean isVisible) {
+		this.frmModificar.setVisible(isVisible);
+	}
 }

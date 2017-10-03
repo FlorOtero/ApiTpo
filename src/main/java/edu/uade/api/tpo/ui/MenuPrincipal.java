@@ -2,6 +2,8 @@ package edu.uade.api.tpo.ui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MenuPrincipal {
 
@@ -36,85 +38,95 @@ public class MenuPrincipal {
 	 */
 	private void initialize() {
 		frmMenuPrincipal = new JFrame();
-		frmMenuPrincipal.setTitle("Menu Principal");
-		frmMenuPrincipal.setBounds(100, 100, 450, 300);
-		frmMenuPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmMenuPrincipal.setTitle("Menu");
+		frmMenuPrincipal.getContentPane().setBackground(new Color(255, 255, 224));
 		frmMenuPrincipal.getContentPane().setLayout(null);
 		
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 255, 224));
-		panel.setBounds(0, 0, 434, 261);
-		frmMenuPrincipal.getContentPane().add(panel);
-		panel.setLayout(null);
+		textField = new JTextField();
+		textField.setBounds(176, 61, 273, 26);
+		frmMenuPrincipal.getContentPane().add(textField);
+		textField.setColumns(10);
+		
+		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar.setBounds(189, 148, 117, 29);
+		frmMenuPrincipal.getContentPane().add(btnBuscar);
+		
+		JLabel lblIngresarProducto = new JLabel("Ingresar producto");
+		lblIngresarProducto.setBounds(46, 66, 117, 16);
+		frmMenuPrincipal.getContentPane().add(lblIngresarProducto);
 		
 		JMenuBar menuBar = new JMenuBar();
-		menuBar.setBounds(41, 11, 211, 34);
-		panel.add(menuBar);
+		frmMenuPrincipal.setJMenuBar(menuBar);
 		
-		JMenu mnMiCuenta = new JMenu("Mi Cuenta");
+		JMenu mnMiCuenta = new JMenu("Mi cuenta");
 		menuBar.add(mnMiCuenta);
 		
-		JMenuItem mntmModificarCuenta = new JMenuItem("Modificar Cuenta");
+		JMenuItem mntmModificarCuenta = new JMenuItem("Modificar cuenta");
+		mntmModificarCuenta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		mnMiCuenta.add(mntmModificarCuenta);
 		
-		JMenuItem mntmEliminarCuenta = new JMenuItem("Eliminar Cuenta");
+		JMenuItem mntmEliminarCuenta = new JMenuItem("Eliminar cuenta");
 		mnMiCuenta.add(mntmEliminarCuenta);
 		
-		JMenuItem mntmEstadoCuentaCorriente = new JMenuItem("Estado Cuenta Corriente");
+		JMenuItem mntmEstadoCuentaCorriente = new JMenuItem("Estado cuenta corriente");
 		mnMiCuenta.add(mntmEstadoCuentaCorriente);
 		
 		JMenuItem mntmReputacion = new JMenuItem("Reputacion");
 		mnMiCuenta.add(mntmReputacion);
 		
-		JMenuItem mntmCerrarSesion = new JMenuItem("Cerrar Sesion");
+		JMenuItem mntmCerrarSesion = new JMenuItem("Cerrar sesion");
 		mnMiCuenta.add(mntmCerrarSesion);
 		
 		JMenu mnPublicaciones = new JMenu("Publicaciones");
 		menuBar.add(mnPublicaciones);
 		
-		JMenuItem mntmNuevaPublicacion = new JMenuItem("Nueva Publicacion");
-		mnPublicaciones.add(mntmNuevaPublicacion);
+		JMenuItem mntmNuevaPublicacin = new JMenuItem("Nueva publicación");
+		mntmNuevaPublicacin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				NuevaPublicacion nuevaPublicacion = new NuevaPublicacion();
+				nuevaPublicacion.setVisible(true);
+				frmMenuPrincipal.dispose();
+			}
+		});
+		mnPublicaciones.add(mntmNuevaPublicacin);
 		
-		JMenuItem mntmModificarPublicacion = new JMenuItem("Modificar Publicacion");
-		mnPublicaciones.add(mntmModificarPublicacion);
+		JMenuItem mntmModificarPublicacin = new JMenuItem("Modificar publicación");
+		mntmModificarPublicacin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ModificacionPublicacion modificarPublicacion = new ModificacionPublicacion();
+				modificarPublicacion.setVisible(true);
+				frmMenuPrincipal.dispose();
+			}
+		});
+		mnPublicaciones.add(mntmModificarPublicacin);
 		
-		JMenuItem mntmEliminarPublicacion = new JMenuItem("Eliminar Publicacion");
+		JMenuItem mntmEliminarPublicacion = new JMenuItem("Eliminar publicación");
 		mnPublicaciones.add(mntmEliminarPublicacion);
 		
 		JMenuItem mntmConsultaDeComisiones = new JMenuItem("Consulta de comisiones pagadas");
 		mnPublicaciones.add(mntmConsultaDeComisiones);
 		
-		JMenu mnPagos = new JMenu("Consultas");
-		menuBar.add(mnPagos);
+		JMenu mnConsultar = new JMenu("Consultar");
+		menuBar.add(mnConsultar);
 		
 		JMenuItem mntmCalificaciones = new JMenuItem("Calificaciones");
-		mnPagos.add(mntmCalificaciones);
+		mnConsultar.add(mntmCalificaciones);
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("Transacciones Confirmadas");
-		mnPagos.add(mntmNewMenuItem);
+		JMenuItem mntmTransaccionesConfirmadas = new JMenuItem("Transacciones confirmadas");
+		mnConsultar.add(mntmTransaccionesConfirmadas);
 		
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Transacciones Canceladas");
-		mnPagos.add(mntmNewMenuItem_1);
+		JMenuItem mntmTransaccionesCanceladas = new JMenuItem("Transacciones canceladas");
+		mnConsultar.add(mntmTransaccionesCanceladas);
 		
 		JMenuItem mntmMovimientosCuentaCorriente = new JMenuItem("Movimientos Cuenta Corriente");
-		mnPagos.add(mntmMovimientosCuentaCorriente);
-		
-		JLabel lblIngresarProducto = new JLabel("Ingresar producto:");
-		lblIngresarProducto.setBounds(95, 85, 91, 14);
-		panel.add(lblIngresarProducto);
-		
-		textField = new JTextField();
-		textField.setBounds(211, 82, 86, 20);
-		panel.add(textField);
-		textField.setColumns(10);
-		
-		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.setBounds(163, 153, 89, 23);
-		panel.add(btnBuscar);
+		mnConsultar.add(mntmMovimientosCuentaCorriente);
 	}
 
 	public void setVisible(boolean isVisible) {
 		this.frmMenuPrincipal.setVisible(isVisible);
 	}
-
 }
