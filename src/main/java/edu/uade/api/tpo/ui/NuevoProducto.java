@@ -128,7 +128,10 @@ public class NuevoProducto {
 		
 		JCalendar calendar = new JCalendar();
 		calendar.setBounds(231, 166, 198, 153);
+		calendar.setWeekOfYearVisible(false);
+		calendar.setTodayButtonVisible(true);
 		frmNuevoProducto.getContentPane().add(calendar);
+		
 		
 		JButton btnAgregar = new JButton("Agregar ");
 		btnAgregar.setBounds(396, 364, 89, 23);

@@ -116,6 +116,7 @@ public class MenuPrincipal {
 		JMenuItem mntmCalificaciones = new JMenuItem("Calificaciones");
 		mnConsultar.add(mntmCalificaciones);
 		
+		
 		JMenuItem mntmTransaccionesConfirmadas = new JMenuItem("Transacciones confirmadas");
 		mnConsultar.add(mntmTransaccionesConfirmadas);
 		

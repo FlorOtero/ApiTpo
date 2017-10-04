@@ -1,6 +1,9 @@
 package edu.uade.api.tpo.ui;
 
 import javax.swing.*;
+
+import com.toedter.calendar.JCalendar;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -129,6 +132,7 @@ public class NuevaSubasta {
 		JLabel lblPrecioInicial = new JLabel("Precio inicial");
 		lblPrecioInicial.setBounds(34, 178, 107, 16);
 		frmNuevaSubasta.getContentPane().add(lblPrecioInicial);
+		
 		
 		textField_4 = new JTextField();
 		textField_4.setBounds(221, 167, 130, 26);

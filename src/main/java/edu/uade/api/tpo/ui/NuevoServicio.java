@@ -9,6 +9,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+
+import com.toedter.calendar.JCalendar;
+
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
@@ -68,11 +71,11 @@ public class NuevoServicio {
 		frmNuevoServicio.getContentPane().add(lblPrecio);
 		
 		JLabel lblFechaHasta = new JLabel("Fecha hasta");
-		lblFechaHasta.setBounds(34, 215, 88, 16);
+		lblFechaHasta.setBounds(34, 174, 88, 16);
 		frmNuevoServicio.getContentPane().add(lblFechaHasta);
 		
 		JLabel lblNewLabel = new JLabel("Formas de pago");
-		lblNewLabel.setBounds(34, 256, 136, 16);
+		lblNewLabel.setBounds(17, 315, 136, 16);
 		frmNuevoServicio.getContentPane().add(lblNewLabel);
 		
 		textField = new JTextField();
@@ -90,16 +93,22 @@ public class NuevoServicio {
 		frmNuevoServicio.getContentPane().add(textField_2);
 		textField_2.setColumns(10);
 		
+		JCalendar calendar = new JCalendar();
+		calendar.setBounds(231, 166, 198, 153);
+		calendar.setWeekOfYearVisible(false);
+		calendar.setTodayButtonVisible(true);
+		frmNuevoServicio.getContentPane().add(calendar);
+		
 		JCheckBox chckbxEfectivo = new JCheckBox("Efectivo");
-		chckbxEfectivo.setBounds(221, 252, 128, 23);
+		chckbxEfectivo.setBounds(221, 323, 128, 23);
 		frmNuevoServicio.getContentPane().add(chckbxEfectivo);
 		
 		JCheckBox chckbxTarjetaDeCredito = new JCheckBox("Tarjeta de credito");
-		chckbxTarjetaDeCredito.setBounds(221, 283, 142, 23);
+		chckbxTarjetaDeCredito.setBounds(221, 352, 142, 23);
 		frmNuevoServicio.getContentPane().add(chckbxTarjetaDeCredito);
 		
 		JCheckBox chckbxTransferenciaBancaria = new JCheckBox("Transferencia bancaria");
-		chckbxTransferenciaBancaria.setBounds(221, 311, 197, 23);
+		chckbxTransferenciaBancaria.setBounds(221, 387, 197, 23);
 		frmNuevoServicio.getContentPane().add(chckbxTransferenciaBancaria);
 		
 		JButton btnPublicar = new JButton("Publicar");
@@ -126,12 +135,12 @@ public class NuevoServicio {
 		frmNuevoServicio.getContentPane().add(btnCancelar);
 		
 		JLabel lblTipoDeContratacion = new JLabel("Tipo de contratacion");
-		lblTipoDeContratacion.setBounds(34, 379, 136, 16);
+		lblTipoDeContratacion.setBounds(17, 427, 136, 16);
 		frmNuevoServicio.getContentPane().add(lblTipoDeContratacion);
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Abono", "Unica vez"}));
-		comboBox.setBounds(221, 374, 142, 29);
+		comboBox.setBounds(239, 422, 142, 29);
 		frmNuevoServicio.getContentPane().add(comboBox);
 	}
 	public void setVisible(boolean isVisible) {
