@@ -41,6 +41,7 @@ public class MenuPrincipal {
 		frmMenuPrincipal.setTitle("Menu");
 		frmMenuPrincipal.getContentPane().setBackground(new Color(255, 255, 224));
 		frmMenuPrincipal.getContentPane().setLayout(null);
+		frmMenuPrincipal.setBounds(100, 100, 544, 565);
 		
 		textField = new JTextField();
 		textField.setBounds(176, 61, 273, 26);
@@ -105,6 +106,13 @@ public class MenuPrincipal {
 		mnPublicaciones.add(mntmModificarPublicacin);
 		
 		JMenuItem mntmEliminarPublicacion = new JMenuItem("Eliminar publicación");
+		mntmEliminarPublicacion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BajaPublicacion baja = new BajaPublicacion();
+				baja.setVisible(true);
+				frmMenuPrincipal.dispose();
+			}
+		});
 		mnPublicaciones.add(mntmEliminarPublicacion);
 		
 		JMenuItem mntmConsultaDeComisiones = new JMenuItem("Consulta de comisiones pagadas");

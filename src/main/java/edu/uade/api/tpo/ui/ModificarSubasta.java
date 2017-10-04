@@ -138,5 +138,8 @@ public class ModificarSubasta {
 		comboBox.setBounds(222, 49, 129, 27);
 		frmModificarSubasta.getContentPane().add(comboBox);
 	}
+	public void setVisible(boolean isVisible) {
+		this.frmModificarSubasta.setVisible(isVisible);
+	}
 
 }

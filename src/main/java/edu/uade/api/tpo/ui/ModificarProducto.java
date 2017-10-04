@@ -130,4 +130,7 @@ public class ModificarProducto {
 		comboBox.setBounds(226, 49, 125, 27);
 		frmModificarProducto.getContentPane().add(comboBox);
 	}
+	public void setVisible(boolean isVisible) {
+		this.frmModificarProducto.setVisible(isVisible);
+	}
 }

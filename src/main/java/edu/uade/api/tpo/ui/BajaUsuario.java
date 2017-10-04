@@ -51,7 +51,7 @@ public class BajaUsuario {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 224));
-		panel.setBounds(0, 0, 434, 261);
+		panel.setBounds(0, 0, 434, 278);
 		frmBajaUsuario.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -99,5 +99,8 @@ public class BajaUsuario {
 		JLabel lblmostrarNombre = new JLabel("(mostrar nombre)");
 		lblmostrarNombre.setBounds(217, 106, 100, 17);
 		panel.add(lblmostrarNombre);
+	}
+	public void setVisible(boolean isVisible) {
+		this.frmBajaUsuario.setVisible(isVisible);
 	}
 }

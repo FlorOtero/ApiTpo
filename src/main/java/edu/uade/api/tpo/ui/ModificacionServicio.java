@@ -138,5 +138,8 @@ public class ModificacionServicio {
 	public void setFrmModificarServicio(JFrame frmModificarServicio) {
 		this.frmModificarServicio = frmModificarServicio;
 	}
+	public void setVisible(boolean isVisible) {
+		this.frmModificarServicio.setVisible(isVisible);
+	}
 }
 

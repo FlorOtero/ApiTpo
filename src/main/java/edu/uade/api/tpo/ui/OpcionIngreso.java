@@ -48,7 +48,7 @@ public class OpcionIngreso {
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 224));
 		panel.setForeground(new Color(0, 0, 0));
-		panel.setBounds(0, 0, 434, 261);
+		panel.setBounds(0, 0, 434, 278);
 		OpcionIngreso.getContentPane().add(panel);
 		panel.setLayout(null);
 		
