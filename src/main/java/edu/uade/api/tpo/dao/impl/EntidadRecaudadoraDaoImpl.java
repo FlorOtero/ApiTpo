@@ -56,4 +56,9 @@ public class EntidadRecaudadoraDaoImpl extends AbstractDao<EntidadRecaudadora> {
     public PreparedStatement create(EntidadRecaudadora entidadRecaudadora, Connection conn) throws SQLException {
         throw new UnsupportedOperationException("Unsupported operation create EntidadRecaudadora!");
     }
+
+    @Override
+    public PreparedStatement findBy(String field, String value, Connection conn) throws SQLException {
+        throw new UnsupportedOperationException("Find by is not supported on class EntidadRecaudadora!");
+    }
 }

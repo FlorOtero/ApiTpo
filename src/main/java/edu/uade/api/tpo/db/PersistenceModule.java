@@ -6,27 +6,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
 
 public class PersistenceModule {
 
     private static final Logger logger = LoggerFactory.getLogger(PersistenceModule.class);
     private final DataSource dataSource;
     private static PersistenceModule instance;
-    private static final Properties databaseProperties;
-
-    static {
-        databaseProperties = new Properties();
-        try {
-            InputStream input = ClassLoader.getSystemResourceAsStream("database.properties");
-            databaseProperties.load(input);
-        } catch (IOException e) {
-            logger.error("Database properties not found, exiting...", e);
-            System.exit(0);
-        }
-    }
 
     private PersistenceModule() {
 
@@ -34,9 +19,9 @@ public class PersistenceModule {
         HikariConfig config = new HikariConfig();
 
         config.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        config.setJdbcUrl(databaseProperties.getProperty("tpo.database.jdbc.url"));
-        config.setUsername(databaseProperties.getProperty("tpo.database.jdbc.username"));
-        config.setPassword(databaseProperties.getProperty("tpo.database.jdbc.password"));
+        config.setJdbcUrl("jdbc:mysql://api-tpo.ck6ywww2iqip.sa-east-1.rds.amazonaws.com:3306/apitpo");
+        config.setUsername("master");
+        config.setPassword("vWAJjK7CJgKAR97H");
         config.addDataSourceProperty("cachePrepStmts", "true");
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
@@ -46,7 +31,6 @@ public class PersistenceModule {
         config.addDataSourceProperty("rewriteBatchedStatements", "true");
         config.addDataSourceProperty("cacheResultSetMetadata", "true");
         config.addDataSourceProperty("cacheServerConfiguration", "true");
-        config.addDataSourceProperty("elideSetAutoCommits", "true");
         config.addDataSourceProperty("maintainTimeStats", "false");
         config.addDataSourceProperty("serverTimezone", "GMT-3");
         config.setMinimumIdle(5);

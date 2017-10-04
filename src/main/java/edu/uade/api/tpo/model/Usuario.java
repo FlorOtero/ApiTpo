@@ -15,23 +15,11 @@ public class Usuario implements Serializable {
     private List<Publicacion> publicaciones;
     private String mail;
     private List<Calificacion> calificaciones;
+    private Estado estado;
 
     public Usuario() {
-
-    }
-
-    public Usuario(String nombreUsuario, String nombre, String apellido, String mail, Domicilio domicilio, Password password,
-                   CuentaCorriente cuentaCorriente, List<Publicacion> publicaciones, List<Calificacion> calificaciones) {
-        super();
-        this.nombreUsuario = nombreUsuario;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.domicilio = domicilio;
-        this.password = password;
-        this.cuentaCorriente = cuentaCorriente;
-        this.publicaciones = publicaciones;
-        this.mail = mail;
-        this.calificaciones = calificaciones;
+        this.cuentaCorriente = new CuentaCorriente();
+        this.estado = Estado.ACTIVO;
     }
 
     public String getNombreUsuario() {
@@ -112,6 +100,14 @@ public class Usuario implements Serializable {
 
     public List<Calificacion> getCalificaciones() {
         return calificaciones;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
     }
 
     public void setCalificaciones(List<Calificacion> calificaciones) {

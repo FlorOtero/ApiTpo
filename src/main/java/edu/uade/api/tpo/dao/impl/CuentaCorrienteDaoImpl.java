@@ -36,7 +36,8 @@ public class CuentaCorrienteDaoImpl extends AbstractDao<CuentaCorriente> {
     public PreparedStatement create(CuentaCorriente cuentaCorriente, Connection conn) throws SQLException {
         String query = "INSERT INTO " + schema + ".cuentas_corrientes VALUES(?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
-        ps.setString(1, UUIDUtils.generate());
+        cuentaCorriente.setId(UUIDUtils.generate());
+        ps.setString(1, cuentaCorriente.getId());
         ps.setFloat(2, cuentaCorriente.getSaldo());
         return ps;
     }
@@ -60,5 +61,10 @@ public class CuentaCorrienteDaoImpl extends AbstractDao<CuentaCorriente> {
             cuentaCorriente.setTransacciones(TransaccionDaoImpl.getInstance().findByCuentaCorriente(cuentaCorriente.getId()));
         }
         return cuentaCorriente;
+    }
+
+    @Override
+    public PreparedStatement findBy(String field, String value, Connection conn) throws SQLException {
+        throw new UnsupportedOperationException("Find by is not supported on class CuentaCorriente!");
     }
 }
