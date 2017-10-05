@@ -2,6 +2,7 @@ package edu.uade.api.tpo.dao.impl;
 
 import edu.uade.api.tpo.dao.AbstractManyToOneDao;
 import edu.uade.api.tpo.dao.ManyToOneDao;
+import edu.uade.api.tpo.model.MedioPago;
 import edu.uade.api.tpo.model.Publicacion;
 import edu.uade.api.tpo.util.UUIDUtils;
 
@@ -35,6 +36,11 @@ public class PublicacionDaoImpl extends AbstractManyToOneDao<Publicacion> {
         ps.setString(6, String.valueOf(publicacion.getEstado()));
         ps.setString(7, publicacion.getArticulo().getId());
         ps.setFloat(8, publicacion.getComision());
+        if (publicacion.getMediosPago() != null && !publicacion.getMediosPago().isEmpty()) {
+            for (MedioPago medioPago : publicacion.getMediosPago()) {
+                MedioPagoDaoImpl.getInstance().addMedioPagoToPublicacion(publicacion.getId(), medioPago);
+            }
+        }
         return ps;
     }
 
@@ -68,7 +74,9 @@ public class PublicacionDaoImpl extends AbstractManyToOneDao<Publicacion> {
         ps.setString(6, publicacion.getArticulo().getId());
         ps.setFloat(7, publicacion.getComision());
         ps.setString(8, publicacion.getId());
-
+        if (publicacion.getMediosPago() != null && !publicacion.getMediosPago().isEmpty()) {
+            MedioPagoDaoImpl.getInstance().updateMediosPagoToPublicacion(publicacion.getId(), publicacion.getMediosPago());
+        }
         return ps;
     }
 
@@ -99,6 +107,7 @@ public class PublicacionDaoImpl extends AbstractManyToOneDao<Publicacion> {
         publicacion.setEstado(rs.getString("estado").charAt(0));
         publicacion.setArticulo(ArticuloDaoImpl.getInstance().findById(rs.getString("articulo_id")));
         publicacion.setComision(rs.getFloat("comision"));
+        publicacion.setMediosPago(MedioPagoDaoImpl.getInstance().findByPublicacionId(publicacion.getId()));
         return publicacion;
     }
 
