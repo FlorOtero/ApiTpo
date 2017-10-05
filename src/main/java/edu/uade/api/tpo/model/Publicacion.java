@@ -2,6 +2,7 @@ package edu.uade.api.tpo.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class Publicacion implements Serializable {
     private String id;
@@ -12,6 +13,7 @@ public class Publicacion implements Serializable {
     private float comision;
     private Articulo articulo;
     private String usuarioId;
+    private List<MedioPago> mediosPago;
 
     public void ofertar(float monto, String nombreUsuario) {
 
@@ -83,5 +85,13 @@ public class Publicacion implements Serializable {
 
     public void setUsuarioId(String usuarioId) {
         this.usuarioId = usuarioId;
+    }
+
+    public List<MedioPago> getMediosPago() {
+        return mediosPago;
+    }
+
+    public void setMediosPago(List<MedioPago> mediosPago) {
+        this.mediosPago = mediosPago;
     }
 }

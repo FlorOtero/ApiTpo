@@ -2,6 +2,7 @@ package edu.uade.api.tpo.dao.impl;
 
 import edu.uade.api.tpo.dao.AbstractManyToOneDao;
 import edu.uade.api.tpo.dao.ManyToOneDao;
+import edu.uade.api.tpo.model.MedioPago;
 import edu.uade.api.tpo.model.Subasta;
 import edu.uade.api.tpo.util.UUIDUtils;
 
@@ -47,6 +48,11 @@ public class SubastaDaoImpl extends AbstractManyToOneDao<Subasta> {
         ps.setFloat(9, subasta.getPrecioMin());
         ps.setInt(10, subasta.getDiasVigencia());
         ps.setFloat(11, subasta.getPrecioInicial());
+        if (subasta.getMediosPago() != null && !subasta.getMediosPago().isEmpty()) {
+            for (MedioPago medioPago : subasta.getMediosPago()) {
+                MedioPagoDaoImpl.getInstance().addMedioPagoToSubasta(subasta.getId(), medioPago);
+            }
+        }
         return ps;
     }
 
@@ -75,7 +81,9 @@ public class SubastaDaoImpl extends AbstractManyToOneDao<Subasta> {
         ps.setInt(9, subasta.getDiasVigencia());
         ps.setFloat(10, subasta.getPrecioInicial());
         ps.setString(11, subasta.getId());
-
+        if (subasta.getMediosPago() != null && !subasta.getMediosPago().isEmpty()) {
+            MedioPagoDaoImpl.getInstance().updateMediosPagoToSubasta(subasta.getId(), subasta.getMediosPago());
+        }
         return ps;
     }
 
@@ -109,6 +117,7 @@ public class SubastaDaoImpl extends AbstractManyToOneDao<Subasta> {
         subasta.setPrecioMin(rs.getFloat("precio_min"));
         subasta.setDiasVigencia(rs.getInt("dias_vigencia"));
         subasta.setPrecioInicial(rs.getFloat("precio_inicial"));
+        subasta.setMediosPago(MedioPagoDaoImpl.getInstance().findBySubastaId(subasta.getId()));
         return subasta;
     }
 
