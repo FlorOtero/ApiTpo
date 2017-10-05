@@ -1,8 +1,8 @@
 package edu.uade.api.tpo.model;
 
-import java.io.Serializable;
+import edu.uade.api.tpo.db.Persistible;
 
-public class Garantia implements Serializable {
+public class Garantia implements Persistible {
 
     private String id;
     private int cantidad;

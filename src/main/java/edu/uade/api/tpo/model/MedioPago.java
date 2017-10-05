@@ -1,8 +1,8 @@
 package edu.uade.api.tpo.model;
 
-import java.io.Serializable;
+import edu.uade.api.tpo.db.Persistible;
 
-public enum MedioPago implements Serializable {
+public enum MedioPago implements Persistible {
 
     EFECTIVO("0ea15b57-85ad-49b3-af04-080dac974678"),
     TRANSFERENCIA_BANCARIA("b166bf70-0ea9-4fc2-b803-40fd6e7cb8b8"),
@@ -16,5 +16,10 @@ public enum MedioPago implements Serializable {
 
     public String getId() {
         return id;
+    }
+
+    @Override
+    public void setId(String id) {
+        this.id = id;
     }
 }

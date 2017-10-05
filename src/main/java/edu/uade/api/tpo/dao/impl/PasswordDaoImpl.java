@@ -35,7 +35,6 @@ public class PasswordDaoImpl extends AbstractDao<Password> {
         String passCifrada = Encriptacion.cifrarBase64(password.getValor());
     	String query = "INSERT INTO " + schema + ".passwords VALUES(?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
-        password.setId(UUIDUtils.generate());
         ps.setString(1, password.getId());
         ps.setString(2, passCifrada);
         ps.setTimestamp(3, new Timestamp(password.getFechaModificacion().getTime()));

@@ -37,7 +37,7 @@ public class CompraEfectivoDaoImpl extends AbstractManyToOneDao<CompraEfectivo> 
     public PreparedStatement create(CompraEfectivo compraEfectivo, Connection conn) throws SQLException {
         String query = "INSERT INTO " + schema + ".compras_efectivo VALUES(?,?,?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
-        ps.setString(1, UUIDUtils.generate());
+        ps.setString(1, compraEfectivo.getId());
         ps.setString(2, compraEfectivo.getContraparte().getId());
         ps.setString(3, compraEfectivo.getPublicacion().getId());
         ps.setString(4, String.valueOf(compraEfectivo.getEstado()));

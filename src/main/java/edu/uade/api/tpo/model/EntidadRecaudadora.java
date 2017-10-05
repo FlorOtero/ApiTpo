@@ -1,8 +1,8 @@
 package edu.uade.api.tpo.model;
 
-import java.io.Serializable;
+import edu.uade.api.tpo.db.Persistible;
 
-public abstract class EntidadRecaudadora implements Serializable {
+public abstract class EntidadRecaudadora implements Persistible {
 
     private String id;
 

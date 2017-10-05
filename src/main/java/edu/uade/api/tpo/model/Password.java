@@ -1,9 +1,10 @@
 package edu.uade.api.tpo.model;
 
-import java.io.Serializable;
+import edu.uade.api.tpo.db.Persistible;
+
 import java.util.Date;
 
-public class Password implements Serializable {
+public class Password implements Persistible {
 
     private String id;
     private String valor;

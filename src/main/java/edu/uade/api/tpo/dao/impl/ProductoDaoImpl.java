@@ -36,7 +36,7 @@ public class ProductoDaoImpl extends AbstractDao<Producto> {
     public PreparedStatement create(Producto producto, Connection conn) throws SQLException {
         String query = "INSERT INTO " + schema + ".productos VALUES(?,?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
-        ps.setString(1, UUIDUtils.generate());
+        ps.setString(1, producto.getId());
         ps.setString(2, producto.getNombre());
         ps.setString(3, producto.getDescripcion());
         ps.setString(4, producto.toImagesTokenized());

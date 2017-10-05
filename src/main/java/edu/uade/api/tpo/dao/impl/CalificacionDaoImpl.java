@@ -35,7 +35,7 @@ public class CalificacionDaoImpl extends AbstractManyToOneDao<Calificacion> {
     public PreparedStatement create(Calificacion calificacion, Connection conn) throws SQLException {
         String query = "INSERT INTO " + schema + ".calificaciones VALUES(?,?,?,?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
-        ps.setString(1, UUIDUtils.generate());
+        ps.setString(1, calificacion.getId());
         ps.setInt(2, calificacion.getCalificacion());
         ps.setString(3, calificacion.getObservaciones());
         ps.setTimestamp(4, new Timestamp(calificacion.getFecha().getTime()));

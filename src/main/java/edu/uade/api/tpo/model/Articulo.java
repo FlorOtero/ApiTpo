@@ -1,13 +1,13 @@
 package edu.uade.api.tpo.model;
 
 import com.google.common.base.Strings;
+import edu.uade.api.tpo.db.Persistible;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-public abstract class Articulo implements Serializable {
+public abstract class Articulo implements Persistible {
 
     private String id;
     private String nombre;

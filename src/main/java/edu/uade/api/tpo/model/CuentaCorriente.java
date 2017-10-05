@@ -1,10 +1,11 @@
 package edu.uade.api.tpo.model;
 
-import java.io.Serializable;
+import edu.uade.api.tpo.db.Persistible;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class CuentaCorriente implements Serializable {
+public class CuentaCorriente implements Persistible {
 
     private String id;
     private float saldo;
