@@ -4,7 +4,6 @@ import edu.uade.api.tpo.dao.AbstractManyToOneDao;
 import edu.uade.api.tpo.dao.ManyToOneDao;
 import edu.uade.api.tpo.model.MedioPago;
 import edu.uade.api.tpo.model.Subasta;
-import edu.uade.api.tpo.util.UUIDUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -118,6 +117,7 @@ public class SubastaDaoImpl extends AbstractManyToOneDao<Subasta> {
         subasta.setDiasVigencia(rs.getInt("dias_vigencia"));
         subasta.setPrecioInicial(rs.getFloat("precio_inicial"));
         subasta.setMediosPago(MedioPagoDaoImpl.getInstance().findBySubastaId(subasta.getId()));
+        subasta.setOfertas(OfertaDaoImpl.getInstance().findManyBy("subasta_id", subasta.getId()));
         return subasta;
     }
 

@@ -1,33 +1,54 @@
 package edu.uade.api.tpo.model;
 
+import edu.uade.api.tpo.db.Persistible;
+
 import java.util.Date;
 
-public class Oferta {
-	private float monto;
-	private Date fecha;
-	private Usuario usuario;
+public class Oferta implements Persistible {
 
-	public float getMonto() {
-		return monto;
-	}
+    private String id;
+    private float monto;
+    private Date fecha;
+    private Usuario usuario;
+    private Subasta subasta;
 
-	public void setMonto(float monto) {
-		this.monto = monto;
-	}
+    public float getMonto() {
+        return monto;
+    }
 
-	public Date getFecha() {
-		return fecha;
-	}
+    public void setMonto(float monto) {
+        this.monto = monto;
+    }
 
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
-	}
+    public Date getFecha() {
+        return fecha;
+    }
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Subasta getSubasta() {
+        return subasta;
+    }
+
+    public void setSubasta(Subasta subasta) {
+        this.subasta = subasta;
+    }
 }
