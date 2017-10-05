@@ -37,7 +37,7 @@ public class ServicioDaoImpl extends AbstractDao<Servicio> {
     public PreparedStatement create(Servicio servicio, Connection conn) throws SQLException {
         String query = "INSERT INTO " + schema + ".servicios VALUES(?,?,?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
-        ps.setString(1, UUIDUtils.generate());
+        ps.setString(1, servicio.getId());
         ps.setString(2, servicio.getNombre());
         ps.setString(3, servicio.getDescripcion());
         ps.setString(4, servicio.toImagesTokenized());

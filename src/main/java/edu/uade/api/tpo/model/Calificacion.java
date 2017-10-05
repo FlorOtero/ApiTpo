@@ -1,9 +1,10 @@
 package edu.uade.api.tpo.model;
 
-import java.io.Serializable;
+import edu.uade.api.tpo.db.Persistible;
+
 import java.util.Date;
 
-public class Calificacion implements Serializable {
+public class Calificacion implements Persistible {
 
     private String id;
     private Transaccion transaccion;

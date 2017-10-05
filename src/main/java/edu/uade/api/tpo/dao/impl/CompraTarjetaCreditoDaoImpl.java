@@ -37,7 +37,7 @@ public class CompraTarjetaCreditoDaoImpl extends AbstractManyToOneDao<CompraTarj
     public PreparedStatement create(CompraTarjetaCredito compraTarjetaCredito, Connection conn) throws SQLException {
         String query = "INSERT INTO " + schema + ".compras_tarjeta_credito VALUES(?,?,?,?,?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
-        ps.setString(1, UUIDUtils.generate());
+        ps.setString(1, compraTarjetaCredito.getId());
         ps.setString(2, compraTarjetaCredito.getContraparte().getId());
         ps.setString(3, compraTarjetaCredito.getPublicacion().getId());
         ps.setString(4, String.valueOf(compraTarjetaCredito.getEstado()));

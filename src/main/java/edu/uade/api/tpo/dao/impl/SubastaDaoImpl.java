@@ -37,7 +37,7 @@ public class SubastaDaoImpl extends AbstractManyToOneDao<Subasta> {
     public PreparedStatement create(Subasta subasta, Connection conn) throws SQLException {
         String query = "INSERT INTO " + schema + ".subastas VALUES (?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
-        ps.setString(1, UUIDUtils.generate());
+        ps.setString(1, subasta.getId());
         ps.setString(2, subasta.getUsuarioId());
         ps.setTimestamp(3, new Timestamp(subasta.getFechaDesde().getTime()));
         ps.setTimestamp(4, new Timestamp(subasta.getFechaHasta().getTime()));

@@ -28,7 +28,7 @@ public class PublicacionDaoImpl extends AbstractManyToOneDao<Publicacion> {
     public PreparedStatement create(Publicacion publicacion, Connection conn) throws SQLException {
         String query = "INSERT INTO " + schema + ".publicaciones VALUES(?,?,?,?,?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
-        ps.setString(1, UUIDUtils.generate());
+        ps.setString(1, publicacion.getId());
         ps.setString(2, publicacion.getUsuarioId());
         ps.setTimestamp(3, new Timestamp(publicacion.getFechaDesde().getTime()));
         ps.setTimestamp(4, new Timestamp(publicacion.getFechaHasta().getTime()));

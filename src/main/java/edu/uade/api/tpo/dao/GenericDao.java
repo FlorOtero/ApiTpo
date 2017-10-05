@@ -1,9 +1,10 @@
 package edu.uade.api.tpo.dao;
 
-import java.io.Serializable;
+import edu.uade.api.tpo.db.Persistible;
+
 import java.sql.SQLException;
 
-public interface GenericDao<T extends Serializable> {
+public interface GenericDao<T extends Persistible> {
 
     public T findById(String id) throws SQLException;
 

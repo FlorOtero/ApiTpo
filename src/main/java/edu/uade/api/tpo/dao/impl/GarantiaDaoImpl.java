@@ -37,7 +37,7 @@ public class GarantiaDaoImpl extends AbstractDao<Garantia> {
     public PreparedStatement create(Garantia garantia, Connection conn) throws SQLException {
         String query = "INSERT INTO " + schema + ".garantias VALUES(?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
-        ps.setString(1, UUIDUtils.generate());
+        ps.setString(1, garantia.getId());
         ps.setInt(2, garantia.getCantidad());
         ps.setString(3, garantia.getTipo().toString());
         return ps;

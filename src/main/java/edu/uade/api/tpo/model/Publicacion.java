@@ -1,10 +1,11 @@
 package edu.uade.api.tpo.model;
 
-import java.io.Serializable;
+import edu.uade.api.tpo.db.Persistible;
+
 import java.util.Date;
 import java.util.List;
 
-public class Publicacion implements Serializable {
+public class Publicacion implements Persistible {
     private String id;
     private Date fechaDesde;
     private Date fechaHasta;

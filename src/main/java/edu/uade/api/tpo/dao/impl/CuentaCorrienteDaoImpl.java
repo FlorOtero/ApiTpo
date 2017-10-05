@@ -36,7 +36,6 @@ public class CuentaCorrienteDaoImpl extends AbstractDao<CuentaCorriente> {
     public PreparedStatement create(CuentaCorriente cuentaCorriente, Connection conn) throws SQLException {
         String query = "INSERT INTO " + schema + ".cuentas_corrientes VALUES(?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
-        cuentaCorriente.setId(UUIDUtils.generate());
         ps.setString(1, cuentaCorriente.getId());
         ps.setFloat(2, cuentaCorriente.getSaldo());
         return ps;

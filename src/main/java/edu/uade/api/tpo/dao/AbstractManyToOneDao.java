@@ -1,13 +1,14 @@
 package edu.uade.api.tpo.dao;
 
-import java.io.Serializable;
+import edu.uade.api.tpo.db.Persistible;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-public abstract class AbstractManyToOneDao<T extends Serializable> extends AbstractDao<T> implements ManyToOneDao<T> {
+public abstract class AbstractManyToOneDao<T extends Persistible> extends AbstractDao<T> implements ManyToOneDao<T> {
 
     @Override
     public List<T> findManyBy(String field, String value) throws SQLException {

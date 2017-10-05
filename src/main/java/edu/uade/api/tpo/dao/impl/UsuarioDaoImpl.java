@@ -56,7 +56,7 @@ public class UsuarioDaoImpl extends AbstractDao<Usuario> {
 
         String query = "INSERT INTO " + schema + ".usuarios VALUES(?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
-        ps.setString(1, UUIDUtils.generate());
+        ps.setString(1, usuario.getId());
         ps.setString(2, usuario.getNombreUsuario());
         ps.setString(3, usuario.getNombre());
         ps.setString(4, usuario.getApellido());
