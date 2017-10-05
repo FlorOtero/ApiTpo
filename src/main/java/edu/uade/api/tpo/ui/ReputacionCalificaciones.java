@@ -18,6 +18,8 @@ import java.awt.Component;
 import java.awt.Color;
 import java.awt.Button;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ReputacionCalificaciones {
 
@@ -59,11 +61,11 @@ public class ReputacionCalificaciones {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 224));
-		panel.setBounds(0, 0, 434, 291);
+		panel.setBounds(0, 0, 444, 308);
 		frmReputacionCalificaciones.getContentPane().add(panel);
 		
 		JLabel lblReputacion = new JLabel("Reputacion:");
-		lblReputacion.setBounds(93, 11, 71, 23);
+		lblReputacion.setBounds(71, 11, 93, 23);
 		
 		JLabel lblreputacion = new JLabel("(reputacion)");
 		lblreputacion.setBounds(203, 13, 89, 19);
@@ -72,7 +74,7 @@ public class ReputacionCalificaciones {
 		scrollPane.setBounds(71, 70, 297, 145);
 		
 		JLabel lblCalificaciones = new JLabel("Calificaciones:");
-		lblCalificaciones.setBounds(93, 41, 71, 23);
+		lblCalificaciones.setBounds(71, 41, 93, 23);
 		
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
@@ -91,7 +93,17 @@ public class ReputacionCalificaciones {
 		panel.add(lblCalificaciones);
 		
 		JButton btnVolverAMenu = new JButton("Volver a menu principal");
+		btnVolverAMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MenuPrincipal menu = new MenuPrincipal();
+				menu.setVisible(true);
+				frmReputacionCalificaciones.dispose();
+			}
+		});
 		btnVolverAMenu.setBounds(115, 242, 177, 23);
 		panel.add(btnVolverAMenu);
+	}
+	public void setVisible(boolean isVisible) {
+		this.frmReputacionCalificaciones.setVisible(isVisible);
 	}
 }

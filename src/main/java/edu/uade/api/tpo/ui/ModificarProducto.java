@@ -105,7 +105,7 @@ public class ModificarProducto {
 		JButton btnPublicar = new JButton("Modificar");
 		btnPublicar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showConfirmDialog(null, "Se ha modificado con exito");
+				JOptionPane.showConfirmDialog(null, "Su producto se ha modificado con exito", "Aviso", JOptionPane.PLAIN_MESSAGE);
 				MenuPrincipal menuP = new MenuPrincipal();
 				menuP.setVisible(true);
 				frmModificarProducto.dispose();

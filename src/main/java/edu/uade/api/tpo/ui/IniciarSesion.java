@@ -9,6 +9,8 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class IniciarSesion {
 
@@ -51,7 +53,7 @@ public class IniciarSesion {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 224));
-		panel.setBounds(0, 0, 434, 261);
+		panel.setBounds(0, 0, 450, 278);
 		frmIniciarSesion.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -73,11 +75,28 @@ public class IniciarSesion {
 		panel.add(passwordField);
 		
 		JButton btnAceptar = new JButton("Aceptar");
+		btnAceptar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MenuPrincipal menu = new MenuPrincipal();
+				menu.setVisible(true);
+				frmIniciarSesion.dispose();
+			}
+		});
 		btnAceptar.setBounds(81, 168, 103, 23);
 		panel.add(btnAceptar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				OpcionIngreso opcion = new OpcionIngreso();
+				opcion.setVisible(true);
+				frmIniciarSesion.dispose();
+			}
+		});
 		btnCancelar.setBounds(252, 168, 103, 23);
 		panel.add(btnCancelar);
+	}
+	public void setVisible(boolean isVisible) {
+		this.frmIniciarSesion.setVisible(isVisible);
 	}
 }

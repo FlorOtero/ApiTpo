@@ -127,7 +127,7 @@ public class RegistrarUsuario {
 				user.setNombreUsuario(textField_3.getText());
 				try {
 					SistemaUsuarios.getInstance().altaUsuario(user);
-					JOptionPane.showMessageDialog(null, "Se ha creado su usuario con exito");
+					JOptionPane.showMessageDialog(null, "Se ha creado su usuario con exito", "Aviso", JOptionPane.PLAIN_MESSAGE);
 				} catch(BusinessException e1) {
 					//TODO Manejar la exception y mostrar un mensaje de error cuando existe el usuario
 				}
@@ -161,15 +161,18 @@ public class RegistrarUsuario {
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int rta= JOptionPane.showConfirmDialog(null,"Seguro que quiere salir?");
+				int rta= JOptionPane.showConfirmDialog(null,"Seguro que quiere salir?", "Aviso", JOptionPane.YES_NO_OPTION);
 				if (JOptionPane.OK_OPTION == rta) {
-					MenuPrincipal menu = new MenuPrincipal();
-					menu.setVisible(true);
+					OpcionIngreso ingreso = new OpcionIngreso();
+					ingreso.setVisible(true);
 					frmRegistrarse.dispose();
 				}
 			}
 		});
 		btnCancelar.setBounds(379, 341, 117, 29);
 		panel.add(btnCancelar);
+	}
+	public void setVisible(boolean isVisible) {
+		this.frmRegistrarse.setVisible(isVisible);
 	}
 }

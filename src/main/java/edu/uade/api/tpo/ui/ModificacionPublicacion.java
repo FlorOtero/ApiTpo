@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
@@ -82,6 +83,11 @@ public class ModificacionPublicacion extends JFrame {
 		});
 		rdbtnNewRadioButton11.setBounds(35, 57, 141, 23);
 		frmModificar.getContentPane().add(rdbtnNewRadioButton11);
+		
+		ButtonGroup group = new ButtonGroup();
+		group.add(rdbtnNewRadioButton);
+		group.add(rdbtnNewRadioButton1);
+		group.add(rdbtnNewRadioButton11);
 				
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {

@@ -103,7 +103,7 @@ public class ModificacionServicio {
 		JButton btnModificar = new JButton("Modificar");
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showConfirmDialog(null, "Se ha modificado con exito");
+				JOptionPane.showConfirmDialog(null, "Su servicio se ha modificado con exito", "Aviso", JOptionPane.PLAIN_MESSAGE);
 				MenuPrincipal menuP = new MenuPrincipal();
 				menuP.setVisible(true);
 				frmModificarServicio.dispose();
@@ -113,6 +113,13 @@ public class ModificacionServicio {
 		frmModificarServicio.getContentPane().add(btnModificar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MenuPrincipal menu = new MenuPrincipal();
+				menu.setVisible(true);
+				frmModificarServicio.dispose();
+			}
+		});
 		btnCancelar.setBounds(313, 508, 117, 29);
 		frmModificarServicio.getContentPane().add(btnCancelar);
 		

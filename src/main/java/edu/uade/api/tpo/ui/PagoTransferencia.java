@@ -55,7 +55,7 @@ public class PagoTransferencia {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 224));
-		panel.setBounds(0, 0, 434, 261);
+		panel.setBounds(0, 0, 450, 278);
 		frmPagoConTransferencia.getContentPane().add(panel);
 		panel.setLayout(null);
 		

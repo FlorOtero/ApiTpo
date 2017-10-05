@@ -106,7 +106,7 @@ public class NuevoProducto {
 		JButton btnPublicar = new JButton("Publicar");
 		btnPublicar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showConfirmDialog(null, "Se ha publicado con exito");
+				JOptionPane.showConfirmDialog(null, "Se ha publicado con exito","Confirmacion",JOptionPane.PLAIN_MESSAGE);
 				MenuPrincipal menuP = new MenuPrincipal();
 				menuP.setVisible(true);
 				frmNuevoProducto.dispose();

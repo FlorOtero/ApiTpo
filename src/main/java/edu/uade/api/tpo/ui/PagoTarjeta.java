@@ -60,7 +60,7 @@ public class PagoTarjeta {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 224));
-		panel.setBounds(0, 0, 434, 301);
+		panel.setBounds(0, 0, 450, 301);
 		frmPagoConTarjeta.getContentPane().add(panel);
 		
 		JLabel lblNumeroDeTarjeta = new JLabel("Numero de tarjeta:");

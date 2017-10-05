@@ -59,9 +59,9 @@ public class BajaPublicacion {
 		JButton btnNewButton = new JButton("Eliminar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int rta= JOptionPane.showConfirmDialog(null,"Esta seguro de que quiere eliminar la publicación?");
+				int rta= JOptionPane.showConfirmDialog(null,"Esta seguro de que quiere eliminar la publicación?", "Aviso", JOptionPane.OK_CANCEL_OPTION);
 				if (JOptionPane.OK_OPTION == rta) {
-					JOptionPane.showMessageDialog(null, "Se ha eliminado su publicación");
+					JOptionPane.showConfirmDialog(null,"Su publicacion se ha eliminado con exito","Confirmacion",JOptionPane.PLAIN_MESSAGE);
 					MenuPrincipal menu = new MenuPrincipal();
 					menu.setVisible(true);
 					frmEliminarPublicacion.dispose();
@@ -75,7 +75,7 @@ public class BajaPublicacion {
 		JButton btnNewButton_1 = new JButton("Cancelar");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int rta= JOptionPane.showConfirmDialog(null,"Seguro que quiere salir?");
+				int rta= JOptionPane.showConfirmDialog(null,"Seguro que quiere salir?", "Aviso", JOptionPane.OK_CANCEL_OPTION);
 				if (JOptionPane.OK_OPTION == rta) {
 					MenuPrincipal menu = new MenuPrincipal();
 					menu.setVisible(true);

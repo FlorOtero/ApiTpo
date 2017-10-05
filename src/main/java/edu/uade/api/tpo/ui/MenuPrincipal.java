@@ -42,6 +42,7 @@ public class MenuPrincipal {
 		frmMenuPrincipal.getContentPane().setBackground(new Color(255, 255, 224));
 		frmMenuPrincipal.getContentPane().setLayout(null);
 		frmMenuPrincipal.setBounds(100, 100, 544, 565);
+		frmMenuPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		textField = new JTextField();
 		textField.setBounds(176, 61, 273, 26);
@@ -65,21 +66,51 @@ public class MenuPrincipal {
 		JMenuItem mntmModificarCuenta = new JMenuItem("Modificar cuenta");
 		mntmModificarCuenta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				ModificarUsuario modificarUser = new ModificarUsuario();
+				modificarUser.setVisible(true);
+				frmMenuPrincipal.dispose();
 			}
 		});
 		mnMiCuenta.add(mntmModificarCuenta);
 		
 		JMenuItem mntmEliminarCuenta = new JMenuItem("Eliminar cuenta");
+		mntmEliminarCuenta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BajaUsuario bajaUser = new BajaUsuario();
+				bajaUser.setVisible(true);
+				frmMenuPrincipal.dispose();
+			}
+		});
 		mnMiCuenta.add(mntmEliminarCuenta);
 		
 		JMenuItem mntmEstadoCuentaCorriente = new JMenuItem("Estado cuenta corriente");
+		mntmEstadoCuentaCorriente.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EstadoCuentaCorriente estadoCuenta = new EstadoCuentaCorriente();
+				estadoCuenta.setVisible(true);
+				frmMenuPrincipal.dispose();
+			}
+		});
 		mnMiCuenta.add(mntmEstadoCuentaCorriente);
 		
 		JMenuItem mntmReputacion = new JMenuItem("Reputacion");
+		mntmReputacion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ReputacionCalificaciones reputacionUser = new ReputacionCalificaciones();
+				reputacionUser.setVisible(true);
+				frmMenuPrincipal.dispose();
+			}
+		});
 		mnMiCuenta.add(mntmReputacion);
 		
 		JMenuItem mntmCerrarSesion = new JMenuItem("Cerrar sesion");
+		mntmCerrarSesion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				OpcionIngreso opcion = new OpcionIngreso();
+				opcion.setVisible(true);
+				frmMenuPrincipal.dispose();
+			}
+		});
 		mnMiCuenta.add(mntmCerrarSesion);
 		
 		JMenu mnPublicaciones = new JMenu("Publicaciones");
@@ -114,25 +145,6 @@ public class MenuPrincipal {
 			}
 		});
 		mnPublicaciones.add(mntmEliminarPublicacion);
-		
-		JMenuItem mntmConsultaDeComisiones = new JMenuItem("Consulta de comisiones pagadas");
-		mnPublicaciones.add(mntmConsultaDeComisiones);
-		
-		JMenu mnConsultar = new JMenu("Consultar");
-		menuBar.add(mnConsultar);
-		
-		JMenuItem mntmCalificaciones = new JMenuItem("Calificaciones");
-		mnConsultar.add(mntmCalificaciones);
-		
-		
-		JMenuItem mntmTransaccionesConfirmadas = new JMenuItem("Transacciones confirmadas");
-		mnConsultar.add(mntmTransaccionesConfirmadas);
-		
-		JMenuItem mntmTransaccionesCanceladas = new JMenuItem("Transacciones canceladas");
-		mnConsultar.add(mntmTransaccionesCanceladas);
-		
-		JMenuItem mntmMovimientosCuentaCorriente = new JMenuItem("Movimientos Cuenta Corriente");
-		mnConsultar.add(mntmMovimientosCuentaCorriente);
 	}
 
 	public void setVisible(boolean isVisible) {

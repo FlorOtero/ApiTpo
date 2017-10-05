@@ -9,6 +9,7 @@ import javax.swing.JRadioButton;
 
 import edu.uade.api.tpo.model.Subasta;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -78,6 +79,12 @@ public class NuevaPublicacion {
 			}
 		});
 		rdbtnNuevaSubasta.setBounds(61, 191, 141, 23);
+		
+		ButtonGroup group = new ButtonGroup();
+		group.add(rdbtnNuevaSubasta);
+		group.add(rdbtnNuevoServicio);
+		group.add(rdbtnNuevoProducto);
+		
 		frmNuevaPublicacion.getContentPane().add(rdbtnNuevaSubasta);
 		
 		JButton btnSiguiente = new JButton("Siguiente");

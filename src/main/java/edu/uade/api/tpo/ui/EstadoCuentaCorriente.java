@@ -25,6 +25,8 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JScrollPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class EstadoCuentaCorriente {
 
@@ -67,7 +69,7 @@ public class EstadoCuentaCorriente {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 224));
-		panel.setBounds(0, 0, 434, 295);
+		panel.setBounds(0, 0, 450, 312);
 		frmEstadoDeCuenta.getContentPane().add(panel);
 		
 		JLabel lblTransaccionesAConsultar = new JLabel("Transacciones a consultar:");
@@ -96,6 +98,13 @@ public class EstadoCuentaCorriente {
 		JLabel lblmonto = new JLabel("(monto)");
 		
 		JButton btnVolverAMenu = new JButton("Volver a menu principal");
+		btnVolverAMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MenuPrincipal menu = new MenuPrincipal();
+				menu.setVisible(true);
+				frmEstadoDeCuenta.dispose();
+			}
+		});
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -141,5 +150,8 @@ public class EstadoCuentaCorriente {
 		panel.setLayout(gl_panel);
 		
 
+	}
+	public void setVisible(boolean isVisible) {
+		this.frmEstadoDeCuenta.setVisible(isVisible);
 	}
 }

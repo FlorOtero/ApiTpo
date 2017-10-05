@@ -10,7 +10,11 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
+
 import java.awt.Color;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ModificarUsuario {
 
@@ -52,7 +56,7 @@ public class ModificarUsuario {
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 224));
-		panel.setBounds(0, 0, 502, 299);
+		panel.setBounds(0, 0, 518, 316);
 		frmModificarUsuario.getContentPane().add(panel);
 		panel.setLayout(null);
 		
@@ -115,11 +119,29 @@ public class ModificarUsuario {
 		panel.add(dtrpnmostrarContrasea);
 		
 		JButton btnConfirmarModificacion = new JButton("Confirmar Modificacion");
+		btnConfirmarModificacion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MenuPrincipal menu = new MenuPrincipal();
+				JOptionPane.showConfirmDialog(null,"Su usuario se ha modificado con exito","Confirmacion",JOptionPane.PLAIN_MESSAGE);
+				menu.setVisible(true);
+				frmModificarUsuario.dispose();
+			}
+		});
 		btnConfirmarModificacion.setBounds(69, 252, 154, 23);
 		panel.add(btnConfirmarModificacion);
 		
 		JButton btnAceptar = new JButton("Cancelar");
+		btnAceptar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MenuPrincipal menu = new MenuPrincipal();
+				menu.setVisible(true);
+				frmModificarUsuario.dispose();
+			}
+		});
 		btnAceptar.setBounds(290, 252, 89, 23);
 		panel.add(btnAceptar);
+	}
+	public void setVisible(boolean isVisible) {
+		this.frmModificarUsuario.setVisible(isVisible);
 	}
 }
