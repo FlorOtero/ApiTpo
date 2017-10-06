@@ -73,4 +73,16 @@ public class SistemaUsuarios {
         }
         return u;
     }
+
+    public Usuario login(String nombreUsuario, String password) throws BusinessException {
+        Usuario usuario = this.buscarUsuario(nombreUsuario);
+        if(usuario == null) {
+            throw new BusinessException("El usuario no existe");
+        } else {
+            if(!password.equals(usuario.getPassword())) {
+                throw new BusinessException("La contraseña es incorrecta");
+            }
+        }
+        return usuario;
+    }
 }
