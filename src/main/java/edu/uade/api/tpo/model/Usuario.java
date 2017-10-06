@@ -20,7 +20,7 @@ public class Usuario implements Persistible {
 
     public Usuario() {
         this.cuentaCorriente = new CuentaCorriente();
-        this.estado = Estado.ACTIVO;
+        this.estado = Estado.A;
     }
 
     public String getNombreUsuario() {
