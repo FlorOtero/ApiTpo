@@ -4,10 +4,12 @@ import edu.uade.api.tpo.dao.GenericDao;
 import edu.uade.api.tpo.dao.impl.UsuarioDaoImpl;
 import edu.uade.api.tpo.exceptions.BusinessException;
 
+import edu.uade.api.tpo.exceptions.ExpiredPasswordException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
+import java.util.Calendar;
 
 public class SistemaUsuarios {
     private static final Logger logger = LoggerFactory.getLogger(SistemaUsuarios.class);
@@ -74,13 +76,20 @@ public class SistemaUsuarios {
         return u;
     }
 
-    public Usuario login(String nombreUsuario, String password) throws BusinessException {
+    public Usuario login(String nombreUsuario, String password) throws BusinessException, ExpiredPasswordException {
         Usuario usuario = this.buscarUsuario(nombreUsuario);
-        if(usuario == null) {
+        if (usuario == null) {
             throw new BusinessException("El usuario no existe");
         } else {
-            if(!password.equals(usuario.getPassword())) {
+            Password p = usuario.getPassword();
+            if (!password.equals(p.getValor())) {
                 throw new BusinessException("La contraseña es incorrecta");
+            } else {
+                Calendar cal = Calendar.getInstance();
+                cal.add(Calendar.DAY_OF_MONTH, -180);
+                if (cal.getTime().compareTo(p.getFechaModificacion()) > 0) {
+                    throw new ExpiredPasswordException("La contraseña ha expirado");
+                }
             }
         }
         return usuario;
