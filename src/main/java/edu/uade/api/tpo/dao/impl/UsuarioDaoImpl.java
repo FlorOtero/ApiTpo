@@ -5,7 +5,6 @@ import edu.uade.api.tpo.dao.GenericDao;
 import edu.uade.api.tpo.model.Estado;
 import edu.uade.api.tpo.model.Publicacion;
 import edu.uade.api.tpo.model.Usuario;
-import edu.uade.api.tpo.util.UUIDUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,7 +33,7 @@ public class UsuarioDaoImpl extends AbstractDao<Usuario> {
         String query = "SELECT * FROM " + schema + ".usuarios WHERE usuario_id = ? AND estado = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, id);
-        ps.setString(2, Estado.ACTIVO.getValue());
+        ps.setString(2, Estado.A.getVal());
         return ps;
     }
 
@@ -43,7 +42,7 @@ public class UsuarioDaoImpl extends AbstractDao<Usuario> {
         String query = "SELECT * FROM " + schema + ".usuarios WHERE " + field + " = ? AND estado = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, value);
-        ps.setString(2, Estado.ACTIVO.getValue());
+        ps.setString(2, Estado.A.getVal());
         return ps;
     }
 
@@ -64,7 +63,7 @@ public class UsuarioDaoImpl extends AbstractDao<Usuario> {
         ps.setString(6, usuario.getMail());
         ps.setString(7, usuario.getPassword().getId());
         ps.setString(8, usuario.getCuentaCorriente().getId());
-        ps.setString(9, usuario.getEstado().getValue());
+        ps.setString(9, usuario.getEstado().getVal());
         return ps;
     }
 
@@ -104,7 +103,7 @@ public class UsuarioDaoImpl extends AbstractDao<Usuario> {
         ps.setString(6, usuario.getPassword().getId());
         ps.setString(7, usuario.getCuentaCorriente().getId());
         ps.setString(8, usuario.getId());
-        ps.setString(9, usuario.getEstado().getValue());
+        ps.setString(9, usuario.getEstado().getVal());
 
         return ps;
     }
