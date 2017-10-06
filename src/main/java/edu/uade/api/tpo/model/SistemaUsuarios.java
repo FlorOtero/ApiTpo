@@ -79,8 +79,11 @@ public class SistemaUsuarios {
         if(usuario == null) {
             throw new BusinessException("El usuario no existe");
         } else {
-            if(!password.equals(usuario.getPassword())) {
+            Password p = usuario.getPassword();
+            if(!password.equals(p.getValor())) {
                 throw new BusinessException("La contraseña es incorrecta");
+            } else {
+                //p.getFechaModificacion()
             }
         }
         return usuario;
