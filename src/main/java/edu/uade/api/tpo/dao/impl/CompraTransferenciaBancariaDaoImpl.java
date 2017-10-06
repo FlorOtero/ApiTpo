@@ -4,7 +4,6 @@ import edu.uade.api.tpo.dao.AbstractManyToOneDao;
 import edu.uade.api.tpo.dao.ManyToOneDao;
 import edu.uade.api.tpo.model.CompraTransferenciaBancaria;
 import edu.uade.api.tpo.model.Publicacion;
-import edu.uade.api.tpo.util.UUIDUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -35,7 +34,7 @@ public class CompraTransferenciaBancariaDaoImpl extends AbstractManyToOneDao<Com
 
     @Override
     public PreparedStatement create(CompraTransferenciaBancaria compraTransferenciaBancaria, Connection conn) throws SQLException {
-        String query = "INSERT INTO " + schema + ".compras_transf_bancarias VALUES(?,?,?,?,?,?,?,?)";
+        String query = "INSERT INTO " + schema + ".compras_transf_bancaria VALUES(?,?,?,?,?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, compraTransferenciaBancaria.getId());
         ps.setString(2, compraTransferenciaBancaria.getContraparte().getId());
@@ -51,7 +50,7 @@ public class CompraTransferenciaBancariaDaoImpl extends AbstractManyToOneDao<Com
 
     @Override
     public PreparedStatement update(CompraTransferenciaBancaria compraTransferenciaBancaria, Connection conn) throws SQLException {
-        String query = "UPDATE " + schema + ".compras_transf_bancarias SET contraparte_id = ?, publicacion_id = ?, estado = ?, fecha = ?, entidad_recaudadora_id = ?, numero_cuenta = ?, cuenta_corriente_id = ? where compra_transf_bancaria_id = ?";
+        String query = "UPDATE " + schema + ".compras_transf_bancaria SET contraparte_id = ?, publicacion_id = ?, estado = ?, fecha = ?, entidad_recaudadora_id = ?, numero_cuenta = ?, cuenta_corriente_id = ? where compra_transf_bancaria_id = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, compraTransferenciaBancaria.getContraparte().getId());
         ps.setString(2, compraTransferenciaBancaria.getPublicacion().getId());
@@ -76,7 +75,7 @@ public class CompraTransferenciaBancariaDaoImpl extends AbstractManyToOneDao<Com
 
     @Override
     public PreparedStatement findManyBy(String field, String value, Connection conn) throws SQLException {
-        String query = "SELECT * FROM " + schema + ".compras_transf_bancarias WHERE " + field + " = ?";
+        String query = "SELECT * FROM " + schema + ".compras_transf_bancaria WHERE " + field + " = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, value);
         return ps;

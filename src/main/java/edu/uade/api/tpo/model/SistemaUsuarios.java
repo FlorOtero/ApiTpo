@@ -43,7 +43,7 @@ public class SistemaUsuarios {
     public void eliminarUsuario(String nombreUsuario) throws BusinessException {
         Usuario usuario = this.buscarUsuario(nombreUsuario);
         if(usuario!=null) {
-        	usuario.setEstado(Estado.INACTIVO);
+        	usuario.setEstado(Estado.I);
         	try {
         		usuarioDao.update(usuario);
         	} catch (SQLException e) {
