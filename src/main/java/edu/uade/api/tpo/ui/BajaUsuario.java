@@ -6,18 +6,29 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JTextField;
+
+import edu.uade.api.tpo.exceptions.BusinessException;
+import edu.uade.api.tpo.model.Password;
+import edu.uade.api.tpo.model.SistemaUsuarios;
+import edu.uade.api.tpo.model.Usuario;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 
 public class BajaUsuario {
 
 	private JFrame frmBajaUsuario;
 	private JTextField textField;
+	private JLabel lblmostrarApellido;
+	private JLabel lblmostrarNombre;
+	private JLabel lblmostrarMail;
+	private Usuario user;
 
 	/**
 	 * Launch the application.
@@ -71,32 +82,63 @@ public class BajaUsuario {
 		btnBuscar.setBounds(172, 65, 89, 23);
 		panel.add(btnBuscar);
 		
+		
+		
+		JButton btnRegistrarse = new JButton("Buscar");
+		btnRegistrarse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e)  { 
+				try {
+					user = SistemaUsuarios.getInstance().buscarUsuario(textField.getText());
+					lblmostrarApellido.setText(user.getApellido());
+					lblmostrarMail.setText(user.getMail());
+					lblmostrarNombre.setText(user.getNombre());
+					
+					JOptionPane.showMessageDialog(null, "Se ha encontrado su usuario con exito", "Aviso", JOptionPane.PLAIN_MESSAGE);
+				}
+				
+				finally  {
+//					catch(BusinessException e1) {
+//					//TODO Manejar la exception y mostrar un mensaje de error cuando no existe el usuario
+//				}
+				
+				}			}
+		});
+		
 		JLabel lblMail = new JLabel("E-Mail:");
 		lblMail.setBounds(105, 162, 71, 17);
 		panel.add(lblMail);
 		
-		JLabel lblmostrarMail = new JLabel("(mostrar apellido)");
-		lblmostrarMail.setBounds(217, 134, 100, 17);
-		panel.add(lblmostrarMail);
+		JLabel lblmostrarApellido = new JLabel("(mostrar apellido)");
+		lblmostrarApellido.setBounds(217, 134, 100, 17);
+		panel.add(lblmostrarApellido);
 		
 		JLabel lblDireccion = new JLabel("Apellido:");
 		lblDireccion.setBounds(105, 134, 85, 17);
 		panel.add(lblDireccion);
 		
-		JLabel lblmostrarDireccion = new JLabel("(mostrar email)");
-		lblmostrarDireccion.setBounds(217, 161, 89, 19);
-		panel.add(lblmostrarDireccion);
+		JLabel lblmostrarMail = new JLabel("(mostrar email)");
+		lblmostrarMail.setBounds(217, 161, 89, 19);
+		panel.add(lblmostrarMail);
 		
 		JButton btnConfirmar = new JButton("Confirmar");
-		btnConfirmar.addActionListener(new ActionListener() {
+		btnConfirmar.addActionListener(new ActionListener()  {
 			public void actionPerformed(ActionEvent e) {
+				try{
+				SistemaUsuarios.getInstance().eliminarUsuario(user.getNombreUsuario()) ;
+				
 				int rta= JOptionPane.showConfirmDialog(null,"Seguro que quiere dar de baja su usuario?", "Aviso", JOptionPane.OK_CANCEL_OPTION);
 				if (JOptionPane.OK_OPTION == rta) {
 					JOptionPane.showConfirmDialog(null,"Su usuario se ha eliminado con exito","Confirmacion",JOptionPane.PLAIN_MESSAGE);
 					OpcionIngreso opcion = new OpcionIngreso();
 					opcion.setVisible(true);
 					frmBajaUsuario.dispose();
+				} 
+				} 
+				catch(BusinessException e1) {
 				}
+				
+				
+			
 			}
 		});
 		btnConfirmar.setBounds(105, 214, 89, 23);
