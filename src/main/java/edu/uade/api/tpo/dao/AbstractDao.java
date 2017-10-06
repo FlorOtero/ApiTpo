@@ -9,11 +9,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public abstract class AbstractBaseDao<T extends Serializable> implements BaseDao<T> {
+public abstract class AbstractDao<T extends Serializable> implements GenericDao<T> {
 
     private DataSource dataSource;
+    protected String schema = "apitpo";
 
-    public AbstractBaseDao() {
+    public AbstractDao() {
         this.dataSource = PersistenceModule.getInstance().getDataSource();
     }
 
@@ -27,7 +28,8 @@ public abstract class AbstractBaseDao<T extends Serializable> implements BaseDao
     @Override
     public final T findById(String id) throws SQLException {
         try (Connection conn = this.getConnection(); PreparedStatement ps = findById(id, conn); ResultSet rs = ps.executeQuery()) {
-            return map(rs);
+            T t = map(rs);
+            return t;
         }
     }
 
@@ -38,7 +40,15 @@ public abstract class AbstractBaseDao<T extends Serializable> implements BaseDao
         }
     }
 
-    private Connection getConnection() throws SQLException {
+    @Override
+    public T findBy(String field, String value) throws SQLException {
+        try (Connection conn = this.getConnection(); PreparedStatement ps = findBy(field, value, conn); ResultSet rs = ps.executeQuery()) {
+            T t = map(rs);
+            return t;
+        }
+    }
+
+    protected Connection getConnection() throws SQLException {
         return this.dataSource.getConnection();
     }
 
@@ -49,5 +59,7 @@ public abstract class AbstractBaseDao<T extends Serializable> implements BaseDao
     public abstract T map(ResultSet rs) throws SQLException;
 
     public abstract PreparedStatement update(T t, Connection conn) throws SQLException;
+
+    public abstract PreparedStatement findBy(String field, String value, Connection conn) throws SQLException;
 
 }
