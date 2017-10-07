@@ -6,14 +6,14 @@ public enum EstadoTransaccion {
     A, //aprobada
 	C; //cancelada
 
-    private String val;
+    private char val;
 
     EstadoTransaccion() {}
 
-    EstadoTransaccion(String val) {
+    EstadoTransaccion(char val) {
         this.val = val;
     }
-    public String getVal() {
+    public char getVal() {
         return val;
     }
 }
