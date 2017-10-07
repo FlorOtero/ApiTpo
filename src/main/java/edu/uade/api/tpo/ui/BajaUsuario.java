@@ -83,9 +83,7 @@ public class BajaUsuario {
 		panel.add(btnBuscar);
 		
 		
-		
-		JButton btnRegistrarse = new JButton("Buscar");
-		btnRegistrarse.addActionListener(new ActionListener() {
+		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)  { 
 				try {
 					user = SistemaUsuarios.getInstance().buscarUsuario(textField.getText());
