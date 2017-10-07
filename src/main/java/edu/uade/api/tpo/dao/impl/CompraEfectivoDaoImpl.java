@@ -94,7 +94,7 @@ public class CompraEfectivoDaoImpl extends AbstractManyToOneDao<CompraEfectivo> 
             pub = SubastaDaoImpl.getInstance().findById(rs.getString("publicacion_id"));
         }
         compra.setPublicacion(pub);
-        compra.setEstado(rs.getString("estado").charAt(0));
+        compra.setEstadoByChar(rs.getString("estado").charAt(0));
         compra.setFecha(rs.getTimestamp("fecha"));
         compra.setCuentaCorrienteId(rs.getString("cuenta_corriente_id"));
 

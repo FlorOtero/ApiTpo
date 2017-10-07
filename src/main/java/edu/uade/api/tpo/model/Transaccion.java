@@ -35,6 +35,22 @@ public abstract class Transaccion implements Persistible {
     public void setEstado(EstadoTransaccion estado) {
         this.estado = estado;
     }
+    
+    public void setEstadoByChar(char e) {
+    		e = Character.toUpperCase(e);
+    		
+    		switch (e) {
+    			case 'A':
+    				this.setEstado(EstadoTransaccion.A);
+    			break;
+    			case 'C':
+    				this.setEstado(EstadoTransaccion.C);
+    			break;
+    			case 'P':
+    				this.setEstado(EstadoTransaccion.P);
+    			break;
+    		}
+    }
 
 	public Date getFecha() {
 		return fecha;

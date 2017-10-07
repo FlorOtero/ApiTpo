@@ -97,7 +97,7 @@ public class CompraTarjetaCreditoDaoImpl extends AbstractManyToOneDao<CompraTarj
             pub = SubastaDaoImpl.getInstance().findById(rs.getString("publicacion_id"));
         }
         compra.setPublicacion(pub);
-        compra.setEstado(rs.getString("estado").charAt(0));
+        compra.setEstadoByChar(rs.getString("estado").charAt(0));
         compra.setFecha(rs.getTimestamp("fecha"));
         compra.setEntidad(EntidadRecaudadoraDaoImpl.getInstance().findById(rs.getString("entidad_recaudadora_id")));
         compra.setNumeroTarjeta(rs.getString("numero_tarjeta"));
