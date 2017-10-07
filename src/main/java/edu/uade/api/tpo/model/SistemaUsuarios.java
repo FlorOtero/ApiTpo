@@ -76,13 +76,10 @@ public class SistemaUsuarios {
         return u;
     }
 
-    public boolean validarPassword(String password) throws InvalidPasswordException {
+    public void validarPassword(String password) throws InvalidPasswordException {
 
         String regex = "(?=.*[A-Z])(?=.*\\d)[\\w\\d]{8,20}";
-
-        if (Pattern.matches(regex, password)) {
-            return true;
-        } else {
+        if (!Pattern.matches(regex, password)) {
             throw new InvalidPasswordException("La contraseña ingresada es incorrecta.\nLa misma debe tener entre 8 y 20 caracteres, al menos un número y al menos una letra mayúscula.");
         }
     }
