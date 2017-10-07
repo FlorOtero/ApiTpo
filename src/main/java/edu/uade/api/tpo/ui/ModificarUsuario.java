@@ -2,6 +2,12 @@ package edu.uade.api.tpo.ui;
 
 import java.awt.EventQueue;
 
+import edu.uade.api.tpo.exceptions.BusinessException;
+import edu.uade.api.tpo.model.Domicilio;
+import edu.uade.api.tpo.model.Password;
+import edu.uade.api.tpo.model.SistemaUsuarios;
+import edu.uade.api.tpo.model.Usuario;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
@@ -11,15 +17,26 @@ import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
+import edu.uade.api.tpo.exceptions.BusinessException;
 
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.InputMethodListener;
+import java.util.Date;
+import java.awt.event.InputMethodEvent;
+import javax.swing.JPasswordField;
 
 public class ModificarUsuario {
 
 	private JFrame frmModificarUsuario;
 	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JTextField textField_3;
+	private JPasswordField passwordField;
+	private Usuario user;
+	private Domicilio domicilio;
 
 	/**
 	 * Launch the application.
@@ -53,7 +70,7 @@ public class ModificarUsuario {
 		frmModificarUsuario.setBounds(100, 100, 518, 338);
 		frmModificarUsuario.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmModificarUsuario.getContentPane().setLayout(null);
-		
+		JButton btnDomicilio = new JButton("Cambiar domicilio");
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 255, 224));
 		panel.setBounds(0, 0, 518, 316);
@@ -61,7 +78,7 @@ public class ModificarUsuario {
 		panel.setLayout(null);
 		
 		JLabel lblIngresarNombreDe = new JLabel("Ingresar nombre de usuario:");
-		lblIngresarNombreDe.setBounds(65, 22, 139, 20);
+		lblIngresarNombreDe.setBounds(43, 22, 180, 20);
 		panel.add(lblIngresarNombreDe);
 		
 		textField = new JTextField();
@@ -70,64 +87,70 @@ public class ModificarUsuario {
 		textField.setColumns(10);
 		
 		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String nombreUsuario= textField.getText();
+				try{
+					user= new Usuario();				
+					user= SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);	
+					textField_1.setText(user.getNombre());
+					textField_2.setText(user.getApellido());
+					textField_3.setText(user.getMail());
+					passwordField.setText(user.getNombre());
+					btnDomicilio.setEnabled(true);
+				}catch(Exception ef){
+					
+				}		
+			}
+		});
 		btnBuscar.setBounds(206, 53, 89, 23);
 		panel.add(btnBuscar);
 		
 		JLabel lblNombre = new JLabel("Nombre:");
-		lblNombre.setBounds(147, 87, 46, 14);
+		lblNombre.setBounds(111, 87, 82, 14);
 		panel.add(lblNombre);
 		
-		JEditorPane dtrpnmostrarNombre = new JEditorPane();
-		dtrpnmostrarNombre.setText("(mostrar nombre)");
-		dtrpnmostrarNombre.setBounds(246, 87, 128, 20);
-		panel.add(dtrpnmostrarNombre);
-		
 		JLabel lblApellido = new JLabel("Apellido:");
-		lblApellido.setBounds(147, 120, 46, 14);
+		lblApellido.setBounds(111, 120, 82, 14);
 		panel.add(lblApellido);
 		
-		JEditorPane dtrpnmostrarApellido = new JEditorPane();
-		dtrpnmostrarApellido.setText("(mostrar apellido)");
-		dtrpnmostrarApellido.setBounds(246, 120, 128, 20);
-		panel.add(dtrpnmostrarApellido);
-		
 		JLabel lblDomicilio = new JLabel("Domicilio:");
-		lblDomicilio.setBounds(147, 149, 46, 14);
+		lblDomicilio.setBounds(111, 149, 82, 14);
 		panel.add(lblDomicilio);
 		
 		JLabel lblEmail = new JLabel("E-Mail:");
-		lblEmail.setBounds(147, 180, 46, 14);
+		lblEmail.setBounds(111, 180, 82, 14);
 		panel.add(lblEmail);
 		
 		JLabel lblContrasea = new JLabel("Contrase\u00F1a:");
-		lblContrasea.setBounds(147, 211, 76, 14);
+		lblContrasea.setBounds(111, 211, 112, 14);
 		panel.add(lblContrasea);
-		
-		JEditorPane dtrpnmostrarDomicilio = new JEditorPane();
-		dtrpnmostrarDomicilio.setText("(mostrar domicilio)");
-		dtrpnmostrarDomicilio.setBounds(246, 149, 128, 20);
-		panel.add(dtrpnmostrarDomicilio);
-		
-		JEditorPane dtrpnmostrarEmail = new JEditorPane();
-		dtrpnmostrarEmail.setText("(mostrar email)");
-		dtrpnmostrarEmail.setBounds(246, 180, 128, 20);
-		panel.add(dtrpnmostrarEmail);
-		
-		JEditorPane dtrpnmostrarContrasea = new JEditorPane();
-		dtrpnmostrarContrasea.setText("(mostrar contrase\u00F1a)");
-		dtrpnmostrarContrasea.setBounds(246, 211, 128, 20);
-		panel.add(dtrpnmostrarContrasea);
 		
 		JButton btnConfirmarModificacion = new JButton("Confirmar Modificacion");
 		btnConfirmarModificacion.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				MenuPrincipal menu = new MenuPrincipal();
-				JOptionPane.showConfirmDialog(null,"Su usuario se ha modificado con exito","Confirmacion",JOptionPane.PLAIN_MESSAGE);
-				menu.setVisible(true);
-				frmModificarUsuario.dispose();
+			public void actionPerformed(ActionEvent e) {				
+				Usuario user = new Usuario();
+				Password password = new Password();
+				user.setNombre(textField.getText());
+				user.setApellido(textField_1.getText());
+				user.setDomicilio(domicilio);
+				user.setMail(textField_2.getText());
+				password.setValor(passwordField.toString());
+				password.setFechaModificacion(new Date());
+				user.setPassword(password);
+				user.setNombreUsuario(textField_3.getText());
+				try {
+					SistemaUsuarios.getInstance().modificarUsuario(user);
+					MenuPrincipal menu = new MenuPrincipal();
+					JOptionPane.showConfirmDialog(null,"Su usuario se ha modificado con exito","Confirmacion",JOptionPane.PLAIN_MESSAGE);
+					menu.setVisible(true);
+					frmModificarUsuario.dispose();
+				} catch(BusinessException e1) {
+					//TODO Manejar la exception y mostrar un mensaje de error cuando existe el usuario
+				}
 			}
 		});
-		btnConfirmarModificacion.setBounds(69, 252, 154, 23);
+		btnConfirmarModificacion.setBounds(43, 252, 180, 23);
 		panel.add(btnConfirmarModificacion);
 		
 		JButton btnAceptar = new JButton("Cancelar");
@@ -140,6 +163,37 @@ public class ModificarUsuario {
 		});
 		btnAceptar.setBounds(290, 252, 89, 23);
 		panel.add(btnAceptar);
+		
+		textField_1 = new JTextField();
+		textField_1.setBounds(229, 81, 130, 26);
+		panel.add(textField_1);
+		textField_1.setColumns(10);
+		
+		textField_2 = new JTextField();
+		textField_2.setBounds(229, 114, 130, 26);
+		panel.add(textField_2);
+		textField_2.setColumns(10);
+		
+		textField_3 = new JTextField();
+		textField_3.setBounds(229, 174, 130, 26);
+		panel.add(textField_3);
+		textField_3.setColumns(10);
+		
+
+		btnDomicilio.setEnabled(false);
+		btnDomicilio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				domicilio= user.getDomicilio();
+				ModificarDomicilio cambiarDomicilio = new ModificarDomicilio(domicilio);
+				cambiarDomicilio.setVisible(true);
+			}
+		});
+		btnDomicilio.setBounds(235, 143, 139, 29);
+		panel.add(btnDomicilio);
+		
+		passwordField = new JPasswordField();
+		passwordField.setBounds(235, 205, 124, 26);
+		panel.add(passwordField);
 	}
 	public void setVisible(boolean isVisible) {
 		this.frmModificarUsuario.setVisible(isVisible);
