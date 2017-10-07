@@ -120,7 +120,9 @@ public class Usuario implements Persistible {
     		float reputacion = 0;
     	
     		for(Calificacion c : calificaciones){
-    			reputacion += c.getCalificacion();
+    			if(c.getTransaccion().getEstado().getVal().equals("A")) {
+    				reputacion += c.getCalificacion();
+    			}
     		}
     		
     		return (reputacion/calificaciones.size());
