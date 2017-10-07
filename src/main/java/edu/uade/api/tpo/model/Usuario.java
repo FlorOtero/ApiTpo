@@ -121,7 +121,7 @@ public class Usuario implements Persistible {
     		int aprobadas = 0;
     	
     		for(Calificacion c : calificaciones){
-    			if(c.getTransaccion().getEstado().getVal() == 'A') {
+    			if(c.getTransaccion().getEstado() == EstadoTransaccion.A) {
     				reputacion += c.getCalificacion();
     				aprobadas++;
     			}

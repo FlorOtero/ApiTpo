@@ -3,6 +3,7 @@ package edu.uade.api.tpo.dao.impl;
 import edu.uade.api.tpo.dao.AbstractManyToOneDao;
 import edu.uade.api.tpo.dao.ManyToOneDao;
 import edu.uade.api.tpo.model.CompraTransferenciaBancaria;
+import edu.uade.api.tpo.model.EstadoTransaccion;
 import edu.uade.api.tpo.model.Publicacion;
 
 import java.sql.*;
@@ -99,7 +100,7 @@ public class CompraTransferenciaBancariaDaoImpl extends AbstractManyToOneDao<Com
             pub = SubastaDaoImpl.getInstance().findById(rs.getString("publicacion_id"));
         }
         compra.setPublicacion(pub);
-        compra.setEstadoByChar(rs.getString("estado").charAt(0));
+        compra.setEstado(EstadoTransaccion.valueOf(rs.getString("estado")));
         compra.setFecha(rs.getTimestamp("fecha"));
         compra.setEntidad(EntidadRecaudadoraDaoImpl.getInstance().findById(rs.getString("entidad_recaudadora_id")));
         compra.setNumeroCta(rs.getString("numero_cuenta"));
