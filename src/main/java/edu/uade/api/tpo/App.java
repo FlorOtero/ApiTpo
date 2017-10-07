@@ -13,6 +13,6 @@ public class App {
         //Init database
         PersistenceModule.getInstance();
         Usuario u = SistemaUsuarios.getInstance().buscarUsuario("flor");
-
+        System.out.println(u);
     }
 }

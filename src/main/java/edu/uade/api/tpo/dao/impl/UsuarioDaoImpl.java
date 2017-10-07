@@ -42,7 +42,7 @@ public class UsuarioDaoImpl extends AbstractDao<Usuario> {
         String query = "SELECT * FROM " + schema + ".usuarios WHERE " + field + " = ? AND estado = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, value);
-        ps.setString(2, Estado.A.getVal());
+        ps.setString(2, Estado.A.toString());
         return ps;
     }
 
