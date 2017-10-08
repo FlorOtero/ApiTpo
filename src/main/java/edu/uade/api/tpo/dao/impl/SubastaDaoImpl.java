@@ -31,7 +31,7 @@ public class SubastaDaoImpl extends AbstractManyToOneDao<Subasta> {
 
     @Override
     public PreparedStatement findById(String id, Connection conn) throws SQLException {
-        String query = "SELECT * FROM " + schema + ".subastas WHERE subasta_id = ?";
+        String query = "SELECT * FROM " + schema + ".subastas WHERE subasta_id = ? AND estado = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, id);
         return ps;
@@ -101,9 +101,10 @@ public class SubastaDaoImpl extends AbstractManyToOneDao<Subasta> {
 
     @Override
     public PreparedStatement findManyBy(String field, String value, Connection conn) throws SQLException {
-        String query = "SELECT * FROM " + schema + ".subastas WHERE " + field + " = ?";
+        String query = "SELECT * FROM " + schema + ".subastas WHERE " + field + " = ? AND estado = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, value);
+        ps.setString(2, Estado.A.toString());
         return ps;
     }
 

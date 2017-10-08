@@ -61,7 +61,11 @@ public class SistemaPublicaciones {
 	
 	public void eliminarSubasta(Subasta subasta) {
 		subasta.setEstado(Estado.I);
-		
+		try {
+			this.subastaDao.update(subasta);
+		} catch (SQLException e) {
+			logger.error("Error eliminando la subasta", e);
+		}
 	}
 
 	public void modificarPublicacion(Publicacion p) {
