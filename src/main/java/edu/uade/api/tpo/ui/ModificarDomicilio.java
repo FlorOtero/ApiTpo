@@ -20,7 +20,12 @@ public class ModificarDomicilio {
 	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTextField textField_4;
-	private static Domicilio domicilio;
+	private Domicilio domicilio;
+	
+	public ModificarDomicilio(Domicilio domicilio) {
+		this();
+		this.domicilio = domicilio;
+	}
 
 	/**
 	 * Launch the application.
@@ -29,7 +34,7 @@ public class ModificarDomicilio {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ModificarDomicilio window = new ModificarDomicilio(domicilio);
+					ModificarDomicilio window = new ModificarDomicilio();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -41,7 +46,7 @@ public class ModificarDomicilio {
 	/**
 	 * Create the application.
 	 */
-	public ModificarDomicilio(Domicilio domicilio) {
+	public ModificarDomicilio() {
 		initialize();
 	}
 
@@ -58,12 +63,22 @@ public class ModificarDomicilio {
 		frame.getContentPane().add(lblCalle);
 		
 		textField = new JTextField();
+		textField.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				domicilio.setlinea1(textField.getText());
+			}
+		});
 		textField.setBounds(166, 60, 130, 26);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
 		textField.setText(domicilio.getlinea1());
 		
 		textField_1 = new JTextField();
+		textField_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				domicilio.setlinea2(textField_1.getText());
+			}
+		});
 		textField_1.setBounds(166, 94, 130, 26);
 		frame.getContentPane().add(textField_1);
 		textField_1.setColumns(10);
@@ -74,6 +89,11 @@ public class ModificarDomicilio {
 		frame.getContentPane().add(lblNewLabel);
 		
 		textField_2 = new JTextField();
+		textField_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				domicilio.setCp(textField_2.getText());
+			}
+		});
 		textField_2.setBounds(166, 159, 130, 26);
 		frame.getContentPane().add(textField_2);
 		textField_2.setColumns(10);
@@ -88,12 +108,22 @@ public class ModificarDomicilio {
 		frame.getContentPane().add(lblProvincia);
 		
 		textField_3 = new JTextField();
+		textField_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				domicilio.setCiudad(textField_3.getText());
+			}
+		});
 		textField_3.setBounds(166, 239, 130, 26);
 		frame.getContentPane().add(textField_3);
 		textField_3.setColumns(10);
 		textField_3.setText(domicilio.getCiudad());
 		
 		textField_4 = new JTextField();
+		textField_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				domicilio.setProvincia(textField_4.getText());
+			}
+		});
 		textField_4.setBounds(166, 286, 130, 26);
 		frame.getContentPane().add(textField_4);
 		textField_4.setColumns(10);
@@ -102,11 +132,6 @@ public class ModificarDomicilio {
 		JButton btnGuardar = new JButton("Guardar");
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				domicilio.setlinea1(textField.getText());
-				domicilio.setlinea2(textField_1.getText());
-				domicilio.setCp(textField_2.getText());
-				domicilio.setCiudad(textField_3.getText());
-				domicilio.setProvincia(textField_4.getText());
 				frame.dispose();
 			}
 		});

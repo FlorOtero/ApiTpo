@@ -37,6 +37,7 @@ public class ModificarUsuario {
 	private JPasswordField passwordField;
 	private Usuario user;
 	private Domicilio domicilio;
+	private Password password;
 
 	/**
 	 * Launch the application.
@@ -90,13 +91,13 @@ public class ModificarUsuario {
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String nombreUsuario= textField.getText();
-				try{
-					user= new Usuario();				
+				try{				
 					user= SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);	
 					textField_1.setText(user.getNombre());
 					textField_2.setText(user.getApellido());
 					textField_3.setText(user.getMail());
-					passwordField.setText(user.getNombre());
+					password=user.getPassword();					
+					passwordField.setText(password.getValor());
 					btnDomicilio.setEnabled(true);
 				}catch(Exception ef){
 					
@@ -129,16 +130,6 @@ public class ModificarUsuario {
 		JButton btnConfirmarModificacion = new JButton("Confirmar Modificacion");
 		btnConfirmarModificacion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {				
-				Usuario user = new Usuario();
-				Password password = new Password();
-				user.setNombre(textField.getText());
-				user.setApellido(textField_1.getText());
-				user.setDomicilio(domicilio);
-				user.setMail(textField_2.getText());
-				password.setValor(passwordField.toString());
-				password.setFechaModificacion(new Date());
-				user.setPassword(password);
-				user.setNombreUsuario(textField_3.getText());
 				try {
 					SistemaUsuarios.getInstance().modificarUsuario(user);
 					MenuPrincipal menu = new MenuPrincipal();
@@ -153,28 +144,43 @@ public class ModificarUsuario {
 		btnConfirmarModificacion.setBounds(43, 252, 180, 23);
 		panel.add(btnConfirmarModificacion);
 		
-		JButton btnAceptar = new JButton("Cancelar");
-		btnAceptar.addActionListener(new ActionListener() {
+		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MenuPrincipal menu = new MenuPrincipal();
 				menu.setVisible(true);
 				frmModificarUsuario.dispose();
 			}
 		});
-		btnAceptar.setBounds(290, 252, 89, 23);
-		panel.add(btnAceptar);
+		btnCancelar.setBounds(290, 252, 89, 23);
+		panel.add(btnCancelar);
 		
 		textField_1 = new JTextField();
+		textField_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				user.setNombre(textField_1.getText());
+			}
+		});
 		textField_1.setBounds(229, 81, 130, 26);
 		panel.add(textField_1);
 		textField_1.setColumns(10);
 		
 		textField_2 = new JTextField();
+		textField_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				user.setApellido(textField_2.getText());
+			}
+		});
 		textField_2.setBounds(229, 114, 130, 26);
 		panel.add(textField_2);
 		textField_2.setColumns(10);
 		
 		textField_3 = new JTextField();
+		textField_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				user.setMail(textField_3.getText());
+			}
+		});
 		textField_3.setBounds(229, 174, 130, 26);
 		panel.add(textField_3);
 		textField_3.setColumns(10);
@@ -186,12 +192,20 @@ public class ModificarUsuario {
 				domicilio= user.getDomicilio();
 				ModificarDomicilio cambiarDomicilio = new ModificarDomicilio(domicilio);
 				cambiarDomicilio.setVisible(true);
+				user.setDomicilio(domicilio);
 			}
 		});
 		btnDomicilio.setBounds(235, 143, 139, 29);
 		panel.add(btnDomicilio);
 		
 		passwordField = new JPasswordField();
+		passwordField.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				password.setValor(passwordField.toString());
+				password.setFechaModificacion(new Date());
+				user.setPassword(password);
+			}
+		});
 		passwordField.setBounds(235, 205, 124, 26);
 		panel.add(passwordField);
 	}
