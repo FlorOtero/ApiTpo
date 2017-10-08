@@ -1,6 +1,11 @@
 package edu.uade.api.tpo.model;
 
 import java.util.List;
+
+import edu.uade.api.tpo.dao.GenericDao;
+import edu.uade.api.tpo.dao.impl.UsuarioDaoImpl;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -23,7 +28,7 @@ public class SistemaPublicaciones {
 		p.setFechaHasta(fechaHasta);
 		p.setPrecio(precio);
 		p.setArticulo(articulo);
-		this.publicaciones.add(p);
+		// this.publicaciones.add(p);
 		return p;
 	}
 	
@@ -48,13 +53,15 @@ public class SistemaPublicaciones {
 		return s;
 	}
 	
-	public ArrayList<Publicacion> buscarPublicacion(String busqueda) {
+	public ArrayList<Publicacion> filtrarPublicaciones(String busqueda) {
 		ArrayList<Publicacion> resultado = new ArrayList<Publicacion>();
-		Usuario u = new Usuario();
+		GenericDao<Usuario> usuarioDao = UsuarioDaoImpl.getInstance();
+		Usuario u = null;
+		try { u = usuarioDao.findBy("nombre_usuario", "flor"); } catch (SQLException e) {}
 		Date fechaDesde = new Date();
 		Date fechaHasta = new Date();
 		Float precio = (float) 0;
-		Articulo articulo = new Producto();
+		Articulo articulo = null;
 		resultado.add(this.crearPublicacion(u, fechaDesde, fechaHasta, precio, articulo));
 		resultado.add(this.crearPublicacion(u, fechaDesde, fechaHasta, precio, articulo));
 		return resultado;

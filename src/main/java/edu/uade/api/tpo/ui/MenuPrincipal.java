@@ -14,6 +14,7 @@ public class MenuPrincipal {
 
 	private JFrame frmMenuPrincipal;
 	private JTextField buscarField;
+	private JTable table = new JTable();
 	JLabel lblIngresarProducto;
 
 	/**
@@ -69,6 +70,8 @@ public class MenuPrincipal {
 			}
 		});
 		frmMenuPrincipal.getContentPane().add(btnBuscar);
+		
+		
 		
 		
 		
@@ -170,7 +173,7 @@ public class MenuPrincipal {
 	
 	private ArrayList<Publicacion> buscarPublicacion(String busqueda) {
 		SistemaPublicaciones sp = SistemaPublicaciones.getInstance();
-		ArrayList<Publicacion> resultado = sp.buscarPublicacion(busqueda);
+		ArrayList<Publicacion> resultado = sp.filtrarPublicaciones(busqueda);
 		return resultado;
 	}
 }
