@@ -7,7 +7,7 @@ import java.util.Date;
 public abstract class Transaccion implements Persistible {
 	private String id;
 	private Publicacion publicacion;
-	private char estado;
+	private EstadoTransaccion estado;
 	private Date fecha;
 	private Usuario contraparte;
 	private String cuentaCorrienteId;
@@ -28,13 +28,13 @@ public abstract class Transaccion implements Persistible {
 		this.publicacion = publicacion;
 	}
 
-	public char getEstado() {
-		return estado;
-	}
+    public EstadoTransaccion getEstado() {
+        return estado;
+    }
 
-	public void setEstado(char estado) {
-		this.estado = estado;
-	}
+    public void setEstado(EstadoTransaccion estado) {
+        this.estado = estado;
+    }
 
 	public Date getFecha() {
 		return fecha;

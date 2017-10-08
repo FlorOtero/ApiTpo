@@ -2,3 +2,5 @@
 /build/
 *.class
 /.idea/
+
+*.iml

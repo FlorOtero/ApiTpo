@@ -3,8 +3,8 @@ package edu.uade.api.tpo.dao.impl;
 import edu.uade.api.tpo.dao.AbstractManyToOneDao;
 import edu.uade.api.tpo.dao.ManyToOneDao;
 import edu.uade.api.tpo.model.CompraEfectivo;
+import edu.uade.api.tpo.model.EstadoTransaccion;
 import edu.uade.api.tpo.model.Publicacion;
-import edu.uade.api.tpo.util.UUIDUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -94,7 +94,7 @@ public class CompraEfectivoDaoImpl extends AbstractManyToOneDao<CompraEfectivo> 
             pub = SubastaDaoImpl.getInstance().findById(rs.getString("publicacion_id"));
         }
         compra.setPublicacion(pub);
-        compra.setEstado(rs.getString("estado").charAt(0));
+        compra.setEstado(EstadoTransaccion.valueOf(rs.getString("estado")));
         compra.setFecha(rs.getTimestamp("fecha"));
         compra.setCuentaCorrienteId(rs.getString("cuenta_corriente_id"));
 
