@@ -10,8 +10,17 @@ import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.util.Date;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.JCalendar;
+
+import edu.uade.api.tpo.exceptions.BusinessException;
+import edu.uade.api.tpo.model.Articulo;
+import edu.uade.api.tpo.model.Producto;
+import edu.uade.api.tpo.model.Publicacion;
+import edu.uade.api.tpo.model.SistemaPublicaciones;
+import edu.uade.api.tpo.model.Usuario;
 
 public class NuevoProducto {
 
@@ -105,11 +114,18 @@ public class NuevoProducto {
 		
 		JButton btnPublicar = new JButton("Publicar");
 		btnPublicar.addActionListener(new ActionListener() {
+			private List<String> imagenes;
+
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showConfirmDialog(null, "Se ha publicado con exito","Confirmacion",JOptionPane.PLAIN_MESSAGE);
-				MenuPrincipal menuP = new MenuPrincipal();
-				menuP.setVisible(true);
-				frmNuevoProducto.dispose();
+				   Publicacion publi = new Publicacion();
+				   Producto prod = new Producto();
+				   prod.setNombre(textField.getText());
+				   prod.setDescripcion(textField_1.getText());
+				   prod.setImagenes(imagenes);
+				   publi.setPrecio(0);
+				   SistemaPublicaciones.getInstance().crearPublicacion(null, null, null, 0, prod);
+				JOptionPane.showMessageDialog(null, "Se ha creado su Producto con exito", "Aviso", JOptionPane.PLAIN_MESSAGE);
+				
 			}
 		});
 		btnPublicar.setBounds(121, 361, 117, 29);
