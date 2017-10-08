@@ -10,6 +10,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.awt.event.ActionEvent;
@@ -17,6 +18,7 @@ import com.toedter.calendar.JCalendar;
 
 import edu.uade.api.tpo.exceptions.BusinessException;
 import edu.uade.api.tpo.model.Articulo;
+import edu.uade.api.tpo.model.MedioPago;
 import edu.uade.api.tpo.model.Producto;
 import edu.uade.api.tpo.model.Publicacion;
 import edu.uade.api.tpo.model.SistemaPublicaciones;
@@ -28,6 +30,7 @@ public class NuevoProducto {
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
+	private JCalendar calendar;
 
 	/**
 	 * Launch the application.
@@ -122,19 +125,24 @@ public class NuevoProducto {
 				   prod.setNombre(textField.getText());
 				   prod.setDescripcion(textField_1.getText());
 				   prod.setImagenes(imagenes);
-				   publi.setPrecio(textField_2);
-				   java.util.Date fecha = new Date();
-				publi.setFechaDesde(fecha);
-				   Date fechaHasta = null;
-				publi.setFechaHasta(fechaHasta);
-				publi.setArticulo(prod);
-
-				try {
-					SistemaPublicaciones.getInstance().crearPublicacion(publi);
-				} catch (BusinessException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				   publi.setPrecio(Float.parseFloat(textField_2.getText()));
+		           publi.setFechaHasta(calendar.getDate());
+				   publi.setArticulo(prod);
+				  
+				   List<MedioPago> mediosPagos = new ArrayList();
+				   
+				if (chckbxEfectivo.isSelected() ) {
+					mediosPagos.add(MedioPago.EFECTIVO);
 				}
+			       if (chckbxTarjetaDeCredito.isSelected()){
+					
+					mediosPagos.add(MedioPago.TARJETA_CREDITO);
+				}
+			       if (chckbxTransferenciaBancaria.isSelected()) {
+					mediosPagos.add(MedioPago.TRANSFERENCIA_BANCARIA);
+				}	
+					
+				SistemaPublicaciones.getInstance().altaPublicacion("9ec1f480-b1a3-4605-a808-26829333e09d", publi.getFechaHasta(),publi.getPrecio(), publi.getArticulo(), mediosPagos);
 				JOptionPane.showMessageDialog(null, "Se ha creado su Producto con exito", "Aviso", JOptionPane.PLAIN_MESSAGE);
 				
 			}
@@ -153,7 +161,7 @@ public class NuevoProducto {
 		btnCancelar.setBounds(263, 361, 117, 29);
 		frmNuevoProducto.getContentPane().add(btnCancelar);
 		
-		JCalendar calendar = new JCalendar();
+		 calendar = new JCalendar();
 		calendar.setBounds(231, 166, 198, 153);
 		calendar.setWeekOfYearVisible(false);
 		calendar.setTodayButtonVisible(true);
