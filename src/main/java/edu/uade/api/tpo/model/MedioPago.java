@@ -9,6 +9,13 @@ public enum MedioPago implements Persistible {
     TARJETA_CREDITO("be5c6b74-48f6-475d-ad87-a08ece31edde");
 
     private String id;
+    
+    public static MedioPago getMedioPago(String medioPagoId) {
+        for (MedioPago m : MedioPago.values()) {
+            if (m.getId().equals(medioPagoId)) return m;
+        }
+		throw new IllegalArgumentException("Value " + medioPagoId + " unknown");
+     }
 
     MedioPago(String id) {
         this.id = id;
