@@ -1,14 +1,15 @@
 package edu.uade.api.tpo.model;
 
-import edu.uade.api.tpo.dao.ManyToOneDao;
-import edu.uade.api.tpo.dao.impl.PublicacionDaoImpl;
-import edu.uade.api.tpo.dao.impl.SubastaDaoImpl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.uade.api.tpo.dao.ManyToOneDao;
+import edu.uade.api.tpo.dao.impl.PublicacionDaoImpl;
+import edu.uade.api.tpo.dao.impl.SubastaDaoImpl;
 
 public class SistemaPublicaciones {
 
@@ -29,9 +30,9 @@ public class SistemaPublicaciones {
         return instance;
     }
 
-    public Publicacion altaPublicacion(String usuarioId, Date fechaDesde, Date fechaHasta, float precio, Articulo articulo, List<MedioPago> mediosPago) {
+    public Publicacion altaPublicacion(String usuarioId, Date fechaHasta, float precio, Articulo articulo, List<MedioPago> mediosPago) {
         Publicacion p = new Publicacion();
-        p.setFechaDesde(fechaDesde);
+        p.setFechaDesde(new Date());
         p.setFechaHasta(fechaHasta);
         p.setPrecio(precio);
         p.setArticulo(articulo);

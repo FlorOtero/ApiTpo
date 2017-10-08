@@ -26,6 +26,8 @@ public class PublicacionDaoImpl extends AbstractManyToOneDao<Publicacion> {
 
     @Override
     public PreparedStatement create(Publicacion publicacion, Connection conn) throws SQLException {
+    	ArticuloDaoImpl.getInstance().create(publicacion.getArticulo());
+    	
         String query = "INSERT INTO " + schema + ".publicaciones VALUES(?,?,?,?,?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, publicacion.getId());
@@ -36,12 +38,16 @@ public class PublicacionDaoImpl extends AbstractManyToOneDao<Publicacion> {
         ps.setString(6, String.valueOf(publicacion.getEstado()));
         ps.setString(7, publicacion.getArticulo().getId());
         ps.setFloat(8, publicacion.getComision());
-        if (publicacion.getMediosPago() != null && !publicacion.getMediosPago().isEmpty()) {
+        return ps;
+    }
+    
+    @Override
+    public void doAfterCreate(Publicacion publicacion) throws SQLException {
+    	if (publicacion.getMediosPago() != null && !publicacion.getMediosPago().isEmpty()) {
             for (MedioPago medioPago : publicacion.getMediosPago()) {
                 MedioPagoDaoImpl.getInstance().addMedioPagoToPublicacion(publicacion.getId(), medioPago);
             }
         }
-        return ps;
     }
 
     @Override

@@ -1,11 +1,12 @@
 package edu.uade.api.tpo;
 
-import edu.uade.api.tpo.exceptions.InvalidPasswordException;
-import edu.uade.api.tpo.model.SistemaUsuarios;
-import edu.uade.api.tpo.model.Usuario;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import edu.uade.api.tpo.exceptions.InvalidPasswordException;
+import edu.uade.api.tpo.model.SistemaUsuarios;
+import edu.uade.api.tpo.model.Usuario;
 
 public class SistemaUsuariosTest {
 
