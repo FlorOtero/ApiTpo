@@ -32,11 +32,10 @@ public class PasswordDaoImpl extends AbstractDao<Password> {
 
     @Override
     public PreparedStatement create(Password password, Connection conn) throws SQLException {
-        String passCifrada = Encriptacion.cifrarBase64(password.getValor());
     	String query = "INSERT INTO " + schema + ".passwords VALUES(?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, password.getId());
-        ps.setString(2, passCifrada);
+        ps.setString(2, password.getValor());
         ps.setTimestamp(3, new Timestamp(password.getFechaModificacion().getTime()));
         return ps;
     }
@@ -57,7 +56,7 @@ public class PasswordDaoImpl extends AbstractDao<Password> {
         if (rs.first()) {
             password = new Password();
             password.setId(rs.getString("password_id"));
-            password.setValor(Encriptacion.descifrarBase64(rs.getString("valor")));
+            password.setValor(rs.getString("valor"));
             password.setFechaModificacion(rs.getTimestamp("fecha_modificacion"));
         }
         return password;
