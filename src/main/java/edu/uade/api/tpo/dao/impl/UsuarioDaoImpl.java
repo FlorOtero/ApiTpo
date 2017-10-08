@@ -93,6 +93,11 @@ public class UsuarioDaoImpl extends AbstractDao<Usuario> {
 
     @Override
     public PreparedStatement update(Usuario usuario, Connection conn) throws SQLException {
+    	//Cascade domicilio & password before modify user
+        DomicilioDaoImpl.getInstance().update(usuario.getDomicilio());
+        PasswordDaoImpl.getInstance().update(usuario.getPassword());
+        CuentaCorrienteDaoImpl.getInstance().update(usuario.getCuentaCorriente());
+    	
         String query = "UPDATE " + schema + ".usuarios SET nombre_usuario = ?, nombre = ?, apellido = ?, domicilio_id = ?, mail = ?, password_id = ?, cuenta_corriente_id = ?, estado = ? WHERE usuario_id = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, usuario.getNombreUsuario());
