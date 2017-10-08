@@ -24,6 +24,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputMethodListener;
 import java.util.Date;
+import java.util.prefs.Preferences;
 import java.awt.event.InputMethodEvent;
 import javax.swing.JPasswordField;
 import java.awt.event.FocusAdapter;
@@ -32,7 +33,6 @@ import java.awt.event.FocusEvent;
 public class ModificarUsuario {
 
 	private JFrame frmModificarUsuario;
-	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
@@ -40,7 +40,8 @@ public class ModificarUsuario {
 	private Usuario user;
 	private Domicilio domicilio;
 	private Password password;
-
+	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
+	
 	/**
 	 * Launch the application.
 	 */
@@ -62,6 +63,7 @@ public class ModificarUsuario {
 	 */
 	public ModificarUsuario() {
 		initialize();
+		cargarUsuario();
 	}
 
 	/**
@@ -79,35 +81,6 @@ public class ModificarUsuario {
 		panel.setBounds(0, 0, 518, 316);
 		frmModificarUsuario.getContentPane().add(panel);
 		panel.setLayout(null);
-		
-		JLabel lblIngresarNombreDe = new JLabel("Ingresar nombre de usuario:");
-		lblIngresarNombreDe.setBounds(43, 22, 180, 20);
-		panel.add(lblIngresarNombreDe);
-		
-		textField = new JTextField();
-		textField.setBounds(235, 22, 139, 20);
-		panel.add(textField);
-		textField.setColumns(10);
-		
-		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String nombreUsuario= textField.getText();
-				try{				
-					user= SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);	
-					textField_1.setText(user.getNombre());
-					textField_2.setText(user.getApellido());
-					textField_3.setText(user.getMail());
-					password=user.getPassword();					
-					passwordField.setText(password.getValor());
-					btnDomicilio.setEnabled(true);
-				}catch(Exception ef){
-					
-				}		
-			}
-		});
-		btnBuscar.setBounds(206, 53, 89, 23);
-		panel.add(btnBuscar);
 		
 		JLabel lblNombre = new JLabel("Nombre:");
 		lblNombre.setBounds(111, 87, 82, 14);
@@ -189,9 +162,6 @@ public class ModificarUsuario {
 		textField_3.setBounds(229, 174, 130, 26);
 		panel.add(textField_3);
 		textField_3.setColumns(10);
-		
-
-		btnDomicilio.setEnabled(false);
 		btnDomicilio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				domicilio= user.getDomicilio();
@@ -217,5 +187,14 @@ public class ModificarUsuario {
 	}
 	public void setVisible(boolean isVisible) {
 		this.frmModificarUsuario.setVisible(isVisible);
+	}
+	public void cargarUsuario(){
+		String nombreUsuario = prefs.get("USERNAME", null);				
+		user= SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
+		textField_1.setText(user.getNombre());
+		textField_2.setText(user.getApellido());
+		textField_3.setText(user.getMail());
+		password=user.getPassword();					
+		passwordField.setText(password.getValor());
 	}
 }

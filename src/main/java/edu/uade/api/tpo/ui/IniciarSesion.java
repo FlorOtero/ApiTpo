@@ -12,6 +12,7 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.prefs.Preferences;
 import java.awt.event.ActionEvent;
 
 import edu.uade.api.tpo.exceptions.BusinessException;
@@ -26,6 +27,7 @@ public class IniciarSesion {
 	private JButton btnAceptar;
 	private JButton btnCancelar;
 	private JLabel notification;
+	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
 
 	/**
 	 * Launch the application.
@@ -151,6 +153,7 @@ public class IniciarSesion {
 
 		try {
 			su.login(nombreUsuario, password).getNombre();
+			prefs.put("USERNAME", nombreUsuario);
 			return true;
 		} catch (BusinessException e) {
 			notification.setText(e.getMessage());
