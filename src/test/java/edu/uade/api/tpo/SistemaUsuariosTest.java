@@ -20,13 +20,8 @@ public class SistemaUsuariosTest {
 
     @Test
     public void test_findUsuario() {
-    	//MedioPago mp = MedioPago.valueOf("0ea15b57-85ad-49b3-af04-080dac974678");
-    	
-    	
-    	
-        Usuario u = sistemaUsuarios.buscarUsuario("flor");
+        Usuario u = sistemaUsuarios.buscarUsuario("asd");
         Assert.assertNotNull(u);
-        
     }
 
     @Test

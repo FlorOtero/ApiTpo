@@ -53,7 +53,7 @@ public class MedioPagoDaoImpl extends AbstractDao<MedioPago> {
     public MedioPago map(ResultSet rs) throws SQLException {
         MedioPago medioPago = null;
         if (rs.first()) {
-            medioPago = MedioPago.valueOf(rs.getString("medio_pago_id"));
+            medioPago = MedioPago.getMedioPago(rs.getString("medio_pago_id"));
         }
         return medioPago;
     }
