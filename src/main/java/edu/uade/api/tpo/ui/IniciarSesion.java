@@ -13,6 +13,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.ActionEvent;
+
+import edu.uade.api.tpo.exceptions.BusinessException;
+import edu.uade.api.tpo.exceptions.ExpiredPasswordException;
 import edu.uade.api.tpo.model.SistemaUsuarios;
 
 public class IniciarSesion {
@@ -20,6 +23,9 @@ public class IniciarSesion {
 	private JFrame frmIniciarSesion;
 	private JTextField nombreUsuarioField;
 	private JPasswordField passwordField;
+	private JButton btnAceptar;
+	private JButton btnCancelar;
+	private JLabel notification;
 
 	/**
 	 * Launch the application.
@@ -57,9 +63,9 @@ public class IniciarSesion {
 		JPanel panel = new JPanel();
 		nombreUsuarioField = new JTextField();
 		passwordField = new JPasswordField();
-		JButton btnAceptar = new JButton("Ingresar");
-		JButton btnCancelar = new JButton("Cancelar");
-		JLabel notification = new JLabel("");
+		btnAceptar = new JButton("Ingresar");
+		btnCancelar = new JButton("Cancelar");
+		notification = new JLabel("");
 		
 		
 		
@@ -82,7 +88,7 @@ public class IniciarSesion {
 			public void keyPressed(KeyEvent e) {}
 			public void keyTyped(KeyEvent e) {}
 			public void keyReleased(KeyEvent e) {
-				validateForm(btnAceptar, nombreUsuarioField.getText(), new String(passwordField.getPassword()));
+				validateForm();
 			}
 		});
 		panel.add(nombreUsuarioField);
@@ -94,7 +100,7 @@ public class IniciarSesion {
 			public void keyPressed(KeyEvent e) {}
 			public void keyTyped(KeyEvent e) {}
 			public void keyReleased(KeyEvent e) {
-				validateForm(btnAceptar, nombreUsuarioField.getText(), new String(passwordField.getPassword()));
+				validateForm();
 			}
 		});
 		panel.add(passwordField);
@@ -105,18 +111,10 @@ public class IniciarSesion {
 				btnAceptar.setEnabled(false);
 				notification.setText("");
 				
-				// TODO: REMOVE THIS
-				MenuPrincipal amenu = new MenuPrincipal();
-				amenu.setVisible(true);
-				frmIniciarSesion.dispose();
-				
-				boolean loginSuccess = login(nombreUsuarioField.getText(), new String(passwordField.getPassword())); 
-				if (loginSuccess) {
+				if (login()) {
 					MenuPrincipal menu = new MenuPrincipal();
 					menu.setVisible(true);
 					frmIniciarSesion.dispose();
-				} else {
-					notification.setText("Usuario o Password no valido");
 				}
 				btnAceptar.setEnabled(true);
 			}
@@ -145,23 +143,33 @@ public class IniciarSesion {
 		this.frmIniciarSesion.setVisible(isVisible);
 	}
 	
-	public boolean login(String nombreUsuario, String password) {
-		System.out.println("Trying to login with credentials: " + nombreUsuario);
+	public boolean login() {
+		String nombreUsuario = nombreUsuarioField.getText();
+		String password = new String(passwordField.getPassword());
 		SistemaUsuarios su = SistemaUsuarios.getInstance();
+		System.out.println("Trying to login with credentials: " + nombreUsuario);
+
 		try {
 			System.out.println(su.login(nombreUsuario, password).getNombre());
 			return true;
-		} catch (Exception e) {
+		} catch (BusinessException e) {
+			notification.setText(e.getMessage());
 			return false;
-		}
+		} catch (ExpiredPasswordException e) {
+			notification.setText(e.getMessage());
+			return false;
+		} 
 		
 	}
 	
-	public void validateForm(JButton acceptButton, String nombreUsuario, String password) {
+	public void validateForm() {
+		String nombreUsuario = nombreUsuarioField.getText();
+		String password = new String(passwordField.getPassword());
+		
 		if (nombreUsuario.length() > 0 && password.length() > 0) {
-			acceptButton.setEnabled(true);
+			this.btnAceptar.setEnabled(true);
 		} else {
-			acceptButton.setEnabled(false);
+			this.btnAceptar.setEnabled(false);
 		}
 	}
 }
