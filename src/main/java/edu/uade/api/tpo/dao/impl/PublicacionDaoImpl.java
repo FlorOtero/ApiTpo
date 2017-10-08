@@ -52,9 +52,10 @@ public class PublicacionDaoImpl extends AbstractManyToOneDao<Publicacion> {
 
     @Override
     public PreparedStatement findById(String id, Connection conn) throws SQLException {
-        String query = "SELECT * FROM " + schema + ".publicaciones WHERE publicacion_id = ?";
+        String query = "SELECT * FROM " + schema + ".publicaciones WHERE publicacion_id = ? AND estado = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, id);
+        ps.setString(2, Estado.A.toString());
         return ps;
     }
 
@@ -70,6 +71,7 @@ public class PublicacionDaoImpl extends AbstractManyToOneDao<Publicacion> {
 
     @Override
     public PreparedStatement update(Publicacion publicacion, Connection conn) throws SQLException {
+    	ArticuloDaoImpl.getInstance().update(publicacion.getArticulo());
         String query = "UPDATE " + schema + ".publicaciones SET usuario_id = ?, fecha_desde = ?, fecha_hasta = ?, precio = ?, estado = ?, articulo_id = ?, comision = ? WHERE publicacion_id = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, publicacion.getUsuarioId());
@@ -88,9 +90,10 @@ public class PublicacionDaoImpl extends AbstractManyToOneDao<Publicacion> {
 
     @Override
     public PreparedStatement findManyBy(String field, String value, Connection conn) throws SQLException {
-        String query = "SELECT * FROM " + schema + ".publicaciones WHERE " + field + " = ?";
+        String query = "SELECT * FROM " + schema + ".publicaciones WHERE " + field + " = ? AND estado = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, value);
+        ps.setString(2, Estado.A.toString());
         return ps;
     }
 

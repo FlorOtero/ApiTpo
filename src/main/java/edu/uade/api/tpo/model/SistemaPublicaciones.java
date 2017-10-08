@@ -50,14 +50,21 @@ public class SistemaPublicaciones {
 	}
 
 	public void eliminarPublicacion(Publicacion publicacion) {
+		publicacion.setEstado(Estado.I);
+		try {
+			this.publicacionDao.update(publicacion);
+		} catch (SQLException e) {
+			logger.error("Error eliminando publicacion", e);
+		}
 
 	}
 
-	public void modificarPublicacion(Publicacion p, Date fechaDesde, Date fechaHasta, float precio, Articulo articulo) {
-		p.setFechaDesde(fechaDesde);
-		p.setFechaHasta(fechaHasta);
-		p.setPrecio(precio);
-		p.setArticulo(articulo);
+	public void modificarPublicacion(Publicacion p) {
+		try {
+			publicacionDao.update(p);
+		} catch (SQLException e) {
+			logger.error("Error modificando la publicacion", e);
+		}
 	}
 
 	public Subasta crearSubasta(Usuario u, Articulo a, float precioMin, int diasVigencia, float precioInicial) {
