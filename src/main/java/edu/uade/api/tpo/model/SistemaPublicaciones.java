@@ -67,6 +67,14 @@ public class SistemaPublicaciones {
 		}
 	}
 
+	public void modificarSubasta(Subasta subasta) {
+		try {
+			this.subastaDao.update(subasta);
+		} catch (SQLException e) {
+			logger.error("Error modificando la subasta", e);
+		}
+	}
+
 	public Subasta altaSubasta(String usuarioId, Articulo a, float precioMin, int diasVigencia, float precioInicial,
 			List<MedioPago> mediosPago) {
 		Subasta s = new Subasta();
@@ -98,9 +106,19 @@ public class SistemaPublicaciones {
 		try {
 			return publicacionDao.findById(publicacionId);
 		} catch (SQLException e) {
-			logger.error("Error buscando publicacion");
+			logger.error("Error buscando publicacion", e);
 		}
 		return publicacion;
+	}
+
+	public Subasta buscarSubasta(String subastaId) {
+		Subasta subasta = null;
+		try {
+			subasta = subastaDao.findById(subastaId);
+		} catch (SQLException e) {
+			logger.error("Error buscando la subasta", e);
+		}
+		return subasta;
 	}
 
 }

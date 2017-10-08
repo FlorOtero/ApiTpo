@@ -1,15 +1,18 @@
 package edu.uade.api.tpo.dao.impl;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.uade.api.tpo.dao.AbstractManyToOneDao;
 import edu.uade.api.tpo.dao.ManyToOneDao;
 import edu.uade.api.tpo.model.Estado;
 import edu.uade.api.tpo.model.MedioPago;
-import edu.uade.api.tpo.model.Publicacion;
 import edu.uade.api.tpo.model.Subasta;
-
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class SubastaDaoImpl extends AbstractManyToOneDao<Subasta> {
 
@@ -75,11 +78,13 @@ public class SubastaDaoImpl extends AbstractManyToOneDao<Subasta> {
 
     @Override
     public PreparedStatement update(Subasta subasta, Connection conn) throws SQLException {
+    	ArticuloDaoImpl.getInstance().update(subasta.getArticulo());
+    	
         String query = "UPDATE " + schema + ".subastas SET usuario_id = ?, fecha_desde = ?, fecha_hasta = ?, precio = ?, estado = ?, articulo_id = ?, comision = ?, precio_min = ?, dias_vigencia = ?, precio_inicial = ? where subasta_id = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, subasta.getUsuarioId());
         ps.setTimestamp(2, new Timestamp(subasta.getFechaDesde().getTime()));
-        ps.setTimestamp(3, new Timestamp(subasta.getFechaHasta().getTime()));
+        ps.setTimestamp(3, null);
         ps.setFloat(4, subasta.getPrecio());
         ps.setString(5, String.valueOf(subasta.getEstado()));
         ps.setString(6, subasta.getArticulo().getId());

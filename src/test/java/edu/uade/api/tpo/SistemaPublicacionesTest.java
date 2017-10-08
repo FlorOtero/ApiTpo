@@ -8,11 +8,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.uade.api.tpo.dao.impl.PublicacionDaoImpl;
 import edu.uade.api.tpo.model.Articulo;
 import edu.uade.api.tpo.model.Garantia;
 import edu.uade.api.tpo.model.MedioPago;
-import edu.uade.api.tpo.model.MediosDePago;
 import edu.uade.api.tpo.model.Producto;
 import edu.uade.api.tpo.model.Publicacion;
 import edu.uade.api.tpo.model.Servicio;
@@ -25,6 +23,7 @@ public class SistemaPublicacionesTest {
 
 	private static final String USER_ID = "3e17502f-7761-4995-91d3-81412c57c27d";
 	private static final String PUBLICACION_ID = "1e261566-22b4-462f-9def-b35b1da52e60";
+	private static final String SUBASTA_ID = "4f8dd95c-61e5-481a-8c20-2fee2fd495c3";
 	private SistemaPublicaciones sistemaPublicaciones;
 
 	@Before
@@ -58,7 +57,7 @@ public class SistemaPublicacionesTest {
 	}
 
 	@Test
-	public void test_modifPublicacion() {
+	public void test_modificarPublicacion() {
 		Publicacion p = this.sistemaPublicaciones.buscarPublicacion(PUBLICACION_ID);
 		Articulo a = p.getArticulo();
 		a.setDescripcion("Lorem ipsum..");
@@ -92,5 +91,18 @@ public class SistemaPublicacionesTest {
 		
 		Subasta s = this.sistemaPublicaciones.altaSubasta(USER_ID, servicio, 105, 15, 30, mediosPago);
 		Assert.assertNotNull(s);
+	}
+	
+	@Test
+	public void test_modificarSubasta() {
+		Subasta subasta = this.sistemaPublicaciones.buscarSubasta(SUBASTA_ID);
+		subasta.getArticulo().setDescripcion("Una descripcion");
+		subasta.getArticulo().setNombre("Un nombre");
+		subasta.setPrecioInicial(321);
+		subasta.setPrecioMin(111);
+		subasta.getMediosPago().clear();
+		subasta.getMediosPago().add(MedioPago.TRANSFERENCIA_BANCARIA);
+		
+		this.sistemaPublicaciones.modificarSubasta(subasta);
 	}
 }
