@@ -58,6 +58,11 @@ public class SistemaPublicaciones {
 		}
 
 	}
+	
+	public void eliminarSubasta(Subasta subasta) {
+		subasta.setEstado(Estado.I);
+		
+	}
 
 	public void modificarPublicacion(Publicacion p) {
 		try {
