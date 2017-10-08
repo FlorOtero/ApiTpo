@@ -15,7 +15,7 @@ import edu.uade.api.tpo.model.TipoPeriodo;
 
 public class SistemaPublicacionesTest {
 
-	private static final String USER_ID = "9ec1f480-b1a3-4605-a808-26829333e09d";
+	private static final String USER_ID = "3e17502f-7761-4995-91d3-81412c57c27d";
 	private SistemaPublicaciones sistemaPublicaciones;
 
 	@Before
