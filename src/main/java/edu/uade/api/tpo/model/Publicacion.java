@@ -16,7 +16,10 @@ public class Publicacion implements Persistible {
     private String usuarioId;
     private List<MedioPago> mediosPago;
 
-    public void ofertar(float monto, String nombreUsuario) {
+    public void ofertar(float monto, Usuario usuario) {
+    	
+    	//creamos la compra comun y corriente
+    	
 
     }
 
@@ -74,10 +77,6 @@ public class Publicacion implements Persistible {
 
     public void setArticulo(Articulo articulo) {
         this.articulo = articulo;
-    }
-
-    public void ofertar(float monto, Date fecha, String nombreUsuario) {
-
     }
 
     public String getUsuarioId() {
