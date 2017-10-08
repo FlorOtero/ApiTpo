@@ -16,6 +16,7 @@ public class MenuPrincipal {
 	private JTextField buscarField;
 	private JTable table = new JTable();
 	JLabel lblIngresarProducto;
+	private JTable table_1;
 
 	/**
 	 * Launch the application.
@@ -70,6 +71,10 @@ public class MenuPrincipal {
 			}
 		});
 		frmMenuPrincipal.getContentPane().add(btnBuscar);
+		
+		table_1 = new JTable();
+		table_1.setBounds(226, 194, 259, 243);
+		frmMenuPrincipal.getContentPane().add(table_1);
 		
 		
 		
