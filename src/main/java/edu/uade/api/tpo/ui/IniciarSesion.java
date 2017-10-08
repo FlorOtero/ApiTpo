@@ -150,7 +150,7 @@ public class IniciarSesion {
 		System.out.println("Trying to login with credentials: " + nombreUsuario);
 
 		try {
-			System.out.println(su.login(nombreUsuario, password).getNombre());
+			su.login(nombreUsuario, password).getNombre();
 			return true;
 		} catch (BusinessException e) {
 			notification.setText(e.getMessage());
