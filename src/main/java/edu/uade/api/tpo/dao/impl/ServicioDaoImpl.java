@@ -78,4 +78,9 @@ public class ServicioDaoImpl extends AbstractDao<Servicio> {
     public PreparedStatement findBy(String field, String value, Connection conn) throws SQLException {
         throw new UnsupportedOperationException("Find by is not supported on class Servicio!");
     }
+    
+    @Override
+    public void delete(Servicio t) throws SQLException {
+    	throw new UnsupportedOperationException("Delete is not supported on class Servicio!");
+    }
 }

@@ -66,4 +66,9 @@ public class CuentaCorrienteDaoImpl extends AbstractDao<CuentaCorriente> {
     public PreparedStatement findBy(String field, String value, Connection conn) throws SQLException {
         throw new UnsupportedOperationException("Find by is not supported on class CuentaCorriente!");
     }
+    
+    @Override
+    public void delete(CuentaCorriente t) throws SQLException {
+    	throw new UnsupportedOperationException("Delete is not supported on class CuentaCorriente!");
+    }
 }

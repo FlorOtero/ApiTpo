@@ -109,4 +109,9 @@ public class CompraTarjetaCreditoDaoImpl extends AbstractManyToOneDao<CompraTarj
     public PreparedStatement findBy(String field, String value, Connection conn) throws SQLException {
         throw new UnsupportedOperationException("Find by is not supported on class CompraTarjetaCredito!");
     }
+    
+    @Override
+    public void delete(CompraTarjetaCredito t) throws SQLException {
+    	throw new UnsupportedOperationException("Delete is not supported on class CompraTarjetaCredito!");
+    }
 }

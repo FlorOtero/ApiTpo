@@ -153,4 +153,9 @@ public class MedioPagoDaoImpl extends AbstractDao<MedioPago> {
         ps.setString(1, subastaId);
         return ps;
     }
+    
+    @Override
+    public void delete(MedioPago t) throws SQLException {
+    	throw new UnsupportedOperationException("Delete is not supported on class MedioPago!");
+    }
 }
