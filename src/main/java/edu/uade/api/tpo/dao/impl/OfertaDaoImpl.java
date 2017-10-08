@@ -95,4 +95,9 @@ public class OfertaDaoImpl extends AbstractManyToOneDao<Oferta> {
         oferta.setFecha(rs.getDate("fecha"));
         return oferta;
     }
+    
+    @Override
+    public void delete(Oferta t) throws SQLException {
+    	throw new UnsupportedOperationException("Delete is not supported on class Oferta!");
+    }
 }

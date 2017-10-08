@@ -69,5 +69,8 @@ public class PasswordDaoImpl extends AbstractDao<Password> {
         throw new UnsupportedOperationException("Find by is not supported on class Password!");
     }
     
-    
+    @Override
+    public void delete(Password t) throws SQLException {
+    	throw new UnsupportedOperationException("Delete is not supported on class Password!");
+    }
 }

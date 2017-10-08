@@ -106,8 +106,18 @@ public class SistemaPublicaciones {
 	}
 
 	public Subasta convertirPublicacionSubasta(Publicacion p, float precioMin, int diasVigencia, float pInicial) {
-		Subasta s = null;
-		return s;
+		Subasta subasta = new Subasta();
+		subasta.setArticulo(p.getArticulo());
+		subasta.setUsuarioId(p.getUsuarioId());
+		subasta.setFechaDesde(p.getFechaDesde());
+		subasta.setPrecioMin(precioMin);
+		subasta.setPrecioInicial(pInicial);
+		subasta.setEstado(Estado.A);
+		subasta.setComision(p.getComision());
+		subasta.setDiasVigencia(diasVigencia);
+		subasta.setMediosPago(p.getMediosPago());
+		
+		return subasta;
 	}
 
 	public Publicacion buscarPublicacion(String publicacionId) {
