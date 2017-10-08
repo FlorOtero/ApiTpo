@@ -122,14 +122,13 @@ public class NuevoProducto {
 				   prod.setNombre(textField.getText());
 				   prod.setDescripcion(textField_1.getText());
 				   prod.setImagenes(imagenes);
-				   publi.setPrecio(0);
+				   publi.setPrecio(textField_2);
 				   java.util.Date fecha = new Date();
 				publi.setFechaDesde(fecha);
 				   Date fechaHasta = null;
 				publi.setFechaHasta(fechaHasta);
-				   float precio = 0;
-				Date fechaDesde = null;
-				Usuario userId = null;
+				publi.setArticulo(prod);
+
 				try {
 					SistemaPublicaciones.getInstance().crearPublicacion(publi);
 				} catch (BusinessException e1) {
