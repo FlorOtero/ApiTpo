@@ -34,6 +34,9 @@ public class ProductoDaoImpl extends AbstractDao<Producto> {
 
     @Override
     public PreparedStatement create(Producto producto, Connection conn) throws SQLException {
+    	
+    	GarantiaDaoImpl.getInstance().create(producto.getGarantia());
+    	
         String query = "INSERT INTO " + schema + ".productos VALUES(?,?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, producto.getId());
