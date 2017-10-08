@@ -114,4 +114,20 @@ public class Usuario implements Persistible {
     public void setCalificaciones(List<Calificacion> calificaciones) {
         this.calificaciones = calificaciones;
     }
+    
+    public float calcularReputacion(){
+    	
+    		float reputacion = 0;
+    		int aprobadas = 0;
+    	
+    		for(Calificacion c : calificaciones){
+    			if(c.getTransaccion().getEstado() == EstadoTransaccion.A) {
+    				reputacion += c.getCalificacion();
+    				aprobadas++;
+    			}
+    		}
+    		
+    		return (reputacion/aprobadas);
+    	
+    }
 }

@@ -42,7 +42,7 @@ public class UsuarioDaoImpl extends AbstractDao<Usuario> {
         String query = "SELECT * FROM " + schema + ".usuarios WHERE " + field + " = ? AND estado = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, value);
-        ps.setString(2, Estado.A.getVal());
+        ps.setString(2, Estado.A.toString());
         return ps;
     }
 
@@ -93,7 +93,7 @@ public class UsuarioDaoImpl extends AbstractDao<Usuario> {
 
     @Override
     public PreparedStatement update(Usuario usuario, Connection conn) throws SQLException {
-        String query = "UPDATE " + schema + ".usuarios SET nombre_usuario = ?, nombre = ?, apellido = ?, domicilio_id = ?, mail = ?, password_id = ?, cuenta_corriente_id = ? WHERE usuario_id = ?";
+        String query = "UPDATE " + schema + ".usuarios SET nombre_usuario = ?, nombre = ?, apellido = ?, domicilio_id = ?, mail = ?, password_id = ?, cuenta_corriente_id = ?, estado = ? WHERE usuario_id = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, usuario.getNombreUsuario());
         ps.setString(2, usuario.getNombre());
@@ -102,8 +102,8 @@ public class UsuarioDaoImpl extends AbstractDao<Usuario> {
         ps.setString(5, usuario.getMail());
         ps.setString(6, usuario.getPassword().getId());
         ps.setString(7, usuario.getCuentaCorriente().getId());
-        ps.setString(8, usuario.getId());
-        ps.setString(9, usuario.getEstado().getVal());
+        ps.setString(8, usuario.getEstado().toString());
+        ps.setString(9, usuario.getId());
 
         return ps;
     }
