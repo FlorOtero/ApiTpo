@@ -4,6 +4,7 @@ import edu.uade.api.tpo.dao.AbstractManyToOneDao;
 import edu.uade.api.tpo.dao.ManyToOneDao;
 import edu.uade.api.tpo.model.Estado;
 import edu.uade.api.tpo.model.MedioPago;
+import edu.uade.api.tpo.model.Publicacion;
 import edu.uade.api.tpo.model.Subasta;
 
 import java.sql.*;
@@ -35,12 +36,14 @@ public class SubastaDaoImpl extends AbstractManyToOneDao<Subasta> {
 
     @Override
     public PreparedStatement create(Subasta subasta, Connection conn) throws SQLException {
+    	ArticuloDaoImpl.getInstance().create(subasta.getArticulo());
+    	
         String query = "INSERT INTO " + schema + ".subastas VALUES (?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, subasta.getId());
         ps.setString(2, subasta.getUsuarioId());
         ps.setTimestamp(3, new Timestamp(subasta.getFechaDesde().getTime()));
-        ps.setTimestamp(4, new Timestamp(subasta.getFechaHasta().getTime()));
+        ps.setTimestamp(4, null);
         ps.setFloat(5, subasta.getPrecio());
         ps.setString(6, String.valueOf(subasta.getEstado()));
         ps.setString(7, subasta.getArticulo().getId());
@@ -48,12 +51,16 @@ public class SubastaDaoImpl extends AbstractManyToOneDao<Subasta> {
         ps.setFloat(9, subasta.getPrecioMin());
         ps.setInt(10, subasta.getDiasVigencia());
         ps.setFloat(11, subasta.getPrecioInicial());
-        if (subasta.getMediosPago() != null && !subasta.getMediosPago().isEmpty()) {
+        return ps;
+    }
+    
+    @Override
+    public void doAfterCreate(Subasta subasta) throws SQLException {
+    	if (subasta.getMediosPago() != null && !subasta.getMediosPago().isEmpty()) {
             for (MedioPago medioPago : subasta.getMediosPago()) {
                 MedioPagoDaoImpl.getInstance().addMedioPagoToSubasta(subasta.getId(), medioPago);
             }
         }
-        return ps;
     }
 
     @Override

@@ -12,9 +12,13 @@ import edu.uade.api.tpo.dao.impl.PublicacionDaoImpl;
 import edu.uade.api.tpo.model.Articulo;
 import edu.uade.api.tpo.model.Garantia;
 import edu.uade.api.tpo.model.MedioPago;
+import edu.uade.api.tpo.model.MediosDePago;
 import edu.uade.api.tpo.model.Producto;
 import edu.uade.api.tpo.model.Publicacion;
+import edu.uade.api.tpo.model.Servicio;
 import edu.uade.api.tpo.model.SistemaPublicaciones;
+import edu.uade.api.tpo.model.Subasta;
+import edu.uade.api.tpo.model.TipoContratacion;
 import edu.uade.api.tpo.model.TipoPeriodo;
 
 public class SistemaPublicacionesTest {
@@ -71,5 +75,22 @@ public class SistemaPublicacionesTest {
 		this.sistemaPublicaciones.eliminarPublicacion(p);
 		p = this.sistemaPublicaciones.buscarPublicacion(PUBLICACION_ID);
 		Assert.assertNull(p);
+	}
+	
+	@Test
+	public void test_altaSubasta() {
+		Servicio servicio = new Servicio();
+		servicio.setNombre("Un servicio");
+		servicio.setDescripcion("Descripcion del servicio");
+		servicio.setContratacion(TipoContratacion.ABONO);
+		servicio.fromCertificadosTokenized("asd,eewqe");
+		servicio.fromImagesTokenized("asasd,asdasd");
+		
+		List<MedioPago> mediosPago = new ArrayList<MedioPago>();
+		mediosPago.add(MedioPago.EFECTIVO);
+		mediosPago.add(MedioPago.TRANSFERENCIA_BANCARIA);
+		
+		Subasta s = this.sistemaPublicaciones.altaSubasta(USER_ID, servicio, 105, 15, 30, mediosPago);
+		Assert.assertNotNull(s);
 	}
 }
