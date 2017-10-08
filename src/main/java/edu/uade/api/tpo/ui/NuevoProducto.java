@@ -123,7 +123,19 @@ public class NuevoProducto {
 				   prod.setDescripcion(textField_1.getText());
 				   prod.setImagenes(imagenes);
 				   publi.setPrecio(0);
-				   SistemaPublicaciones.getInstance().crearPublicacion(null, null, null, 0, prod);
+				   java.util.Date fecha = new Date();
+				publi.setFechaDesde(fecha);
+				   Date fechaHasta = null;
+				publi.setFechaHasta(fechaHasta);
+				   float precio = 0;
+				Date fechaDesde = null;
+				Usuario userId = null;
+				try {
+					SistemaPublicaciones.getInstance().crearPublicacion(publi);
+				} catch (BusinessException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				JOptionPane.showMessageDialog(null, "Se ha creado su Producto con exito", "Aviso", JOptionPane.PLAIN_MESSAGE);
 				
 			}
