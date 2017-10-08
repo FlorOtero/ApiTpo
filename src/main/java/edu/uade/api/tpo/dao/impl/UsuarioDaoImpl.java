@@ -63,7 +63,7 @@ public class UsuarioDaoImpl extends AbstractDao<Usuario> {
         ps.setString(6, usuario.getMail());
         ps.setString(7, usuario.getPassword().getId());
         ps.setString(8, usuario.getCuentaCorriente().getId());
-        ps.setString(9, usuario.getEstado().getVal());
+        ps.setString(9, usuario.getEstado().toString());
         return ps;
     }
 
