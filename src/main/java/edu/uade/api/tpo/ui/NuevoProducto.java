@@ -18,10 +18,12 @@ import com.toedter.calendar.JCalendar;
 
 import edu.uade.api.tpo.exceptions.BusinessException;
 import edu.uade.api.tpo.model.Articulo;
+import edu.uade.api.tpo.model.Garantia;
 import edu.uade.api.tpo.model.MedioPago;
 import edu.uade.api.tpo.model.Producto;
 import edu.uade.api.tpo.model.Publicacion;
 import edu.uade.api.tpo.model.SistemaPublicaciones;
+import edu.uade.api.tpo.model.TipoPeriodo;
 import edu.uade.api.tpo.model.Usuario;
 
 public class NuevoProducto {
@@ -65,91 +67,95 @@ public class NuevoProducto {
 		frmNuevoProducto.setBounds(100, 100, 529, 434);
 		frmNuevoProducto.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmNuevoProducto.getContentPane().setLayout(null);
-		
+
 		JLabel lblNombre = new JLabel("Nombre");
 		lblNombre.setBounds(34, 53, 61, 16);
 		frmNuevoProducto.getContentPane().add(lblNombre);
-		
+
 		JLabel lblDescripcion = new JLabel("Descripcion");
 		lblDescripcion.setBounds(34, 93, 88, 16);
 		frmNuevoProducto.getContentPane().add(lblDescripcion);
-		
+
 		JLabel lblPrecio = new JLabel("Precio");
 		lblPrecio.setBounds(34, 134, 61, 16);
 		frmNuevoProducto.getContentPane().add(lblPrecio);
-		
+
 		JLabel lblFechaHasta = new JLabel("Fecha hasta");
 		lblFechaHasta.setBounds(34, 184, 88, 16);
 		frmNuevoProducto.getContentPane().add(lblFechaHasta);
-		
+
 		JLabel lblNewLabel = new JLabel("Formas de pago");
 		lblNewLabel.setBounds(34, 256, 136, 16);
 		frmNuevoProducto.getContentPane().add(lblNewLabel);
-		
+
 		textField = new JTextField();
 		textField.setBounds(221, 48, 130, 26);
 		frmNuevoProducto.getContentPane().add(textField);
 		textField.setColumns(10);
-		
+
 		textField_1 = new JTextField();
 		textField_1.setBounds(221, 88, 130, 26);
 		frmNuevoProducto.getContentPane().add(textField_1);
 		textField_1.setColumns(10);
-		
+
 		textField_2 = new JTextField();
 		textField_2.setBounds(221, 129, 130, 26);
 		frmNuevoProducto.getContentPane().add(textField_2);
 		textField_2.setColumns(10);
-		
+
 		JCheckBox chckbxEfectivo = new JCheckBox("Efectivo");
 		chckbxEfectivo.setBounds(34, 279, 128, 23);
 		frmNuevoProducto.getContentPane().add(chckbxEfectivo);
-		
+
 		JCheckBox chckbxTarjetaDeCredito = new JCheckBox("Tarjeta de credito");
 		chckbxTarjetaDeCredito.setBounds(34, 305, 142, 23);
 		frmNuevoProducto.getContentPane().add(chckbxTarjetaDeCredito);
-		
+
 		JCheckBox chckbxTransferenciaBancaria = new JCheckBox("Transferencia bancaria");
 		chckbxTransferenciaBancaria.setBounds(34, 331, 197, 23);
 		frmNuevoProducto.getContentPane().add(chckbxTransferenciaBancaria);
-		
-	
-		
+
 		JButton btnPublicar = new JButton("Publicar");
 		btnPublicar.addActionListener(new ActionListener() {
 			private List<String> imagenes;
 
 			public void actionPerformed(ActionEvent e) {
-				   Publicacion publi = new Publicacion();
-				   Producto prod = new Producto();
-				   prod.setNombre(textField.getText());
-				   prod.setDescripcion(textField_1.getText());
-				   prod.setImagenes(imagenes);
-				   publi.setPrecio(Float.parseFloat(textField_2.getText()));
-		           publi.setFechaHasta(calendar.getDate());
-				   publi.setArticulo(prod);
-				  
-				   List<MedioPago> mediosPagos = new ArrayList();
-				   
-				if (chckbxEfectivo.isSelected() ) {
+				Publicacion publi = new Publicacion();
+				Producto prod = new Producto();
+				prod.setNombre(textField.getText());
+				prod.setDescripcion(textField_1.getText());
+				prod.setImagenes(imagenes);
+				publi.setPrecio(Float.parseFloat(textField_2.getText()));
+				publi.setFechaHasta(calendar.getDate());
+				Garantia garantia = new Garantia();
+				garantia.setCantidad(2);
+				garantia.setTipo(TipoPeriodo.ANUAL);
+				prod.setGarantia(garantia);
+				prod.fromImagesTokenized("images");
+				publi.setArticulo(prod);
+				List<MedioPago> mediosPagos = new ArrayList();
+
+				if (chckbxEfectivo.isSelected()) {
 					mediosPagos.add(MedioPago.EFECTIVO);
 				}
-			       if (chckbxTarjetaDeCredito.isSelected()){
-					
+				if (chckbxTarjetaDeCredito.isSelected()) {
+
 					mediosPagos.add(MedioPago.TARJETA_CREDITO);
 				}
-			       if (chckbxTransferenciaBancaria.isSelected()) {
+				if (chckbxTransferenciaBancaria.isSelected()) {
 					mediosPagos.add(MedioPago.TRANSFERENCIA_BANCARIA);
-				}	
-					
-				SistemaPublicaciones.getInstance().altaPublicacion("9ec1f480-b1a3-4605-a808-26829333e09d", publi.getFechaHasta(),publi.getPrecio(), publi.getArticulo(), mediosPagos);
-				JOptionPane.showMessageDialog(null, "Se ha creado su Producto con exito", "Aviso", JOptionPane.PLAIN_MESSAGE);
-				
+				}
+
+				SistemaPublicaciones.getInstance().altaPublicacion("9ec1f480-b1a3-4605-a808-26829333e09d",
+						publi.getFechaHasta(), publi.getPrecio(), publi.getArticulo(), mediosPagos);
+				JOptionPane.showMessageDialog(null, "Se ha creado su Producto con exito", "Aviso",
+						JOptionPane.PLAIN_MESSAGE);
+
 			}
 		});
 		btnPublicar.setBounds(121, 361, 117, 29);
 		frmNuevoProducto.getContentPane().add(btnPublicar);
-		
+
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -160,18 +166,18 @@ public class NuevoProducto {
 		});
 		btnCancelar.setBounds(263, 361, 117, 29);
 		frmNuevoProducto.getContentPane().add(btnCancelar);
-		
-		 calendar = new JCalendar();
+
+		calendar = new JCalendar();
 		calendar.setBounds(231, 166, 198, 153);
 		calendar.setWeekOfYearVisible(false);
 		calendar.setTodayButtonVisible(true);
 		frmNuevoProducto.getContentPane().add(calendar);
-		
-		
+
 		JButton btnAgregar = new JButton("Agregar ");
 		btnAgregar.setBounds(396, 364, 89, 23);
 		frmNuevoProducto.getContentPane().add(btnAgregar);
 	}
+
 	public void setVisible(boolean isVisible) {
 		this.frmNuevoProducto.setVisible(isVisible);
 	}
