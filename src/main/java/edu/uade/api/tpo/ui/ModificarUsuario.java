@@ -26,6 +26,8 @@ import java.awt.event.InputMethodListener;
 import java.util.Date;
 import java.awt.event.InputMethodEvent;
 import javax.swing.JPasswordField;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class ModificarUsuario {
 
@@ -156,8 +158,9 @@ public class ModificarUsuario {
 		panel.add(btnCancelar);
 		
 		textField_1 = new JTextField();
-		textField_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		textField_1.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
 				user.setNombre(textField_1.getText());
 			}
 		});
@@ -166,8 +169,9 @@ public class ModificarUsuario {
 		textField_1.setColumns(10);
 		
 		textField_2 = new JTextField();
-		textField_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		textField_2.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
 				user.setApellido(textField_2.getText());
 			}
 		});
@@ -176,8 +180,9 @@ public class ModificarUsuario {
 		textField_2.setColumns(10);
 		
 		textField_3 = new JTextField();
-		textField_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		textField_3.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
 				user.setMail(textField_3.getText());
 			}
 		});
@@ -195,18 +200,19 @@ public class ModificarUsuario {
 				user.setDomicilio(domicilio);
 			}
 		});
-		btnDomicilio.setBounds(235, 143, 139, 29);
+		btnDomicilio.setBounds(229, 143, 139, 29);
 		panel.add(btnDomicilio);
 		
 		passwordField = new JPasswordField();
-		passwordField.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		passwordField.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
 				password.setValor(passwordField.toString());
 				password.setFechaModificacion(new Date());
 				user.setPassword(password);
 			}
 		});
-		passwordField.setBounds(235, 205, 124, 26);
+		passwordField.setBounds(229, 205, 124, 26);
 		panel.add(passwordField);
 	}
 	public void setVisible(boolean isVisible) {

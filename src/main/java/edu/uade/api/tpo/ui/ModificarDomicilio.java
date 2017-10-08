@@ -11,6 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import edu.uade.api.tpo.model.Domicilio;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class ModificarDomicilio {
 
@@ -23,14 +25,14 @@ public class ModificarDomicilio {
 	private Domicilio domicilio;
 	
 	public ModificarDomicilio(Domicilio domicilio) {
-		this();
 		this.domicilio = domicilio;
+		initialize();
 	}
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -41,14 +43,11 @@ public class ModificarDomicilio {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the application.
 	 */
-	public ModificarDomicilio() {
-		initialize();
-	}
 
 	/**
 	 * Initialize the contents of the frame.
@@ -63,8 +62,9 @@ public class ModificarDomicilio {
 		frame.getContentPane().add(lblCalle);
 		
 		textField = new JTextField();
-		textField.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		textField.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
 				domicilio.setlinea1(textField.getText());
 			}
 		});
@@ -74,8 +74,9 @@ public class ModificarDomicilio {
 		textField.setText(domicilio.getlinea1());
 		
 		textField_1 = new JTextField();
-		textField_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		textField_1.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
 				domicilio.setlinea2(textField_1.getText());
 			}
 		});
@@ -89,8 +90,9 @@ public class ModificarDomicilio {
 		frame.getContentPane().add(lblNewLabel);
 		
 		textField_2 = new JTextField();
-		textField_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		textField_2.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
 				domicilio.setCp(textField_2.getText());
 			}
 		});
@@ -108,8 +110,9 @@ public class ModificarDomicilio {
 		frame.getContentPane().add(lblProvincia);
 		
 		textField_3 = new JTextField();
-		textField_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		textField_3.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
 				domicilio.setCiudad(textField_3.getText());
 			}
 		});
@@ -119,8 +122,9 @@ public class ModificarDomicilio {
 		textField_3.setText(domicilio.getCiudad());
 		
 		textField_4 = new JTextField();
-		textField_4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		textField_4.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
 				domicilio.setProvincia(textField_4.getText());
 			}
 		});

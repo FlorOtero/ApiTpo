@@ -48,7 +48,7 @@ public class PasswordDaoImpl extends AbstractDao<Password> {
         ps.setString(1, password.getValor());
         ps.setTimestamp(2, new Timestamp(password.getFechaModificacion().getTime()));
         ps.setString(3, password.getId());
-        return null;
+        return ps;
     }
 
     @Override
