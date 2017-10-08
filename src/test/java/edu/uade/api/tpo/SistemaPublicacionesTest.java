@@ -41,4 +41,9 @@ public class SistemaPublicacionesTest {
 
 		this.sistemaPublicaciones.altaPublicacion(USER_ID, new Date(), 300, articulo, mediosPago);
 	}
+	
+	@Test
+	public void test_modifPublicacion() {
+		
+	}
 }
