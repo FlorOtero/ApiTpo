@@ -2,6 +2,7 @@ package edu.uade.api.tpo.dao.impl;
 
 import edu.uade.api.tpo.dao.AbstractManyToOneDao;
 import edu.uade.api.tpo.dao.ManyToOneDao;
+import edu.uade.api.tpo.model.Estado;
 import edu.uade.api.tpo.model.MedioPago;
 import edu.uade.api.tpo.model.Subasta;
 
@@ -110,7 +111,7 @@ public class SubastaDaoImpl extends AbstractManyToOneDao<Subasta> {
         subasta.setFechaDesde(rs.getTimestamp("fecha_desde"));
         subasta.setFechaHasta(rs.getTimestamp("fecha_hasta"));
         subasta.setPrecio(rs.getFloat("precio"));
-        subasta.setEstado(rs.getString("estado").charAt(0));
+        subasta.setEstado(Estado.valueOf(rs.getString("estado")));
         subasta.setArticulo(ArticuloDaoImpl.getInstance().findById(rs.getString("articulo_id")));
         subasta.setComision(rs.getFloat("comision"));
         subasta.setPrecioMin(rs.getFloat("precio_min"));

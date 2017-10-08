@@ -2,9 +2,9 @@ package edu.uade.api.tpo.dao.impl;
 
 import edu.uade.api.tpo.dao.AbstractManyToOneDao;
 import edu.uade.api.tpo.dao.ManyToOneDao;
+import edu.uade.api.tpo.model.Estado;
 import edu.uade.api.tpo.model.MedioPago;
 import edu.uade.api.tpo.model.Publicacion;
-import edu.uade.api.tpo.util.UUIDUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -104,7 +104,7 @@ public class PublicacionDaoImpl extends AbstractManyToOneDao<Publicacion> {
         publicacion.setFechaDesde(rs.getTimestamp("fecha_desde"));
         publicacion.setFechaHasta(rs.getTimestamp("fecha_hasta"));
         publicacion.setPrecio(rs.getFloat("precio"));
-        publicacion.setEstado(rs.getString("estado").charAt(0));
+        publicacion.setEstado(Estado.valueOf(rs.getString("estado")));
         publicacion.setArticulo(ArticuloDaoImpl.getInstance().findById(rs.getString("articulo_id")));
         publicacion.setComision(rs.getFloat("comision"));
         publicacion.setMediosPago(MedioPagoDaoImpl.getInstance().findByPublicacionId(publicacion.getId()));
