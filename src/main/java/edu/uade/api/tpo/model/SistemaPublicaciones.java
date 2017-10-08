@@ -48,4 +48,16 @@ public class SistemaPublicaciones {
 		return s;
 	}
 	
+	public ArrayList<Publicacion> buscarPublicacion(String busqueda) {
+		ArrayList<Publicacion> resultado = new ArrayList<Publicacion>();
+		Usuario u = new Usuario();
+		Date fechaDesde = new Date();
+		Date fechaHasta = new Date();
+		Float precio = (float) 0;
+		Articulo articulo = new Producto();
+		resultado.add(this.crearPublicacion(u, fechaDesde, fechaHasta, precio, articulo));
+		resultado.add(this.crearPublicacion(u, fechaDesde, fechaHasta, precio, articulo));
+		return resultado;
+	}
+	
 }

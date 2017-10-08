@@ -1,14 +1,20 @@
 package edu.uade.api.tpo.ui;
 
 import javax.swing.*;
+
+import edu.uade.api.tpo.model.Publicacion;
+import edu.uade.api.tpo.model.SistemaPublicaciones;
+
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class MenuPrincipal {
 
 	private JFrame frmMenuPrincipal;
-	private JTextField textField;
+	private JTextField buscarField;
+	JLabel lblIngresarProducto;
 
 	/**
 	 * Launch the application.
@@ -44,18 +50,29 @@ public class MenuPrincipal {
 		frmMenuPrincipal.setBounds(100, 100, 544, 565);
 		frmMenuPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		textField = new JTextField();
-		textField.setBounds(176, 61, 273, 26);
-		frmMenuPrincipal.getContentPane().add(textField);
-		textField.setColumns(10);
+		// Content
+		
+		lblIngresarProducto = new JLabel("Buscar Publicaciones");
+		lblIngresarProducto.setBounds(40, 40, 180, 16);
+		frmMenuPrincipal.getContentPane().add(lblIngresarProducto);
+		
+		buscarField = new JTextField();
+		buscarField.setBounds(40, 66, 273, 26);
+		frmMenuPrincipal.getContentPane().add(buscarField);
+		buscarField.setColumns(10);
 		
 		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.setBounds(189, 148, 117, 29);
+		btnBuscar.setBounds(330, 66, 117, 29);
+		btnBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				buscarPublicacion(buscarField.getText());
+			}
+		});
 		frmMenuPrincipal.getContentPane().add(btnBuscar);
 		
-		JLabel lblIngresarProducto = new JLabel("Ingresar producto");
-		lblIngresarProducto.setBounds(46, 66, 117, 16);
-		frmMenuPrincipal.getContentPane().add(lblIngresarProducto);
+		
+		
+		// Menu
 		
 		JMenuBar menuBar = new JMenuBar();
 		frmMenuPrincipal.setJMenuBar(menuBar);
@@ -149,5 +166,11 @@ public class MenuPrincipal {
 
 	public void setVisible(boolean isVisible) {
 		this.frmMenuPrincipal.setVisible(isVisible);
+	}
+	
+	private ArrayList<Publicacion> buscarPublicacion(String busqueda) {
+		SistemaPublicaciones sp = SistemaPublicaciones.getInstance();
+		ArrayList<Publicacion> resultado = sp.buscarPublicacion(busqueda);
+		return resultado;
 	}
 }
