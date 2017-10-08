@@ -1,14 +1,15 @@
 package edu.uade.api.tpo.dao;
 
-import edu.uade.api.tpo.db.PersistenceModule;
-import edu.uade.api.tpo.db.Persistible;
-import edu.uade.api.tpo.util.UUIDUtils;
-
-import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import javax.sql.DataSource;
+
+import edu.uade.api.tpo.db.PersistenceModule;
+import edu.uade.api.tpo.db.Persistible;
+import edu.uade.api.tpo.util.UUIDUtils;
 
 public abstract class AbstractDao<T extends Persistible> implements GenericDao<T> {
 
@@ -20,11 +21,13 @@ public abstract class AbstractDao<T extends Persistible> implements GenericDao<T
     }
 
     @Override
-    public final void create(T t) throws SQLException {
+    public void create(T t) throws SQLException {
         t.setId(UUIDUtils.generate());
         try (Connection conn = this.getConnection(); PreparedStatement ps = create(t, conn)) {
             ps.execute();
         }
+        
+        doAfterCreate(t);
     }
 
     @Override
@@ -48,6 +51,10 @@ public abstract class AbstractDao<T extends Persistible> implements GenericDao<T
             T t = map(rs);
             return t;
         }
+    }
+    
+    public void doAfterCreate(T t) throws SQLException {
+
     }
 
     protected Connection getConnection() throws SQLException {
