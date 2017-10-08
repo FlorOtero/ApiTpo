@@ -1,11 +1,13 @@
 package edu.uade.api.tpo;
 
-import edu.uade.api.tpo.exceptions.InvalidPasswordException;
-import edu.uade.api.tpo.model.SistemaUsuarios;
-import edu.uade.api.tpo.model.Usuario;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import edu.uade.api.tpo.exceptions.InvalidPasswordException;
+import edu.uade.api.tpo.model.MedioPago;
+import edu.uade.api.tpo.model.SistemaUsuarios;
+import edu.uade.api.tpo.model.Usuario;
 
 public class SistemaUsuariosTest {
 
@@ -18,7 +20,7 @@ public class SistemaUsuariosTest {
 
     @Test
     public void test_findUsuario() {
-        Usuario u = sistemaUsuarios.buscarUsuario("flor");
+        Usuario u = sistemaUsuarios.buscarUsuario("asd");
         Assert.assertNotNull(u);
     }
 
