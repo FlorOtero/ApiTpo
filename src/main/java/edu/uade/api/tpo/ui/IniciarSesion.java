@@ -10,13 +10,22 @@ import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.ActionEvent;
+
+import edu.uade.api.tpo.exceptions.BusinessException;
+import edu.uade.api.tpo.exceptions.ExpiredPasswordException;
+import edu.uade.api.tpo.model.SistemaUsuarios;
 
 public class IniciarSesion {
 
 	private JFrame frmIniciarSesion;
-	private JTextField textField;
+	private JTextField nombreUsuarioField;
 	private JPasswordField passwordField;
+	private JButton btnAceptar;
+	private JButton btnCancelar;
+	private JLabel notification;
 
 	/**
 	 * Launch the application.
@@ -52,51 +61,115 @@ public class IniciarSesion {
 		frmIniciarSesion.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
+		nombreUsuarioField = new JTextField();
+		passwordField = new JPasswordField();
+		btnAceptar = new JButton("Ingresar");
+		btnCancelar = new JButton("Cancelar");
+		notification = new JLabel("");
+		
+		
+		
 		panel.setBackground(new Color(255, 255, 224));
 		panel.setBounds(0, 0, 450, 278);
 		frmIniciarSesion.getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblNombreDeUsuario = new JLabel("Nombre de usuario:");
-		lblNombreDeUsuario.setBounds(92, 58, 103, 14);
+		lblNombreDeUsuario.setBounds(92, 58, 150, 14);
 		panel.add(lblNombreDeUsuario);
 		
 		JLabel lblContrasea = new JLabel("Contrase\u00F1a: ");
-		lblContrasea.setBounds(92, 101, 79, 14);
+		lblContrasea.setBounds(92, 101, 150, 14);
 		panel.add(lblContrasea);
 		
-		textField = new JTextField();
-		textField.setBounds(209, 55, 134, 20);
-		panel.add(textField);
-		textField.setColumns(10);
 		
-		passwordField = new JPasswordField();
-		passwordField.setBounds(209, 98, 134, 20);
-		panel.add(passwordField);
-		
-		JButton btnAceptar = new JButton("Aceptar");
-		btnAceptar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				MenuPrincipal menu = new MenuPrincipal();
-				menu.setVisible(true);
-				frmIniciarSesion.dispose();
+		nombreUsuarioField.setBounds(220, 55, 134, 20);
+		nombreUsuarioField.addKeyListener(new KeyListener() {
+			public void keyPressed(KeyEvent e) {}
+			public void keyTyped(KeyEvent e) {}
+			public void keyReleased(KeyEvent e) {
+				validateForm();
 			}
 		});
-		btnAceptar.setBounds(81, 168, 103, 23);
+		panel.add(nombreUsuarioField);
+		nombreUsuarioField.setColumns(10);
+		
+		
+		passwordField.setBounds(220, 98, 134, 20);
+		passwordField.addKeyListener(new KeyListener() {
+			public void keyPressed(KeyEvent e) {}
+			public void keyTyped(KeyEvent e) {}
+			public void keyReleased(KeyEvent e) {
+				validateForm();
+			}
+		});
+		panel.add(passwordField);
+		
+		
+		btnAceptar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				btnAceptar.setEnabled(false);
+				notification.setText("");
+				
+				if (login()) {
+					MenuPrincipal menu = new MenuPrincipal();
+					menu.setVisible(true);
+					frmIniciarSesion.dispose();
+				}
+				btnAceptar.setEnabled(true);
+			}
+		});
+		btnAceptar.setEnabled(false);
+		btnAceptar.setBounds(81, 168, 150, 23);
 		panel.add(btnAceptar);
 		
-		JButton btnCancelar = new JButton("Cancelar");
+		
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				notification.setText("");
 				OpcionIngreso opcion = new OpcionIngreso();
 				opcion.setVisible(true);
 				frmIniciarSesion.dispose();
 			}
 		});
-		btnCancelar.setBounds(252, 168, 103, 23);
+		btnCancelar.setBounds(252, 168, 150, 23);
 		panel.add(btnCancelar);
+		
+		notification.setBounds(92, 220, 300, 14);
+		panel.add(notification);
 	}
+	
 	public void setVisible(boolean isVisible) {
 		this.frmIniciarSesion.setVisible(isVisible);
+	}
+	
+	public boolean login() {
+		String nombreUsuario = nombreUsuarioField.getText();
+		String password = new String(passwordField.getPassword());
+		SistemaUsuarios su = SistemaUsuarios.getInstance();
+		System.out.println("Trying to login with credentials: " + nombreUsuario);
+
+		try {
+			su.login(nombreUsuario, password).getNombre();
+			return true;
+		} catch (BusinessException e) {
+			notification.setText(e.getMessage());
+			return false;
+		} catch (ExpiredPasswordException e) {
+			notification.setText(e.getMessage());
+			return false;
+		} 
+		
+	}
+	
+	public void validateForm() {
+		String nombreUsuario = nombreUsuarioField.getText();
+		String password = new String(passwordField.getPassword());
+		
+		if (nombreUsuario.length() > 0 && password.length() > 0) {
+			this.btnAceptar.setEnabled(true);
+		} else {
+			this.btnAceptar.setEnabled(false);
+		}
 	}
 }
