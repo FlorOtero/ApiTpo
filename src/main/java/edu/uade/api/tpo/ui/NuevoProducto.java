@@ -140,8 +140,8 @@ public class NuevoProducto {
 				publi.setFechaHasta(calendar.getDate());
 				
 				Garantia garantia = new Garantia();
-				garantia.setCantidad(Integer.parseInt(textField_3.getText()));		
-				garantia.setTipo(TipoPeriodo.ANUAL);
+				garantia.setCantidad(Integer.parseInt(textField_3.getText()));
+		        garantia.setTipo(TipoPeriodo.ANUAL);
 				prod.setGarantia(garantia);
 				
 				prod.fromImagesTokenized("images");
