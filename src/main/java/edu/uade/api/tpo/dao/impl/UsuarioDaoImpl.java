@@ -107,4 +107,9 @@ public class UsuarioDaoImpl extends AbstractDao<Usuario> {
 
         return ps;
     }
+    
+    @Override
+    public void delete(Usuario t) throws SQLException {
+    	throw new UnsupportedOperationException("Delete is not supported on class Usuario!");
+    }
 }
