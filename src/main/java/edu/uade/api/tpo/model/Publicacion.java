@@ -20,13 +20,12 @@ public class Publicacion implements Persistible {
     public void ofertar(float monto, Usuario usuario, MedioPago mp) throws BusinessException {
     	
 	    	if(estado == Estado.I) {
-	    		throw new BusinessException("La publicacion está inactiva");
+	    		throw new BusinessException("La publicacion está inactiva!");
 	    	}
-	    	
-	    	//existe mp?
-	    	
-	    	
-	    	
+	    	if(!mediosPago.contains(mp)) {
+	    		throw new BusinessException("El medio de pago elegido no está disponible en esta publicación!");
+	    	}
+	    	SistemaTransacciones.getInstance().crearTransaccion(usuario, this, mp);
     }
 
     public String getId() {

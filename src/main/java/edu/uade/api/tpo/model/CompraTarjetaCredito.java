@@ -6,8 +6,8 @@ public class CompraTarjetaCredito extends Transaccion {
     
     public CompraTarjetaCredito() {}
 
-    public CompraTarjetaCredito(Publicacion publicacion, Usuario contraparte, String cuentaCorrienteId) {
-		super(publicacion, contraparte, cuentaCorrienteId);
+    public CompraTarjetaCredito(Publicacion publicacion, Usuario contraparte) {
+		super(publicacion, contraparte);
 		// TODO Auto-generated constructor stub
 	}
 

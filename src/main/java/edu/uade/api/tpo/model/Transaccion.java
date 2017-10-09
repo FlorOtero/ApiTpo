@@ -14,13 +14,13 @@ public abstract class Transaccion implements Persistible {
 	
 	public Transaccion() {}
 	
-	public Transaccion(Publicacion publicacion, Usuario contraparte, String cuentaCorrienteId) {
+	public Transaccion(Publicacion publicacion, Usuario contraparte) {
 		super();
 		this.publicacion = publicacion;
 		this.estado = EstadoTransaccion.P;
 		this.fecha = new Date();
 		this.contraparte = contraparte;
-		this.cuentaCorrienteId = cuentaCorrienteId;
+		this.cuentaCorrienteId = contraparte.getCuentaCorriente().getId();
 	}
 
 	public String getId() {

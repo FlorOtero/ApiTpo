@@ -15,8 +15,5 @@ public class SistemaNotificacionCobro {
         return instance;
     }
 	
-//	public String notificar(){	
-//		return mensaje;
-//	}
 
 }

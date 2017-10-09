@@ -6,8 +6,8 @@ public class CompraTransferenciaBancaria extends Transaccion {
 	
 	public CompraTransferenciaBancaria() {}
 
-	public CompraTransferenciaBancaria(Publicacion publicacion, Usuario contraparte, String cuentaCorrienteId) {
-		super(publicacion, contraparte, cuentaCorrienteId);
+	public CompraTransferenciaBancaria(Publicacion publicacion, Usuario contraparte) {
+		super(publicacion, contraparte);
 		// TODO Auto-generated constructor stub
 	}
 

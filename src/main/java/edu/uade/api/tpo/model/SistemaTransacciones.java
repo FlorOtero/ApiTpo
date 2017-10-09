@@ -21,9 +21,23 @@ public class SistemaTransacciones {
 	}
 
 	public void crearTransaccion(Usuario contraparte, Publicacion publicacion, MedioPago medioDePago){
-		//Transaccion tr = new Transaccion(publicacion, contraparte);
+		Transaccion tr = null;
 		
+		switch (medioDePago) {
+		case EFECTIVO:
+			tr = new CompraEfectivo(publicacion, contraparte);
+			break;
+		case TRANSFERENCIA_BANCARIA:
+			tr = new CompraTransferenciaBancaria(publicacion, contraparte);
+			//	SistemaNotificacionCobro.getInstance()
+			break;
+		case TARJETA_CREDITO:
+			tr = new CompraTarjetaCredito(publicacion, contraparte);
+			//	SistemaNotificacionCobro.getInstance()
+			break;
+		}
 		
+		transacciones.add(tr);
 
 	}
 
