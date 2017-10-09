@@ -34,6 +34,7 @@ public class SubastaDaoImpl extends AbstractManyToOneDao<Subasta> {
 		String query = "SELECT * FROM " + schema + ".subastas WHERE subasta_id = ? AND estado = ?";
 		PreparedStatement ps = conn.prepareStatement(query);
 		ps.setString(1, id);
+		ps.setString(2, Estado.A.toString());
 		return ps;
 	}
 
