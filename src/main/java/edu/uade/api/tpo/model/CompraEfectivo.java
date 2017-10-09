@@ -1,5 +1,7 @@
 package edu.uade.api.tpo.model;
 
+import edu.uade.api.tpo.exceptions.BusinessException;
+
 public class CompraEfectivo extends Transaccion {
 	
 	public CompraEfectivo() {}
@@ -9,12 +11,11 @@ public class CompraEfectivo extends Transaccion {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void pagar() {
+	public void pagar() throws BusinessException {
 		//restamos de la cta cte del comprador y sumamos en la del vendedor
 		//+ comisiones
 		float saldoComprador = this.getContraparte().getCuentaCorriente().getSaldo();
-		String idVendedor = this.getPublicacion().getUsuarioId();
-		Usuario vendedor = SistemaUsuarios.getInstance().buscarUsuarioById(idVendedor);
+		Usuario vendedor = SistemaUsuarios.getInstance().buscarUsuarioById(this.getPublicacion().getUsuarioId());
 		float saldoVendedor = vendedor.getCuentaCorriente().getSaldo();
 		
 		//restamos de la cta cte comprador el valor de la publicacion
@@ -24,8 +25,13 @@ public class CompraEfectivo extends Transaccion {
 		//restamos de la cta cte vendedor el valor de la comision
 		saldoVendedor = saldoVendedor - (this.getPublicacion().getPrecio() * this.getPublicacion().getComision());
 		
-		SistemaUsuarios.getInstance().buscarUsuario(this.getContraparte().getNombreUsuario()).getCuentaCorriente().setSaldo(saldoComprador);
-		SistemaUsuarios.getInstance().buscarUsuario(vendedor.getNombreUsuario()).getCuentaCorriente().setSaldo(saldoVendedor);
+		//seteamos los objetos con sus saldos correspondientes
+		this.getContraparte().getCuentaCorriente().setSaldo(saldoComprador);
+		vendedor.getCuentaCorriente().setSaldo(saldoVendedor);
+		
+		//modificamos los usuarios
+		SistemaUsuarios.getInstance().modificarUsuario(this.getContraparte());
+		SistemaUsuarios.getInstance().modificarUsuario(vendedor);
 
 	}
 }
