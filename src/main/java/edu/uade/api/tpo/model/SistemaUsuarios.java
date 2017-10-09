@@ -78,6 +78,16 @@ public class SistemaUsuarios {
         return u;
     }
 
+    public Usuario buscarUsuarioById(String usuarioId) {
+        Usuario u = null;
+        try {
+            u = usuarioDao.findById(usuarioId);
+        } catch (SQLException e) {
+            logger.error("Error buscando usuario :" + usuarioId, e);
+        }
+        return u;
+    } 
+    
     public Usuario login(String nombreUsuario, String password) throws BusinessException, ExpiredPasswordException {
         Usuario usuario = this.buscarUsuario(nombreUsuario);
         if (usuario == null) {
