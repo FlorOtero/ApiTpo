@@ -23,6 +23,7 @@ public class SistemaTransacciones {
 	public void crearTransaccion(Usuario contraparte, Publicacion publicacion, MedioPago medioDePago){
 		//Transaccion tr = new Transaccion(publicacion, contraparte);
 		
+		
 
 	}
 

@@ -12,6 +12,8 @@ public abstract class Transaccion implements Persistible {
 	private Usuario contraparte;
 	private String cuentaCorrienteId;
 	
+	public Transaccion() {}
+	
 	public Transaccion(Publicacion publicacion, Usuario contraparte, String cuentaCorrienteId) {
 		super();
 		this.publicacion = publicacion;

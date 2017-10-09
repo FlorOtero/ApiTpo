@@ -36,8 +36,7 @@ public class OfertaDaoImpl extends AbstractManyToOneDao<Oferta> {
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, oferta.getId());
         ps.setString(2, oferta.getUsuario().getId());
-        ps.setString(3, oferta.getSubasta().getId());
-        ps.setFloat(4, oferta.getMonto());
+        ps.setFloat(3, oferta.getMonto());
         ps.setTimestamp(5, new Timestamp(oferta.getFecha().getTime()));
         return ps;
     }
@@ -47,8 +46,7 @@ public class OfertaDaoImpl extends AbstractManyToOneDao<Oferta> {
         String query = "UPDATE " + schema + ".ofertas SET usuario_id = ?, subasta_id = ?, monto = ?, fecha = ? WHERE oferta_id = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, oferta.getUsuario().getId());
-        ps.setString(2, oferta.getSubasta().getId());
-        ps.setFloat(3, oferta.getMonto());
+        ps.setFloat(2, oferta.getMonto());
         ps.setTimestamp(4, new Timestamp(oferta.getFecha().getTime()));
         ps.setString(5, oferta.getId());
         return ps;
@@ -90,7 +88,6 @@ public class OfertaDaoImpl extends AbstractManyToOneDao<Oferta> {
         Oferta oferta = new Oferta();
         oferta.setId(rs.getString("oferta_id"));
         oferta.setUsuario(UsuarioDaoImpl.getInstance().findById(rs.getString("usuario_id")));
-        oferta.setSubasta(SubastaDaoImpl.getInstance().findById(rs.getString("subasta_id")));
         oferta.setMonto(rs.getFloat("monto"));
         oferta.setFecha(rs.getDate("fecha"));
         return oferta;

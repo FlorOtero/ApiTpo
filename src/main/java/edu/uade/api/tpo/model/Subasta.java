@@ -8,11 +8,15 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
+import edu.uade.api.tpo.exceptions.BusinessException;
+
 public class Subasta extends Publicacion {
 	private float precioMin;
 	private int diasVigencia;
 	private float precioInicial;
 	private List<Oferta> ofertas;
+	
+	public Subasta() {}
 
 	public Subasta(float precioMin, int diasVigencia, float precioInicial) {
 		super();
@@ -54,7 +58,12 @@ public class Subasta extends Publicacion {
 		this.ofertas = ofertas;
 	}
 
-	public void ofertar(float monto, Usuario usuario) {
+	public void ofertar(float monto, Usuario usuario) throws BusinessException {
+    	
+		if(super.getEstado() == Estado.I) {
+			throw new BusinessException("La publicacion está inactiva");
+		} else {
+    	
 		Date now = new Date();
 		Oferta oferta = new Oferta(monto, now, usuario);
 		//creamos la oferta
@@ -67,6 +76,7 @@ public class Subasta extends Publicacion {
 			}
 		}
 		SistemaNotificacionSubasta.getInstance().notificarUsuarios(usuariosNotificados, this);
+		}
 	}
 
 }

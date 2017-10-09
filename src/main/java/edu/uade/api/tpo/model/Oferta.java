@@ -10,6 +10,8 @@ public class Oferta implements Persistible {
     private float monto;
     private Date fecha;
     private Usuario usuario;
+    
+    public Oferta() {}
 
     public Oferta(float monto, Date fecha, Usuario usuario) {
 		super();
