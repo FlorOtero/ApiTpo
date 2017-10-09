@@ -105,4 +105,19 @@ public class SistemaPublicacionesTest {
 		
 		this.sistemaPublicaciones.modificarSubasta(subasta);
 	}
+	
+	@Test
+	public void test_eliminarSubasta() {
+		Subasta subasta = this.sistemaPublicaciones.buscarSubasta(SUBASTA_ID);
+		this.sistemaPublicaciones.eliminarSubasta(subasta);
+		subasta = this.sistemaPublicaciones.buscarSubasta(SUBASTA_ID);
+		Assert.assertNull(subasta);
+	}
+	
+	@Test
+	public void test_convertirPublicacionSubasta() {
+		Publicacion p = this.sistemaPublicaciones.buscarPublicacion(PUBLICACION_ID);
+		Subasta s = this.sistemaPublicaciones.convertirPublicacionSubasta(p, 666, 30, 400);
+		Assert.assertNotNull(s);
+	}
 }

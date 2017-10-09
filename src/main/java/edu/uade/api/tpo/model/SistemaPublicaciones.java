@@ -61,7 +61,11 @@ public class SistemaPublicaciones {
 	
 	public void eliminarSubasta(Subasta subasta) {
 		subasta.setEstado(Estado.I);
-		
+		try {
+			this.subastaDao.update(subasta);
+		} catch (SQLException e) {
+			logger.error("Error eliminando la subasta", e);
+		}
 	}
 
 	public void modificarPublicacion(Publicacion p) {
@@ -82,15 +86,12 @@ public class SistemaPublicaciones {
 
 	public Subasta altaSubasta(String usuarioId, Articulo a, float precioMin, int diasVigencia, float precioInicial,
 			List<MedioPago> mediosPago) {
-		Subasta s = new Subasta();
+		Subasta s = new Subasta(precioMin,diasVigencia,precioInicial);
 		s.setArticulo(a);
 		s.setUsuarioId(usuarioId);
 		s.setFechaDesde(new Date());
-		s.setPrecioMin(precioMin);
-		s.setPrecioInicial(precioInicial);
 		s.setEstado(Estado.A);
 		s.setComision(10);
-		s.setDiasVigencia(diasVigencia);
 		s.setMediosPago(mediosPago);
 		try {
 			this.subastaDao.create(s);
@@ -102,8 +103,24 @@ public class SistemaPublicaciones {
 	}
 
 	public Subasta convertirPublicacionSubasta(Publicacion p, float precioMin, int diasVigencia, float pInicial) {
-		Subasta s = null;
-		return s;
+		Subasta subasta = new Subasta();
+		subasta.setArticulo(p.getArticulo());
+		subasta.setUsuarioId(p.getUsuarioId());
+		subasta.setFechaDesde(p.getFechaDesde());
+		subasta.setPrecioMin(precioMin);
+		subasta.setPrecioInicial(pInicial);
+		subasta.setEstado(Estado.A);
+		subasta.setComision(p.getComision());
+		subasta.setDiasVigencia(diasVigencia);
+		subasta.setMediosPago(p.getMediosPago());
+		
+		try {
+			this.publicacionDao.delete(p);
+			this.subastaDao.create(subasta);
+		} catch (SQLException e) {
+			logger.error("Error convirtiendo publicacion a subasta", e);
+		}
+		return subasta;
 	}
 
 	public Publicacion buscarPublicacion(String publicacionId) {

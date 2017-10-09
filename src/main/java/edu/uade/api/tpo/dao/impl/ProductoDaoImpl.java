@@ -12,70 +12,86 @@ import java.sql.SQLException;
 
 public class ProductoDaoImpl extends AbstractDao<Producto> {
 
-    private static GenericDao<Producto> instance;
+	private static GenericDao<Producto> instance;
 
-    private ProductoDaoImpl() {
-    }
+	private ProductoDaoImpl() {
+	}
 
-    public static GenericDao<Producto> getInstance() {
-        if (instance == null) {
-            instance = new ProductoDaoImpl();
-        }
-        return instance;
-    }
+	public static GenericDao<Producto> getInstance() {
+		if (instance == null) {
+			instance = new ProductoDaoImpl();
+		}
+		return instance;
+	}
 
-    @Override
-    public PreparedStatement findById(String id, Connection conn) throws SQLException {
-        String query = "SELECT * FROM " + schema + ".productos WHERE producto_id = ?";
-        PreparedStatement ps = conn.prepareStatement(query);
-        ps.setString(1, id);
-        return ps;
-    }
+	@Override
+	public PreparedStatement findById(String id, Connection conn) throws SQLException {
+		String query = "SELECT * FROM " + schema + ".productos WHERE producto_id = ?";
+		PreparedStatement ps = conn.prepareStatement(query);
+		ps.setString(1, id);
+		return ps;
+	}
 
-    @Override
-    public PreparedStatement create(Producto producto, Connection conn) throws SQLException {
-    	
-    	GarantiaDaoImpl.getInstance().create(producto.getGarantia());
-    	
-        String query = "INSERT INTO " + schema + ".productos VALUES(?,?,?,?,?)";
-        PreparedStatement ps = conn.prepareStatement(query);
-        ps.setString(1, producto.getId());
-        ps.setString(2, producto.getNombre());
-        ps.setString(3, producto.getDescripcion());
-        ps.setString(4, producto.toImagesTokenized());
-        ps.setString(5, producto.getGarantia().getId());
-        return ps;
-    }
+	@Override
+	public PreparedStatement create(Producto producto, Connection conn) throws SQLException {
 
-    @Override
-    public PreparedStatement update(Producto producto, Connection conn) throws SQLException {
-        String query = "UPDATE " + schema + ".productos SET nombre = ?, descripcion = ?, imagenes = ?, garantia_id = ? WHERE producto_id = ?";
-        PreparedStatement ps = conn.prepareStatement(query);
-        ps.setString(1, producto.getNombre());
-        ps.setString(2, producto.getDescripcion());
-        ps.setString(3, producto.toImagesTokenized());
-        ps.setString(4, producto.getGarantia().getId());
-        ps.setString(5, producto.getId());
+		GarantiaDaoImpl.getInstance().create(producto.getGarantia());
 
-        return ps;
-    }
+		String query = "INSERT INTO " + schema + ".productos VALUES(?,?,?,?,?)";
+		PreparedStatement ps = conn.prepareStatement(query);
+		ps.setString(1, producto.getId());
+		ps.setString(2, producto.getNombre());
+		ps.setString(3, producto.getDescripcion());
+		ps.setString(4, producto.toImagesTokenized());
+		ps.setString(5, producto.getGarantia().getId());
+		return ps;
+	}
 
-    @Override
-    public Producto map(ResultSet rs) throws SQLException {
-        Producto producto = null;
-        if (rs.first()) {
-            producto = new Producto();
-            producto.setId(rs.getString("producto_id"));
-            producto.setNombre(rs.getString("nombre"));
-            producto.setDescripcion(rs.getString("descripcion"));
-            producto.fromImagesTokenized(rs.getString("imagenes"));
-            producto.setGarantia(GarantiaDaoImpl.getInstance().findById(rs.getString("garantia_id")));
-        }
-        return producto;
-    }
+	@Override
+	public PreparedStatement update(Producto producto, Connection conn) throws SQLException {
+		String query = "UPDATE " + schema
+				+ ".productos SET nombre = ?, descripcion = ?, imagenes = ?, garantia_id = ? WHERE producto_id = ?";
+		PreparedStatement ps = conn.prepareStatement(query);
+		ps.setString(1, producto.getNombre());
+		ps.setString(2, producto.getDescripcion());
+		ps.setString(3, producto.toImagesTokenized());
+		ps.setString(4, producto.getGarantia().getId());
+		ps.setString(5, producto.getId());
 
-    @Override
-    public PreparedStatement findBy(String field, String value, Connection conn) throws SQLException {
-        throw new UnsupportedOperationException("Find by is not supported on class Producto!");
-    }
+		return ps;
+	}
+
+	@Override
+	public Producto map(ResultSet rs) throws SQLException {
+		Producto producto = null;
+		if (rs.first()) {
+			producto = new Producto();
+			producto.setId(rs.getString("producto_id"));
+			producto.setNombre(rs.getString("nombre"));
+			producto.setDescripcion(rs.getString("descripcion"));
+			producto.fromImagesTokenized(rs.getString("imagenes"));
+			producto.setGarantia(GarantiaDaoImpl.getInstance().findById(rs.getString("garantia_id")));
+		}
+		return producto;
+	}
+
+	@Override
+	public PreparedStatement findBy(String field, String value, Connection conn) throws SQLException {
+		throw new UnsupportedOperationException("Find by is not supported on class Producto!");
+	}
+
+	@Override
+	public void delete(Producto t) throws SQLException {
+		try (Connection conn = this.getConnection(); PreparedStatement ps = getDeleteStatement(t, conn)) {
+            ps.execute();
+		}
+		GarantiaDaoImpl.getInstance().delete(t.getGarantia());
+	}
+	
+	private PreparedStatement getDeleteStatement(Producto p, Connection conn) throws SQLException {
+		String query = "DELETE FROM " + schema + ".productos WHERE producto_id = ?";
+		PreparedStatement ps = conn.prepareStatement(query);
+		ps.setString(1, p.getId());
+		return ps;
+	}
 }

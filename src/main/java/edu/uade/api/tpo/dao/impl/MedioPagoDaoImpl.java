@@ -147,10 +147,27 @@ public class MedioPagoDaoImpl extends AbstractDao<MedioPago> {
         }
     }
 
-    private PreparedStatement getDeleteStatementBySubasta(String subastaId, Connection conn) throws SQLException {
+	private PreparedStatement getDeleteStatementBySubasta(String subastaId, Connection conn) throws SQLException {
         String query = "DELETE FROM " + schema + ".subastas_medios_pago WHERE subasta_id = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, subastaId);
         return ps;
+    }
+    
+    @Override
+    public void delete(MedioPago t) throws SQLException {
+    	throw new UnsupportedOperationException("Delete is not supported on class MedioPago!");
+    }
+    
+    public void deleteByPublicacionId(String publicacionId) throws SQLException {
+    	try (Connection conn = this.getConnection(); PreparedStatement ps = getDeleteStatementByPublicacion(publicacionId, conn)) {
+            ps.execute();
+        }
+    }
+    
+    public void deleteBySubastaId(String subastaId) throws SQLException {
+    	try (Connection conn = this.getConnection(); PreparedStatement ps = getDeleteStatementBySubasta(subastaId, conn)) {
+            ps.execute();
+        }
     }
 }
