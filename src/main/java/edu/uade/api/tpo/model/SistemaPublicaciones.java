@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import edu.uade.api.tpo.dao.ManyToOneDao;
 import edu.uade.api.tpo.dao.impl.PublicacionDaoImpl;
 import edu.uade.api.tpo.dao.impl.SubastaDaoImpl;
@@ -86,12 +85,15 @@ public class SistemaPublicaciones {
 
 	public Subasta altaSubasta(String usuarioId, Articulo a, float precioMin, int diasVigencia, float precioInicial,
 			List<MedioPago> mediosPago) {
-		Subasta s = new Subasta(precioMin,diasVigencia,precioInicial);
+		Subasta s = new Subasta();
 		s.setArticulo(a);
 		s.setUsuarioId(usuarioId);
 		s.setFechaDesde(new Date());
+		s.setPrecioMin(precioMin);
+		s.setPrecioInicial(precioInicial);
 		s.setEstado(Estado.A);
 		s.setComision(10);
+		s.setDiasVigencia(diasVigencia);
 		s.setMediosPago(mediosPago);
 		try {
 			this.subastaDao.create(s);

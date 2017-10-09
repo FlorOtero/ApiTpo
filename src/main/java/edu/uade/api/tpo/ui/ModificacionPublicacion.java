@@ -88,6 +88,7 @@ public class ModificacionPublicacion extends JFrame {
 		group.add(rdbtnNewRadioButton);
 		group.add(rdbtnNewRadioButton1);
 		group.add(rdbtnNewRadioButton11);
+	
 				
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
