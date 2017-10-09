@@ -100,7 +100,7 @@ public class SistemaUsuarios {
                 Calendar cal = Calendar.getInstance();
                 cal.add(Calendar.DAY_OF_MONTH, -180);
                 if (cal.getTime().compareTo(p.getFechaModificacion()) > 0) {
-                    throw new ExpiredPasswordException("La contraseña ha expirado");
+                    throw new ExpiredPasswordException("La contraseña ha expirado", usuario);
                 }
             }
         }
