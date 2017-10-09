@@ -17,6 +17,7 @@ public class MenuPrincipal {
 	private JTable table = new JTable();
 	JLabel lblIngresarProducto;
 	private JTable table_1;
+	private ArrayList<Publicacion> resultado;
 
 	/**
 	 * Launch the application.
@@ -68,13 +69,29 @@ public class MenuPrincipal {
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				buscarPublicacion(buscarField.getText());
+				String[] columnNames = {"First Name",
+                "Last Name",
+                "Sport",
+                "# of Years",
+                "Vegetarian"};
+				Object[][] data = {};
+				int i = resultado.size();
+				for(int j=0; j<i; j++){	
+					Object[] row = { resultado.get(j).getId(), 1, 1 };
+					data[j] = row;
+				}
+				table_1 = new JTable(data, columnNames);
+				table_1.setBounds(226, 194, 259, 243);
+				frmMenuPrincipal.getContentPane().add(table_1);
 			}
 		});
 		frmMenuPrincipal.getContentPane().add(btnBuscar);
+		/*String[] columnNames = {"Nombre",
+                "Precio",
+                "Tipo"};*/
 		
-		table_1 = new JTable();
-		table_1.setBounds(226, 194, 259, 243);
-		frmMenuPrincipal.getContentPane().add(table_1);
+
+
 		
 		
 		
@@ -178,7 +195,7 @@ public class MenuPrincipal {
 	
 	private ArrayList<Publicacion> buscarPublicacion(String busqueda) {
 		SistemaPublicaciones sp = SistemaPublicaciones.getInstance();
-		ArrayList<Publicacion> resultado = sp.filtrarPublicaciones(busqueda);
+		resultado = sp.filtrarPublicaciones(busqueda);
 		return resultado;
 	}
 }
