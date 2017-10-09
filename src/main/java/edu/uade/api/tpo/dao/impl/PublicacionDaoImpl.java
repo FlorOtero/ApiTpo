@@ -4,6 +4,7 @@ import edu.uade.api.tpo.dao.AbstractManyToOneDao;
 import edu.uade.api.tpo.dao.ManyToOneDao;
 import edu.uade.api.tpo.model.Estado;
 import edu.uade.api.tpo.model.MedioPago;
+import edu.uade.api.tpo.model.Producto;
 import edu.uade.api.tpo.model.Publicacion;
 
 import java.sql.*;
@@ -129,6 +130,17 @@ public class PublicacionDaoImpl extends AbstractManyToOneDao<Publicacion> {
 
 	@Override
 	public void delete(Publicacion t) throws SQLException {
-		throw new UnsupportedOperationException("Delete is not supported on class Publicacion!");
+		MedioPagoDaoImpl.getInstance().deleteByPublicacionId(t.getId());
+		try (Connection conn = this.getConnection(); PreparedStatement ps = getDeleteStatement(t, conn)) {
+			ps.execute();
+		}
+		ArticuloDaoImpl.getInstance().delete(t.getArticulo());
+	}
+
+	private PreparedStatement getDeleteStatement(Publicacion p, Connection conn) throws SQLException {
+		String query = "DELETE FROM " + schema + ".publicaciones WHERE publicacion_id = ?";
+		PreparedStatement ps = conn.prepareStatement(query);
+		ps.setString(1, p.getId());
+		return ps;
 	}
 }

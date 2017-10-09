@@ -1,15 +1,15 @@
 package edu.uade.api.tpo.dao.impl;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import edu.uade.api.tpo.dao.AbstractDao;
 import edu.uade.api.tpo.dao.GenericDao;
 import edu.uade.api.tpo.model.Garantia;
 import edu.uade.api.tpo.model.TipoPeriodo;
 import edu.uade.api.tpo.util.UUIDUtils;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class GarantiaDaoImpl extends AbstractDao<Garantia> {
 
@@ -69,9 +69,17 @@ public class GarantiaDaoImpl extends AbstractDao<Garantia> {
     public PreparedStatement findBy(String field, String value, Connection conn) throws SQLException {
         throw new UnsupportedOperationException("Find by is not supported on class Garantia!");
     }
-    
-    @Override
-    public void delete(Garantia t) throws SQLException {
-    	throw new UnsupportedOperationException("Delete is not supported on class Garantia!");
+   
+    public void delete(Garantia garantia) throws SQLException {
+        try (Connection conn = this.getConnection(); PreparedStatement ps = getDeleteStatement(garantia, conn)) {
+            ps.execute();
+        }
     }
+    
+	private PreparedStatement getDeleteStatement(Garantia garantia, Connection conn) throws SQLException {
+		String query = "DELETE FROM " + schema + ".garantias WHERE garantia_id = ?";
+		PreparedStatement ps = conn.prepareStatement(query);
+		ps.setString(1, garantia.getId());
+		return ps;
+	}
 }
