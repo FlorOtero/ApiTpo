@@ -15,8 +15,9 @@ public class Subasta extends Publicacion {
 	private int diasVigencia;
 	private float precioInicial;
 	private List<Oferta> ofertas;
-	
-	public Subasta() {}
+
+	public Subasta() {
+	}
 
 	public Subasta(float precioMin, int diasVigencia, float precioInicial) {
 		super();
@@ -58,25 +59,30 @@ public class Subasta extends Publicacion {
 		this.ofertas = ofertas;
 	}
 
-	public void ofertar(float monto, Usuario usuario) throws BusinessException {
-    	
-		if(super.getEstado() == Estado.I) {
-			throw new BusinessException("La publicacion está inactiva");
-		} else {
-    	
+	public void ofertar(float monto, Usuario usuario, MedioPago mp) throws BusinessException {
+		if (estado != Estado.A) {
+			throw new BusinessException("La publicacion no está activa!");
+		}
+		if (!mediosPago.contains(mp)) {
+			throw new BusinessException("El medio de pago elegido no está disponible en esta publicación!");
+		}
+
 		Date now = new Date();
 		Oferta oferta = new Oferta(monto, now, usuario);
-		//creamos la oferta
+		// creamos la oferta
 		ofertas.add(oferta);
-		//notificamos a todos menos al usuario que hizo la oferta
-		Set<String> usuariosNotificados = new HashSet();
-		for(Oferta o : ofertas) {
-			if(!o.getUsuario().getId().equals(usuario.getId())) {
-				usuariosNotificados.add(o.getUsuario().getNombreUsuario());
-			}
-		}
-		SistemaNotificacionSubasta.getInstance().notificarUsuarios(usuariosNotificados, this);
-		}
+		setChanged();
+		notifyObservers();
+
+		/*
+		 * //notificamos a todos menos al usuario que hizo la oferta Set<String>
+		 * usuariosNotificados = new HashSet(); for(Oferta o : ofertas) {
+		 * if(!o.getUsuario().getId().equals(usuario.getId())) {
+		 * usuariosNotificados.add(o.getUsuario().getNombreUsuario()); } }
+		 * SistemaNotificacionSubasta.getInstance().notificarUsuarios(
+		 * usuariosNotificados, this); }
+		 */
+
 	}
 
 }

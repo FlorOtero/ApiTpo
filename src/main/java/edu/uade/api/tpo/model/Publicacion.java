@@ -5,17 +5,18 @@ import edu.uade.api.tpo.exceptions.BusinessException;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Observable;
 
-public class Publicacion implements Persistible {
+public class Publicacion extends Observable implements Persistible {
     private String id;
     private Date fechaDesde;
     private Date fechaHasta;
     private float precio;
-    private Estado estado;
+    protected Estado estado;
     private float comision;
     private Articulo articulo;
     private String usuarioId;
-    private List<MedioPago> mediosPago;
+    protected List<MedioPago> mediosPago;
    
     public Publicacion() {
 		super();
@@ -32,6 +33,8 @@ public class Publicacion implements Persistible {
 	    	}
 	    	//todo: chequear estado transaccion luego de ofertar
 	    	SistemaTransacciones.getInstance().crearTransaccion(usuario, this, mp);
+	    	setChanged();
+	    	notifyObservers();
     }
 
     public String getId() {
