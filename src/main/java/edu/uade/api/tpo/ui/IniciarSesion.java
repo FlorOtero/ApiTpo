@@ -5,17 +5,25 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.sql.SQLException;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 
 import edu.uade.api.tpo.exceptions.BusinessException;
 import edu.uade.api.tpo.exceptions.ExpiredPasswordException;
+import edu.uade.api.tpo.model.Password;
 import edu.uade.api.tpo.model.SistemaUsuarios;
 
 public class IniciarSesion {
@@ -26,6 +34,8 @@ public class IniciarSesion {
 	private JButton btnAceptar;
 	private JButton btnCancelar;
 	private JLabel notification;
+    private static final Logger logger = LoggerFactory.getLogger(IniciarSesion.class);
+
 
 	/**
 	 * Launch the application.
@@ -148,7 +158,6 @@ public class IniciarSesion {
 		String password = new String(passwordField.getPassword());
 		SistemaUsuarios su = SistemaUsuarios.getInstance();
 		System.out.println("Trying to login with credentials: " + nombreUsuario);
-
 		try {
 			su.login(nombreUsuario, password).getNombre();
 			return true;
@@ -156,7 +165,14 @@ public class IniciarSesion {
 			notification.setText(e.getMessage());
 			return false;
 		} catch (ExpiredPasswordException e) {
-			notification.setText(e.getMessage());
+			String newPassword= JOptionPane.showInputDialog(null, e.getMessage() + " Ingrese nueva contraseña", "Aviso", JOptionPane.WARNING_MESSAGE);
+			e.getUsuario().getPassword().setValor(newPassword);
+			try{
+				su.getInstance().modificarUsuario(e.getUsuario());	
+				JOptionPane.showConfirmDialog(null, "Su contraseña se ha modificado con exito", "Aviso", JOptionPane.PLAIN_MESSAGE);
+			}catch (BusinessException e3){
+				logger.error("Error modificando la contraseña del usuario", e3);
+			}
 			return false;
 		} 
 		
