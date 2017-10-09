@@ -1,13 +1,15 @@
 package edu.uade.api.tpo.model;
 
+import edu.uade.api.tpo.exceptions.BusinessException;
+
 public class CompraTransferenciaBancaria extends Transaccion {
 	private EntidadRecaudadora entidad;
 	private String numeroCta;
 	
 	public CompraTransferenciaBancaria() {}
 
-	public CompraTransferenciaBancaria(Publicacion publicacion, Usuario contraparte, String cuentaCorrienteId) {
-		super(publicacion, contraparte, cuentaCorrienteId);
+	public CompraTransferenciaBancaria(Publicacion publicacion, Usuario contraparte) {
+		super(publicacion, contraparte);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -27,7 +29,7 @@ public class CompraTransferenciaBancaria extends Transaccion {
 		this.numeroCta = numeroCta;
 	}
 
-	public void pagar() {
+	public void pagar() throws BusinessException{
 
 	}
 }

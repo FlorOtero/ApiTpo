@@ -21,10 +21,27 @@ public class SistemaTransacciones {
 	}
 
 	public void crearTransaccion(Usuario contraparte, Publicacion publicacion, MedioPago medioDePago){
-		//Transaccion tr = new Transaccion(publicacion, contraparte);
+		Transaccion tr = null;
+		//todo: cambiar estado publicacion y transaccion despues de recibir la respuesta
+		switch (medioDePago) {
+		case EFECTIVO:
+			publicacion.setEstado(Estado.I);
+			tr = new CompraEfectivo(publicacion, contraparte);
+			break;
+		case TRANSFERENCIA_BANCARIA:
+			publicacion.setEstado(Estado.P);
+			tr = new CompraTransferenciaBancaria(publicacion, contraparte);
+			//	SistemaNotificacionCobro.getInstance()...
+			break;
+		case TARJETA_CREDITO:
+			publicacion.setEstado(Estado.P);
+			tr = new CompraTarjetaCredito(publicacion, contraparte);
+			//	SistemaNotificacionCobro.getInstance()...
+			break;
+		}
 		
-		
-
+		transacciones.add(tr);
+		SistemaPublicaciones.getInstance().modificarPublicacion(publicacion);
 	}
 
 }
