@@ -57,9 +57,9 @@ public class ArticuloDaoImpl implements GenericDao<Articulo> {
 	@Override
 	public void delete(Articulo t) throws SQLException {
 		if (t instanceof Producto) {
-			
+			ProductoDaoImpl.getInstance().delete((Producto) t);
 		} else if (t instanceof Servicio) {
-
+			ServicioDaoImpl.getInstance().delete((Servicio) t);
 		}
 	}
 }

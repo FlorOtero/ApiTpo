@@ -82,7 +82,16 @@ public class ProductoDaoImpl extends AbstractDao<Producto> {
 
 	@Override
 	public void delete(Producto t) throws SQLException {
-		throw new UnsupportedOperationException("Delete is not supported on class Producto!");
-
+		try (Connection conn = this.getConnection(); PreparedStatement ps = getDeleteStatement(t, conn)) {
+            ps.execute();
+		}
+		GarantiaDaoImpl.getInstance().delete(t.getGarantia());
+	}
+	
+	private PreparedStatement getDeleteStatement(Producto p, Connection conn) throws SQLException {
+		String query = "DELETE FROM " + schema + ".productos WHERE producto_id = ?";
+		PreparedStatement ps = conn.prepareStatement(query);
+		ps.setString(1, p.getId());
+		return ps;
 	}
 }
