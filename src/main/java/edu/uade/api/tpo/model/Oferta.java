@@ -10,9 +10,17 @@ public class Oferta implements Persistible {
     private float monto;
     private Date fecha;
     private Usuario usuario;
-    private Subasta subasta;
+    
+    public Oferta() {}
 
-    public float getMonto() {
+    public Oferta(float monto, Date fecha, Usuario usuario) {
+		super();
+		this.monto = monto;
+		this.fecha = fecha;
+		this.usuario = usuario;
+	}
+
+	public float getMonto() {
         return monto;
     }
 
@@ -44,11 +52,4 @@ public class Oferta implements Persistible {
         this.id = id;
     }
 
-    public Subasta getSubasta() {
-        return subasta;
-    }
-
-    public void setSubasta(Subasta subasta) {
-        this.subasta = subasta;
-    }
 }

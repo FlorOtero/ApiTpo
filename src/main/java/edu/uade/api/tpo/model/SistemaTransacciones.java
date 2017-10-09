@@ -20,20 +20,11 @@ public class SistemaTransacciones {
 		transacciones.add(c);
 	}
 
-	public Transaccion crearCompra(Usuario contraparteCompra, Publicacion publicacionCompra){
-		Transaccion compra = null;  // TODO: fix with constructor
-		compra.setContraparte(contraparteCompra);
-		compra.setPublicacion(publicacionCompra);
-		//	transacciones.add(compra);
-		return compra;
-	}
+	public void crearTransaccion(Usuario contraparte, Publicacion publicacion, MedioPago medioDePago){
+		//Transaccion tr = new Transaccion(publicacion, contraparte);
+		
+		
 
-	public Transaccion crearVenta(Usuario contraparteVenta, Publicacion publicacionVenta){
-		Transaccion venta = null; // TODO: fix with constructor
-		venta.setContraparte(contraparteVenta);
-		venta.setPublicacion(publicacionVenta);
-		transacciones.add(venta);
-		return venta;
 	}
 
 }
