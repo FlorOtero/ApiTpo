@@ -1,6 +1,7 @@
 package edu.uade.api.tpo.ui;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 import edu.uade.api.tpo.model.Publicacion;
 import edu.uade.api.tpo.model.SistemaPublicaciones;
@@ -69,33 +70,20 @@ public class MenuPrincipal {
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				buscarPublicacion(buscarField.getText());
-				String[] columnNames = {"First Name",
-                "Last Name",
-                "Sport",
-                "# of Years",
-                "Vegetarian"};
-				Object[][] data = {};
-				int i = resultado.size();
-				for(int j=0; j<i; j++){	
-					Object[] row = { resultado.get(j).getId(), 1, 1 };
-					data[j] = row;
+				String[] columnNames = {"First Name","Last Name"};
+				
+				DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+				for(Publicacion p : resultado){	
+					JButton ver = new JButton();
+					model.addRow(new Object[]{p.getId(), p.getPrecio(), ver });
 				}
-				table_1 = new JTable(data, columnNames);
+				
+				table_1 = new JTable(model);
 				table_1.setBounds(226, 194, 259, 243);
 				frmMenuPrincipal.getContentPane().add(table_1);
 			}
 		});
 		frmMenuPrincipal.getContentPane().add(btnBuscar);
-		/*String[] columnNames = {"Nombre",
-                "Precio",
-                "Tipo"};*/
-		
-
-
-		
-		
-		
-		
 		
 		// Menu
 		
@@ -195,7 +183,7 @@ public class MenuPrincipal {
 	
 	private ArrayList<Publicacion> buscarPublicacion(String busqueda) {
 		SistemaPublicaciones sp = SistemaPublicaciones.getInstance();
-		ArrayList<Publicacion> resultado = (ArrayList<Publicacion>) sp.filtrarPublicaciones(busqueda);
+		resultado = (ArrayList<Publicacion>) sp.filtrarPublicaciones(busqueda);
 		return resultado;
 	}
 }

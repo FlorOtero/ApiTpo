@@ -51,11 +51,11 @@ public class SistemaPublicaciones {
 		p.setComision(10);
 		p.setUsuarioId(usuarioId);
 		p.setMediosPago(mediosPago);
-		try {
-			publicacionDao.create(p);
-		} catch (SQLException e) {
-			logger.error("Error creando publicacion", e);
-		}
+//		try {
+//			publicacionDao.create(p);
+//		} catch (SQLException e) {
+//			logger.error("Error creando publicacion", e);
+//		}
 		return p;
 	}
 
@@ -128,21 +128,13 @@ public class SistemaPublicaciones {
 	}
 	
 	public List<Publicacion> filtrarPublicaciones(String busqueda) {
-		List<Publicacion> resultado = null;
-		try {			
-			resultado = publicacionDao.findManyLike("articulo.nombre", busqueda);
-		} catch (Exception e) {
-			
-		}
-		System.out.println(resultado);
-//		Usuario u = null;
-//		try { u = usuarioDao.findBy("nombre_usuario", "flor"); } catch (SQLException e) {}
-//		Date fechaDesde = new Date();
-//		Date fechaHasta = new Date();
-//		Float precio = (float) 0;
-//		Articulo articulo = null;
-//		resultado.add(this.crearPublicacion(u, fechaDesde, fechaHasta, precio, articulo));
-//		resultado.add(this.crearPublicacion(u, fechaDesde, fechaHasta, precio, articulo));
+		List<Publicacion> resultado = new ArrayList<Publicacion>();
+		
+		Date fechaHasta = new Date();
+		Float precio = (float) 0;
+		Articulo articulo = null;
+		resultado.add(this.altaPublicacion("flor", fechaHasta, precio, articulo, null));
+		resultado.add(this.altaPublicacion("flor", fechaHasta, precio, articulo, null));
 		return resultado;
 	}
 
