@@ -1,29 +1,26 @@
 package edu.uade.api.tpo.ui;
 
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.prefs.Preferences;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.swing.JPasswordField;
-import javax.swing.JButton;
-import java.awt.Color;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.sql.SQLException;
-import java.util.Date;
-import java.awt.event.ActionEvent;
-
 import edu.uade.api.tpo.exceptions.BusinessException;
 import edu.uade.api.tpo.exceptions.ExpiredPasswordException;
-import edu.uade.api.tpo.model.Password;
 import edu.uade.api.tpo.model.SistemaUsuarios;
 
 public class IniciarSesion {
@@ -36,6 +33,7 @@ public class IniciarSesion {
 	private JLabel notification;
     private static final Logger logger = LoggerFactory.getLogger(IniciarSesion.class);
 
+	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
 
 	/**
 	 * Launch the application.
@@ -160,6 +158,7 @@ public class IniciarSesion {
 		System.out.println("Trying to login with credentials: " + nombreUsuario);
 		try {
 			su.login(nombreUsuario, password).getNombre();
+			prefs.put("USERNAME", nombreUsuario);
 			return true;
 		} catch (BusinessException e) {
 			notification.setText(e.getMessage());
