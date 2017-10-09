@@ -1,6 +1,7 @@
 package edu.uade.api.tpo.model;
 
 import edu.uade.api.tpo.db.Persistible;
+import edu.uade.api.tpo.exceptions.BusinessException;
 
 import java.util.Date;
 import java.util.List;
@@ -16,8 +17,16 @@ public class Publicacion implements Persistible {
     private String usuarioId;
     private List<MedioPago> mediosPago;
 
-    public void ofertar(float monto, String nombreUsuario) {
-
+    public void ofertar(float monto, Usuario usuario, MedioPago mp) throws BusinessException {
+    	
+	    	if(estado == Estado.I) {
+	    		throw new BusinessException("La publicacion está inactiva");
+	    	}
+	    	
+	    	//existe mp?
+	    	
+	    	
+	    	
     }
 
     public String getId() {
@@ -66,10 +75,6 @@ public class Publicacion implements Persistible {
 
     public void setArticulo(Articulo articulo) {
         this.articulo = articulo;
-    }
-
-    public void ofertar(float monto, Date fecha, String nombreUsuario) {
-
     }
 
     public String getUsuarioId() {

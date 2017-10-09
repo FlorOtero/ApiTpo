@@ -32,25 +32,23 @@ public class OfertaDaoImpl extends AbstractManyToOneDao<Oferta> {
 
     @Override
     public PreparedStatement create(Oferta oferta, Connection conn) throws SQLException {
-        String query = "INSERT INTO " + schema + ".ofertas VALUES(?,?,?,?,?)";
+        String query = "INSERT INTO " + schema + ".ofertas VALUES(?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, oferta.getId());
         ps.setString(2, oferta.getUsuario().getId());
-        ps.setString(3, oferta.getSubasta().getId());
-        ps.setFloat(4, oferta.getMonto());
-        ps.setTimestamp(5, new Timestamp(oferta.getFecha().getTime()));
+        ps.setFloat(3, oferta.getMonto());
+        ps.setTimestamp(4, new Timestamp(oferta.getFecha().getTime()));
         return ps;
     }
 
     @Override
     public PreparedStatement update(Oferta oferta, Connection conn) throws SQLException {
-        String query = "UPDATE " + schema + ".ofertas SET usuario_id = ?, subasta_id = ?, monto = ?, fecha = ? WHERE oferta_id = ?";
+        String query = "UPDATE " + schema + ".ofertas SET usuario_id = ?, monto = ?, fecha = ? WHERE oferta_id = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, oferta.getUsuario().getId());
-        ps.setString(2, oferta.getSubasta().getId());
-        ps.setFloat(3, oferta.getMonto());
-        ps.setTimestamp(4, new Timestamp(oferta.getFecha().getTime()));
-        ps.setString(5, oferta.getId());
+        ps.setFloat(2, oferta.getMonto());
+        ps.setTimestamp(3, new Timestamp(oferta.getFecha().getTime()));
+        ps.setString(4, oferta.getId());
         return ps;
     }
 
@@ -65,7 +63,7 @@ public class OfertaDaoImpl extends AbstractManyToOneDao<Oferta> {
 
     @Override
     public PreparedStatement findById(String id, Connection conn) throws SQLException {
-        return this.findBy("subasta_id", id, conn);
+    		throw new UnsupportedOperationException("findById is not supported on class Oferta!");
     }
 
     @Override
@@ -90,7 +88,6 @@ public class OfertaDaoImpl extends AbstractManyToOneDao<Oferta> {
         Oferta oferta = new Oferta();
         oferta.setId(rs.getString("oferta_id"));
         oferta.setUsuario(UsuarioDaoImpl.getInstance().findById(rs.getString("usuario_id")));
-        oferta.setSubasta(SubastaDaoImpl.getInstance().findById(rs.getString("subasta_id")));
         oferta.setMonto(rs.getFloat("monto"));
         oferta.setFecha(rs.getDate("fecha"));
         return oferta;
