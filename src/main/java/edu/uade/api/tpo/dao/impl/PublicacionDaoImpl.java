@@ -129,6 +129,9 @@ public class PublicacionDaoImpl extends AbstractManyToOneDao<Publicacion> {
 
 	@Override
 	public void delete(Publicacion t) throws SQLException {
+		String query = "DELETE FROM " + schema + ".publicaciones WHERE publicacion_id = ?";
+		
+		
 		throw new UnsupportedOperationException("Delete is not supported on class Publicacion!");
 	}
 }
