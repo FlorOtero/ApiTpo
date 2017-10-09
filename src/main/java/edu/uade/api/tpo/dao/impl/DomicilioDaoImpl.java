@@ -78,4 +78,9 @@ public class DomicilioDaoImpl extends AbstractDao<Domicilio> {
     public PreparedStatement findBy(String field, String value, Connection conn) throws SQLException {
         throw new UnsupportedOperationException("Find by is not supported on class Domicilio!");
     }
+    
+    @Override
+    public void delete(Domicilio t) throws SQLException {
+    	throw new UnsupportedOperationException("Delete is not supported on class Domicilio!");
+    }
 }

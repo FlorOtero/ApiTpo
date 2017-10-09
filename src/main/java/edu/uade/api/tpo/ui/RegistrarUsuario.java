@@ -128,6 +128,9 @@ public class RegistrarUsuario {
 				try {
 					SistemaUsuarios.getInstance().altaUsuario(user);
 					JOptionPane.showMessageDialog(null, "Se ha creado su usuario con exito", "Aviso", JOptionPane.PLAIN_MESSAGE);
+					OpcionIngreso ingreso = new OpcionIngreso();
+					ingreso.setVisible(true);
+					frmRegistrarse.dispose();
 				} catch(BusinessException e1) {
 					//TODO Manejar la exception y mostrar un mensaje de error cuando existe el usuario
 				}

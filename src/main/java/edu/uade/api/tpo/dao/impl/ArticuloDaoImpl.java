@@ -53,4 +53,9 @@ public class ArticuloDaoImpl implements GenericDao<Articulo> {
     public Articulo findBy(String field, String value) throws SQLException {
         throw new UnsupportedOperationException("Find by is not supported on class Articulo!");
     }
+    
+    @Override
+    public void delete(Articulo t) throws SQLException {
+    	throw new UnsupportedOperationException("Delete is not supported on class Articulo!");
+    }
 }

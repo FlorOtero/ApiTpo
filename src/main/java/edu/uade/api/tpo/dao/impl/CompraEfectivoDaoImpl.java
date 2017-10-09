@@ -111,4 +111,9 @@ public class CompraEfectivoDaoImpl extends AbstractManyToOneDao<CompraEfectivo> 
 		// TODO Auto-generated method stub
 		return null;
 	}
+    
+    @Override
+    public void delete(CompraEfectivo t) throws SQLException {
+    	throw new UnsupportedOperationException("Delete is not supported on class CompraEfectivo!");
+    }
 }

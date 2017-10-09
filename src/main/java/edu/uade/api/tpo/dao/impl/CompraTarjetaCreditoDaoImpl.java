@@ -115,4 +115,9 @@ public class CompraTarjetaCreditoDaoImpl extends AbstractManyToOneDao<CompraTarj
 		// TODO Auto-generated method stub
 		return null;
 	}
+    
+    @Override
+    public void delete(CompraTarjetaCredito t) throws SQLException {
+    	throw new UnsupportedOperationException("Delete is not supported on class CompraTarjetaCredito!");
+    }
 }

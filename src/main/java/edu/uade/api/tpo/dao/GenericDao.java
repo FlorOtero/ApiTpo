@@ -13,5 +13,7 @@ public interface GenericDao<T extends Persistible> {
     public void update(T t) throws SQLException;
 
     public T findBy(String field, String value) throws SQLException;
+    
+    public void delete(T t) throws SQLException;
 
 }

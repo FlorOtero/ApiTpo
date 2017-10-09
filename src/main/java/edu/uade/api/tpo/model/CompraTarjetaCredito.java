@@ -3,8 +3,15 @@ package edu.uade.api.tpo.model;
 public class CompraTarjetaCredito extends Transaccion {
     private EntidadRecaudadora entidad;
     private String numeroTarjeta;
+    
+    public CompraTarjetaCredito() {}
 
-    public EntidadRecaudadora getEntidad() {
+    public CompraTarjetaCredito(Publicacion publicacion, Usuario contraparte, String cuentaCorrienteId) {
+		super(publicacion, contraparte, cuentaCorrienteId);
+		// TODO Auto-generated constructor stub
+	}
+
+	public EntidadRecaudadora getEntidad() {
         return entidad;
     }
 

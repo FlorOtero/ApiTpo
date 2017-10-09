@@ -31,5 +31,5 @@ public abstract class AbstractManyToOneDao<T extends Persistible> extends Abstra
     public abstract PreparedStatement findManyLike(String field, String value, Connection conn) throws SQLException;
 
     public abstract List<T> mapMany(ResultSet rs) throws SQLException;
-
+    
 }

@@ -33,7 +33,7 @@ public class UsuarioDaoImpl extends AbstractDao<Usuario> {
         String query = "SELECT * FROM " + schema + ".usuarios WHERE usuario_id = ? AND estado = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, id);
-        ps.setString(2, Estado.A.getVal());
+        ps.setString(2, Estado.A.toString());
         return ps;
     }
 
@@ -63,7 +63,7 @@ public class UsuarioDaoImpl extends AbstractDao<Usuario> {
         ps.setString(6, usuario.getMail());
         ps.setString(7, usuario.getPassword().getId());
         ps.setString(8, usuario.getCuentaCorriente().getId());
-        ps.setString(9, usuario.getEstado().getVal());
+        ps.setString(9, usuario.getEstado().toString());
         return ps;
     }
 
@@ -106,5 +106,10 @@ public class UsuarioDaoImpl extends AbstractDao<Usuario> {
         ps.setString(9, usuario.getId());
 
         return ps;
+    }
+    
+    @Override
+    public void delete(Usuario t) throws SQLException {
+    	throw new UnsupportedOperationException("Delete is not supported on class Usuario!");
     }
 }
