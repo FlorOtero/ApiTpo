@@ -2,7 +2,10 @@ package edu.uade.api.tpo.model;
 
 import java.util.List;
 
+import edu.uade.api.tpo.dao.AbstractManyToOneDao;
 import edu.uade.api.tpo.dao.GenericDao;
+import edu.uade.api.tpo.dao.ManyToOneDao;
+import edu.uade.api.tpo.dao.impl.PublicacionDaoImpl;
 import edu.uade.api.tpo.dao.impl.UsuarioDaoImpl;
 
 import java.sql.SQLException;
@@ -11,9 +14,12 @@ import java.util.Date;
 
 public class SistemaPublicaciones {
 	private static SistemaPublicaciones instance = null;
-	private List<Publicacion> publicaciones; 
+	private List<Publicacion> publicaciones;
+	private ManyToOneDao<Publicacion> publicacionDao;
 	
-	private SistemaPublicaciones() {}
+	private SistemaPublicaciones() {
+		this.publicacionDao = PublicacionDaoImpl.getInstance();
+	}
 	
 	public static SistemaPublicaciones getInstance() {
         if(instance == null){
@@ -53,17 +59,22 @@ public class SistemaPublicaciones {
 		return s;
 	}
 	
-	public ArrayList<Publicacion> filtrarPublicaciones(String busqueda) {
-		ArrayList<Publicacion> resultado = new ArrayList<Publicacion>();
-		GenericDao<Usuario> usuarioDao = UsuarioDaoImpl.getInstance();
-		Usuario u = null;
-		try { u = usuarioDao.findBy("nombre_usuario", "flor"); } catch (SQLException e) {}
-		Date fechaDesde = new Date();
-		Date fechaHasta = new Date();
-		Float precio = (float) 0;
-		Articulo articulo = null;
-		resultado.add(this.crearPublicacion(u, fechaDesde, fechaHasta, precio, articulo));
-		resultado.add(this.crearPublicacion(u, fechaDesde, fechaHasta, precio, articulo));
+	public List<Publicacion> filtrarPublicaciones(String busqueda) {
+		List<Publicacion> resultado = null;
+		try {			
+			resultado = publicacionDao.findManyLike("articulo.nombre", busqueda);
+		} catch (Exception e) {
+			
+		}
+		System.out.println(resultado);
+//		Usuario u = null;
+//		try { u = usuarioDao.findBy("nombre_usuario", "flor"); } catch (SQLException e) {}
+//		Date fechaDesde = new Date();
+//		Date fechaHasta = new Date();
+//		Float precio = (float) 0;
+//		Articulo articulo = null;
+//		resultado.add(this.crearPublicacion(u, fechaDesde, fechaHasta, precio, articulo));
+//		resultado.add(this.crearPublicacion(u, fechaDesde, fechaHasta, precio, articulo));
 		return resultado;
 	}
 	

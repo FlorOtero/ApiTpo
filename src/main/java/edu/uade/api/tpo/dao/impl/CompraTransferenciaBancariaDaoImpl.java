@@ -112,4 +112,9 @@ public class CompraTransferenciaBancariaDaoImpl extends AbstractManyToOneDao<Com
     public PreparedStatement findBy(String field, String value, Connection conn) throws SQLException {
         throw new UnsupportedOperationException("Find by is not supported on class CompraTransferenciaBancaria!");
     }
+
+	@Override
+	public PreparedStatement findManyLike(String field, String value, Connection conn) throws SQLException {
+		throw new UnsupportedOperationException("Find Many Like is not supported on class CompraTransferenciaBancaria!");
+	}
 }

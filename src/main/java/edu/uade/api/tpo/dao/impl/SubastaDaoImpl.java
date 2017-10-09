@@ -125,4 +125,9 @@ public class SubastaDaoImpl extends AbstractManyToOneDao<Subasta> {
     public PreparedStatement findBy(String field, String value, Connection conn) throws SQLException {
         throw new UnsupportedOperationException("Find by is not supported on class Subasta!");
     }
+    
+    @Override
+	public PreparedStatement findManyLike(String field, String value, Connection conn) throws SQLException {
+		throw new UnsupportedOperationException("Find Many Like is not supported on class Subasta");
+	}
 }
