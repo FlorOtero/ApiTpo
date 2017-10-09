@@ -2,8 +2,9 @@ package edu.uade.api.tpo.model;
 
 public enum Estado {
 
-    A,
-    I;
+    A,//activa
+    P,//pausada
+    I;//inactiva
 
     private String val;
 
