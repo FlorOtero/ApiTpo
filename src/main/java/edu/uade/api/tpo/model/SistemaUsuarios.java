@@ -86,7 +86,7 @@ public class SistemaUsuarios {
             logger.error("Error buscando usuario :" + usuarioId, e);
         }
         return u;
-    } 
+    }
     
     public Usuario login(String nombreUsuario, String password) throws BusinessException, ExpiredPasswordException {
         Usuario usuario = this.buscarUsuario(nombreUsuario);
