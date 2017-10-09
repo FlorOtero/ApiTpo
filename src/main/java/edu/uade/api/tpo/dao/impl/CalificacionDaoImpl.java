@@ -102,4 +102,10 @@ public class CalificacionDaoImpl extends AbstractManyToOneDao<Calificacion> {
     public PreparedStatement findBy(String field, String value, Connection conn) throws SQLException {
         throw new UnsupportedOperationException("Find by is not supported on class Calificacion!");
     }
+
+	@Override
+	public PreparedStatement findManyLike(String field, String value, Connection conn) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -109,4 +109,10 @@ public class CompraTarjetaCreditoDaoImpl extends AbstractManyToOneDao<CompraTarj
     public PreparedStatement findBy(String field, String value, Connection conn) throws SQLException {
         throw new UnsupportedOperationException("Find by is not supported on class CompraTarjetaCredito!");
     }
+
+	@Override
+	public PreparedStatement findManyLike(String field, String value, Connection conn) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

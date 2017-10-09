@@ -195,7 +195,7 @@ public class MenuPrincipal {
 	
 	private ArrayList<Publicacion> buscarPublicacion(String busqueda) {
 		SistemaPublicaciones sp = SistemaPublicaciones.getInstance();
-		resultado = sp.filtrarPublicaciones(busqueda);
+		ArrayList<Publicacion> resultado = (ArrayList<Publicacion>) sp.filtrarPublicaciones(busqueda);
 		return resultado;
 	}
 }

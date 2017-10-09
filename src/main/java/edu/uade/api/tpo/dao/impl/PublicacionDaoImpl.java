@@ -87,6 +87,14 @@ public class PublicacionDaoImpl extends AbstractManyToOneDao<Publicacion> {
         ps.setString(1, value);
         return ps;
     }
+    
+    @Override
+    public PreparedStatement findManyLike(String field, String value, Connection conn) throws SQLException {
+        String query = "SELECT * FROM " + schema + ".publicaciones AS publicacion,"  + schema + ".articulos AS articulo,  WHERE " + field + " LIKE ? AND publicacion.articulo_id = articulo.id ";
+        PreparedStatement ps = conn.prepareStatement(query);
+        ps.setString(1, value);
+        return ps;
+    }
 
     @Override
     public List<Publicacion> mapMany(ResultSet rs) throws SQLException {

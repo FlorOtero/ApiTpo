@@ -95,4 +95,9 @@ public class OfertaDaoImpl extends AbstractManyToOneDao<Oferta> {
         oferta.setFecha(rs.getDate("fecha"));
         return oferta;
     }
+
+    @Override
+	public PreparedStatement findManyLike(String field, String value, Connection conn) throws SQLException {
+		throw new UnsupportedOperationException("Find Many Like is not supported on this class");
+	}
 }

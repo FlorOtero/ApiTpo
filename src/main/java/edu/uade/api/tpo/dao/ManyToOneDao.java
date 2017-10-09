@@ -9,4 +9,6 @@ public interface ManyToOneDao<T extends Persistible> extends GenericDao<T> {
 
     public List<T> findManyBy(String field, String value) throws SQLException;
 
+	public List<T> findManyLike(String field, String value) throws SQLException;
+
 }
