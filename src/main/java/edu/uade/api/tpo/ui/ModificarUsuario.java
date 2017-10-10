@@ -1,6 +1,7 @@
 package edu.uade.api.tpo.ui;
 
 import java.awt.EventQueue;
+import java.awt.Window;
 
 import edu.uade.api.tpo.exceptions.BusinessException;
 import edu.uade.api.tpo.exceptions.InvalidPasswordException;
@@ -34,6 +35,8 @@ import java.awt.event.FocusEvent;
 public class ModificarUsuario {
 
 	private JFrame frmModificarUsuario;
+	private JFrame frmBajaUsuario;
+	private JFrame frmIniciarSesion;
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
@@ -128,7 +131,7 @@ public class ModificarUsuario {
 				frmModificarUsuario.dispose();
 			}
 		});
-		btnCancelar.setBounds(290, 252, 89, 23);
+		btnCancelar.setBounds(396, 252, 89, 23);
 		panel.add(btnCancelar);
 		
 		textField_1 = new JTextField();
@@ -185,6 +188,23 @@ public class ModificarUsuario {
 		});
 		passwordField.setBounds(229, 205, 124, 26);
 		panel.add(passwordField);
+		
+		JButton btnEliminarUsuario = new JButton("Eliminar Usuario");
+		btnEliminarUsuario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {				
+				try {
+					SistemaUsuarios.getInstance().eliminarUsuario(user.getNombre());
+					JOptionPane.showConfirmDialog(null,"Su usuario se ha eliminado con exito","Confirmacion",JOptionPane.PLAIN_MESSAGE);
+					OpcionIngreso window = new OpcionIngreso();
+					window.OpcionIngreso.setVisible(true);
+					frmBajaUsuario.dispose();
+				} catch(BusinessException e1) {
+					//TODO Manejar la exception y mostrar un mensaje de error cuando existe el usuario
+				}
+			}
+		});
+		btnEliminarUsuario.setBounds(235, 250, 153, 26);
+		panel.add(btnEliminarUsuario);
 	}
 	public void setVisible(boolean isVisible) {
 		this.frmModificarUsuario.setVisible(isVisible);
@@ -197,5 +217,13 @@ public class ModificarUsuario {
 		textField_3.setText(user.getMail());
 		password=user.getPassword();					
 		passwordField.setText(password.getValor());
+	}
+
+	public JFrame getFrmIniciarSesion() {
+		return frmIniciarSesion;
+	}
+
+	public void setFrmIniciarSesion(JFrame frmIniciarSesion) {
+		this.frmIniciarSesion = frmIniciarSesion;
 	}
 }
