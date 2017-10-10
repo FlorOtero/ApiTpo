@@ -5,7 +5,6 @@ import edu.uade.api.tpo.dao.GenericDao;
 import edu.uade.api.tpo.model.Estado;
 import edu.uade.api.tpo.model.Publicacion;
 import edu.uade.api.tpo.model.Usuario;
-import edu.uade.api.tpo.util.UUIDUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,7 +33,7 @@ public class UsuarioDaoImpl extends AbstractDao<Usuario> {
         String query = "SELECT * FROM " + schema + ".usuarios WHERE usuario_id = ? AND estado = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, id);
-        ps.setString(2, Estado.ACTIVO.getValue());
+        ps.setString(2, Estado.A.toString());
         return ps;
     }
 
@@ -43,7 +42,7 @@ public class UsuarioDaoImpl extends AbstractDao<Usuario> {
         String query = "SELECT * FROM " + schema + ".usuarios WHERE " + field + " = ? AND estado = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, value);
-        ps.setString(2, Estado.ACTIVO.getValue());
+        ps.setString(2, Estado.A.toString());
         return ps;
     }
 
@@ -56,7 +55,7 @@ public class UsuarioDaoImpl extends AbstractDao<Usuario> {
 
         String query = "INSERT INTO " + schema + ".usuarios VALUES(?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
-        ps.setString(1, UUIDUtils.generate());
+        ps.setString(1, usuario.getId());
         ps.setString(2, usuario.getNombreUsuario());
         ps.setString(3, usuario.getNombre());
         ps.setString(4, usuario.getApellido());
@@ -64,7 +63,7 @@ public class UsuarioDaoImpl extends AbstractDao<Usuario> {
         ps.setString(6, usuario.getMail());
         ps.setString(7, usuario.getPassword().getId());
         ps.setString(8, usuario.getCuentaCorriente().getId());
-        ps.setString(9, usuario.getEstado().getValue());
+        ps.setString(9, usuario.getEstado().toString());
         return ps;
     }
 
@@ -94,7 +93,12 @@ public class UsuarioDaoImpl extends AbstractDao<Usuario> {
 
     @Override
     public PreparedStatement update(Usuario usuario, Connection conn) throws SQLException {
-        String query = "UPDATE " + schema + ".usuarios SET nombre_usuario = ?, nombre = ?, apellido = ?, domicilio_id = ?, mail = ?, password_id = ?, cuenta_corriente_id = ? WHERE usuario_id = ?";
+    	//Cascade domicilio & password before modify user
+        DomicilioDaoImpl.getInstance().update(usuario.getDomicilio());
+        PasswordDaoImpl.getInstance().update(usuario.getPassword());
+        CuentaCorrienteDaoImpl.getInstance().update(usuario.getCuentaCorriente());
+    	
+        String query = "UPDATE " + schema + ".usuarios SET nombre_usuario = ?, nombre = ?, apellido = ?, domicilio_id = ?, mail = ?, password_id = ?, cuenta_corriente_id = ?, estado = ? WHERE usuario_id = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, usuario.getNombreUsuario());
         ps.setString(2, usuario.getNombre());
@@ -103,9 +107,14 @@ public class UsuarioDaoImpl extends AbstractDao<Usuario> {
         ps.setString(5, usuario.getMail());
         ps.setString(6, usuario.getPassword().getId());
         ps.setString(7, usuario.getCuentaCorriente().getId());
-        ps.setString(8, usuario.getId());
-        ps.setString(9, usuario.getEstado().getValue());
+        ps.setString(8, usuario.getEstado().toString());
+        ps.setString(9, usuario.getId());
 
         return ps;
+    }
+    
+    @Override
+    public void delete(Usuario t) throws SQLException {
+    	throw new UnsupportedOperationException("Delete is not supported on class Usuario!");
     }
 }

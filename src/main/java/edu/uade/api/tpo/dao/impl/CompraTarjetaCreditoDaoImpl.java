@@ -3,8 +3,8 @@ package edu.uade.api.tpo.dao.impl;
 import edu.uade.api.tpo.dao.AbstractManyToOneDao;
 import edu.uade.api.tpo.dao.ManyToOneDao;
 import edu.uade.api.tpo.model.CompraTarjetaCredito;
+import edu.uade.api.tpo.model.EstadoTransaccion;
 import edu.uade.api.tpo.model.Publicacion;
-import edu.uade.api.tpo.util.UUIDUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ public class CompraTarjetaCreditoDaoImpl extends AbstractManyToOneDao<CompraTarj
     public PreparedStatement create(CompraTarjetaCredito compraTarjetaCredito, Connection conn) throws SQLException {
         String query = "INSERT INTO " + schema + ".compras_tarjeta_credito VALUES(?,?,?,?,?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
-        ps.setString(1, UUIDUtils.generate());
+        ps.setString(1, compraTarjetaCredito.getId());
         ps.setString(2, compraTarjetaCredito.getContraparte().getId());
         ps.setString(3, compraTarjetaCredito.getPublicacion().getId());
         ps.setString(4, String.valueOf(compraTarjetaCredito.getEstado()));
@@ -97,7 +97,7 @@ public class CompraTarjetaCreditoDaoImpl extends AbstractManyToOneDao<CompraTarj
             pub = SubastaDaoImpl.getInstance().findById(rs.getString("publicacion_id"));
         }
         compra.setPublicacion(pub);
-        compra.setEstado(rs.getString("estado").charAt(0));
+        compra.setEstado(EstadoTransaccion.valueOf(rs.getString("estado")));
         compra.setFecha(rs.getTimestamp("fecha"));
         compra.setEntidad(EntidadRecaudadoraDaoImpl.getInstance().findById(rs.getString("entidad_recaudadora_id")));
         compra.setNumeroTarjeta(rs.getString("numero_tarjeta"));
@@ -108,5 +108,10 @@ public class CompraTarjetaCreditoDaoImpl extends AbstractManyToOneDao<CompraTarj
     @Override
     public PreparedStatement findBy(String field, String value, Connection conn) throws SQLException {
         throw new UnsupportedOperationException("Find by is not supported on class CompraTarjetaCredito!");
+    }
+    
+    @Override
+    public void delete(CompraTarjetaCredito t) throws SQLException {
+    	throw new UnsupportedOperationException("Delete is not supported on class CompraTarjetaCredito!");
     }
 }

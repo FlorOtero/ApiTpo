@@ -1,12 +1,15 @@
 package edu.uade.api.tpo.dao.impl;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Date;
+
 import edu.uade.api.tpo.dao.AbstractDao;
 import edu.uade.api.tpo.dao.GenericDao;
 import edu.uade.api.tpo.model.Password;
-import edu.uade.api.tpo.util.Encriptacion;
-import edu.uade.api.tpo.util.UUIDUtils;
-
-import java.sql.*;
 public class PasswordDaoImpl extends AbstractDao<Password> {
 
     private static GenericDao<Password> instance;
@@ -32,12 +35,10 @@ public class PasswordDaoImpl extends AbstractDao<Password> {
 
     @Override
     public PreparedStatement create(Password password, Connection conn) throws SQLException {
-        String passCifrada = Encriptacion.cifrarBase64(password.getValor());
     	String query = "INSERT INTO " + schema + ".passwords VALUES(?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
-        password.setId(UUIDUtils.generate());
         ps.setString(1, password.getId());
-        ps.setString(2, passCifrada);
+        ps.setString(2, password.getValor());
         ps.setTimestamp(3, new Timestamp(password.getFechaModificacion().getTime()));
         return ps;
     }
@@ -47,9 +48,9 @@ public class PasswordDaoImpl extends AbstractDao<Password> {
         String query = "UPDATE " + schema + ".passwords SET valor = ?, fecha_modificacion = ? WHERE password_id = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, password.getValor());
-        ps.setTimestamp(2, new Timestamp(password.getFechaModificacion().getTime()));
+        ps.setTimestamp(2, new Timestamp(new Date().getTime()));
         ps.setString(3, password.getId());
-        return null;
+        return ps;
     }
 
     @Override
@@ -58,7 +59,7 @@ public class PasswordDaoImpl extends AbstractDao<Password> {
         if (rs.first()) {
             password = new Password();
             password.setId(rs.getString("password_id"));
-            password.setValor(Encriptacion.descifrarBase64(rs.getString("valor")));
+            password.setValor(rs.getString("valor"));
             password.setFechaModificacion(rs.getTimestamp("fecha_modificacion"));
         }
         return password;
@@ -69,5 +70,8 @@ public class PasswordDaoImpl extends AbstractDao<Password> {
         throw new UnsupportedOperationException("Find by is not supported on class Password!");
     }
     
-    
+    @Override
+    public void delete(Password t) throws SQLException {
+    	throw new UnsupportedOperationException("Delete is not supported on class Password!");
+    }
 }

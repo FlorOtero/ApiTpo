@@ -1,15 +1,29 @@
 package edu.uade.api.tpo.model;
 
-import java.io.Serializable;
+import edu.uade.api.tpo.db.Persistible;
+import edu.uade.api.tpo.exceptions.BusinessException;
+import edu.uade.api.tpo.exceptions.InvalidPasswordException;
+
 import java.util.Date;
 
-public abstract class Transaccion implements Serializable{
+public abstract class Transaccion implements Persistible {
 	private String id;
 	private Publicacion publicacion;
-	private char estado;
+	private EstadoTransaccion estado;
 	private Date fecha;
 	private Usuario contraparte;
 	private String cuentaCorrienteId;
+	
+	public Transaccion() {}
+	
+	public Transaccion(Publicacion publicacion, Usuario contraparte) {
+		super();
+		this.publicacion = publicacion;
+		this.estado = EstadoTransaccion.P;
+		this.fecha = new Date();
+		this.contraparte = contraparte;
+		this.cuentaCorrienteId = contraparte.getCuentaCorriente().getId();
+	}
 
 	public String getId() {
 		return id;
@@ -27,13 +41,13 @@ public abstract class Transaccion implements Serializable{
 		this.publicacion = publicacion;
 	}
 
-	public char getEstado() {
-		return estado;
-	}
+    public EstadoTransaccion getEstado() {
+        return estado;
+    }
 
-	public void setEstado(char estado) {
-		this.estado = estado;
-	}
+    public void setEstado(EstadoTransaccion estado) {
+        this.estado = estado;
+    }
 
 	public Date getFecha() {
 		return fecha;
@@ -59,6 +73,6 @@ public abstract class Transaccion implements Serializable{
 		this.cuentaCorrienteId = cuentaCorrienteId;
 	}
 
-	public abstract void pagar();
+	public abstract void pagar() throws BusinessException, InvalidPasswordException;
 
 }

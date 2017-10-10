@@ -3,8 +3,8 @@ package edu.uade.api.tpo.dao.impl;
 import edu.uade.api.tpo.dao.AbstractManyToOneDao;
 import edu.uade.api.tpo.dao.ManyToOneDao;
 import edu.uade.api.tpo.model.CompraEfectivo;
+import edu.uade.api.tpo.model.EstadoTransaccion;
 import edu.uade.api.tpo.model.Publicacion;
-import edu.uade.api.tpo.util.UUIDUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ public class CompraEfectivoDaoImpl extends AbstractManyToOneDao<CompraEfectivo> 
     public PreparedStatement create(CompraEfectivo compraEfectivo, Connection conn) throws SQLException {
         String query = "INSERT INTO " + schema + ".compras_efectivo VALUES(?,?,?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
-        ps.setString(1, UUIDUtils.generate());
+        ps.setString(1, compraEfectivo.getId());
         ps.setString(2, compraEfectivo.getContraparte().getId());
         ps.setString(3, compraEfectivo.getPublicacion().getId());
         ps.setString(4, String.valueOf(compraEfectivo.getEstado()));
@@ -94,7 +94,7 @@ public class CompraEfectivoDaoImpl extends AbstractManyToOneDao<CompraEfectivo> 
             pub = SubastaDaoImpl.getInstance().findById(rs.getString("publicacion_id"));
         }
         compra.setPublicacion(pub);
-        compra.setEstado(rs.getString("estado").charAt(0));
+        compra.setEstado(EstadoTransaccion.valueOf(rs.getString("estado")));
         compra.setFecha(rs.getTimestamp("fecha"));
         compra.setCuentaCorrienteId(rs.getString("cuenta_corriente_id"));
 
@@ -104,5 +104,10 @@ public class CompraEfectivoDaoImpl extends AbstractManyToOneDao<CompraEfectivo> 
     @Override
     public PreparedStatement findBy(String field, String value, Connection conn) throws SQLException {
         throw new UnsupportedOperationException("Find by is not supported on class CompraEfectivo!");
+    }
+    
+    @Override
+    public void delete(CompraEfectivo t) throws SQLException {
+    	throw new UnsupportedOperationException("Delete is not supported on class CompraEfectivo!");
     }
 }

@@ -37,7 +37,6 @@ public class DomicilioDaoImpl extends AbstractDao<Domicilio> {
     public PreparedStatement create(Domicilio domicilio, Connection conn) throws SQLException {
         String query = "INSERT INTO " + schema + ".domicilios VALUES(?,?,?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
-        domicilio.setId(UUIDUtils.generate());
         ps.setString(1, domicilio.getId());
         ps.setString(2, domicilio.getlinea1());
         ps.setString(3, domicilio.getlinea2());
@@ -78,5 +77,10 @@ public class DomicilioDaoImpl extends AbstractDao<Domicilio> {
     @Override
     public PreparedStatement findBy(String field, String value, Connection conn) throws SQLException {
         throw new UnsupportedOperationException("Find by is not supported on class Domicilio!");
+    }
+    
+    @Override
+    public void delete(Domicilio t) throws SQLException {
+    	throw new UnsupportedOperationException("Delete is not supported on class Domicilio!");
     }
 }

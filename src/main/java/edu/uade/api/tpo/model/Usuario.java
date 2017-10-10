@@ -1,9 +1,10 @@
 package edu.uade.api.tpo.model;
 
-import java.io.Serializable;
+import edu.uade.api.tpo.db.Persistible;
+
 import java.util.List;
 
-public class Usuario implements Serializable {
+public class Usuario implements Persistible {
 
     private String id;
     private String nombreUsuario;
@@ -19,7 +20,7 @@ public class Usuario implements Serializable {
 
     public Usuario() {
         this.cuentaCorriente = new CuentaCorriente();
-        this.estado = Estado.ACTIVO;
+        this.estado = Estado.A;
     }
 
     public String getNombreUsuario() {
@@ -112,5 +113,21 @@ public class Usuario implements Serializable {
 
     public void setCalificaciones(List<Calificacion> calificaciones) {
         this.calificaciones = calificaciones;
+    }
+    
+    public float calcularReputacion(){
+    	
+    		float reputacion = 0;
+    		int aprobadas = 0;
+    	
+    		for(Calificacion c : calificaciones){
+    			if(c.getTransaccion().getEstado() == EstadoTransaccion.A) {
+    				reputacion += c.getCalificacion();
+    				aprobadas++;
+    			}
+    		}
+    		
+    		return (reputacion/aprobadas);
+    	
     }
 }
