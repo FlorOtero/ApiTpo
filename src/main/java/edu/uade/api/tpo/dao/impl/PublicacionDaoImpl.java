@@ -101,12 +101,12 @@ public class PublicacionDaoImpl extends AbstractManyToOneDao<Publicacion> {
 	
 	@Override
     public PreparedStatement findManyLike(String field, String value, Connection conn) throws SQLException {
-        //String query = "SELECT * FROM "+schema+".publicaciones AS publicacion, "+schema+".productos AS producto, "+schema+".servicios AS servicio " +
-        //				   "WHERE (producto."+field+" LIKE '%?%' OR servicio."+field+" LIKE '%?%') AND (publicacion.articulo_id = producto.producto_id OR publicacion.articulo_id = servicio.servicio_id)";
-		String query = "SELECT * FROM apitpo.publicaciones AS publicacion, apitpo.productos AS producto, apitpo.servicios AS servicio WHERE (producto.nombre LIKE '%cha%' OR servicio.nombre LIKE '%cha%') AND (publicacion.articulo_id = producto.producto_id OR publicacion.articulo_id = servicio.servicio_id)";
+        String query = "SELECT publicacion_id, usuario_id, fecha_desde, fecha_hasta, precio, comision, estado, articulo_id, producto_id, nombre, descripcion FROM "+schema+".publicaciones AS publicacion, apitpo.productos AS producto " + 
+        		"WHERE producto."+field+" LIKE '%"+value+"%' AND publicacion.articulo_id = producto.producto_id " + 
+        		"UNION ALL " + 
+        		"SELECT publicacion_id, usuario_id, fecha_desde, fecha_hasta, precio, comision, estado, articulo_id, servicio_id, nombre, descripcion FROM "+schema+".publicaciones AS publicacion, apitpo.servicios AS servicio " + 
+        		"WHERE servicio."+field+" LIKE '%"+value+"%' AND publicacion.articulo_id = servicio.servicio_id";
         PreparedStatement ps = conn.prepareStatement(query);
-        //ps.setString(1, value);
-        //ps.setString(2, value);
         return ps;
     }
 

@@ -1,8 +1,11 @@
 package edu.uade.api.tpo.ui;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
+import edu.uade.api.tpo.model.Producto;
 import edu.uade.api.tpo.model.Publicacion;
+import edu.uade.api.tpo.model.Servicio;
 import edu.uade.api.tpo.model.SistemaPublicaciones;
 
 import java.awt.*;
@@ -12,12 +15,13 @@ import java.awt.event.ActionEvent;
 
 public class MenuPrincipal {
 
+	JLabel lblIngresarProducto;
 	private JFrame frmMenuPrincipal;
 	private JTextField buscarField;
-	private JTable table = new JTable();
-	JLabel lblIngresarProducto;
-	private JTable table_1;
 	private ArrayList<Publicacion> resultado;
+	private JTable tablaBusqueda;
+	JScrollPane scrollPane;
+	
 
 	/**
 	 * Launch the application.
@@ -69,33 +73,10 @@ public class MenuPrincipal {
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				buscarPublicacion(buscarField.getText());
-				String[] columnNames = {"First Name",
-                "Last Name",
-                "Sport",
-                "# of Years",
-                "Vegetarian"};
-				Object[][] data = {};
-				int i = resultado.size();
-				for(int j=0; j<i; j++){	
-					Object[] row = { resultado.get(j).getId(), 1, 1 };
-					data[j] = row;
-				}
-				table_1 = new JTable(data, columnNames);
-				table_1.setBounds(226, 194, 259, 243);
-				frmMenuPrincipal.getContentPane().add(table_1);
+				crearTabla();
 			}
 		});
 		frmMenuPrincipal.getContentPane().add(btnBuscar);
-		/*String[] columnNames = {"Nombre",
-                "Precio",
-                "Tipo"};*/
-		
-
-
-		
-		
-		
-		
 		
 		// Menu
 		
@@ -195,7 +176,50 @@ public class MenuPrincipal {
 	
 	private ArrayList<Publicacion> buscarPublicacion(String busqueda) {
 		SistemaPublicaciones sp = SistemaPublicaciones.getInstance();
-		ArrayList<Publicacion> resultado = (ArrayList<Publicacion>) sp.filtrarPublicaciones(busqueda);
+		resultado = (ArrayList<Publicacion>) sp.filtrarPublicaciones(busqueda);
 		return resultado;
 	}
+	
+	public void crearTabla() {
+		String[] columnNames = {"Nombre Articulo","Precio", "Tipo"};		
+		DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+		
+		if (resultado != null) {
+			for(Publicacion p : resultado){
+				String tipo = "";
+				if (p.getArticulo() instanceof Producto) {
+					tipo = "Producto";
+				} else if (p.getArticulo() instanceof Servicio) {
+					tipo = "Servicio";
+				}
+				model.addRow(new Object[]{ 
+					p.getArticulo().getNombre(), 
+					"$"+p.getPrecio(),
+					tipo
+				});
+			}				
+			tablaBusqueda = new JTable(model);
+			scrollPane = new JScrollPane(tablaBusqueda);
+			tablaBusqueda.setBounds(50, 194, 400, 243);
+			scrollPane.setBounds(50, 194, 400, 243);
+			frmMenuPrincipal.getContentPane().add(scrollPane);
+			tablaBusqueda.addMouseListener(new java.awt.event.MouseAdapter() {
+			    @Override
+			    public void mouseClicked(java.awt.event.MouseEvent evt) {
+			        int row = tablaBusqueda.rowAtPoint(evt.getPoint());
+			        int col = tablaBusqueda.columnAtPoint(evt.getPoint());
+			        if (row >= 0 && col >= 0) {
+			        		Publicacion p = resultado.get(row);
+			        		
+			        		// TODO: change this for Articulo Detail Page
+			            System.out.println("CLICKED "+ p.getArticulo().getNombre());
+			        }
+			    }
+			});
+		} else {
+			JOptionPane.showMessageDialog(null, "No se encontraron coincidencias");
+		}
+	}
+	
+	
 }

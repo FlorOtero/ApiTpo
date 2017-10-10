@@ -2,23 +2,15 @@ package edu.uade.api.tpo.model;
 
 import java.util.List;
 
-import edu.uade.api.tpo.dao.AbstractManyToOneDao;
-import edu.uade.api.tpo.dao.GenericDao;
 import edu.uade.api.tpo.dao.ManyToOneDao;
 import edu.uade.api.tpo.dao.impl.PublicacionDaoImpl;
-import edu.uade.api.tpo.dao.impl.UsuarioDaoImpl;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.sql.SQLException;
 import java.util.Date;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.uade.api.tpo.dao.ManyToOneDao;
-import edu.uade.api.tpo.dao.impl.PublicacionDaoImpl;
 import edu.uade.api.tpo.dao.impl.SubastaDaoImpl;
 
 public class SistemaPublicaciones {
@@ -51,11 +43,11 @@ public class SistemaPublicaciones {
 		p.setComision(10);
 		p.setUsuarioId(usuarioId);
 		p.setMediosPago(mediosPago);
-		try {
-			publicacionDao.create(p);
-		} catch (SQLException e) {
-			logger.error("Error creando publicacion", e);
-		}
+//		try {
+//			publicacionDao.create(p);
+//		} catch (SQLException e) {
+//			logger.error("Error creando publicacion", e);
+//		}
 		return p;
 	}
 
@@ -135,14 +127,6 @@ public class SistemaPublicaciones {
 			
 		}
 		System.out.println(resultado);
-//		Usuario u = null;
-//		try { u = usuarioDao.findBy("nombre_usuario", "flor"); } catch (SQLException e) {}
-//		Date fechaDesde = new Date();
-//		Date fechaHasta = new Date();
-//		Float precio = (float) 0;
-//		Articulo articulo = null;
-//		resultado.add(this.crearPublicacion(u, fechaDesde, fechaHasta, precio, articulo));
-//		resultado.add(this.crearPublicacion(u, fechaDesde, fechaHasta, precio, articulo));
 		return resultado;
 	}
 
