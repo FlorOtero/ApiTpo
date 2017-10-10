@@ -130,7 +130,7 @@ public class SistemaPublicaciones {
 	public List<Publicacion> filtrarPublicaciones(String busqueda) {
 		List<Publicacion> resultado = null;
 		try {			
-			resultado = publicacionDao.findManyLike("articulo.nombre", busqueda);
+			resultado = publicacionDao.findManyLike("nombre", busqueda);
 		} catch (Exception e) {
 			
 		}
