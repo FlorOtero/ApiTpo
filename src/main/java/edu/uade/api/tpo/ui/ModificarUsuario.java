@@ -36,7 +36,6 @@ public class ModificarUsuario {
 
 	private JFrame frmModificarUsuario;
 	private JFrame frmBajaUsuario;
-	private JFrame frmIniciarSesion;
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
@@ -219,11 +218,4 @@ public class ModificarUsuario {
 		passwordField.setText(password.getValor());
 	}
 
-	public JFrame getFrmIniciarSesion() {
-		return frmIniciarSesion;
-	}
-
-	public void setFrmIniciarSesion(JFrame frmIniciarSesion) {
-		this.frmIniciarSesion = frmIniciarSesion;
-	}
 }
