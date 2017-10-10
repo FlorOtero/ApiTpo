@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.Date;
 
 import edu.uade.api.tpo.dao.AbstractDao;
 import edu.uade.api.tpo.dao.GenericDao;
@@ -47,9 +48,9 @@ public class PasswordDaoImpl extends AbstractDao<Password> {
         String query = "UPDATE " + schema + ".passwords SET valor = ?, fecha_modificacion = ? WHERE password_id = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, password.getValor());
-        ps.setTimestamp(2, new Timestamp(password.getFechaModificacion().getTime()));
+        ps.setTimestamp(2, new Timestamp(new Date().getTime()));
         ps.setString(3, password.getId());
-        return null;
+        return ps;
     }
 
     @Override
