@@ -1,22 +1,27 @@
 package edu.uade.api.tpo.ui;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
-import javax.swing.JButton;
 import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.prefs.Preferences;
-import java.awt.event.ActionEvent;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import edu.uade.api.tpo.exceptions.BusinessException;
 import edu.uade.api.tpo.exceptions.ExpiredPasswordException;
+import edu.uade.api.tpo.exceptions.InvalidPasswordException;
 import edu.uade.api.tpo.model.SistemaUsuarios;
 
 public class IniciarSesion {
@@ -27,6 +32,8 @@ public class IniciarSesion {
 	private JButton btnAceptar;
 	private JButton btnCancelar;
 	private JLabel notification;
+    private static final Logger logger = LoggerFactory.getLogger(IniciarSesion.class);
+
 	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
 
 	/**
@@ -150,7 +157,6 @@ public class IniciarSesion {
 		String password = new String(passwordField.getPassword());
 		SistemaUsuarios su = SistemaUsuarios.getInstance();
 		System.out.println("Trying to login with credentials: " + nombreUsuario);
-
 		try {
 			su.login(nombreUsuario, password).getNombre();
 			prefs.put("USERNAME", nombreUsuario);
@@ -159,7 +165,15 @@ public class IniciarSesion {
 			notification.setText(e.getMessage());
 			return false;
 		} catch (ExpiredPasswordException e) {
-			notification.setText(e.getMessage());
+			String newPassword= JOptionPane.showInputDialog(null, e.getMessage() + " Ingrese nueva contraseña", "Aviso", JOptionPane.WARNING_MESSAGE);
+			e.getUsuario().getPassword().setValor(newPassword);
+			try{
+				su.getInstance().modificarUsuario(e.getUsuario());	
+				JOptionPane.showConfirmDialog(null, "Su contraseña se ha modificado con exito", "Aviso", JOptionPane.PLAIN_MESSAGE);
+			}catch (BusinessException | InvalidPasswordException e3){
+				logger.error("Error modificando la contraseña del usuario", e3);
+				JOptionPane.showMessageDialog(null, e3.getMessage(), "Aviso", JOptionPane.PLAIN_MESSAGE);
+			}
 			return false;
 		} 
 		

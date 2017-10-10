@@ -3,6 +3,7 @@ package edu.uade.api.tpo.ui;
 import java.awt.EventQueue;
 
 import edu.uade.api.tpo.exceptions.BusinessException;
+import edu.uade.api.tpo.exceptions.InvalidPasswordException;
 import edu.uade.api.tpo.model.Domicilio;
 import edu.uade.api.tpo.model.Password;
 import edu.uade.api.tpo.model.SistemaUsuarios;
@@ -111,7 +112,7 @@ public class ModificarUsuario {
 					JOptionPane.showConfirmDialog(null,"Su usuario se ha modificado con exito","Confirmacion",JOptionPane.PLAIN_MESSAGE);
 					menu.setVisible(true);
 					frmModificarUsuario.dispose();
-				} catch(BusinessException e1) {
+				} catch(BusinessException | InvalidPasswordException e1) {
 					//TODO Manejar la exception y mostrar un mensaje de error cuando existe el usuario
 				}
 			}
