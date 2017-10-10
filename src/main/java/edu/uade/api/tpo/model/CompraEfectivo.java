@@ -1,6 +1,7 @@
 package edu.uade.api.tpo.model;
 
 import edu.uade.api.tpo.exceptions.BusinessException;
+import edu.uade.api.tpo.exceptions.InvalidPasswordException;
 
 public class CompraEfectivo extends Transaccion {
 	
@@ -11,7 +12,7 @@ public class CompraEfectivo extends Transaccion {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void pagar() throws BusinessException {
+	public void pagar() throws BusinessException, InvalidPasswordException {
 		//restamos de la cta cte del comprador y sumamos en la del vendedor
 		//+ comisiones
 		float saldoComprador = this.getContraparte().getCuentaCorriente().getSaldo();
