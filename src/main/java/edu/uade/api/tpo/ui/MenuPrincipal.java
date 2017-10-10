@@ -70,14 +70,12 @@ public class MenuPrincipal {
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				buscarPublicacion(buscarField.getText());
-				String[] columnNames = {"First Name","Last Name"};
-				
+				String[] columnNames = {"id Publicacion","Precio", "Ir"};		
 				DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 				for(Publicacion p : resultado){	
 					JButton ver = new JButton();
 					model.addRow(new Object[]{p.getId(), p.getPrecio(), ver });
-				}
-				
+				}				
 				table_1 = new JTable(model);
 				table_1.setBounds(226, 194, 259, 243);
 				frmMenuPrincipal.getContentPane().add(table_1);
