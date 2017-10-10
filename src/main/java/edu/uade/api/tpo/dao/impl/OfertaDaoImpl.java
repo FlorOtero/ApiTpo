@@ -35,10 +35,10 @@ public class OfertaDaoImpl extends AbstractManyToOneDao<Oferta> {
         String query = "INSERT INTO " + schema + ".ofertas VALUES(?,?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, oferta.getId());
-        ps.setString(2, oferta.getUsuario().getId());
+        ps.setString(2, oferta.getUsuarioId());
         ps.setFloat(3, oferta.getMonto());
         ps.setTimestamp(4, new Timestamp(oferta.getFecha().getTime()));
-        ps.setString(5, oferta.getSubasta().getId());
+        ps.setString(5, oferta.getSubastaId());
         return ps;
     }
 
@@ -46,11 +46,11 @@ public class OfertaDaoImpl extends AbstractManyToOneDao<Oferta> {
     public PreparedStatement update(Oferta oferta, Connection conn) throws SQLException {
         String query = "UPDATE " + schema + ".ofertas SET usuario_id = ?, monto = ?, fecha = ?, subasta_id = ? WHERE oferta_id = ?";
         PreparedStatement ps = conn.prepareStatement(query);
-        ps.setString(1, oferta.getUsuario().getId());
+        ps.setString(1, oferta.getUsuarioId());
         ps.setFloat(2, oferta.getMonto());
         ps.setTimestamp(3, new Timestamp(oferta.getFecha().getTime()));
         ps.setString(4, oferta.getId());
-        ps.setString(5, oferta.getSubasta().getId());
+        ps.setString(5, oferta.getSubastaId());
         return ps;
     }
 
@@ -89,10 +89,10 @@ public class OfertaDaoImpl extends AbstractManyToOneDao<Oferta> {
     private Oferta mapRow(ResultSet rs) throws SQLException {
         Oferta oferta = new Oferta();
         oferta.setId(rs.getString("oferta_id"));
-        oferta.setUsuario(UsuarioDaoImpl.getInstance().findById(rs.getString("usuario_id")));
+        oferta.setUsuarioId(rs.getString("usuario_id"));
         oferta.setMonto(rs.getFloat("monto"));
         oferta.setFecha(rs.getDate("fecha"));
-        oferta.setSubasta(SubastaDaoImpl.getInstance().findById(rs.getString("subasta_id")));
+        oferta.setSubastaId(rs.getString("subasta_id"));
         return oferta;
     }
     

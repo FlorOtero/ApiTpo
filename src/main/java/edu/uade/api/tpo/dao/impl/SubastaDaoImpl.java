@@ -1,18 +1,15 @@
 package edu.uade.api.tpo.dao.impl;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-
 import edu.uade.api.tpo.dao.AbstractManyToOneDao;
 import edu.uade.api.tpo.dao.ManyToOneDao;
 import edu.uade.api.tpo.model.Estado;
 import edu.uade.api.tpo.model.MedioPago;
+import edu.uade.api.tpo.model.Oferta;
 import edu.uade.api.tpo.model.Subasta;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SubastaDaoImpl extends AbstractManyToOneDao<Subasta> {
 
@@ -97,6 +94,11 @@ public class SubastaDaoImpl extends AbstractManyToOneDao<Subasta> {
 		ps.setString(11, subasta.getId());
 		if (subasta.getMediosPago() != null && !subasta.getMediosPago().isEmpty()) {
 			MedioPagoDaoImpl.getInstance().updateMediosPagoToSubasta(subasta.getId(), subasta.getMediosPago());
+		}
+		if(subasta.getOfertas() != null && !subasta.getOfertas().isEmpty()) {
+			for(Oferta oferta : subasta.getOfertas()) {
+				OfertaDaoImpl.getInstance().create(oferta);
+			}
 		}
 		return ps;
 	}

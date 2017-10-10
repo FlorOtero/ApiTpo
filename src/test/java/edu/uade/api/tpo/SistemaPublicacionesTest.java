@@ -1,29 +1,16 @@
 package edu.uade.api.tpo;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
+import edu.uade.api.tpo.dao.impl.UsuarioDaoImpl;
+import edu.uade.api.tpo.exceptions.BusinessException;
+import edu.uade.api.tpo.model.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.uade.api.tpo.dao.impl.UsuarioDaoImpl;
-import edu.uade.api.tpo.exceptions.BusinessException;
-import edu.uade.api.tpo.model.Articulo;
-import edu.uade.api.tpo.model.Garantia;
-import edu.uade.api.tpo.model.MedioPago;
-import edu.uade.api.tpo.model.Oferta;
-import edu.uade.api.tpo.model.Producto;
-import edu.uade.api.tpo.model.Publicacion;
-import edu.uade.api.tpo.model.Servicio;
-import edu.uade.api.tpo.model.SistemaPublicaciones;
-import edu.uade.api.tpo.model.SistemaUsuarios;
-import edu.uade.api.tpo.model.Subasta;
-import edu.uade.api.tpo.model.TipoContratacion;
-import edu.uade.api.tpo.model.TipoPeriodo;
-import edu.uade.api.tpo.model.Usuario;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class SistemaPublicacionesTest {
 
@@ -47,6 +34,7 @@ public class SistemaPublicacionesTest {
 	public void test_buscarSubasta() {
 		Subasta subasta = this.sistemaPublicaciones.buscarSubasta(SUBASTA_ID);
 		Assert.assertNotNull(subasta);
+		Assert.assertTrue(!subasta.getOfertas().isEmpty());
 	}
 
 	@Test

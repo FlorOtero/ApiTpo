@@ -1,13 +1,13 @@
 package edu.uade.api.tpo.model;
 
-import java.util.Date;
-import java.util.List;
-
 import edu.uade.api.tpo.db.Persistible;
 import edu.uade.api.tpo.exceptions.BusinessException;
 
+import java.util.Date;
+import java.util.List;
+
 public class Publicacion implements Persistible {
-    private String id;
+    protected String id;
     private Date fechaDesde;
     private Date fechaHasta;
     private float precio;

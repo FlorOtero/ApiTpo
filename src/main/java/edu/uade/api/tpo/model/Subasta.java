@@ -1,14 +1,10 @@
 package edu.uade.api.tpo.model;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import edu.uade.api.tpo.exceptions.BusinessException;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Subasta extends Publicacion {
 	private float precioMin;
@@ -67,10 +63,10 @@ public class Subasta extends Publicacion {
 			throw new BusinessException("El medio de pago elegido no está disponible en esta publicación!");
 		}
 
-		Oferta oferta = new Oferta(monto, usuario, this);
+		Oferta oferta = new Oferta(monto, usuario.getId(), id);
 		ofertas.add(oferta);
 		SistemaPublicaciones.getInstance().modificarSubasta(this);
-		
+		/*
 		// notificamos a todos menos al usuario que hizo la oferta
 		Set<String> usuariosNotificados = new HashSet();
 		for (Oferta o : ofertas) {
@@ -79,6 +75,7 @@ public class Subasta extends Publicacion {
 			}
 		}
 		SistemaNotificacionSubasta.getInstance().notificarUsuarios(usuariosNotificados, this);
+		*/
 	}
 
 	private Oferta buscarMayorOferta() {
