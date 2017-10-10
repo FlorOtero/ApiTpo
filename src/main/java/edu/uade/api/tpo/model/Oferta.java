@@ -6,49 +6,61 @@ import java.util.Date;
 
 public class Oferta implements Persistible {
 
-    private String id;
-    private float monto;
-    private Date fecha;
-    private Usuario usuario;
-    private Subasta subasta;
+	private String id;
+	private float monto;
+	private Date fecha;
+	private Usuario usuario;
+	private Subasta subasta;
 
-    public float getMonto() {
-        return monto;
-    }
+	public Oferta() {
+	}
 
-    public void setMonto(float monto) {
-        this.monto = monto;
-    }
+	public Oferta(float monto, Date fecha, Usuario usuario, Subasta subasta) {
+		super();
+		this.monto = monto;
+		this.fecha = fecha;
+		this.usuario = usuario;
+		this.subasta = subasta;
+	}
 
-    public Date getFecha() {
-        return fecha;
-    }
+	public float getMonto() {
+		return monto;
+	}
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
-    }
+	public void setMonto(float monto) {
+		this.monto = monto;
+	}
 
-    public Usuario getUsuario() {
-        return usuario;
-    }
+	public Date getFecha() {
+		return fecha;
+	}
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
 
-    public String getId() {
-        return id;
-    }
+	public Usuario getUsuario() {
+		return usuario;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 
-    public Subasta getSubasta() {
-        return subasta;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public void setSubasta(Subasta subasta) {
-        this.subasta = subasta;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public Subasta getSubasta() {
+		return subasta;
+	}
+
+	public void setSubasta(Subasta subasta) {
+		this.subasta = subasta;
+	}
+
 }

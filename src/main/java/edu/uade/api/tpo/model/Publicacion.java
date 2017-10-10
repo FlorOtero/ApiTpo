@@ -1,6 +1,7 @@
 package edu.uade.api.tpo.model;
 
 import edu.uade.api.tpo.db.Persistible;
+import edu.uade.api.tpo.exceptions.BusinessException;
 
 import java.util.Date;
 import java.util.List;
@@ -10,14 +11,27 @@ public class Publicacion implements Persistible {
     private Date fechaDesde;
     private Date fechaHasta;
     private float precio;
-    private char estado;
+    private Estado estado;
     private float comision;
     private Articulo articulo;
     private String usuarioId;
     private List<MedioPago> mediosPago;
+   
+    public Publicacion() {
+		super();
+		this.comision = 0.03f;
+	}
 
-    public void ofertar(float monto, String nombreUsuario) {
-
+	public void ofertar(float monto, Usuario usuario, MedioPago mp) throws BusinessException {
+    	
+	    	if(estado != Estado.A) {
+	    		throw new BusinessException("La publicacion no está activa!");
+	    	}
+	    	if(!mediosPago.contains(mp)) {
+	    		throw new BusinessException("El medio de pago elegido no está disponible en esta publicación!");
+	    	}
+	    	//todo: chequear estado transaccion luego de ofertar
+	    	SistemaTransacciones.getInstance().crearTransaccion(usuario, this, mp);
     }
 
     public String getId() {
@@ -52,14 +66,6 @@ public class Publicacion implements Persistible {
         this.precio = precio;
     }
 
-    public char getEstado() {
-        return estado;
-    }
-
-    public void setEstado(char estado) {
-        this.estado = estado;
-    }
-
     public float getComision() {
         return comision;
     }
@@ -76,10 +82,6 @@ public class Publicacion implements Persistible {
         this.articulo = articulo;
     }
 
-    public void ofertar(float monto, Date fecha, String nombreUsuario) {
-
-    }
-
     public String getUsuarioId() {
         return usuarioId;
     }
@@ -94,5 +96,13 @@ public class Publicacion implements Persistible {
 
     public void setMediosPago(List<MedioPago> mediosPago) {
         this.mediosPago = mediosPago;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
     }
 }

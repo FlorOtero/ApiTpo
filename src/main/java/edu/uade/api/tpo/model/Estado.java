@@ -2,17 +2,20 @@ package edu.uade.api.tpo.model;
 
 public enum Estado {
 
-    ACTIVO("A"),
-    INACTIVO("I");
+    A,//activa
+    P,//pausada
+    I;//inactiva
 
-    private String value;
+    private String val;
 
-    Estado(String value) {
-        this.value = value;
+    Estado() {}
+
+    Estado(String val) {
+        this.val = val;
     }
 
-    public String getValue() {
-        return value;
+    public String getVal() {
+        return val;
     }
 
 }
