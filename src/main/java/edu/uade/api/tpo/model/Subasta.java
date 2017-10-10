@@ -2,7 +2,9 @@ package edu.uade.api.tpo.model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import edu.uade.api.tpo.exceptions.BusinessException;
 
@@ -67,17 +69,15 @@ public class Subasta extends Publicacion {
 		// creamos la oferta
 		Oferta oferta = new Oferta(monto, now, usuario, this);
 		ofertas.add(oferta);
-		setChanged();
-		notifyObservers();
 
-		/*
-		 * //notificamos a todos menos al usuario que hizo la oferta Set<String>
-		 * usuariosNotificados = new HashSet(); for(Oferta o : ofertas) {
-		 * if(!o.getUsuario().getId().equals(usuario.getId())) {
-		 * usuariosNotificados.add(o.getUsuario().getNombreUsuario()); } }
-		 * SistemaNotificacionSubasta.getInstance().notificarUsuarios(
-		 * usuariosNotificados, this); }
-		 */
+		// notificamos a todos menos al usuario que hizo la oferta
+		Set<String> usuariosNotificados = new HashSet();
+		for (Oferta o : ofertas) {
+			if (!o.getUsuario().getId().equals(usuario.getId())) {
+				usuariosNotificados.add(o.getUsuario().getNombreUsuario());
+			}
+		}
+		SistemaNotificacionSubasta.getInstance().notificarUsuarios(usuariosNotificados, this);
 
 	}
 

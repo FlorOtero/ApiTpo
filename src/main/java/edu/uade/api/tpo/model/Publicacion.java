@@ -1,13 +1,12 @@
 package edu.uade.api.tpo.model;
 
+import java.util.Date;
+import java.util.List;
+
 import edu.uade.api.tpo.db.Persistible;
 import edu.uade.api.tpo.exceptions.BusinessException;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Observable;
-
-public class Publicacion extends Observable implements Persistible {
+public class Publicacion implements Persistible {
     private String id;
     private Date fechaDesde;
     private Date fechaHasta;
@@ -33,8 +32,6 @@ public class Publicacion extends Observable implements Persistible {
 	    	}
 	    	//todo: chequear estado transaccion luego de ofertar
 	    	SistemaTransacciones.getInstance().crearTransaccion(usuario, this, mp);
-	    	setChanged();
-	    	notifyObservers();
     }
 
     public String getId() {
