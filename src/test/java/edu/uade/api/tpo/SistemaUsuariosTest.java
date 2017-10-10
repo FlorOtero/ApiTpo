@@ -29,15 +29,18 @@ public class SistemaUsuariosTest {
         Usuario u = sistemaUsuarios.buscarUsuario("flor");
         u.setNombre("un nombre");
         u.setApellido("un apellido");
+        u.getPassword().setValor("54321");
         try {
             sistemaUsuarios.modificarUsuario(u);
             u = sistemaUsuarios.buscarUsuario("flor");
             Assert.assertEquals("un nombre", u.getNombre());
             Assert.assertEquals("un apellido", u.getApellido());
-
+            Assert.assertEquals("54321", u.getPassword().getValor());
             //Vuelvo atrás los cambios
             u.setNombre("Flor");
             u.setApellido("Otero");
+            u.getPassword().setValor("12345");
+            
             sistemaUsuarios.modificarUsuario(u);
         } catch (Exception e) {
             Assert.fail("Should not throw any exception");
