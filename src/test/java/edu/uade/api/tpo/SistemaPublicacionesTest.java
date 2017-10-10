@@ -1,5 +1,6 @@
 package edu.uade.api.tpo;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -8,16 +9,21 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.uade.api.tpo.dao.impl.UsuarioDaoImpl;
+import edu.uade.api.tpo.exceptions.BusinessException;
 import edu.uade.api.tpo.model.Articulo;
 import edu.uade.api.tpo.model.Garantia;
 import edu.uade.api.tpo.model.MedioPago;
+import edu.uade.api.tpo.model.Oferta;
 import edu.uade.api.tpo.model.Producto;
 import edu.uade.api.tpo.model.Publicacion;
 import edu.uade.api.tpo.model.Servicio;
 import edu.uade.api.tpo.model.SistemaPublicaciones;
+import edu.uade.api.tpo.model.SistemaUsuarios;
 import edu.uade.api.tpo.model.Subasta;
 import edu.uade.api.tpo.model.TipoContratacion;
 import edu.uade.api.tpo.model.TipoPeriodo;
+import edu.uade.api.tpo.model.Usuario;
 
 public class SistemaPublicacionesTest {
 
@@ -35,6 +41,12 @@ public class SistemaPublicacionesTest {
 	public void test_buscarPublicacion() {
 		Publicacion p = this.sistemaPublicaciones.buscarPublicacion(PUBLICACION_ID);
 		Assert.assertNotNull(p);
+	}
+
+	@Test
+	public void test_buscarSubasta() {
+		Subasta subasta = this.sistemaPublicaciones.buscarSubasta(SUBASTA_ID);
+		Assert.assertNotNull(subasta);
 	}
 
 	@Test
@@ -67,7 +79,7 @@ public class SistemaPublicacionesTest {
 
 		this.sistemaPublicaciones.modificarPublicacion(p);
 	}
-	
+
 	@Test
 	public void test_eliminarPublicacion() {
 		Publicacion p = this.sistemaPublicaciones.buscarPublicacion(PUBLICACION_ID);
@@ -75,7 +87,7 @@ public class SistemaPublicacionesTest {
 		p = this.sistemaPublicaciones.buscarPublicacion(PUBLICACION_ID);
 		Assert.assertNull(p);
 	}
-	
+
 	@Test
 	public void test_altaSubasta() {
 		Servicio servicio = new Servicio();
@@ -84,15 +96,15 @@ public class SistemaPublicacionesTest {
 		servicio.setContratacion(TipoContratacion.ABONO);
 		servicio.fromCertificadosTokenized("asd,eewqe");
 		servicio.fromImagesTokenized("asasd,asdasd");
-		
+
 		List<MedioPago> mediosPago = new ArrayList<MedioPago>();
 		mediosPago.add(MedioPago.EFECTIVO);
 		mediosPago.add(MedioPago.TRANSFERENCIA_BANCARIA);
-		
+
 		Subasta s = this.sistemaPublicaciones.altaSubasta(USER_ID, servicio, 105, 15, 30, mediosPago);
 		Assert.assertNotNull(s);
 	}
-	
+
 	@Test
 	public void test_modificarSubasta() {
 		Subasta subasta = this.sistemaPublicaciones.buscarSubasta(SUBASTA_ID);
@@ -102,10 +114,21 @@ public class SistemaPublicacionesTest {
 		subasta.setPrecioMin(111);
 		subasta.getMediosPago().clear();
 		subasta.getMediosPago().add(MedioPago.TRANSFERENCIA_BANCARIA);
-		
+
 		this.sistemaPublicaciones.modificarSubasta(subasta);
 	}
-	
+
+	@Test
+	public void test_ofertarSubasta() {
+		Subasta subasta = this.sistemaPublicaciones.buscarSubasta(SUBASTA_ID);
+		try {
+			Usuario usuario = UsuarioDaoImpl.getInstance().findById(USER_ID);
+			subasta.ofertar(300, usuario, MedioPago.TRANSFERENCIA_BANCARIA);
+		} catch (SQLException | BusinessException e) {
+			Assert.fail("Should not throw exception");
+		}
+	}
+
 	@Test
 	public void test_eliminarSubasta() {
 		Subasta subasta = this.sistemaPublicaciones.buscarSubasta(SUBASTA_ID);
@@ -113,7 +136,7 @@ public class SistemaPublicacionesTest {
 		subasta = this.sistemaPublicaciones.buscarSubasta(SUBASTA_ID);
 		Assert.assertNull(subasta);
 	}
-	
+
 	@Test
 	public void test_convertirPublicacionSubasta() {
 		Publicacion p = this.sistemaPublicaciones.buscarPublicacion(PUBLICACION_ID);

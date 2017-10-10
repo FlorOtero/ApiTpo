@@ -4,7 +4,7 @@ import edu.uade.api.tpo.db.Persistible;
 
 import java.util.Date;
 
-public class Oferta implements Persistible {
+public class Oferta implements Persistible, Comparable<Oferta> {
 
 	private String id;
 	private float monto;
@@ -13,12 +13,12 @@ public class Oferta implements Persistible {
 	private Subasta subasta;
 
 	public Oferta() {
+		this.fecha = new Date();
 	}
 
-	public Oferta(float monto, Date fecha, Usuario usuario, Subasta subasta) {
-		super();
+	public Oferta(float monto, Usuario usuario, Subasta subasta) {
+		this();
 		this.monto = monto;
-		this.fecha = fecha;
 		this.usuario = usuario;
 		this.subasta = subasta;
 	}
@@ -61,6 +61,16 @@ public class Oferta implements Persistible {
 
 	public void setSubasta(Subasta subasta) {
 		this.subasta = subasta;
+	}
+
+	@Override
+	public int compareTo(Oferta o) {
+		if (this.monto > o.getMonto()) {
+			return 1;
+		} else if (this.monto < o.getMonto()) {
+			return -1;
+		}
+		return 0;
 	}
 
 }
