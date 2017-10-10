@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 
 import edu.uade.api.tpo.exceptions.BusinessException;
 import edu.uade.api.tpo.exceptions.ExpiredPasswordException;
+import edu.uade.api.tpo.exceptions.InvalidPasswordException;
 import edu.uade.api.tpo.model.SistemaUsuarios;
 
 public class IniciarSesion {
@@ -169,8 +170,9 @@ public class IniciarSesion {
 			try{
 				su.getInstance().modificarUsuario(e.getUsuario());	
 				JOptionPane.showConfirmDialog(null, "Su contraseña se ha modificado con exito", "Aviso", JOptionPane.PLAIN_MESSAGE);
-			}catch (BusinessException e3){
+			}catch (BusinessException | InvalidPasswordException e3){
 				logger.error("Error modificando la contraseña del usuario", e3);
+				JOptionPane.showMessageDialog(null, e3.getMessage(), "Aviso", JOptionPane.PLAIN_MESSAGE);
 			}
 			return false;
 		} 
