@@ -32,23 +32,25 @@ public class OfertaDaoImpl extends AbstractManyToOneDao<Oferta> {
 
     @Override
     public PreparedStatement create(Oferta oferta, Connection conn) throws SQLException {
-        String query = "INSERT INTO " + schema + ".ofertas VALUES(?,?,?,?)";
+        String query = "INSERT INTO " + schema + ".ofertas VALUES(?,?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, oferta.getId());
         ps.setString(2, oferta.getUsuario().getId());
         ps.setFloat(3, oferta.getMonto());
         ps.setTimestamp(4, new Timestamp(oferta.getFecha().getTime()));
+        ps.setString(5, oferta.getSubasta().getId());
         return ps;
     }
 
     @Override
     public PreparedStatement update(Oferta oferta, Connection conn) throws SQLException {
-        String query = "UPDATE " + schema + ".ofertas SET usuario_id = ?, monto = ?, fecha = ? WHERE oferta_id = ?";
+        String query = "UPDATE " + schema + ".ofertas SET usuario_id = ?, monto = ?, fecha = ?, subasta_id = ? WHERE oferta_id = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, oferta.getUsuario().getId());
         ps.setFloat(2, oferta.getMonto());
         ps.setTimestamp(3, new Timestamp(oferta.getFecha().getTime()));
         ps.setString(4, oferta.getId());
+        ps.setString(5, oferta.getSubasta().getId());
         return ps;
     }
 
@@ -90,6 +92,7 @@ public class OfertaDaoImpl extends AbstractManyToOneDao<Oferta> {
         oferta.setUsuario(UsuarioDaoImpl.getInstance().findById(rs.getString("usuario_id")));
         oferta.setMonto(rs.getFloat("monto"));
         oferta.setFecha(rs.getDate("fecha"));
+        oferta.setSubasta(SubastaDaoImpl.getInstance().findById(rs.getString("subasta_id")));
         return oferta;
     }
 

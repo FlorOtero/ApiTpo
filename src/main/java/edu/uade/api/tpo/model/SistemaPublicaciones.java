@@ -116,6 +116,12 @@ public class SistemaPublicaciones {
 		subasta.setDiasVigencia(diasVigencia);
 		subasta.setMediosPago(p.getMediosPago());
 		
+		try {
+			this.publicacionDao.delete(p);
+			this.subastaDao.create(subasta);
+		} catch (SQLException e) {
+			logger.error("Error convirtiendo publicacion a subasta", e);
+		}
 		return subasta;
 	}
 	

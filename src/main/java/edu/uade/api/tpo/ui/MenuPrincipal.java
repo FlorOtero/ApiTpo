@@ -95,16 +95,7 @@ public class MenuPrincipal {
 			}
 		});
 		mnMiCuenta.add(mntmModificarCuenta);
-		
-		JMenuItem mntmEliminarCuenta = new JMenuItem("Eliminar cuenta");
-		mntmEliminarCuenta.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				BajaUsuario bajaUser = new BajaUsuario();
-				bajaUser.setVisible(true);
-				frmMenuPrincipal.dispose();
-			}
-		});
-		mnMiCuenta.add(mntmEliminarCuenta);
+
 		
 		JMenuItem mntmEstadoCuentaCorriente = new JMenuItem("Estado cuenta corriente");
 		mntmEstadoCuentaCorriente.addActionListener(new ActionListener() {
