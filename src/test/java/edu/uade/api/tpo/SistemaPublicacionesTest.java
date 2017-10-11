@@ -1,23 +1,13 @@
 package edu.uade.api.tpo;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
+import edu.uade.api.tpo.model.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.uade.api.tpo.model.Articulo;
-import edu.uade.api.tpo.model.Garantia;
-import edu.uade.api.tpo.model.MedioPago;
-import edu.uade.api.tpo.model.Producto;
-import edu.uade.api.tpo.model.Publicacion;
-import edu.uade.api.tpo.model.Servicio;
-import edu.uade.api.tpo.model.SistemaPublicaciones;
-import edu.uade.api.tpo.model.Subasta;
-import edu.uade.api.tpo.model.TipoContratacion;
-import edu.uade.api.tpo.model.TipoPeriodo;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class SistemaPublicacionesTest {
 
@@ -38,7 +28,7 @@ public class SistemaPublicacionesTest {
 	}
 
 	@Test
-	public void test_altaPublicacion() {
+	public void test_altaPublicacionProducto() {
 		Producto articulo = new Producto();
 		articulo.setDescripcion("Desc");
 		articulo.fromImagesTokenized("asd,ewqe");
@@ -54,6 +44,20 @@ public class SistemaPublicacionesTest {
 		mediosPago.add(MedioPago.TARJETA_CREDITO);
 
 		this.sistemaPublicaciones.altaPublicacion(USER_ID, new Date(), 300, articulo, mediosPago);
+	}
+
+	@Test
+	public void test_altaPublicacionServicio() {
+		Servicio servicio = new Servicio();
+		servicio.setDescripcion("ASDASD");
+		servicio.setNombre("Etc etc");
+		servicio.fromCertificadosTokenized("certificados");
+		servicio.fromImagesTokenized("images");
+		servicio.setContratacion(TipoContratacion.ABONO);
+
+		List<MedioPago> mediosPago = new ArrayList<>();
+		mediosPago.add(MedioPago.EFECTIVO);
+		this.sistemaPublicaciones.altaPublicacion(USER_ID, new Date(), 300, servicio, mediosPago);
 	}
 
 	@Test
@@ -119,5 +123,11 @@ public class SistemaPublicacionesTest {
 		Publicacion p = this.sistemaPublicaciones.buscarPublicacion(PUBLICACION_ID);
 		Subasta s = this.sistemaPublicaciones.convertirPublicacionSubasta(p, 666, 30, 400);
 		Assert.assertNotNull(s);
+	}
+
+	@Test
+	public void test_filtrarPublicaciones() {
+		List<Publicacion> publicaciones = this.sistemaPublicaciones.filtrarPublicaciones("Compu");
+		Assert.assertTrue(publicaciones.size() == 2);
 	}
 }
