@@ -36,6 +36,7 @@ public class SistemaPublicacionesTest {
 		Assert.assertTrue(!subasta.getOfertas().isEmpty());
 	}
 
+	@Test
 	public void test_altaPublicacionProducto() {
 		Producto articulo = new Producto();
 		articulo.setDescripcion("Desc");
@@ -123,7 +124,7 @@ public class SistemaPublicacionesTest {
 		Subasta subasta = this.sistemaPublicaciones.buscarSubasta(SUBASTA_ID);
 		try {
 			Usuario usuario = UsuarioDaoImpl.getInstance().findById(USER_ID);
-			subasta.ofertar(300, usuario, MedioPago.TRANSFERENCIA_BANCARIA);
+			subasta.ofertar(200, usuario, MedioPago.TRANSFERENCIA_BANCARIA);
 		} catch (SQLException | BusinessException e) {
 			Assert.fail("Should not throw exception");
 		}

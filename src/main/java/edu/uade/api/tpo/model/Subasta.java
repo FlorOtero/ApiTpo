@@ -3,6 +3,7 @@ package edu.uade.api.tpo.model;
 import edu.uade.api.tpo.exceptions.BusinessException;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Subasta extends Publicacion {
 	private float precioMin;
@@ -66,21 +67,8 @@ public class Subasta extends Publicacion {
 		SistemaPublicaciones.getInstance().modificarSubasta(this);
 
 		// notificamos a todos menos al usuario que hizo la oferta
-		Set<String> usuariosNotificados = new HashSet<>();
-		for (Oferta o : ofertas) {
-			if (!o.getUsuarioId().equals(usuario.getId())) {
-				usuariosNotificados.add(o.getUsuarioId());
-			}
-		}
-		SistemaNotificacionSubasta.getInstance().notificarUsuarios(usuariosNotificados, this);
-	}
-
-	private Oferta buscarMayorOferta() {
-		Oferta oferta = null;
-		if (!this.ofertas.isEmpty()) {
-			Collections.sort(this.ofertas);
-			oferta = this.ofertas.get(ofertas.size() - 1);
-		}
-		return oferta;
+		ofertas.stream().filter(o -> !o.getUsuarioId().equals(usuario.getId())).map(o -> o.getUsuarioId()).collect(Collectors.toSet()).forEach(usuarioId -> {
+			SistemaNotificacionSubasta.getInstance().notificarUsuarioSubasta(usuarioId, this);
+		});
 	}
 }

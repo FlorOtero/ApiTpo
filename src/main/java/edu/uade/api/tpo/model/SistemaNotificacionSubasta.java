@@ -1,11 +1,12 @@
 package edu.uade.api.tpo.model;
 
-import java.util.Collection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SistemaNotificacionSubasta {
 
 	private static SistemaNotificacionSubasta instance = null;
-	
+	private static final Logger logger = LoggerFactory.getLogger(SistemaNotificacionSubasta.class);
 	private SistemaNotificacionSubasta() {}
 
 	public static SistemaNotificacionSubasta getInstance() {
@@ -14,18 +15,8 @@ public class SistemaNotificacionSubasta {
 		}
 		return instance;
 	}
-	
-	public void notificarUsuarioGanador(String nombreUsuario, Subasta s) {
-		// TODO: implement method
-		// Usuario.isGanador(s);
-	}
-		
-	public void notificarUsuarios(Collection<String> nombreUsuarios, Subasta s) {
-		// SistemaUsuarios su = SistemaUsuarios.getInstance();
-		for(int i=0; i< nombreUsuarios.size(); i++) {
-			// Usuario u = su.buscarUsuario(nombreUsuarios);
-            // notificar(u, s);
-        }
-	}
 
+	public void notificarUsuarioSubasta(String userId, Subasta subasta) {
+		logger.info(">>> Notificando Usuario: "+userId);
+	}
 }

@@ -70,7 +70,7 @@ public class OfertaDaoImpl extends AbstractManyToOneDao<Oferta> {
 
     @Override
     public PreparedStatement findManyBy(String field, String value, Connection conn) throws SQLException {
-        String query = "SELECT * FROM " + schema + ".ofertas WHERE " + field + " = ?";
+        String query = "SELECT * FROM " + schema + ".ofertas WHERE " + field + " = ? ORDER BY monto DESC";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, value);
         return ps;
