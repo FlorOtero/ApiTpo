@@ -1,14 +1,27 @@
 package edu.uade.api.tpo.ui;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
+import edu.uade.api.tpo.model.Producto;
+import edu.uade.api.tpo.model.Publicacion;
+import edu.uade.api.tpo.model.Servicio;
+import edu.uade.api.tpo.model.SistemaPublicaciones;
+
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class MenuPrincipal {
 
+	JLabel lblIngresarProducto;
 	private JFrame frmMenuPrincipal;
-	private JTextField textField;
+	private JTextField buscarField;
+	private ArrayList<Publicacion> resultado;
+	private JTable tablaBusqueda;
+	JScrollPane scrollPane;
+	
 
 	/**
 	 * Launch the application.
@@ -44,18 +57,28 @@ public class MenuPrincipal {
 		frmMenuPrincipal.setBounds(100, 100, 544, 565);
 		frmMenuPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		textField = new JTextField();
-		textField.setBounds(176, 61, 273, 26);
-		frmMenuPrincipal.getContentPane().add(textField);
-		textField.setColumns(10);
+		// Content
+		
+		lblIngresarProducto = new JLabel("Buscar Publicaciones");
+		lblIngresarProducto.setBounds(40, 40, 180, 16);
+		frmMenuPrincipal.getContentPane().add(lblIngresarProducto);
+		
+		buscarField = new JTextField();
+		buscarField.setBounds(40, 66, 273, 26);
+		frmMenuPrincipal.getContentPane().add(buscarField);
+		buscarField.setColumns(10);
 		
 		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.setBounds(189, 148, 117, 29);
+		btnBuscar.setBounds(330, 66, 117, 29);
+		btnBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				buscarPublicacion(buscarField.getText());
+				crearTabla();
+			}
+		});
 		frmMenuPrincipal.getContentPane().add(btnBuscar);
 		
-		JLabel lblIngresarProducto = new JLabel("Ingresar producto");
-		lblIngresarProducto.setBounds(46, 66, 117, 16);
-		frmMenuPrincipal.getContentPane().add(lblIngresarProducto);
+		// Menu
 		
 		JMenuBar menuBar = new JMenuBar();
 		frmMenuPrincipal.setJMenuBar(menuBar);
@@ -141,4 +164,53 @@ public class MenuPrincipal {
 	public void setVisible(boolean isVisible) {
 		this.frmMenuPrincipal.setVisible(isVisible);
 	}
+	
+	private ArrayList<Publicacion> buscarPublicacion(String busqueda) {
+		SistemaPublicaciones sp = SistemaPublicaciones.getInstance();
+		resultado = (ArrayList<Publicacion>) sp.filtrarPublicaciones(busqueda);
+		return resultado;
+	}
+	
+	public void crearTabla() {
+		String[] columnNames = {"Nombre Articulo","Precio", "Tipo"};		
+		DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+		
+		if (resultado != null) {
+			for(Publicacion p : resultado){
+				String tipo = "";
+				if (p.getArticulo() instanceof Producto) {
+					tipo = "Producto";
+				} else if (p.getArticulo() instanceof Servicio) {
+					tipo = "Servicio";
+				}
+				model.addRow(new Object[]{ 
+					p.getArticulo().getNombre(), 
+					"$"+p.getPrecio(),
+					tipo
+				});
+			}				
+			tablaBusqueda = new JTable(model);
+			scrollPane = new JScrollPane(tablaBusqueda);
+			tablaBusqueda.setBounds(50, 194, 400, 243);
+			scrollPane.setBounds(50, 194, 400, 243);
+			frmMenuPrincipal.getContentPane().add(scrollPane);
+			tablaBusqueda.addMouseListener(new java.awt.event.MouseAdapter() {
+			    @Override
+			    public void mouseClicked(java.awt.event.MouseEvent evt) {
+			        int row = tablaBusqueda.rowAtPoint(evt.getPoint());
+			        int col = tablaBusqueda.columnAtPoint(evt.getPoint());
+			        if (row >= 0 && col >= 0) {
+			        		Publicacion p = resultado.get(row);
+			        		
+			        		// TODO: change this for Articulo Detail Page
+			            System.out.println("CLICKED "+ p.getArticulo().getNombre());
+			        }
+			    }
+			});
+		} else {
+			JOptionPane.showMessageDialog(null, "No se encontraron coincidencias");
+		}
+	}
+	
+	
 }

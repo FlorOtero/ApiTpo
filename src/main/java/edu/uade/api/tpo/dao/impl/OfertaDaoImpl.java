@@ -95,6 +95,11 @@ public class OfertaDaoImpl extends AbstractManyToOneDao<Oferta> {
         oferta.setSubasta(SubastaDaoImpl.getInstance().findById(rs.getString("subasta_id")));
         return oferta;
     }
+
+    @Override
+	public PreparedStatement findManyLike(String field, String value, Connection conn) throws SQLException {
+		throw new UnsupportedOperationException("Find Many Like is not supported on this class");
+	}
     
     @Override
     public void delete(Oferta t) throws SQLException {

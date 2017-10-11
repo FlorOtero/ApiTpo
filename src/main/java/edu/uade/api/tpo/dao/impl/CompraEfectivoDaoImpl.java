@@ -105,6 +105,11 @@ public class CompraEfectivoDaoImpl extends AbstractManyToOneDao<CompraEfectivo> 
     public PreparedStatement findBy(String field, String value, Connection conn) throws SQLException {
         throw new UnsupportedOperationException("Find by is not supported on class CompraEfectivo!");
     }
+
+	@Override
+	public PreparedStatement findManyLike(String field, String value, Connection conn) throws SQLException {
+		throw new UnsupportedOperationException("Delete is not supported on class CompraEfectivo!");
+	}
     
     @Override
     public void delete(CompraEfectivo t) throws SQLException {

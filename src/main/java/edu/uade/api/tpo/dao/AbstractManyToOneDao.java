@@ -17,8 +17,18 @@ public abstract class AbstractManyToOneDao<T extends Persistible> extends Abstra
             return result;
         }
     }
+    
+    @Override
+    public List<T> findManyLike(String field, String value) throws SQLException {
+        try (Connection conn = this.getConnection(); PreparedStatement ps = findManyLike(field, value, conn); ResultSet rs = ps.executeQuery()) {
+            List<T> result = mapMany(rs);
+            return result;
+        }
+    }
 
     public abstract PreparedStatement findManyBy(String field, String value, Connection conn) throws SQLException;
+    
+    public abstract PreparedStatement findManyLike(String field, String value, Connection conn) throws SQLException;
 
     public abstract List<T> mapMany(ResultSet rs) throws SQLException;
     
