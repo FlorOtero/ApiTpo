@@ -43,11 +43,11 @@ public class SistemaPublicaciones {
 		p.setComision(10);
 		p.setUsuarioId(usuarioId);
 		p.setMediosPago(mediosPago);
-//		try {
-//			publicacionDao.create(p);
-//		} catch (SQLException e) {
-//			logger.error("Error creando publicacion", e);
-//		}
+		try {
+			publicacionDao.create(p);
+		} catch (SQLException e) {
+			logger.error("Error creando publicacion", e);
+		}
 		return p;
 	}
 
@@ -124,9 +124,8 @@ public class SistemaPublicaciones {
 		try {			
 			resultado = publicacionDao.findManyLike("nombre", busqueda);
 		} catch (Exception e) {
-			
+			logger.error("Error filtrando publicaciones", e);	
 		}
-		System.out.println(resultado);
 		return resultado;
 	}
 

@@ -111,7 +111,6 @@ public class CalificacionDaoImpl extends AbstractManyToOneDao<Calificacion> {
 
 	@Override
 	public PreparedStatement findManyLike(String field, String value, Connection conn) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException("Delete is not supported on class Calificacion!");
 	}
 }
