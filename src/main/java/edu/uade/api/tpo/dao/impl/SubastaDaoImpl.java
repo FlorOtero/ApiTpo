@@ -13,6 +13,7 @@ import java.util.List;
 
 public class SubastaDaoImpl extends AbstractManyToOneDao<Subasta> {
 
+
 	private static ManyToOneDao<Subasta> instance;
 
 	private SubastaDaoImpl() {
@@ -142,6 +143,11 @@ public class SubastaDaoImpl extends AbstractManyToOneDao<Subasta> {
 	@Override
 	public PreparedStatement findBy(String field, String value, Connection conn) throws SQLException {
 		throw new UnsupportedOperationException("Find by is not supported on class Subasta!");
+	}
+	
+	@Override
+	public PreparedStatement findManyLike(String field, String value, Connection conn) throws SQLException {
+		throw new UnsupportedOperationException("Find Many Like is not supported on class Subasta");
 	}
 
 	@Override

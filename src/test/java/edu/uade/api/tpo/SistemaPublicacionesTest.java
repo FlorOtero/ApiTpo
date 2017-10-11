@@ -6,7 +6,6 @@ import edu.uade.api.tpo.model.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,8 +36,7 @@ public class SistemaPublicacionesTest {
 		Assert.assertTrue(!subasta.getOfertas().isEmpty());
 	}
 
-	@Test
-	public void test_altaPublicacion() {
+	public void test_altaPublicacionProducto() {
 		Producto articulo = new Producto();
 		articulo.setDescripcion("Desc");
 		articulo.fromImagesTokenized("asd,ewqe");
@@ -54,6 +52,20 @@ public class SistemaPublicacionesTest {
 		mediosPago.add(MedioPago.TARJETA_CREDITO);
 
 		this.sistemaPublicaciones.altaPublicacion(USER_ID, new Date(), 300, articulo, mediosPago);
+	}
+
+	@Test
+	public void test_altaPublicacionServicio() {
+		Servicio servicio = new Servicio();
+		servicio.setDescripcion("ASDASD");
+		servicio.setNombre("Etc etc");
+		servicio.fromCertificadosTokenized("certificados");
+		servicio.fromImagesTokenized("images");
+		servicio.setContratacion(TipoContratacion.ABONO);
+
+		List<MedioPago> mediosPago = new ArrayList<>();
+		mediosPago.add(MedioPago.EFECTIVO);
+		this.sistemaPublicaciones.altaPublicacion(USER_ID, new Date(), 300, servicio, mediosPago);
 	}
 
 	@Test
@@ -130,5 +142,11 @@ public class SistemaPublicacionesTest {
 		Publicacion p = this.sistemaPublicaciones.buscarPublicacion(PUBLICACION_ID);
 		Subasta s = this.sistemaPublicaciones.convertirPublicacionSubasta(p, 666, 30, 400);
 		Assert.assertNotNull(s);
+	}
+
+	@Test
+	public void test_filtrarPublicaciones() {
+		List<Publicacion> publicaciones = this.sistemaPublicaciones.filtrarPublicaciones("Compu");
+		Assert.assertTrue(publicaciones.size() == 2);
 	}
 }
