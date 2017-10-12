@@ -1,5 +1,6 @@
 package edu.uade.api.tpo.model;
 
+import edu.uade.api.tpo.controller.SistemaUsuarios;
 import edu.uade.api.tpo.exceptions.BusinessException;
 import edu.uade.api.tpo.exceptions.InvalidPasswordException;
 

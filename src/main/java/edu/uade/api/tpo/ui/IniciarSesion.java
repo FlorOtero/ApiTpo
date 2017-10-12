@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 import edu.uade.api.tpo.exceptions.BusinessException;
 import edu.uade.api.tpo.exceptions.ExpiredPasswordException;
 import edu.uade.api.tpo.exceptions.InvalidPasswordException;
-import edu.uade.api.tpo.model.SistemaUsuarios;
+import edu.uade.api.tpo.controller.SistemaUsuarios;
 
 public class IniciarSesion {
 
