@@ -89,6 +89,9 @@ public class BajaPublicacion {
 		JButton btnNewButton = new JButton("Eliminar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int row = 0;
+				Publicacion p = resultadoUser.get(row);
+				SistemaPublicaciones.getInstance().eliminarPublicacion(p);
 				int rta= JOptionPane.showConfirmDialog(null,"Esta seguro de que quiere eliminar la publicación?", "Aviso", JOptionPane.OK_CANCEL_OPTION);
 				if (JOptionPane.OK_OPTION == rta) {
 					JOptionPane.showConfirmDialog(null,"Su publicacion se ha eliminado con exito","Confirmacion",JOptionPane.PLAIN_MESSAGE);
@@ -124,15 +127,13 @@ public class BajaPublicacion {
 	
 	private ArrayList<Publicacion> buscarPublicacion(String busqueda) {
 		 Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
-		 String nombreUsuario = prefs.get("USERNAME", null);
-         Usuario user = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
+		 //String nombreUsuario = prefs.get("USERNAME", null);
+         Usuario user = SistemaUsuarios.getInstance().buscarUsuario("flor");
 		 resultadoUser =  (ArrayList<Publicacion>) user.getPublicaciones();
 		return resultadoUser;
 	}
 		
 
-
-	
 	public void crearTabla() {
 		String[] columnNames = {"Nombre Articulo","Precio", "Tipo"};		
 		DefaultTableModel model = new DefaultTableModel(columnNames, 0);
