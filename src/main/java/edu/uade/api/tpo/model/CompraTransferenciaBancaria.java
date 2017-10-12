@@ -8,9 +8,9 @@ public class CompraTransferenciaBancaria extends Transaccion {
 	
 	public CompraTransferenciaBancaria() {}
 
-	public CompraTransferenciaBancaria(Publicacion publicacion, Usuario contraparte) {
+	public CompraTransferenciaBancaria(Publicacion publicacion, Usuario contraparte, String numeroCta) {
 		super(publicacion, contraparte);
-		// TODO Auto-generated constructor stub
+		this.numeroCta = numeroCta;
 	}
 
 	public EntidadRecaudadora getEntidad() {

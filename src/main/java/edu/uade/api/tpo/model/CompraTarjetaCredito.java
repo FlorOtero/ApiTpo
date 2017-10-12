@@ -8,9 +8,9 @@ public class CompraTarjetaCredito extends Transaccion {
     
     public CompraTarjetaCredito() {}
 
-    public CompraTarjetaCredito(Publicacion publicacion, Usuario contraparte) {
+    public CompraTarjetaCredito(Publicacion publicacion, Usuario contraparte, String numeroTarjeta) {
 		super(publicacion, contraparte);
-		// TODO Auto-generated constructor stub
+        this.numeroTarjeta = numeroTarjeta;
 	}
 
 	public EntidadRecaudadora getEntidad() {

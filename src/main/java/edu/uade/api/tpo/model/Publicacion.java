@@ -34,7 +34,6 @@ public class Publicacion implements Persistible {
 	    	if(monto != precio) {
 	    	    throw new BusinessException("El monto no puede ser diferente al precio de la publicacion");
             }
-	    	//todo: chequear estado transaccion luego de ofertar
 	    	SistemaTransacciones.getInstance().crearTransaccion(usuario, this, mp);
     }
 

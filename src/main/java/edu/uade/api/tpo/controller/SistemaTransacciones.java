@@ -64,7 +64,7 @@ public class SistemaTransacciones {
             SistemaPublicaciones.getInstance().modificarPublicacion(transaccion.getPublicacion());
             TransaccionDaoImpl.getInstance().update(transaccion);
         } catch (SQLException e) {
-            logger.error("Error aprobando transaccion", e);
+            logger.error("Error rechazando transaccion", e);
         }
     }
 
