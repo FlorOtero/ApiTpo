@@ -12,6 +12,7 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.prefs.Preferences;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -27,7 +28,8 @@ import edu.uade.api.tpo.model.SistemaPublicaciones;
 import edu.uade.api.tpo.model.TipoPeriodo;
 
 public class ModificarProducto {
-
+	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
+	private String nombreUsuario = prefs.get("USERNAME", null);
 	private JFrame frmModificarProducto;
 	private JTextField textField_1;
 	private JTextField textField_2;
