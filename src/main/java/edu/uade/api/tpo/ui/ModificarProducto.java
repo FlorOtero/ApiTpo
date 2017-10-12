@@ -139,6 +139,7 @@ public class ModificarProducto {
 			public void actionPerformed(ActionEvent e) {
 				Publicacion publicacion = new Publicacion();
 				Producto producto = new Producto();
+				producto.setId("c4244652-e6e6-47a0-8fc5-e19a221bafd9");
 				producto.setNombre(textField.toString());
 				producto.setDescripcion(textField_2.toString());
 				Garantia garantia = new Garantia();
@@ -158,6 +159,7 @@ public class ModificarProducto {
 				}
 				publicacion.setMediosPago(mediosPago);
 				publicacion.setPrecio(Float.parseFloat(textField_3.toString()));
+				
 				
 				SistemaPublicaciones.getInstance().modificarPublicacion(publicacion);
 				

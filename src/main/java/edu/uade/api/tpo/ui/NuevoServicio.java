@@ -95,8 +95,8 @@ public class NuevoServicio {
 		
 		JCalendar calendar = new JCalendar();
 		calendar.setBounds(231, 166, 198, 153);
-		calendar.setWeekOfYearVisible(false);
-		calendar.setTodayButtonVisible(true);
+//		calendar.setWeekOfYearVisible(false);
+//		calendar.setTodayButtonVisible(true);
 		frmNuevoServicio.getContentPane().add(calendar);
 		
 		JCheckBox chckbxEfectivo = new JCheckBox("Efectivo");

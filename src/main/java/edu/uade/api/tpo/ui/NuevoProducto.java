@@ -126,7 +126,7 @@ public class NuevoProducto {
 				prod.setDescripcion(textField_1.getText());
 				prod.setImagenes(imagenes);
 				publi.setPrecio(Float.parseFloat(textField_2.getText()));
-				publi.setFechaHasta(calendar.getDate());
+//				publi.setFechaHasta(calendar.getDate());
 				Garantia garantia = new Garantia();
 				garantia.setCantidad(2);
 				garantia.setTipo(TipoPeriodo.ANUAL);
@@ -169,8 +169,8 @@ public class NuevoProducto {
 
 		calendar = new JCalendar();
 		calendar.setBounds(231, 166, 198, 153);
-		calendar.setWeekOfYearVisible(false);
-		calendar.setTodayButtonVisible(true);
+//		calendar.setWeekOfYearVisible(false);
+//		calendar.setTodayButtonVisible(true);
 		frmNuevoProducto.getContentPane().add(calendar);
 
 		JButton btnAgregar = new JButton("Agregar ");
