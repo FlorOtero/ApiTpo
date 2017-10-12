@@ -80,10 +80,7 @@ public class DetallePublicacion {
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frmMenuPrincipal = new MenuPrincipal();	
-				frmMenuPrincipal.setVisible(true);
-				frmDetallePublicacion.dispose();
-	        		
+				backToMenuPrincipal();
 			}
 		});
 		btnCancelar.setBounds(242, 389, 117, 29);
@@ -123,43 +120,52 @@ public class DetallePublicacion {
 			manageSubasta();
 		}else{
 			managePublicacion();
-		} 
+		}
+		
+		backToMenuPrincipal();
 	}
+	
 	public void setVisible(boolean isVisible) {
 		this.frmDetallePublicacion.setVisible(isVisible);
 	}
-	public void manageSubasta(){
+	
+	public void manageSubasta() {
+		Subasta subasta = (Subasta) publicacion;
 		//Precio de la ultima oferta. 
-		btnOfertar.setName("Ofertar");
 		JLabel lblOferta = new JLabel("Su oferta");
 		lblOferta.setBounds(23, 327, 51, 16);
 		frmDetallePublicacion.getContentPane().add(lblOferta);
+		
 		JTextField txtOferta= new JTextField();
 		txtOferta.setBounds(166, 326, 61, 16);
 		frmDetallePublicacion.getContentPane().add(txtOferta);
+		
+		btnOfertar.setName("Ofertar");
 		btnOfertar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MedioPago mp = null;
 				
 				// TODO: get from MedioPago directly, without strings switch
+				System.out.println(getSelectedButtonText(bg));
 				switch(getSelectedButtonText(bg)) {
-					case "EFECTIVO": mp = MedioPago.EFECTIVO; break;
-					case "TRANSFERENCIA_BANCARIA": mp = MedioPago.TRANSFERENCIA_BANCARIA; break;
-					case "TARJETA_CREDITO": mp = MedioPago.TARJETA_CREDITO; break;
+					case "Efectivo": mp = MedioPago.EFECTIVO; break;
+					case "Transferencia Bancaria": mp = MedioPago.TRANSFERENCIA_BANCARIA; break;
+					case "Tarjeta de Credito": mp = MedioPago.TARJETA_CREDITO; break;
 				}
 				
 				try {
-					publicacion.ofertar(Float.parseFloat(txtOferta.getText()), user, mp);
+					subasta.ofertar(Float.parseFloat(txtOferta.getText()), user, mp);
 				} catch (NumberFormatException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
 				} catch (BusinessException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
 				}
-				publicacion.setPrecio(Float.parseFloat(txtOferta.getText()));
-
+				
+				JOptionPane.showMessageDialog(null, "Has ofertado exitosamente!");
 			}
 		});
 	}
+	
 	public void managePublicacion(){
 		JLabel lblNewLabel_2 = new JLabel();
 		lblNewLabel_2.setBounds(109, 127, 61, 16);
@@ -182,4 +188,10 @@ public class DetallePublicacion {
         }
         return null;
     }
+	
+	public void backToMenuPrincipal() {
+		frmMenuPrincipal = new MenuPrincipal();	
+		frmMenuPrincipal.setVisible(true);
+		frmDetallePublicacion.dispose();
+	}
 }

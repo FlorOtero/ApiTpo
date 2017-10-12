@@ -23,6 +23,23 @@ public class Subasta extends Publicacion {
 		this.precioInicial = precioInicial;
 		this.ofertas = new ArrayList<>();
 	}
+	
+	@Override
+	public void ofertar(float monto, Usuario usuario, MedioPago mp) throws BusinessException {
+	    	
+	    	if (estado != Estado.A) {
+	    		throw new BusinessException("La publicacion no está activa!");
+	    	}
+	    	if (!mediosPago.contains(mp)) {
+	    		throw new BusinessException("El medio de pago elegido no está disponible en esta publicación!");
+	    	}
+
+	    	this.setPrecio(monto);
+	    	this.ofertas.add(new Oferta(monto, new Date(), usuario, this));
+	    	
+	    	//todo: chequear estado transaccion luego de ofertar
+	    	SistemaTransacciones.getInstance().crearTransaccion(usuario, this, mp);
+	}
 
 	public float getPrecioMin() {
 		return precioMin;

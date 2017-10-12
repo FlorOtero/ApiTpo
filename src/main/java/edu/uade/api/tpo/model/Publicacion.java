@@ -11,11 +11,11 @@ public class Publicacion implements Persistible {
     private Date fechaDesde;
     private Date fechaHasta;
     private float precio;
-    private Estado estado;
     private float comision;
     private Articulo articulo;
     private String usuarioId;
-    private List<MedioPago> mediosPago;
+    protected Estado estado;
+    protected List<MedioPago> mediosPago;
    
     public Publicacion() {
 		super();
