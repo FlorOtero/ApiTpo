@@ -36,16 +36,15 @@ public class CompraTransferenciaBancariaDaoImpl extends AbstractManyToOneDao<Com
 	@Override
 	public PreparedStatement create(CompraTransferenciaBancaria compraTransferenciaBancaria, Connection conn)
 			throws SQLException {
-		String query = "INSERT INTO " + schema + ".compras_transf_bancaria VALUES(?,?,?,?,?,?,?,?)";
+		String query = "INSERT INTO " + schema + ".compras_transf_bancaria VALUES(?,?,?,?,?,?,?)";
 		PreparedStatement ps = conn.prepareStatement(query);
 		ps.setString(1, compraTransferenciaBancaria.getId());
 		ps.setString(2, compraTransferenciaBancaria.getContraparte().getId());
 		ps.setString(3, compraTransferenciaBancaria.getPublicacion().getId());
 		ps.setString(4, String.valueOf(compraTransferenciaBancaria.getEstado()));
 		ps.setTimestamp(5, new Timestamp(compraTransferenciaBancaria.getFecha().getTime()));
-		ps.setString(6, compraTransferenciaBancaria.getEntidad().getId());
-		ps.setString(7, compraTransferenciaBancaria.getNumeroCta());
-		ps.setString(8, compraTransferenciaBancaria.getCuentaCorrienteId());
+		ps.setString(6, compraTransferenciaBancaria.getNumeroCta());
+		ps.setString(7, compraTransferenciaBancaria.getCuentaCorrienteId());
 
 		return ps;
 	}
@@ -54,16 +53,15 @@ public class CompraTransferenciaBancariaDaoImpl extends AbstractManyToOneDao<Com
 	public PreparedStatement update(CompraTransferenciaBancaria compraTransferenciaBancaria, Connection conn)
 			throws SQLException {
 		String query = "UPDATE " + schema
-				+ ".compras_transf_bancaria SET contraparte_id = ?, publicacion_id = ?, estado = ?, fecha = ?, entidad_recaudadora_id = ?, numero_cuenta = ?, cuenta_corriente_id = ? where compra_transf_bancaria_id = ?";
+				+ ".compras_transf_bancaria SET contraparte_id = ?, publicacion_id = ?, estado = ?, fecha = ?, numero_cuenta = ?, cuenta_corriente_id = ? where compra_transf_bancaria_id = ?";
 		PreparedStatement ps = conn.prepareStatement(query);
 		ps.setString(1, compraTransferenciaBancaria.getContraparte().getId());
 		ps.setString(2, compraTransferenciaBancaria.getPublicacion().getId());
 		ps.setString(3, String.valueOf(compraTransferenciaBancaria.getEstado()));
 		ps.setTimestamp(4, new Timestamp(compraTransferenciaBancaria.getFecha().getTime()));
-		ps.setString(5, compraTransferenciaBancaria.getEntidad().getId());
-		ps.setString(6, compraTransferenciaBancaria.getNumeroCta());
-		ps.setString(7, compraTransferenciaBancaria.getId());
-		ps.setString(8, compraTransferenciaBancaria.getCuentaCorrienteId());
+		ps.setString(5, compraTransferenciaBancaria.getNumeroCta());
+		ps.setString(6, compraTransferenciaBancaria.getId());
+		ps.setString(7, compraTransferenciaBancaria.getCuentaCorrienteId());
 
 		return ps;
 	}
@@ -105,7 +103,6 @@ public class CompraTransferenciaBancariaDaoImpl extends AbstractManyToOneDao<Com
 		compra.setPublicacion(pub);
 		compra.setEstado(EstadoTransaccion.valueOf(rs.getString("estado")));
 		compra.setFecha(rs.getTimestamp("fecha"));
-		compra.setEntidad(EntidadRecaudadoraDaoImpl.getInstance().findById(rs.getString("entidad_recaudadora_id")));
 		compra.setNumeroCta(rs.getString("numero_cuenta"));
 		compra.setCuentaCorrienteId(rs.getString("cuenta_corriente_id"));
 		return compra;
