@@ -5,6 +5,7 @@ import java.awt.Font;
 
 import javax.swing.JFrame;
 
+import edu.uade.api.tpo.controller.SistemaPublicaciones;
 import edu.uade.api.tpo.controller.SistemaUsuarios;
 import edu.uade.api.tpo.exceptions.BusinessException;
 import edu.uade.api.tpo.model.Articulo;
@@ -205,12 +206,8 @@ public class DetallePublicacion {
 						break;
 				}
 				try {
-<<<<<<< HEAD
-=======
-					// TODO: populate datos paog
-					DatosPago datosPago = null;
->>>>>>> b86ec454ca3ecba62d0a64624c7519f47b4caf56
-					publicacion.ofertar(publicacion.getPrecio(), user, datosPago);
+					SistemaPublicaciones.getInstance().ofertar(publicacion, publicacion.getPrecio(), user, datosPago);
+					JOptionPane.showConfirmDialog(null, "Compra exitosa", "Aviso", JOptionPane.PLAIN_MESSAGE);
 				}catch(BusinessException e2){
 					
 				}
