@@ -65,8 +65,8 @@ public class DetallePublicacion {
 		JLabel lblTipo = new JLabel();
 		lblTipo.setBounds(290, 33, 400, 30);
 		frmDetallePublicacion.getContentPane().add(lblTipo);
-		
-		JLabel lblDescripcion = new JLabel("Descripcion");
+
+		JLabel lblDescripcion = new JLabel("Descripcion: ");
 		lblDescripcion.setBounds(23, 84, 88, 16);
 		frmDetallePublicacion.getContentPane().add(lblDescripcion);
 		
@@ -91,11 +91,11 @@ public class DetallePublicacion {
 		btnCancelar.setBounds(242, 389, 117, 29);
 		frmDetallePublicacion.getContentPane().add(btnCancelar);
 		
-		JLabel lblPrecio = new JLabel("Precio");
+		JLabel lblPrecio = new JLabel("Precio: ");
 		lblPrecio.setBounds(23, 127, 61, 16);
 		frmDetallePublicacion.getContentPane().add(lblPrecio);
 		
-		JLabel lblMediosDePago = new JLabel("Medios de pago disponibles ");
+		JLabel lblMediosDePago = new JLabel("Medios de pago disponibles: ");
 		lblMediosDePago.setBounds(23, 179, 203, 16);
 		frmDetallePublicacion.getContentPane().add(lblMediosDePago);
 		
@@ -176,12 +176,36 @@ public class DetallePublicacion {
 		});
 	}
 	
-	public void managePublicacion() {
+	public void managePublicacion(){
+		btnOfertar.setName("comprar");
 		if(articulo instanceof Producto) {
 			// Mostras los datos del producto
+			JLabel lblGarantia = new JLabel();
+			
 		} else {
 			// Mostras los datos del servicio
 		}
+		btnOfertar.setName("Comprar");
+		btnOfertar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MedioPago mp = null;				
+				System.out.println(getSelectedButtonText(bg));
+				switch(getSelectedButtonText(bg)) {
+					case "Efectivo": mp = MedioPago.EFECTIVO; break;
+					case "Transferencia Bancaria": mp = MedioPago.TRANSFERENCIA_BANCARIA; break;
+					case "Tarjeta de Credito": mp = MedioPago.TARJETA_CREDITO; break;
+				}
+				try {
+					// TODO: populate datos paog
+					DatosPago datosPago = null;
+					publicacion.ofertar(publicacion.getPrecio(), user, datosPago);
+				}catch(BusinessException e2){
+					
+				}
+				
+			}
+		});
+		
 	}
 	
 	public String getSelectedButtonText(ButtonGroup buttonGroup) {
