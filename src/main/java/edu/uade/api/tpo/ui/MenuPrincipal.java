@@ -203,6 +203,9 @@ public class MenuPrincipal {
 			        		Publicacion p = resultado.get(row);
 			        		
 			        		// TODO: change this for Articulo Detail Page
+			        		DetalleArticulo articuloSeleccionado= new DetalleArticulo(p);	
+			        		articuloSeleccionado.setVisible(true);
+			        		frmMenuPrincipal.dispose();
 			            System.out.println("CLICKED "+ p.getArticulo().getNombre());
 			        }
 			    }
