@@ -14,15 +14,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import edu.uade.api.tpo.db.PersistenceModule;
 import edu.uade.api.tpo.exceptions.BusinessException;
 import edu.uade.api.tpo.exceptions.InvalidPasswordException;
 import edu.uade.api.tpo.model.Domicilio;
 import edu.uade.api.tpo.model.Password;
-import edu.uade.api.tpo.model.SistemaUsuarios;
+import edu.uade.api.tpo.controller.SistemaUsuarios;
 import edu.uade.api.tpo.model.Usuario;
 
 public class RegistrarUsuario {

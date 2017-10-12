@@ -1,5 +1,6 @@
 package edu.uade.api.tpo;
 
+import edu.uade.api.tpo.controller.SistemaPublicaciones;
 import edu.uade.api.tpo.model.*;
 import org.junit.Assert;
 import org.junit.Before;

@@ -5,8 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import edu.uade.api.tpo.exceptions.InvalidPasswordException;
-import edu.uade.api.tpo.model.MedioPago;
-import edu.uade.api.tpo.model.SistemaUsuarios;
+import edu.uade.api.tpo.controller.SistemaUsuarios;
 import edu.uade.api.tpo.model.Usuario;
 
 public class SistemaUsuariosTest {

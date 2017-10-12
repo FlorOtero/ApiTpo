@@ -1,6 +1,4 @@
-package edu.uade.api.tpo.model;
-
-import javax.management.Notification;
+package edu.uade.api.tpo.controller;
 
 public class SistemaNotificacionCobro {
 	private String mensaje;

@@ -6,7 +6,7 @@ import javax.swing.table.DefaultTableModel;
 import edu.uade.api.tpo.model.Producto;
 import edu.uade.api.tpo.model.Publicacion;
 import edu.uade.api.tpo.model.Servicio;
-import edu.uade.api.tpo.model.SistemaPublicaciones;
+import edu.uade.api.tpo.controller.SistemaPublicaciones;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
