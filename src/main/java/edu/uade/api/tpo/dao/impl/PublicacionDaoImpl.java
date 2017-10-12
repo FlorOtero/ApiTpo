@@ -2,6 +2,7 @@ package edu.uade.api.tpo.dao.impl;
 
 import edu.uade.api.tpo.dao.AbstractManyToOneDao;
 import edu.uade.api.tpo.dao.ManyToOneDao;
+import edu.uade.api.tpo.model.Comision;
 import edu.uade.api.tpo.model.Estado;
 import edu.uade.api.tpo.model.MedioPago;
 import edu.uade.api.tpo.model.Publicacion;
@@ -37,7 +38,7 @@ public class PublicacionDaoImpl extends AbstractManyToOneDao<Publicacion> {
 		ps.setFloat(5, publicacion.getPrecio());
 		ps.setString(6, String.valueOf(publicacion.getEstado()));
 		ps.setString(7, publicacion.getArticulo().getId());
-		ps.setFloat(8, publicacion.getComision());
+		ps.setFloat(8, publicacion.getComision().getImporte());
 		return ps;
 	}
 
@@ -81,7 +82,7 @@ public class PublicacionDaoImpl extends AbstractManyToOneDao<Publicacion> {
 		ps.setFloat(4, publicacion.getPrecio());
 		ps.setString(5, String.valueOf(publicacion.getEstado()));
 		ps.setString(6, publicacion.getArticulo().getId());
-		ps.setFloat(7, publicacion.getComision());
+		ps.setFloat(7, publicacion.getComision().getImporte());
 		ps.setString(8, publicacion.getId());
 		if (publicacion.getMediosPago() != null && !publicacion.getMediosPago().isEmpty()) {
 			MedioPagoDaoImpl.getInstance().updateMediosPagoToPublicacion(publicacion.getId(),
@@ -130,7 +131,8 @@ public class PublicacionDaoImpl extends AbstractManyToOneDao<Publicacion> {
 		publicacion.setPrecio(rs.getFloat("precio"));
 		publicacion.setEstado(Estado.valueOf(rs.getString("estado")));
 		publicacion.setArticulo(ArticuloDaoImpl.getInstance().findById(rs.getString("articulo_id")));
-		publicacion.setComision(rs.getFloat("comision"));
+		Comision c = new Comision(rs.getFloat("comision"));
+		publicacion.setComision(c);
 		publicacion.setMediosPago(MedioPagoDaoImpl.getInstance().findByPublicacionId(publicacion.getId()));
 		return publicacion;
 	}

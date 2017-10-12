@@ -50,7 +50,7 @@ public class SubastaDaoImpl extends AbstractManyToOneDao<Subasta> {
         ps.setFloat(5, subasta.getPrecio());
         ps.setString(6, String.valueOf(subasta.getEstado()));
         ps.setString(7, subasta.getArticulo().getId());
-        ps.setFloat(8, subasta.getComision());
+        ps.setFloat(8, subasta.getComision().getImporte());
         ps.setFloat(9, subasta.getPrecioMin());
         ps.setInt(10, subasta.getDiasVigencia());
         ps.setFloat(11, subasta.getPrecioInicial());
@@ -89,7 +89,7 @@ public class SubastaDaoImpl extends AbstractManyToOneDao<Subasta> {
         ps.setFloat(4, subasta.getPrecio());
         ps.setString(5, String.valueOf(subasta.getEstado()));
         ps.setString(6, subasta.getArticulo().getId());
-        ps.setFloat(7, subasta.getComision());
+        ps.setFloat(7, subasta.getComision().getImporte());
         ps.setFloat(8, subasta.getPrecioMin());
         ps.setInt(9, subasta.getDiasVigencia());
         ps.setFloat(10, subasta.getPrecioInicial());
@@ -136,7 +136,8 @@ public class SubastaDaoImpl extends AbstractManyToOneDao<Subasta> {
         subasta.setPrecio(rs.getFloat("precio"));
         subasta.setEstado(Estado.valueOf(rs.getString("estado")));
         subasta.setArticulo(ArticuloDaoImpl.getInstance().findById(rs.getString("articulo_id")));
-        subasta.setComision(rs.getFloat("comision"));
+        Comision c = new Comision(rs.getFloat("comision"));
+        subasta.setComision(c);
         subasta.setPrecioMin(rs.getFloat("precio_min"));
         subasta.setDiasVigencia(rs.getInt("dias_vigencia"));
         subasta.setPrecioInicial(rs.getFloat("precio_inicial"));

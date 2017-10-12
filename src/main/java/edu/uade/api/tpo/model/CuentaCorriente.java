@@ -10,6 +10,7 @@ public class CuentaCorriente implements Persistible {
     private String id;
     private float saldo;
     private List<Transaccion> transacciones;
+    private List<Comision> comisiones;
 
     public CuentaCorriente() {
         this.saldo = 0;
@@ -47,8 +48,32 @@ public class CuentaCorriente implements Persistible {
     public boolean hasTransaccion(Transaccion transaccion) {
         return this.transacciones.contains(transaccion);
     }
+    
+    public List<Comision> getComisiones() {
+		return comisiones;
+	}
 
-    public String getId() {
+	public void setComisiones(List<Comision> comisiones) {
+		this.comisiones = comisiones;
+	}
+
+    public void addComision(Comision comision) {
+        this.comisiones.add(comision);
+    }
+
+    public void removeComision(Comision comision) {
+        this.comisiones.remove(comision);
+    }
+
+    public boolean hasComisiones() {
+        return !this.comisiones.isEmpty();
+    }
+
+    public boolean hasComision(Comision comision) {
+        return this.comisiones.contains(comision);
+    }	
+	
+	public String getId() {
         return id;
     }
 

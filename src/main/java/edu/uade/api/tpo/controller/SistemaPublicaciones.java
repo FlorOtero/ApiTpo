@@ -1,5 +1,6 @@
 package edu.uade.api.tpo.controller;
 
+import edu.uade.api.tpo.Config;
 import edu.uade.api.tpo.dao.ManyToOneDao;
 import edu.uade.api.tpo.dao.impl.PublicacionDaoImpl;
 import edu.uade.api.tpo.dao.impl.SubastaDaoImpl;
@@ -39,7 +40,9 @@ public class SistemaPublicaciones {
 		p.setPrecio(precio);
 		p.setArticulo(articulo);
 		p.setEstado(Estado.A);
-		p.setComision(10);
+		//La comision es el valor del producto por el porcentaje establecido
+		Comision c = new Comision(precio * Float.parseFloat(Config.getProperty("porcentajeComision")));
+		p.setComision(c);
 		p.setUsuarioId(usuarioId);
 		p.setMediosPago(mediosPago);
 		try {
@@ -92,7 +95,9 @@ public class SistemaPublicaciones {
 		s.setUsuarioId(usuarioId);
 		s.setFechaDesde(new Date());
 		s.setEstado(Estado.A);
-		s.setComision(10);
+		//por que es 10??
+		Comision c = new Comision(10);
+		s.setComision(c);
 		s.setMediosPago(mediosPago);
 		try {
 			this.subastaDao.create(s);

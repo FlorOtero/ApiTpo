@@ -13,14 +13,13 @@ public class Publicacion implements Persistible {
     private Date fechaHasta;
     private float precio;
     protected Estado estado;
-    private float comision;
+    private Comision comision;
     private Articulo articulo;
     private String usuarioId;
     protected List<MedioPago> mediosPago;
    
     public Publicacion() {
 		super();
-		this.comision = 0.03f;
 	}
 
 	public void ofertar(float monto, Usuario usuario, DatosPago datosPago) throws BusinessException {
@@ -69,15 +68,15 @@ public class Publicacion implements Persistible {
         this.precio = precio;
     }
 
-    public float getComision() {
-        return comision;
-    }
+    public Comision getComision() {
+		return comision;
+	}
 
-    public void setComision(float comision) {
-        this.comision = comision;
-    }
+	public void setComision(Comision comision) {
+		this.comision = comision;
+	}
 
-    public Articulo getArticulo() {
+	public Articulo getArticulo() {
         return articulo;
     }
 
