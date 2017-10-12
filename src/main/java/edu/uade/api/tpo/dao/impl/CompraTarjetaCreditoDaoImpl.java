@@ -35,30 +35,28 @@ public class CompraTarjetaCreditoDaoImpl extends AbstractManyToOneDao<CompraTarj
 
     @Override
     public PreparedStatement create(CompraTarjetaCredito compraTarjetaCredito, Connection conn) throws SQLException {
-        String query = "INSERT INTO " + schema + ".compras_tarjeta_credito VALUES(?,?,?,?,?,?,?,?)";
+        String query = "INSERT INTO " + schema + ".compras_tarjeta_credito VALUES(?,?,?,?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, compraTarjetaCredito.getId());
         ps.setString(2, compraTarjetaCredito.getContraparte().getId());
         ps.setString(3, compraTarjetaCredito.getPublicacion().getId());
         ps.setString(4, String.valueOf(compraTarjetaCredito.getEstado()));
         ps.setTimestamp(5, new Timestamp(compraTarjetaCredito.getFecha().getTime()));
-        ps.setString(6, compraTarjetaCredito.getEntidad().getId());
-        ps.setString(7, compraTarjetaCredito.getNumeroTarjeta());
-        ps.setString(8, compraTarjetaCredito.getCuentaCorrienteId());
+        ps.setString(6, compraTarjetaCredito.getNumeroTarjeta());
+        ps.setString(7, compraTarjetaCredito.getCuentaCorrienteId());
         return ps;
     }
 
     @Override
     public PreparedStatement update(CompraTarjetaCredito compraTarjetaCredito, Connection conn) throws SQLException {
-        String query = "UPDATE " + schema + ".compras_tarjeta_credito SET contraparte_id = ?, publicacion_id = ?, estado = ?, fecha = ?, entidad_recaudadora_id = ?, numero_tarjeta = ?, cuenta_corriente_id = ? WHERE compra_tarjeta_credito_id = ?";
+        String query = "UPDATE " + schema + ".compras_tarjeta_credito SET contraparte_id = ?, publicacion_id = ?, estado = ?, fecha = ?, numero_tarjeta = ?, cuenta_corriente_id = ? WHERE compra_tarjeta_credito_id = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, compraTarjetaCredito.getContraparte().getId());
         ps.setString(2, compraTarjetaCredito.getPublicacion().getId());
         ps.setString(3, String.valueOf(compraTarjetaCredito.getEstado()));
         ps.setTimestamp(4, new Timestamp(compraTarjetaCredito.getFecha().getTime()));
-        ps.setString(5, compraTarjetaCredito.getEntidad().getId());
-        ps.setString(6, compraTarjetaCredito.getNumeroTarjeta());
-        ps.setString(7, compraTarjetaCredito.getCuentaCorrienteId());
+        ps.setString(5, compraTarjetaCredito.getNumeroTarjeta());
+        ps.setString(6, compraTarjetaCredito.getCuentaCorrienteId());
         return ps;
     }
 
@@ -99,7 +97,6 @@ public class CompraTarjetaCreditoDaoImpl extends AbstractManyToOneDao<CompraTarj
         compra.setPublicacion(pub);
         compra.setEstado(EstadoTransaccion.valueOf(rs.getString("estado")));
         compra.setFecha(rs.getTimestamp("fecha"));
-        compra.setEntidad(EntidadRecaudadoraDaoImpl.getInstance().findById(rs.getString("entidad_recaudadora_id")));
         compra.setNumeroTarjeta(rs.getString("numero_tarjeta"));
         compra.setCuentaCorrienteId(rs.getString("cuenta_corriente_id"));
         return compra;
