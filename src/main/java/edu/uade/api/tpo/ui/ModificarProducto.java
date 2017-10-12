@@ -73,6 +73,10 @@ public class ModificarProducto {
 		lblNombre.setBounds(34, 25, 117, 16);
 		frmModificarProducto.getContentPane().add(lblNombre);
 		
+		JLabel lblNombre_1 = new JLabel("Nombre");
+		lblNombre_1.setBounds(34, 93, 88, 16);
+		frmModificarProducto.getContentPane().add(lblNombre_1);
+		
 		JLabel lblDescripcion = new JLabel("Descripcion");
 		lblDescripcion.setBounds(34, 121, 88, 16);
 		frmModificarProducto.getContentPane().add(lblDescripcion);
@@ -93,6 +97,13 @@ public class ModificarProducto {
 		lblNewLabel.setBounds(34, 276, 136, 16);
 		frmModificarProducto.getContentPane().add(lblNewLabel);
 		
+		
+		textField = new JTextField();
+		textField.setColumns(10);
+		textField.setBounds(202, 88, 139, 23);
+		frmModificarProducto.getContentPane().add(textField);
+		
+		
 		textField_1 = new JTextField();
 		textField_1.setBounds(214, 19, 135, 23);
 		frmModificarProducto.getContentPane().add(textField_1);
@@ -102,6 +113,16 @@ public class ModificarProducto {
 		textField_2.setBounds(202, 116, 139, 23);
 		frmModificarProducto.getContentPane().add(textField_2);
 		textField_2.setColumns(10);
+		
+		textField_3 = new JTextField();
+		textField_3.setBounds(202, 146, 139, 23);
+		frmModificarProducto.getContentPane().add(textField_3);
+		textField_3.setColumns(10);
+		
+		textField_4 = new JTextField();
+		textField_4.setBounds(202, 177, 139, 23);
+		frmModificarProducto.getContentPane().add(textField_4);
+		textField_4.setColumns(10);
 		
 		JCheckBox chckbxEfectivo = new JCheckBox("Efectivo");
 		chckbxEfectivo.setBounds(174, 273, 158, 23);
@@ -123,8 +144,19 @@ public class ModificarProducto {
 		JButton btnBuscar = new JButton("Buscar");
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				JOptionPane.showConfirmDialog(null, "Su producto se ha modificado con exito", "Aviso", JOptionPane.PLAIN_MESSAGE);
+				// TODO: buscar el producto a modificar
+				if (textField != null){  //verificar si el textfield corresponde al casillero de busqueda
+					String publicacionId = textField.toString(); //ojo le estoy pasando el nombre no el ID de la publicacion
+					Publicacion pubBuscada = new Publicacion();
+					pubBuscada = SistemaPublicaciones.getInstance().buscarPublicacion(publicacionId);
+					JOptionPane.showConfirmDialog(null, "Se ha encontrado el producto", "Aviso", JOptionPane.PLAIN_MESSAGE);
+					textField_1 = pubBuscada.getNombre();
+					textField_2 = pubBuscada.getDescripcion();
+					textField_3 = pubBuscada.getPrecio();
+					textField_4 = pubBuscada.getGarantia();
+				}else{
+					JOptionPane.showConfirmDialog(null, "No se ha encontrado el producto", "Aviso", JOptionPane.PLAIN_MESSAGE);
+				}
 				MenuPrincipal menuP = new MenuPrincipal();
 				menuP.setVisible(true);
 				frmModificarProducto.dispose();
@@ -137,6 +169,8 @@ public class ModificarProducto {
 		JButton btnModificar = new JButton("Modificar");
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				// TODO: mosificar el producto con los datos ingresados por parametros
+				// TODO: se hardcodeo el is del producto a modificar para probar
 				Publicacion publicacion = new Publicacion();
 				Producto producto = new Producto();
 				producto.setId("c4244652-e6e6-47a0-8fc5-e19a221bafd9");
@@ -182,27 +216,6 @@ public class ModificarProducto {
 		});
 		btnCancelar.setBounds(293, 377, 117, 29);
 		frmModificarProducto.getContentPane().add(btnCancelar);
-		
-		textField_3 = new JTextField();
-		textField_3.setBounds(202, 146, 139, 23);
-		frmModificarProducto.getContentPane().add(textField_3);
-		textField_3.setColumns(10);
-	
-		
-		textField_4 = new JTextField();
-		textField_4.setBounds(202, 177, 139, 23);
-		frmModificarProducto.getContentPane().add(textField_4);
-		textField_4.setColumns(10);
-		
-		JLabel lblNombre_1 = new JLabel("Nombre");
-		lblNombre_1.setBounds(34, 93, 88, 16);
-		frmModificarProducto.getContentPane().add(lblNombre_1);
-		
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(202, 88, 139, 23);
-		frmModificarProducto.getContentPane().add(textField);
-		
 
 	}
 	public void setVisible(boolean isVisible) {
