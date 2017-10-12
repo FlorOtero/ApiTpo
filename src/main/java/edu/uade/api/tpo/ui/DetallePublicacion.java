@@ -5,12 +5,13 @@ import java.awt.Font;
 
 import javax.swing.JFrame;
 
+import edu.uade.api.tpo.controller.SistemaUsuarios;
 import edu.uade.api.tpo.exceptions.BusinessException;
 import edu.uade.api.tpo.model.Articulo;
+import edu.uade.api.tpo.model.DatosPago;
 import edu.uade.api.tpo.model.MedioPago;
 import edu.uade.api.tpo.model.Producto;
 import edu.uade.api.tpo.model.Publicacion;
-import edu.uade.api.tpo.model.SistemaUsuarios;
 import edu.uade.api.tpo.model.Subasta;
 import edu.uade.api.tpo.model.Usuario;
 
@@ -44,7 +45,7 @@ public class DetallePublicacion {
 		this.publicacion= p;
 		this.articulo=p.getArticulo();
 		String nombreUsuario = prefs.get("USERNAME", null);
-		user= SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
+		user = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
 		initialize();
 	}
 
@@ -153,8 +154,11 @@ public class DetallePublicacion {
 					case "Tarjeta de Credito": mp = MedioPago.TARJETA_CREDITO; break;
 				}
 				
+				// TODO: populate datos paog
+				DatosPago datosPago = null;
+				
 				try {
-					subasta.ofertar(Float.parseFloat(txtOferta.getText()), user, mp);
+					subasta.ofertar(Float.parseFloat(txtOferta.getText()), user, datosPago);
 				} catch (NumberFormatException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
 				} catch (BusinessException e1) {

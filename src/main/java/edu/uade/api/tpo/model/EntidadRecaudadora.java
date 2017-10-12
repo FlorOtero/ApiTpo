@@ -1,26 +1,8 @@
 package edu.uade.api.tpo.model;
 
-import edu.uade.api.tpo.db.Persistible;
+@FunctionalInterface
+public interface EntidadRecaudadora<T extends Transaccion> {
 
-public abstract class EntidadRecaudadora implements Persistible {
+    public void informarPago(T t);
 
-    private String id;
-
-    public abstract void cobrar();
-
-    public void notificar() {
-
-    }
-
-    public void efectuarCobro() {
-
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 }

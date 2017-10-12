@@ -5,8 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import edu.uade.api.tpo.exceptions.InvalidPasswordException;
-import edu.uade.api.tpo.model.MedioPago;
-import edu.uade.api.tpo.model.SistemaUsuarios;
+import edu.uade.api.tpo.controller.SistemaUsuarios;
 import edu.uade.api.tpo.model.Usuario;
 
 public class SistemaUsuariosTest {
@@ -29,15 +28,18 @@ public class SistemaUsuariosTest {
         Usuario u = sistemaUsuarios.buscarUsuario("flor");
         u.setNombre("un nombre");
         u.setApellido("un apellido");
+        u.getPassword().setValor("54321");
         try {
             sistemaUsuarios.modificarUsuario(u);
             u = sistemaUsuarios.buscarUsuario("flor");
             Assert.assertEquals("un nombre", u.getNombre());
             Assert.assertEquals("un apellido", u.getApellido());
-
+            Assert.assertEquals("54321", u.getPassword().getValor());
             //Vuelvo atrás los cambios
             u.setNombre("Flor");
             u.setApellido("Otero");
+            u.getPassword().setValor("12345");
+            
             sistemaUsuarios.modificarUsuario(u);
         } catch (Exception e) {
             Assert.fail("Should not throw any exception");

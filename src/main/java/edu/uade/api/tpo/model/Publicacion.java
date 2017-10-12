@@ -1,5 +1,6 @@
 package edu.uade.api.tpo.model;
 
+import edu.uade.api.tpo.controller.SistemaTransacciones;
 import edu.uade.api.tpo.db.Persistible;
 import edu.uade.api.tpo.exceptions.BusinessException;
 
@@ -7,14 +8,14 @@ import java.util.Date;
 import java.util.List;
 
 public class Publicacion implements Persistible {
-    private String id;
+    protected String id;
     private Date fechaDesde;
     private Date fechaHasta;
-    private float precio;
     private float comision;
     private Articulo articulo;
     private String usuarioId;
     protected Estado estado;
+    protected float precio;
     protected List<MedioPago> mediosPago;
    
     public Publicacion() {
@@ -22,16 +23,18 @@ public class Publicacion implements Persistible {
 		this.comision = 0.03f;
 	}
 
-	public void ofertar(float monto, Usuario usuario, MedioPago mp) throws BusinessException {
+	public void ofertar(float monto, Usuario usuario, DatosPago datosPago) throws BusinessException {
     	
 	    	if(estado != Estado.A) {
 	    		throw new BusinessException("La publicacion no está activa!");
 	    	}
-	    	if(!mediosPago.contains(mp)) {
+	    	if(!mediosPago.contains(datosPago.getMedioPago())) {
 	    		throw new BusinessException("El medio de pago elegido no está disponible en esta publicación!");
 	    	}
-	    	//todo: chequear estado transaccion luego de ofertar
-	    	SistemaTransacciones.getInstance().crearTransaccion(usuario, this, mp);
+	    	if(monto != precio) {
+	    	    throw new BusinessException("El monto no puede ser diferente al precio de la publicacion");
+            }
+	    	SistemaTransacciones.getInstance().crearTransaccion(usuario, this, datosPago);
     }
 
     public String getId() {
