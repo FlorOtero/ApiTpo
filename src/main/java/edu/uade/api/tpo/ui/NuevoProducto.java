@@ -10,11 +10,14 @@ import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.JCalendar;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 import edu.uade.api.tpo.exceptions.BusinessException;
 import edu.uade.api.tpo.model.Articulo;
@@ -25,6 +28,11 @@ import edu.uade.api.tpo.model.Publicacion;
 import edu.uade.api.tpo.model.SistemaPublicaciones;
 import edu.uade.api.tpo.model.TipoPeriodo;
 import edu.uade.api.tpo.model.Usuario;
+import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+import javax.swing.DefaultComboBoxModel;
+import java.awt.Panel;
+import java.awt.Label;
 
 public class NuevoProducto {
 
@@ -33,6 +41,9 @@ public class NuevoProducto {
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private JCalendar calendar;
+	private JTextField textField_3;
+	private JTextField JTextField_path;
+	private JComboBox comboBox;
 
 	/**
 	 * Launch the application.
@@ -69,50 +80,50 @@ public class NuevoProducto {
 		frmNuevoProducto.getContentPane().setLayout(null);
 
 		JLabel lblNombre = new JLabel("Nombre");
-		lblNombre.setBounds(34, 53, 61, 16);
+		lblNombre.setBounds(34, 21, 61, 16);
 		frmNuevoProducto.getContentPane().add(lblNombre);
 
 		JLabel lblDescripcion = new JLabel("Descripcion");
-		lblDescripcion.setBounds(34, 93, 88, 16);
+		lblDescripcion.setBounds(34, 49, 88, 16);
 		frmNuevoProducto.getContentPane().add(lblDescripcion);
 
 		JLabel lblPrecio = new JLabel("Precio");
-		lblPrecio.setBounds(34, 134, 61, 16);
+		lblPrecio.setBounds(34, 77, 61, 16);
 		frmNuevoProducto.getContentPane().add(lblPrecio);
 
 		JLabel lblFechaHasta = new JLabel("Fecha hasta");
-		lblFechaHasta.setBounds(34, 184, 88, 16);
+		lblFechaHasta.setBounds(396, 147, 88, 16);
 		frmNuevoProducto.getContentPane().add(lblFechaHasta);
 
 		JLabel lblNewLabel = new JLabel("Formas de pago");
-		lblNewLabel.setBounds(34, 256, 136, 16);
+		lblNewLabel.setBounds(34, 261, 136, 16);
 		frmNuevoProducto.getContentPane().add(lblNewLabel);
 
 		textField = new JTextField();
-		textField.setBounds(221, 48, 130, 26);
+		textField.setBounds(221, 16, 130, 26);
 		frmNuevoProducto.getContentPane().add(textField);
 		textField.setColumns(10);
 
 		textField_1 = new JTextField();
-		textField_1.setBounds(221, 88, 130, 26);
+		textField_1.setBounds(221, 44, 130, 26);
 		frmNuevoProducto.getContentPane().add(textField_1);
 		textField_1.setColumns(10);
 
 		textField_2 = new JTextField();
-		textField_2.setBounds(221, 129, 130, 26);
+		textField_2.setBounds(221, 72, 130, 26);
 		frmNuevoProducto.getContentPane().add(textField_2);
 		textField_2.setColumns(10);
 
 		JCheckBox chckbxEfectivo = new JCheckBox("Efectivo");
-		chckbxEfectivo.setBounds(34, 279, 128, 23);
+		chckbxEfectivo.setBounds(34, 289, 128, 23);
 		frmNuevoProducto.getContentPane().add(chckbxEfectivo);
 
 		JCheckBox chckbxTarjetaDeCredito = new JCheckBox("Tarjeta de credito");
-		chckbxTarjetaDeCredito.setBounds(34, 305, 142, 23);
+		chckbxTarjetaDeCredito.setBounds(34, 314, 142, 23);
 		frmNuevoProducto.getContentPane().add(chckbxTarjetaDeCredito);
 
 		JCheckBox chckbxTransferenciaBancaria = new JCheckBox("Transferencia bancaria");
-		chckbxTransferenciaBancaria.setBounds(34, 331, 197, 23);
+		chckbxTransferenciaBancaria.setBounds(34, 342, 197, 23);
 		frmNuevoProducto.getContentPane().add(chckbxTransferenciaBancaria);
 
 		JButton btnPublicar = new JButton("Publicar");
@@ -124,13 +135,19 @@ public class NuevoProducto {
 				Producto prod = new Producto();
 				prod.setNombre(textField.getText());
 				prod.setDescripcion(textField_1.getText());
-				prod.setImagenes(imagenes);
+				prod.fromImagesTokenized(JTextField_path.toString());
 				publi.setPrecio(Float.parseFloat(textField_2.getText()));
+<<<<<<< HEAD
 //				publi.setFechaHasta(calendar.getDate());
+=======
+				publi.setFechaHasta(calendar.getDate());
+				
+>>>>>>> ABMPublicaciones
 				Garantia garantia = new Garantia();
-				garantia.setCantidad(2);
-				garantia.setTipo(TipoPeriodo.ANUAL);
+				garantia.setCantidad(Integer.parseInt(textField_3.getText()));
+		        garantia.setTipo(TipoPeriodo.ANUAL);
 				prod.setGarantia(garantia);
+				
 				prod.fromImagesTokenized("images");
 				publi.setArticulo(prod);
 				List<MedioPago> mediosPagos = new ArrayList();
@@ -153,7 +170,7 @@ public class NuevoProducto {
 
 			}
 		});
-		btnPublicar.setBounds(121, 361, 117, 29);
+		btnPublicar.setBounds(114, 377, 117, 29);
 		frmNuevoProducto.getContentPane().add(btnPublicar);
 
 		JButton btnCancelar = new JButton("Cancelar");
@@ -164,18 +181,57 @@ public class NuevoProducto {
 				frmNuevoProducto.dispose();
 			}
 		});
-		btnCancelar.setBounds(263, 361, 117, 29);
+		btnCancelar.setBounds(267, 377, 117, 29);
 		frmNuevoProducto.getContentPane().add(btnCancelar);
 
 		calendar = new JCalendar();
+<<<<<<< HEAD
 		calendar.setBounds(231, 166, 198, 153);
 //		calendar.setWeekOfYearVisible(false);
 //		calendar.setTodayButtonVisible(true);
+=======
+		calendar.setBounds(325, 175, 198, 153);
+		calendar.setWeekOfYearVisible(false);
+		calendar.setTodayButtonVisible(true);
+>>>>>>> ABMPublicaciones
 		frmNuevoProducto.getContentPane().add(calendar);
 
 		JButton btnAgregar = new JButton("Agregar ");
-		btnAgregar.setBounds(396, 364, 89, 23);
+		btnAgregar.setBounds(396, 380, 89, 23);
 		frmNuevoProducto.getContentPane().add(btnAgregar);
+		
+		JLabel lblGarantia = new JLabel("Garantia");
+		lblGarantia.setBounds(34, 105, 61, 16);
+		frmNuevoProducto.getContentPane().add(lblGarantia);
+		
+		textField_3 = new JTextField();
+		textField_3.setBounds(221, 100, 130, 26);
+		frmNuevoProducto.getContentPane().add(textField_3);
+		textField_3.setColumns(10);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"ANUAL", "MENSUAL"}));
+		comboBox.setBounds(380, 101, 127, 27);
+		frmNuevoProducto.getContentPane().add(comboBox);
+		
+		JButton btnNewButton = new JButton("Subir imagen");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser chooser = new JFileChooser();
+				chooser.showOpenDialog(null);
+				File f = chooser.getSelectedFile();
+				String filename = f.getAbsolutePath();
+				JTextField_path.setText(filename);
+					
+			}
+		});
+		btnNewButton.setBounds(26, 186, 117, 29);
+		frmNuevoProducto.getContentPane().add(btnNewButton);
+		
+		JTextField_path = new JTextField();
+		JTextField_path.setBounds(149, 147, 130, 105);
+		frmNuevoProducto.getContentPane().add(JTextField_path);
+		JTextField_path.setColumns(10);
 	}
 
 	public void setVisible(boolean isVisible) {

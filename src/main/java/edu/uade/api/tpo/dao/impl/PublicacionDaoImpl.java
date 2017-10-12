@@ -98,6 +98,19 @@ public class PublicacionDaoImpl extends AbstractManyToOneDao<Publicacion> {
 		ps.setString(2, Estado.A.toString());
 		return ps;
 	}
+	
+	@Override
+    public PreparedStatement findManyLike(String field, String value, Connection conn) throws SQLException {
+		String query = "SELECT publicacion_id, usuario_id, fecha_desde, fecha_hasta, precio, comision, estado, articulo_id, producto_id, nombre, descripcion FROM " + schema + ".publicaciones AS publicacion, " + schema + ".productos AS producto " +
+				"WHERE producto." + field + " LIKE ? AND publicacion.articulo_id = producto.producto_id " +
+				"UNION ALL " +
+				"SELECT publicacion_id, usuario_id, fecha_desde, fecha_hasta, precio, comision, estado, articulo_id, servicio_id, nombre, descripcion FROM " + schema + ".publicaciones AS publicacion, " + schema + ".servicios AS servicio " +
+				"WHERE servicio." + field + " LIKE ? AND publicacion.articulo_id = servicio.servicio_id";
+		PreparedStatement ps = conn.prepareStatement(query);
+		ps.setString(1, "%" + value + "%");
+		ps.setString(2, "%" + value + "%");
+		return ps;
+    }
 
 	@Override
 	public List<Publicacion> mapMany(ResultSet rs) throws SQLException {
@@ -129,6 +142,17 @@ public class PublicacionDaoImpl extends AbstractManyToOneDao<Publicacion> {
 
 	@Override
 	public void delete(Publicacion t) throws SQLException {
-		throw new UnsupportedOperationException("Delete is not supported on class Publicacion!");
+		MedioPagoDaoImpl.getInstance().deleteByPublicacionId(t.getId());
+		try (Connection conn = this.getConnection(); PreparedStatement ps = getDeleteStatement(t, conn)) {
+			ps.execute();
+		}
+		ArticuloDaoImpl.getInstance().delete(t.getArticulo());
+	}
+
+	private PreparedStatement getDeleteStatement(Publicacion p, Connection conn) throws SQLException {
+		String query = "DELETE FROM " + schema + ".publicaciones WHERE publicacion_id = ?";
+		PreparedStatement ps = conn.prepareStatement(query);
+		ps.setString(1, p.getId());
+		return ps;
 	}
 }

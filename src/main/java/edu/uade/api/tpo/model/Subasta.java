@@ -1,12 +1,10 @@
 package edu.uade.api.tpo.model;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Predicate;
 
 import edu.uade.api.tpo.exceptions.BusinessException;
 
@@ -65,7 +63,7 @@ public class Subasta extends Publicacion {
 		} else {
     	
 		Date now = new Date();
-		Oferta oferta = new Oferta(monto, now, usuario);
+		Oferta oferta = new Oferta(monto, now, usuario, this);
 		//creamos la oferta
 		ofertas.add(oferta);
 		//notificamos a todos menos al usuario que hizo la oferta

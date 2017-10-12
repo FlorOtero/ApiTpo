@@ -120,4 +120,9 @@ public class CompraTransferenciaBancariaDaoImpl extends AbstractManyToOneDao<Com
 	public void delete(CompraTransferenciaBancaria t) throws SQLException {
 		throw new UnsupportedOperationException("Delete is not supported on class CompraTransferenciaBancaria!");
 	}
+
+	@Override
+	public PreparedStatement findManyLike(String field, String value, Connection conn) throws SQLException {
+		throw new UnsupportedOperationException("Delete is not supported on class CompraTransferenciaBancaria!");
+	}
 }

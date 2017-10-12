@@ -1,13 +1,21 @@
 package edu.uade.api.tpo.model;
 
+import java.util.List;
+
+import edu.uade.api.tpo.dao.ManyToOneDao;
+import edu.uade.api.tpo.dao.impl.PublicacionDaoImpl;
+
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+<<<<<<< HEAD
 import edu.uade.api.tpo.dao.ManyToOneDao;
 import edu.uade.api.tpo.dao.impl.PublicacionDaoImpl;
+=======
+
+>>>>>>> ABMPublicaciones
 import edu.uade.api.tpo.dao.impl.SubastaDaoImpl;
 
 public class SistemaPublicaciones {
@@ -116,7 +124,23 @@ public class SistemaPublicaciones {
 		subasta.setDiasVigencia(diasVigencia);
 		subasta.setMediosPago(p.getMediosPago());
 		
+		try {
+			this.publicacionDao.delete(p);
+			this.subastaDao.create(subasta);
+		} catch (SQLException e) {
+			logger.error("Error convirtiendo publicacion a subasta", e);
+		}
 		return subasta;
+	}
+	
+	public List<Publicacion> filtrarPublicaciones(String busqueda) {
+		List<Publicacion> resultado = null;
+		try {			
+			resultado = publicacionDao.findManyLike("nombre", busqueda);
+		} catch (Exception e) {
+			logger.error("Error filtrando publicaciones", e);	
+		}
+		return resultado;
 	}
 
 	public Publicacion buscarPublicacion(String publicacionId) {
@@ -138,5 +162,4 @@ public class SistemaPublicaciones {
 		}
 		return subasta;
 	}
-
 }

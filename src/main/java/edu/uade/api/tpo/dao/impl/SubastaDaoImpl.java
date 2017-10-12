@@ -16,6 +16,7 @@ import edu.uade.api.tpo.model.Subasta;
 
 public class SubastaDaoImpl extends AbstractManyToOneDao<Subasta> {
 
+
 	private static ManyToOneDao<Subasta> instance;
 
 	private SubastaDaoImpl() {
@@ -34,6 +35,7 @@ public class SubastaDaoImpl extends AbstractManyToOneDao<Subasta> {
 		String query = "SELECT * FROM " + schema + ".subastas WHERE subasta_id = ? AND estado = ?";
 		PreparedStatement ps = conn.prepareStatement(query);
 		ps.setString(1, id);
+		ps.setString(2, Estado.A.toString());
 		return ps;
 	}
 
@@ -139,6 +141,11 @@ public class SubastaDaoImpl extends AbstractManyToOneDao<Subasta> {
 	@Override
 	public PreparedStatement findBy(String field, String value, Connection conn) throws SQLException {
 		throw new UnsupportedOperationException("Find by is not supported on class Subasta!");
+	}
+	
+	@Override
+	public PreparedStatement findManyLike(String field, String value, Connection conn) throws SQLException {
+		throw new UnsupportedOperationException("Find Many Like is not supported on class Subasta");
 	}
 
 	@Override

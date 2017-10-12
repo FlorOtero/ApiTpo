@@ -108,4 +108,9 @@ public class CalificacionDaoImpl extends AbstractManyToOneDao<Calificacion> {
 	public void delete(Calificacion t) throws SQLException {
 		throw new UnsupportedOperationException("Delete is not supported on class Calificacion!");
 	}
+
+	@Override
+	public PreparedStatement findManyLike(String field, String value, Connection conn) throws SQLException {
+		throw new UnsupportedOperationException("Delete is not supported on class Calificacion!");
+	}
 }

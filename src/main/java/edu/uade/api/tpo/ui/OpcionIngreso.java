@@ -12,7 +12,7 @@ import java.awt.event.ActionEvent;
 
 public class OpcionIngreso {
 
-	private JFrame OpcionIngreso;
+	JFrame OpcionIngreso;
 
 	/**
 	 * Launch the application.
