@@ -1,4 +1,6 @@
-package edu.uade.api.tpo.model;
+package edu.uade.api.tpo.controller;
+
+import edu.uade.api.tpo.model.Subasta;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

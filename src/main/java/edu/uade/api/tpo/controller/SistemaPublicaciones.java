@@ -1,17 +1,15 @@
-package edu.uade.api.tpo.model;
-
-import java.util.List;
+package edu.uade.api.tpo.controller;
 
 import edu.uade.api.tpo.dao.ManyToOneDao;
 import edu.uade.api.tpo.dao.impl.PublicacionDaoImpl;
-
-import java.sql.SQLException;
-import java.util.Date;
-
+import edu.uade.api.tpo.dao.impl.SubastaDaoImpl;
+import edu.uade.api.tpo.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.uade.api.tpo.dao.impl.SubastaDaoImpl;
+import java.sql.SQLException;
+import java.util.Date;
+import java.util.List;
 
 public class SistemaPublicaciones {
 

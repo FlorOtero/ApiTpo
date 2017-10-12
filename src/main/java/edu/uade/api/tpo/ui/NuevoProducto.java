@@ -12,27 +12,20 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.JCalendar;
-import java.awt.Image;
-import javax.swing.ImageIcon;
 
-import edu.uade.api.tpo.exceptions.BusinessException;
-import edu.uade.api.tpo.model.Articulo;
 import edu.uade.api.tpo.model.Garantia;
 import edu.uade.api.tpo.model.MedioPago;
 import edu.uade.api.tpo.model.Producto;
 import edu.uade.api.tpo.model.Publicacion;
-import edu.uade.api.tpo.model.SistemaPublicaciones;
+import edu.uade.api.tpo.controller.SistemaPublicaciones;
 import edu.uade.api.tpo.model.TipoPeriodo;
-import edu.uade.api.tpo.model.Usuario;
+
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.DefaultComboBoxModel;
-import java.awt.Panel;
-import java.awt.Label;
 
 public class NuevoProducto {
 

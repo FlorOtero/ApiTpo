@@ -1,7 +1,8 @@
-package edu.uade.api.tpo.model;
+package edu.uade.api.tpo.controller;
+
+import edu.uade.api.tpo.model.*;
 
 import java.util.List;
-import java.util.ArrayList;
 
 public class SistemaTransacciones {
 	List<Transaccion>transacciones;

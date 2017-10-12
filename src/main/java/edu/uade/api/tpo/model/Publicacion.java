@@ -1,5 +1,6 @@
 package edu.uade.api.tpo.model;
 
+import edu.uade.api.tpo.controller.SistemaTransacciones;
 import edu.uade.api.tpo.db.Persistible;
 import edu.uade.api.tpo.exceptions.BusinessException;
 
