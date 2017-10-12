@@ -15,6 +15,7 @@ public class CuentaCorriente implements Persistible {
     public CuentaCorriente() {
         this.saldo = 0;
         this.transacciones = new ArrayList<>();
+        this.comisiones = new ArrayList<>();
     }
 
     public float getSaldo() {
