@@ -61,6 +61,9 @@ public class Subasta extends Publicacion {
 		if (!mediosPago.contains(mp)) {
 			throw new BusinessException("El medio de pago elegido no está disponible en esta publicación!");
 		}
+		if(monto <= getPrecioActual()) {
+			throw new BusinessException("El monto ofertado es menor que el precio actual");
+		}
 
 		Oferta oferta = new Oferta(monto, usuario.getId(), id);
 		ofertas.add(oferta);
@@ -70,5 +73,13 @@ public class Subasta extends Publicacion {
 		ofertas.stream().filter(o -> !o.getUsuarioId().equals(usuario.getId())).map(o -> o.getUsuarioId()).collect(Collectors.toSet()).forEach(usuarioId -> {
 			SistemaNotificacionSubasta.getInstance().notificarUsuarioSubasta(usuarioId, this);
 		});
+	}
+
+	private float getPrecioActual() {
+		if(this.ofertas == null || this.ofertas.isEmpty()) {
+			return this.getPrecioInicial();
+		} else {
+			return this.ofertas.get(0).getMonto();
+		}
 	}
 }

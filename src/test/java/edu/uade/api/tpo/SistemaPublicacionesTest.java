@@ -131,6 +131,18 @@ public class SistemaPublicacionesTest {
 	}
 
 	@Test
+	public void test_ofertarSubastaPrecioInferior() {
+		Subasta subasta = this.sistemaPublicaciones.buscarSubasta(SUBASTA_ID);
+		try {
+			Usuario usuario = UsuarioDaoImpl.getInstance().findById(USER_ID);
+			subasta.ofertar(190, usuario, MedioPago.TRANSFERENCIA_BANCARIA);
+			Assert.fail("Should throw exception");
+		} catch (SQLException | BusinessException e) {
+			Assert.assertEquals("El monto ofertado es menor que el precio actual", e.getMessage());
+		}
+	}
+
+	@Test
 	public void test_eliminarSubasta() {
 		Subasta subasta = this.sistemaPublicaciones.buscarSubasta(SUBASTA_ID);
 		this.sistemaPublicaciones.eliminarSubasta(subasta);
