@@ -62,6 +62,10 @@ public class DetallePublicacion {
 		lblNewLabel.setFont(new Font("", Font.PLAIN, 18));
 		frmDetallePublicacion.getContentPane().add(lblNewLabel);
 		
+		JLabel lblTipo = new JLabel();
+		lblTipo.setBounds(290, 33, 400, 30);
+		frmDetallePublicacion.getContentPane().add(lblTipo);
+		
 		JLabel lblDescripcion = new JLabel("Descripcion");
 		lblDescripcion.setBounds(23, 84, 88, 16);
 		frmDetallePublicacion.getContentPane().add(lblDescripcion);
@@ -97,10 +101,10 @@ public class DetallePublicacion {
 		
 		JLabel lblNewLabel_2 = new JLabel();
 		lblNewLabel_2.setBounds(109, 127, 61, 16);
-		lblNewLabel_2.setText(String.valueOf(publicacion.getPrecio()));
+		lblNewLabel_2.setText(String.valueOf("$" + publicacion.getPrecio()));
 		frmDetallePublicacion.getContentPane().add(lblNewLabel_2);
 		bg = new ButtonGroup();
-		int mpHeight=180;
+		int mp_y=180;
 		for(MedioPago mp: publicacion.getMediosPago()) {
 			String mpLabel = null;
 			
@@ -111,16 +115,18 @@ public class DetallePublicacion {
 				case "TARJETA_CREDITO": 			mpLabel = "Tarjeta de Credito"; break;
 			}
 			JRadioButton b= new JRadioButton(mpLabel);
-			b.setBounds(254, mpHeight, 200, 16);
+			b.setBounds(230, mp_y, 200, 16);
 			bg.add(b);
 			frmDetallePublicacion.add(b);
-			mpHeight+=30;			
+			mp_y += 30;			
 		}
 		
-		if(publicacion instanceof Subasta) {
+		if (publicacion instanceof Subasta) {
 			manageSubasta();
-		}else{
+			lblTipo.setText("Subasta");
+		} else {
 			managePublicacion();
+			lblTipo.setText("Compra Inmediata");
 		}
 		
 		backToMenuPrincipal();
@@ -170,11 +176,7 @@ public class DetallePublicacion {
 		});
 	}
 	
-	public void managePublicacion(){
-		JLabel lblNewLabel_2 = new JLabel();
-		lblNewLabel_2.setBounds(109, 127, 61, 16);
-		lblNewLabel_2.setText(String.valueOf(publicacion.getPrecio()));
-		frmDetallePublicacion.getContentPane().add(lblNewLabel_2);
+	public void managePublicacion() {
 		if(articulo instanceof Producto) {
 			// Mostras los datos del producto
 		} else {

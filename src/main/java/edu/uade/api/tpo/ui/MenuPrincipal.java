@@ -172,7 +172,7 @@ public class MenuPrincipal {
 	}
 	
 	public void crearTabla() {
-		String[] columnNames = {"Nombre Articulo","Precio", "Tipo"};		
+		String[] columnNames = {"Nombre Articulo", "Precio", "Tipo"};		
 		DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 		
 		if (resultado != null) {

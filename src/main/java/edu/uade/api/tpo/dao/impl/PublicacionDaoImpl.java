@@ -105,10 +105,14 @@ public class PublicacionDaoImpl extends AbstractManyToOneDao<Publicacion> {
 				"WHERE producto." + field + " LIKE ? AND publicacion.articulo_id = producto.producto_id " +
 				"UNION ALL " +
 				"SELECT publicacion_id, usuario_id, fecha_desde, fecha_hasta, precio, comision, estado, articulo_id, servicio_id, nombre, descripcion FROM " + schema + ".publicaciones AS publicacion, " + schema + ".servicios AS servicio " +
-				"WHERE servicio." + field + " LIKE ? AND publicacion.articulo_id = servicio.servicio_id";
+				"WHERE servicio." + field + " LIKE ? AND publicacion.articulo_id = servicio.servicio_id " +
+				"UNION ALL " +
+				"SELECT subasta_id, usuario_id, fecha_desde, fecha_hasta, precio, comision, estado, articulo_id, servicio_id, nombre, descripcion FROM " + schema + ".subastas AS subasta, " + schema + ".servicios AS servicio " +
+				"WHERE servicio." + field + " LIKE ? AND subasta.articulo_id = servicio.servicio_id";
 		PreparedStatement ps = conn.prepareStatement(query);
 		ps.setString(1, "%" + value + "%");
 		ps.setString(2, "%" + value + "%");
+		ps.setString(3, "%" + value + "%");
 		return ps;
     }
 
