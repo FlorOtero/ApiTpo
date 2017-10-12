@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.regex.Pattern;
 
@@ -119,4 +120,6 @@ public class SistemaUsuarios {
             throw new InvalidPasswordException("La contraseña ingresada es incorrecta.\nLa misma debe tener entre 8 y 20 caracteres, al menos un número y al menos una letra mayúscula.");
         }
     }
+
+
 }
