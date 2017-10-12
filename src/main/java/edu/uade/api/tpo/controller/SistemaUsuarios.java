@@ -1,4 +1,4 @@
-package edu.uade.api.tpo.model;
+package edu.uade.api.tpo.controller;
 
 import edu.uade.api.tpo.dao.GenericDao;
 import edu.uade.api.tpo.dao.impl.UsuarioDaoImpl;
@@ -6,6 +6,9 @@ import edu.uade.api.tpo.exceptions.BusinessException;
 import edu.uade.api.tpo.exceptions.InvalidPasswordException;
 
 import edu.uade.api.tpo.exceptions.ExpiredPasswordException;
+import edu.uade.api.tpo.model.Estado;
+import edu.uade.api.tpo.model.Password;
+import edu.uade.api.tpo.model.Usuario;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -88,7 +91,7 @@ public class SistemaUsuarios {
             logger.error("Error buscando usuario :" + usuarioId, e);
         }
         return u;
-    } 
+    }
     
     public Usuario login(String nombreUsuario, String password) throws BusinessException, ExpiredPasswordException {
         Usuario usuario = this.buscarUsuario(nombreUsuario);
