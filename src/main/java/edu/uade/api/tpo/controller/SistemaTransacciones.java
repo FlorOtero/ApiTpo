@@ -40,7 +40,7 @@ public class SistemaTransacciones {
         try {
             SistemaPublicaciones.getInstance().modificarPublicacion(publicacion);
             TransaccionDaoImpl.getInstance().create(tr);
-            tr.pagar();
+            tr.ejecutar();
         } catch (Exception e) {
             logger.error("Error creando transaccion", e);
         }

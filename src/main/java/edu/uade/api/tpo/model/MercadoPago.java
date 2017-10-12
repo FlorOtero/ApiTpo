@@ -1,11 +1,11 @@
 package edu.uade.api.tpo.model;
 
-public class MercadoPago extends EntidadRecaudadora {
+import edu.uade.api.tpo.controller.SistemaInterfazEntidadesRecaudadoras;
 
-	private String id;
+public class MercadoPago implements EntidadRecaudadora<CompraTarjetaCredito> {
 
-	public void informarPago(Transaccion transaccion) {
-
+	@Override
+	public void informarPago(CompraTarjetaCredito compraTarjetaCredito) {
+		SistemaInterfazEntidadesRecaudadoras.getInstance().procesarPagoTarjetaCredito(compraTarjetaCredito);
 	}
-
 }

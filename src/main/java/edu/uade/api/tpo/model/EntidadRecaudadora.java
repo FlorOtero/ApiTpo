@@ -1,6 +1,8 @@
 package edu.uade.api.tpo.model;
 
-public abstract class EntidadRecaudadora<T extends > {
+@FunctionalInterface
+public interface EntidadRecaudadora<T extends Transaccion> {
 
-    public abstract void informarPago(Transaccion transaccion);
+    public void informarPago(T t);
+
 }

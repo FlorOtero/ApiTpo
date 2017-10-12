@@ -13,7 +13,7 @@ public class CompraEfectivo extends Transaccion {
 		this.setEstado(EstadoTransaccion.A);
 	}
 
-	public void pagar() throws BusinessException, InvalidPasswordException {
+	public void ejecutar() throws BusinessException, InvalidPasswordException {
 		SistemaTransacciones.getInstance().aprobarTransaccion(this);
 	}
 }
