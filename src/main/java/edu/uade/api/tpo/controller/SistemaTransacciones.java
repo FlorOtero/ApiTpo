@@ -21,27 +21,27 @@ public class SistemaTransacciones {
         return instance;
     }
 
-    public void crearTransaccion(Usuario contraparte, Publicacion publicacion, MedioPago medioDePago) {
+    public void crearTransaccion(Usuario contraparte, Publicacion publicacion, DatosPago datosPago) {
         Transaccion tr = null;
-        switch (medioDePago) {
+        switch (datosPago.getMedioPago()) {
             case EFECTIVO:
                 publicacion.setEstado(Estado.I);
                 tr = new CompraEfectivo(publicacion, contraparte);
                 break;
             case TRANSFERENCIA_BANCARIA:
                 publicacion.setEstado(Estado.P);
-                tr = new CompraTransferenciaBancaria(publicacion, contraparte);
+                tr = new CompraTransferenciaBancaria(publicacion, contraparte, datosPago.getNumeroCuenta());
                 break;
             case TARJETA_CREDITO:
                 publicacion.setEstado(Estado.P);
-                tr = new CompraTarjetaCredito(publicacion, contraparte);
+                tr = new CompraTarjetaCredito(publicacion, contraparte, datosPago.getNumeroTarjeta());
                 break;
         }
         try {
             SistemaPublicaciones.getInstance().modificarPublicacion(publicacion);
             TransaccionDaoImpl.getInstance().create(tr);
-            SistemaPagos.getInstance().pagar(tr);
-        } catch (SQLException e) {
+            tr.pagar();
+        } catch (Exception e) {
             logger.error("Error creando transaccion", e);
         }
     }
@@ -52,6 +52,9 @@ public class SistemaTransacciones {
         try {
             SistemaPublicaciones.getInstance().modificarPublicacion(transaccion.getPublicacion());
             TransaccionDaoImpl.getInstance().update(transaccion);
+            //Generar movimiento cuentaCorriente!!
+
+            logger.info(">>> TRANSACCION GENERADA!! <<<");
         } catch (SQLException e) {
             logger.error("Error aprobando transaccion", e);
         }
@@ -63,6 +66,7 @@ public class SistemaTransacciones {
         try {
             SistemaPublicaciones.getInstance().modificarPublicacion(transaccion.getPublicacion());
             TransaccionDaoImpl.getInstance().update(transaccion);
+            logger.info(">>> TRANSACCION RECHAZADA!! <<<");
         } catch (SQLException e) {
             logger.error("Error rechazando transaccion", e);
         }

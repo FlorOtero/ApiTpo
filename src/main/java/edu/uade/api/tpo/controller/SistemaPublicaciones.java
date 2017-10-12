@@ -154,7 +154,7 @@ public class SistemaPublicaciones {
 		return subasta;
 	}
 
-	public void ofertar(Publicacion publicacion, float monto, Usuario contraparte, MedioPago medioPago) throws BusinessException {
-		publicacion.ofertar(monto, contraparte, medioPago);
+	public void ofertar(Publicacion publicacion, float monto, Usuario contraparte, DatosPago datosPago) throws BusinessException {
+		publicacion.ofertar(monto, contraparte, datosPago);
 	}
 }

@@ -1,10 +1,11 @@
 package edu.uade.api.tpo.model;
 
-import java.util.ArrayList;
-import java.util.List;
 import edu.uade.api.tpo.controller.SistemaNotificacionSubasta;
 import edu.uade.api.tpo.controller.SistemaPublicaciones;
 import edu.uade.api.tpo.exceptions.BusinessException;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Subasta extends Publicacion {
@@ -56,11 +57,11 @@ public class Subasta extends Publicacion {
 		this.ofertas = ofertas;
 	}
 
-	public void ofertar(float monto, Usuario usuario, MedioPago mp) throws BusinessException {
+	public void ofertar(float monto, Usuario usuario, DatosPago datosPago) throws BusinessException {
 		if (estado != Estado.A) {
 			throw new BusinessException("La publicacion no está activa!");
 		}
-		if (!mediosPago.contains(mp)) {
+		if (!mediosPago.contains(datosPago.getMedioPago())) {
 			throw new BusinessException("El medio de pago elegido no está disponible en esta publicación!");
 		}
 		if(monto <= getPrecioActual()) {

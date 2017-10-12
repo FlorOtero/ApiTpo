@@ -127,7 +127,10 @@ public class SistemaPublicacionesTest {
         Subasta subasta = this.sistemaPublicaciones.buscarSubasta(SUBASTA_ID);
         try {
             Usuario usuario = UsuarioDaoImpl.getInstance().findById(USER_ID);
-            this.sistemaPublicaciones.ofertar(subasta, 200, usuario, MedioPago.TRANSFERENCIA_BANCARIA);
+            DatosPago datosPago = new DatosPago();
+            datosPago.setNumeroCuenta("12345");
+            datosPago.setMedioPago(MedioPago.TRANSFERENCIA_BANCARIA);
+            this.sistemaPublicaciones.ofertar(subasta, 200, usuario, datosPago);
         } catch (SQLException | BusinessException e) {
             Assert.fail("Should not throw exception");
         }
@@ -138,7 +141,10 @@ public class SistemaPublicacionesTest {
         Subasta subasta = this.sistemaPublicaciones.buscarSubasta(SUBASTA_ID);
         try {
             Usuario usuario = UsuarioDaoImpl.getInstance().findById(USER_ID);
-            this.sistemaPublicaciones.ofertar(subasta, 190, usuario, MedioPago.TRANSFERENCIA_BANCARIA);
+            DatosPago datosPago = new DatosPago();
+            datosPago.setNumeroCuenta("12345");
+            datosPago.setMedioPago(MedioPago.TRANSFERENCIA_BANCARIA);
+            this.sistemaPublicaciones.ofertar(subasta, 190, usuario, datosPago);
             Assert.fail("Should throw exception");
         } catch (SQLException | BusinessException e) {
             Assert.assertEquals("El monto ofertado es menor que el precio actual", e.getMessage());
@@ -171,7 +177,9 @@ public class SistemaPublicacionesTest {
         Publicacion publicacion = this.sistemaPublicaciones.buscarPublicacion(PUBLICACION_ID);
         try {
             Usuario contraparte = UsuarioDaoImpl.getInstance().findById(CONTRAPARTE_ID);
-            this.sistemaPublicaciones.ofertar(publicacion, 666, contraparte, MedioPago.EFECTIVO);
+            DatosPago datosPago = new DatosPago();
+            datosPago.setMedioPago(MedioPago.EFECTIVO);
+            this.sistemaPublicaciones.ofertar(publicacion, 666, contraparte, datosPago);
         } catch (SQLException | BusinessException e) {
             e.printStackTrace();
             Assert.fail("Should not throw exception");

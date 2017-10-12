@@ -2,8 +2,9 @@ package edu.uade.api.tpo.dao.impl;
 
 import edu.uade.api.tpo.dao.AbstractDao;
 import edu.uade.api.tpo.dao.GenericDao;
+import edu.uade.api.tpo.model.Banco;
 import edu.uade.api.tpo.model.EntidadRecaudadora;
-import edu.uade.api.tpo.model.EntidadRecaudadoraFactory;
+import edu.uade.api.tpo.model.MercadoPago;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -37,7 +38,11 @@ public class EntidadRecaudadoraDaoImpl extends AbstractDao<EntidadRecaudadora> {
     public EntidadRecaudadora map(ResultSet rs) throws SQLException {
         EntidadRecaudadora entidad = null;
         if (rs.first()) {
-            entidad = EntidadRecaudadoraFactory.getEntidadRecaudadora(rs.getString("nombre"));
+            if(rs.getString("nombre").equals("Banco")) {
+                entidad = new Banco();
+            } else {
+                entidad = new MercadoPago();
+            }
         }
         return entidad;
     }

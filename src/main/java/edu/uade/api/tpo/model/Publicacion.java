@@ -23,18 +23,18 @@ public class Publicacion implements Persistible {
 		this.comision = 0.03f;
 	}
 
-	public void ofertar(float monto, Usuario usuario, MedioPago mp) throws BusinessException {
+	public void ofertar(float monto, Usuario usuario, DatosPago datosPago) throws BusinessException {
     	
 	    	if(estado != Estado.A) {
 	    		throw new BusinessException("La publicacion no está activa!");
 	    	}
-	    	if(!mediosPago.contains(mp)) {
+	    	if(!mediosPago.contains(datosPago.getMedioPago())) {
 	    		throw new BusinessException("El medio de pago elegido no está disponible en esta publicación!");
 	    	}
 	    	if(monto != precio) {
 	    	    throw new BusinessException("El monto no puede ser diferente al precio de la publicacion");
             }
-	    	SistemaTransacciones.getInstance().crearTransaccion(usuario, this, mp);
+	    	SistemaTransacciones.getInstance().crearTransaccion(usuario, this, datosPago);
     }
 
     public String getId() {
