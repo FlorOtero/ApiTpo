@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
@@ -17,15 +18,20 @@ import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JSpinner;
+import javax.swing.JTable;
 import javax.swing.JToolBar;
+import javax.swing.table.DefaultTableModel;
 
+import edu.uade.api.tpo.controller.SistemaPublicaciones;
+import edu.uade.api.tpo.controller.SistemaUsuarios;
 import edu.uade.api.tpo.model.Articulo;
 import edu.uade.api.tpo.model.Garantia;
 import edu.uade.api.tpo.model.MedioPago;
 import edu.uade.api.tpo.model.Producto;
 import edu.uade.api.tpo.model.Publicacion;
-import edu.uade.api.tpo.model.SistemaPublicaciones;
+import edu.uade.api.tpo.model.Servicio;
 import edu.uade.api.tpo.model.TipoPeriodo;
+import edu.uade.api.tpo.model.Usuario;
 
 public class ModificarProducto {
 	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
@@ -36,7 +42,11 @@ public class ModificarProducto {
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField;
-
+	private ArrayList<Publicacion> resultado;
+	private JTable tablaBusqueda;
+	private JScrollPane scrollPane;
+	private JComboBox comboBox;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -64,108 +74,84 @@ public class ModificarProducto {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+
 		frmModificarProducto = new JFrame();
 		frmModificarProducto.getContentPane().setBackground(new Color(255, 255, 224));
 		frmModificarProducto.setTitle("Modificar producto");
-		frmModificarProducto.setBounds(100, 100, 541, 490);
+		frmModificarProducto.setBounds(100, 100, 581, 568);
 		frmModificarProducto.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmModificarProducto.getContentPane().setLayout(null);
-		
-		JLabel lblNombre = new JLabel("Nombre Producto");
-		lblNombre.setBounds(34, 25, 117, 16);
-		frmModificarProducto.getContentPane().add(lblNombre);
+		buscarPublicacion();
+		crearTabla();
 		
 		JLabel lblNombre_1 = new JLabel("Nombre");
-		lblNombre_1.setBounds(34, 93, 88, 16);
+		lblNombre_1.setBounds(34, 173, 88, 16);
 		frmModificarProducto.getContentPane().add(lblNombre_1);
 		
 		JLabel lblDescripcion = new JLabel("Descripcion");
-		lblDescripcion.setBounds(34, 121, 88, 16);
+		lblDescripcion.setBounds(34, 201, 88, 16);
 		frmModificarProducto.getContentPane().add(lblDescripcion);
 		
 		JLabel lblPrecio = new JLabel("Precio");
-		lblPrecio.setBounds(34, 152, 61, 16);
+		lblPrecio.setBounds(34, 241, 61, 16);
 		frmModificarProducto.getContentPane().add(lblPrecio);
 		
 		JLabel lblFechaDePublicacion = new JLabel("Garantia");
-		lblFechaDePublicacion.setBounds(34, 180, 158, 16);
+		lblFechaDePublicacion.setBounds(34, 288, 158, 16);
 		frmModificarProducto.getContentPane().add(lblFechaDePublicacion);
 		
 		JLabel lblFechaHasta = new JLabel("Fecha hasta");
-		lblFechaHasta.setBounds(34, 211, 88, 16);
+		lblFechaHasta.setBounds(34, 332, 88, 16);
 		frmModificarProducto.getContentPane().add(lblFechaHasta);
 		
 		JLabel lblNewLabel = new JLabel("Formas de pago");
-		lblNewLabel.setBounds(34, 276, 136, 16);
+		lblNewLabel.setBounds(34, 379, 136, 16);
 		frmModificarProducto.getContentPane().add(lblNewLabel);
 		
 		
 		textField = new JTextField();
 		textField.setColumns(10);
-		textField.setBounds(202, 88, 139, 23);
+		textField.setBounds(202, 162, 139, 23);
 		frmModificarProducto.getContentPane().add(textField);
 		
 		
 		textField_1 = new JTextField();
-		textField_1.setBounds(214, 19, 135, 23);
+		textField_1.setBounds(206, 328, 135, 23);
 		frmModificarProducto.getContentPane().add(textField_1);
 		textField_1.setColumns(10);
 		
 		textField_2 = new JTextField();
-		textField_2.setBounds(202, 116, 139, 23);
+		textField_2.setBounds(202, 197, 139, 23);
 		frmModificarProducto.getContentPane().add(textField_2);
 		textField_2.setColumns(10);
 		
 		textField_3 = new JTextField();
-		textField_3.setBounds(202, 146, 139, 23);
+		textField_3.setBounds(202, 237, 139, 23);
 		frmModificarProducto.getContentPane().add(textField_3);
 		textField_3.setColumns(10);
 		
 		textField_4 = new JTextField();
-		textField_4.setBounds(202, 177, 139, 23);
+		textField_4.setBounds(202, 284, 139, 23);
 		frmModificarProducto.getContentPane().add(textField_4);
 		textField_4.setColumns(10);
 		
 		JCheckBox chckbxEfectivo = new JCheckBox("Efectivo");
-		chckbxEfectivo.setBounds(174, 273, 158, 23);
+		chckbxEfectivo.setBounds(202, 375, 158, 23);
 		frmModificarProducto.getContentPane().add(chckbxEfectivo);
 		
 		JCheckBox chckbxTarjetaDeCredito = new JCheckBox("Tarjeta de credito");
-		chckbxTarjetaDeCredito.setBounds(174, 305, 158, 23);
+		chckbxTarjetaDeCredito.setBounds(202, 410, 158, 23);
 		frmModificarProducto.getContentPane().add(chckbxTarjetaDeCredito);
 		
 		JCheckBox chckbxTransferenciaBancaria = new JCheckBox("Transferencia bancaria");
-		chckbxTransferenciaBancaria.setBounds(174, 337, 158, 23);
+		chckbxTransferenciaBancaria.setBounds(202, 446, 158, 23);
 		frmModificarProducto.getContentPane().add(chckbxTransferenciaBancaria);
 		
-		JComboBox comboBox = new JComboBox();
+		comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "Mensual", "Anual"}));
-		comboBox.setBounds(378, 178, 95, 23);
+		comboBox.setBounds(376, 286, 95, 23);
 		frmModificarProducto.getContentPane().add(comboBox);
 		
-		JButton btnBuscar = new JButton("Buscar");
-		btnBuscar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// TODO: buscar el producto a modificar
-				if (textField != null){  //verificar si el textfield corresponde al casillero de busqueda
-					String publicacionId = textField.toString(); //ojo le estoy pasando el nombre no el ID de la publicacion
-					Publicacion pubBuscada = new Publicacion();
-					pubBuscada = SistemaPublicaciones.getInstance().buscarPublicacion(publicacionId);
-					JOptionPane.showConfirmDialog(null, "Se ha encontrado el producto", "Aviso", JOptionPane.PLAIN_MESSAGE);
-					textField_1 = pubBuscada.getNombre();
-					textField_2 = pubBuscada.getDescripcion();
-					textField_3 = pubBuscada.getPrecio();
-					textField_4 = pubBuscada.getGarantia();
-				}else{
-					JOptionPane.showConfirmDialog(null, "No se ha encontrado el producto", "Aviso", JOptionPane.PLAIN_MESSAGE);
-				}
-				MenuPrincipal menuP = new MenuPrincipal();
-				menuP.setVisible(true);
-				frmModificarProducto.dispose();
-			}
-		});
-		btnBuscar.setBounds(145, 54, 89, 23);
-		frmModificarProducto.getContentPane().add(btnBuscar);
 		
 		
 		JButton btnModificar = new JButton("Modificar");
@@ -205,7 +191,7 @@ public class ModificarProducto {
 				frmModificarProducto.dispose();
 			}
 		});
-		btnModificar.setBounds(123, 377, 117, 29);
+		btnModificar.setBounds(121, 499, 117, 29);
 		frmModificarProducto.getContentPane().add(btnModificar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
@@ -216,11 +202,70 @@ public class ModificarProducto {
 				frmModificarProducto.dispose();
 			}
 		});
-		btnCancelar.setBounds(293, 377, 117, 29);
+		btnCancelar.setBounds(356, 499, 117, 29);
 		frmModificarProducto.getContentPane().add(btnCancelar);
 
 	}
 	public void setVisible(boolean isVisible) {
 		this.frmModificarProducto.setVisible(isVisible);
+	}
+	
+	private ArrayList<Publicacion> buscarPublicacion() {
+		SistemaPublicaciones sp = SistemaPublicaciones.getInstance();
+		Usuario user= SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
+		resultado = (ArrayList<Publicacion>) user.getPublicaciones();
+		return resultado;
+	}
+	
+	public void crearTabla() {
+		String[] columnNames = {"Nombre Articulo","Precio", "Tipo"};		
+		DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+		
+		if (resultado != null) {
+			for(Publicacion p : resultado){
+				String tipo = "";
+				if (p.getArticulo() instanceof Producto) {
+					tipo = "Producto";
+				} else if (p.getArticulo() instanceof Servicio) {
+					tipo = "Servicio";
+				}
+				model.addRow(new Object[]{ 
+					p.getArticulo().getNombre(), 
+					"$"+p.getPrecio(),
+					tipo
+				});
+			}				
+			tablaBusqueda = new JTable(model);
+			scrollPane = new JScrollPane(tablaBusqueda);
+			tablaBusqueda.setBounds(34,40,400, 100);
+			scrollPane.setBounds(34,40, 400, 100);
+			frmModificarProducto.getContentPane().add(scrollPane);
+			tablaBusqueda.addMouseListener(new java.awt.event.MouseAdapter() {
+			    @Override
+			    public void mouseClicked(java.awt.event.MouseEvent evt) {
+			        int row = tablaBusqueda.rowAtPoint(evt.getPoint());
+			        int col = tablaBusqueda.columnAtPoint(evt.getPoint());
+			        if (row >= 0 && col >= 0) {
+			        		Publicacion p = resultado.get(row);		
+			        		CargarDatos(p);
+			        		// TODO: change this for Articulo Detail Page
+			            System.out.println("CLICKED "+ p.getArticulo().getNombre());
+			        }
+			    }
+			});
+		} else {
+			JOptionPane.showMessageDialog(null, "No se encontraron coincidencias");
+		}
+	}
+	private void CargarDatos(Publicacion p) {
+		Producto producto = (Producto) p.getArticulo();
+		textField.setText(producto.getNombre());
+		textField_2.setText(producto.getDescripcion());
+		textField_3.setText(String.valueOf(p.getPrecio()));
+		textField_4.setText(String.valueOf(producto.getGarantia().getCantidad()));
+		textField_1.setText(p.getFechaHasta().toString());
+		comboBox.setSelectedItem(producto.getGarantia().getTipo());
+		
+		
 	}
 }
