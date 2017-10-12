@@ -15,36 +15,28 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import edu.uade.api.tpo.model.DatosPago;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+
 public class PagoTarjeta {
 
 	private JFrame frmPagoConTarjeta;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTextField textField_4;
-	private JTextField textField_5;
-
+	private DatosPago datosPago;
+	private float monto;
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PagoTarjeta window = new PagoTarjeta();
-					window.frmPagoConTarjeta.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+
 
 	/**
 	 * Create the application.
 	 */
-	public PagoTarjeta() {
+	public PagoTarjeta(DatosPago dp, float monto) {
+		this.datosPago= dp;
+		this.monto= monto;
 		initialize();
 	}
 
@@ -69,128 +61,84 @@ public class PagoTarjeta {
 		
 		JLabel lblMonto = new JLabel("Monto:");
 		
-		JLabel lblUsuarioDestinatario = new JLabel("Usuario Destinatario:");
-		
-		JLabel lblNewLabel = new JLabel("Usuario Originante:");
-		
-		textField = new JTextField();
-		textField.setColumns(10);
-		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		
 		textField_3 = new JTextField();
+		textField_3.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				datosPago.setNumeroTarjeta(textField_3.getText());
+			}
+		});
 		textField_3.setColumns(10);
 		
 		textField_4 = new JTextField();
+		textField_4.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+			}
+		});
 		textField_4.setColumns(10);
 		
 		JButton btnConfirmarTransaccion = new JButton("Confirmar Transaccion");
 		btnConfirmarTransaccion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				textField_5.setEnabled(true);
+				frmPagoConTarjeta.dispose();
 			}
 		});
 		
-		JLabel lblCalificacion = new JLabel("Calificacion:");
-		
-		textField_5 = new JTextField();
-		textField_5.setEnabled(false);
-		textField_5.setColumns(10);
-		
-		JButton btnGuardar = new JButton("Guardar y volver");
-		
 		JButton btnCancelar = new JButton("Cancelar");
+		
+		JLabel lblNewLabel = new JLabel();
+		lblNewLabel.setText(String.valueOf(monto));
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(54)
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(77)
-							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
+							.addComponent(lblCodigoDeSeguridad, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)
 							.addGap(18)
-							.addComponent(textField, GroupLayout.PREFERRED_SIZE, 148, GroupLayout.PREFERRED_SIZE))
+							.addComponent(textField_4, GroupLayout.PREFERRED_SIZE, 148, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(77)
-							.addComponent(lblUsuarioDestinatario, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblNumeroDeTarjeta, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblMonto, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE))
 							.addGap(18)
-							.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, 148, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(77)
-							.addComponent(lblMonto, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, 148, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(77)
-							.addComponent(lblNumeroDeTarjeta, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(textField_3, GroupLayout.PREFERRED_SIZE, 148, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(114)
-							.addComponent(lblCalificacion, GroupLayout.PREFERRED_SIZE, 93, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(textField_5, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(138)
-							.addComponent(btnConfirmarTransaccion, GroupLayout.PREFERRED_SIZE, 148, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(59)
-							.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-								.addGroup(gl_panel.createSequentialGroup()
-									.addComponent(btnGuardar, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
-									.addGap(103)
-									.addComponent(btnCancelar, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE))
-								.addGroup(gl_panel.createSequentialGroup()
-									.addComponent(lblCodigoDeSeguridad, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
-									.addGap(18)
-									.addComponent(textField_4, GroupLayout.PREFERRED_SIZE, 148, GroupLayout.PREFERRED_SIZE)))))
-					.addContainerGap(76, Short.MAX_VALUE))
+							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 101, GroupLayout.PREFERRED_SIZE)
+								.addComponent(textField_3, GroupLayout.PREFERRED_SIZE, 148, GroupLayout.PREFERRED_SIZE))))
+					.addContainerGap(92, Short.MAX_VALUE))
+				.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+					.addGap(64)
+					.addComponent(btnConfirmarTransaccion)
+					.addPreferredGap(ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+					.addComponent(btnCancelar, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
+					.addGap(29))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
+					.addGap(60)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblMonto)
+						.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
 					.addGap(8)
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(3)
-							.addComponent(lblNewLabel))
-						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(5)
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(3)
-							.addComponent(lblUsuarioDestinatario))
-						.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(5)
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(3)
-							.addComponent(lblMonto))
-						.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(8)
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblNumeroDeTarjeta)
-						.addComponent(textField_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(textField_3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNumeroDeTarjeta))
 					.addGap(6)
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblCodigoDeSeguridad)
-						.addComponent(textField_4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
-					.addComponent(btnConfirmarTransaccion)
-					.addGap(14)
+						.addComponent(textField_4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblCodigoDeSeguridad))
+					.addGap(57)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(textField_5, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblCalificacion))
-					.addGap(18)
-					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnGuardar)
-						.addComponent(btnCancelar))
-					.addGap(28))
+						.addComponent(btnConfirmarTransaccion)
+						.addComponent(btnCancelar, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
+					.addGap(76))
 		);
 		panel.setLayout(gl_panel);
+	}
+	public void setVisible(boolean isVisible) {
+		this.frmPagoConTarjeta.setVisible(isVisible);
 	}
 }

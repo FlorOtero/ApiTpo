@@ -12,7 +12,9 @@ import edu.uade.api.tpo.model.DatosPago;
 import edu.uade.api.tpo.model.MedioPago;
 import edu.uade.api.tpo.model.Producto;
 import edu.uade.api.tpo.model.Publicacion;
+import edu.uade.api.tpo.model.Servicio;
 import edu.uade.api.tpo.model.Subasta;
+import edu.uade.api.tpo.model.TipoContratacion;
 import edu.uade.api.tpo.model.Usuario;
 
 import java.awt.Color;
@@ -178,23 +180,30 @@ public class DetallePublicacion {
 		btnOfertar.setName("comprar");
 		if(articulo instanceof Producto) {
 			// Mostras los datos del producto
-			JLabel lblGarantia = new JLabel();
-			
+			JLabel lblGarantia = new JLabel();			
 		} else {
 			// Mostras los datos del servicio
+
 		}
 		btnOfertar.setName("Comprar");
 		btnOfertar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MedioPago mp = null;				
+				DatosPago datosPago = null;	
+				MedioPago mp= null;
 				System.out.println(getSelectedButtonText(bg));
 				switch(getSelectedButtonText(bg)) {
 					case "Efectivo": mp = MedioPago.EFECTIVO; break;
-					case "Transferencia Bancaria": mp = MedioPago.TRANSFERENCIA_BANCARIA; break;
-					case "Tarjeta de Credito": mp = MedioPago.TARJETA_CREDITO; break;
+					case "Transferencia Bancaria": mp = MedioPago.TRANSFERENCIA_BANCARIA;
+						PagoTransferencia pagoTB = new PagoTransferencia(datosPago, publicacion.getPrecio());
+						pagoTB.setVisible(true);
+						break;
+					case "Tarjeta de Credito": mp = MedioPago.TARJETA_CREDITO; 
+						PagoTarjeta pagoTC = new PagoTarjeta(datosPago, publicacion.getPrecio());	
+						pagoTC.setVisible(true);
+						break;
 				}
 				try {
-					publicacion.ofertar(publicacion.getPrecio(), user, mp);
+					publicacion.ofertar(publicacion.getPrecio(), user, datosPago);
 				}catch(BusinessException e2){
 					
 				}
