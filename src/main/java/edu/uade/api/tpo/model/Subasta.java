@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import edu.uade.api.tpo.controller.SistemaNotificacionSubasta;
 import edu.uade.api.tpo.exceptions.BusinessException;
 
 public class Subasta extends Publicacion {
