@@ -19,6 +19,6 @@ public class SistemaNotificacionSubasta {
 	}
 
 	public void notificarUsuarioSubasta(String userId, Subasta subasta) {
-		logger.info(">>> Notificando Usuario: "+userId);
+		logger.info(">>> Usuario notificado: "+userId);
 	}
 }

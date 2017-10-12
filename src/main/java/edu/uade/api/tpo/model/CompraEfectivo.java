@@ -10,6 +10,7 @@ public class CompraEfectivo extends Transaccion {
 	
 	public CompraEfectivo(Publicacion publicacion, Usuario contraparte) {
 		super(publicacion, contraparte);
+		this.setEstado(EstadoTransaccion.A);
 		// TODO Auto-generated constructor stub
 	}
 

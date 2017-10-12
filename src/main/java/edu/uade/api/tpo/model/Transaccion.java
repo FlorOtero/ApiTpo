@@ -73,6 +73,8 @@ public abstract class Transaccion implements Persistible {
 		this.cuentaCorrienteId = cuentaCorrienteId;
 	}
 
+
+
 	public abstract void pagar() throws BusinessException, InvalidPasswordException;
 
 }
