@@ -1,21 +1,14 @@
 package edu.uade.api.tpo.controller;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
+import edu.uade.api.tpo.exceptions.BusinessException;
+import edu.uade.api.tpo.exceptions.InvalidPasswordException;
+import edu.uade.api.tpo.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.uade.api.tpo.Config;
-import edu.uade.api.tpo.exceptions.BusinessException;
-import edu.uade.api.tpo.exceptions.InvalidPasswordException;
-import edu.uade.api.tpo.model.Comision;
-import edu.uade.api.tpo.model.EstadoTransaccion;
-import edu.uade.api.tpo.model.ItemCtaCte;
-import edu.uade.api.tpo.model.Publicacion;
-import edu.uade.api.tpo.model.Transaccion;
-import edu.uade.api.tpo.model.Usuario;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class SistemaCuentaCorriente {
 
@@ -37,86 +30,83 @@ public class SistemaCuentaCorriente {
 		if (!(tr.getEstado() == EstadoTransaccion.A)) {
 			throw new BusinessException("La transaccion aun no ha sido aprobada");
 		}
-		
-		try {
 
+		try {
 			Usuario vendedor = SistemaUsuarios.getInstance().buscarUsuarioById(tr.getPublicacion().getUsuarioId());
-			Usuario comprador = tr.getContraparte();
-			
-			// agregamos la transaccion y las comisiones a las respectivas ctas
-			Comision c = tr.getPublicacion().getComision();
-			//TODO HACER LA PERSISTENCIA DEL ID DE TRANSACCION EN LA COMISION
-			c.setIdTransaccion(tr.getId());
-			vendedor.getCuentaCorriente().addComision(c);
-			vendedor.getCuentaCorriente().addTransaccion(tr);
-			comprador.getCuentaCorriente().addTransaccion(tr);
+			Usuario comprador = SistemaUsuarios.getInstance().buscarUsuarioById(tr.getContraparteId());
+			// TODO setear el importe que corresponda
+			Comision comision = new Comision(123);
+			tr.setComision(comision);
 
 			// actualizamos los saldos
 			float saldoVendedor = vendedor.getCuentaCorriente().getSaldo();
 			float saldoComprador = comprador.getCuentaCorriente().getSaldo();
 
-			vendedor.getCuentaCorriente().setSaldo(saldoVendedor + tr.getPublicacion().getPrecio() - tr.getPublicacion().getComision().getImporte());
+			vendedor.getCuentaCorriente()
+					.setSaldo(saldoVendedor + tr.getPublicacion().getPrecio() - comision.getImporte());
 			comprador.getCuentaCorriente().setSaldo(saldoComprador - tr.getPublicacion().getPrecio());
 
 			// modificamos los usuarios para actualizar sus ctas ctes
 			SistemaUsuarios.getInstance().modificarUsuario(comprador);
 			SistemaUsuarios.getInstance().modificarUsuario(vendedor);
-			
+
+			// actualizo la transaccion ya que guarde su comision
+			SistemaTransacciones.getInstance().actualizarTransaccion(tr);
+
 		} catch (Exception e) {
 			logger.error("Error actualizando saldo", e);
 		}
 
 	}
-	
+
 	public List<Comision> listarComisiones(String nombreUsuario) throws BusinessException {
-		
 		Usuario usuario = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
-		
-		if(!usuario.getCuentaCorriente().hasComisiones()) {
+		List<Comision> comisiones = usuario.getCuentaCorriente().getTransacciones().stream()
+				.filter(t -> t.getComision() != null).map(t -> t.getComision()).collect(Collectors.toList());
+		if (comisiones == null || comisiones.isEmpty()) {
 			throw new BusinessException("No hay comisiones para mostrar");
 		}
-		
-		return usuario.getCuentaCorriente().getComisiones();
-		
+		return comisiones;
+
 	}
-	
-	public List<ItemCtaCte> consultarMovimientos(String nombreUsuario) throws BusinessException{
-		
+
+	public List<ItemCtaCte> consultarMovimientos(String nombreUsuario) throws BusinessException {
+
 		List<ItemCtaCte> movimientos = new ArrayList<>();
 		Usuario usuario = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
-		
-		if(!usuario.getCuentaCorriente().hasTransacciones()) {
+		if (!usuario.getCuentaCorriente().hasTransacciones()) {
 			throw new BusinessException("No hay movimientos en la cuenta corriente");
 		}
-		
-		for(Transaccion tr : usuario.getCuentaCorriente().getTransacciones()) {
-			
+
+		 for (Transaccion tr : usuario.getCuentaCorriente().getTransacciones()) {
+
 			ItemCtaCte item = new ItemCtaCte(tr.getId());
 			item.setEstado(tr.getEstado().getVal());
 			item.setComision(false);
-			//si fue una compra...
-			if(tr.getContraparte().getNombreUsuario().equals(nombreUsuario)) {
-				//no se cobra comision x compra
-				//mostramos un descuento en la cuenta del comprador
+            //si fue una compra...
+            if (tr.getContraparteId().equals(usuario.getId())) {
+				// no se cobra comision x compra
+				// mostramos un descuento en la cuenta del comprador
 				item.setMonto(tr.getPublicacion().getPrecio() * -1);
 				item.setTipo("compra");
-			}else {
-				//fue una venta, mostramos el credito en la cta del vendedor
+			} else {
+				// fue una venta, mostramos el credito en la cta del vendedor
 				item.setMonto(tr.getPublicacion().getPrecio());
 				item.setTipo("venta");
-				//al ser venta hubo comision, tenemos que reflejar el descuento
-				//lleva el mismo id de operacion que la transaccion de venta, porque corresponde a ella
+				// al ser venta hubo comision, tenemos que reflejar el descuento
+				// lleva el mismo id de operacion que la transaccion de venta, porque
+				// corresponde a ella
 				ItemCtaCte comision = new ItemCtaCte(tr.getId());
 				comision.setComision(true);
-				comision.setMonto(tr.getPublicacion().getComision().getImporte() * -1);
+				comision.setMonto(tr.getComision().getImporte() * -1);
 				comision.setTipo("comisión");
 				movimientos.add(comision);
-			}	
+			}
 			movimientos.add(item);
 		}
+
 		return movimientos;
+
 	}
-	
-	
 
 }

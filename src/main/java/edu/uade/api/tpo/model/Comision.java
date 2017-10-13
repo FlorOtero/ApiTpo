@@ -1,14 +1,17 @@
 package edu.uade.api.tpo.model;
 
-import java.util.Date;
+import edu.uade.api.tpo.db.Persistible;
 
-public class Comision {
-	
-	float importe;
-	String idTransaccion;
+public class Comision implements Persistible {
+
+	private String id;
+	private float importe;
+
+	public Comision() {
+
+	}
 
 	public Comision(float importe) {
-		super();
 		this.importe = importe;
 	}
 
@@ -20,13 +23,13 @@ public class Comision {
 		this.importe = importe;
 	}
 
-	public String getIdTransaccion() {
-		return idTransaccion;
+	@Override
+	public String getId() {
+		return id;
 	}
 
-	public void setIdTransaccion(String idTransaccion) {
-		this.idTransaccion = idTransaccion;
+	@Override
+	public void setId(String id) {
+		this.id = id;
 	}
-
-
 }

@@ -32,10 +32,10 @@ public class SistemaUsuarios {
         return instance;
     }
 
-    public Usuario altaUsuario(Usuario usuario) throws BusinessException, InvalidPasswordException  {
+    public Usuario altaUsuario(Usuario usuario) throws BusinessException, InvalidPasswordException {
         if (this.buscarUsuario(usuario.getNombreUsuario()) == null) {
             try {
-            	validarPassword(usuario.getPassword().getValor());
+                validarPassword(usuario.getPassword().getValor());
                 usuarioDao.create(usuario);
             } catch (SQLException e) {
                 logger.error("Error creando usuario: " + usuario.getNombreUsuario(), e);
@@ -61,15 +61,11 @@ public class SistemaUsuarios {
     }
 
     public void modificarUsuario(Usuario usuario) throws BusinessException, InvalidPasswordException {
-        if (this.buscarUsuario(usuario.getNombreUsuario()) != null) {
-            try {
-            	validarPassword(usuario.getPassword().getValor());
-                usuarioDao.update(usuario);
-            } catch (SQLException e) {
-                logger.error("Error modificando usuario :" + usuario.getNombreUsuario(), e);
-            }
-        } else {
-            throw new BusinessException("El usuario no existe");
+        try {
+            validarPassword(usuario.getPassword().getValor());
+            usuarioDao.update(usuario);
+        } catch (SQLException e) {
+            logger.error("Error modificando usuario :" + usuario.getNombreUsuario(), e);
         }
     }
 
@@ -92,7 +88,7 @@ public class SistemaUsuarios {
         }
         return u;
     }
-    
+
     public Usuario login(String nombreUsuario, String password) throws BusinessException, ExpiredPasswordException {
         Usuario usuario = this.buscarUsuario(nombreUsuario);
         if (usuario == null) {
