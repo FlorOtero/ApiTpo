@@ -15,9 +15,9 @@ import javax.swing.table.DefaultTableModel;
 import edu.uade.api.tpo.model.Producto;
 import edu.uade.api.tpo.model.Publicacion;
 import edu.uade.api.tpo.model.Servicio;
-import edu.uade.api.tpo.model.SistemaPublicaciones;
-import edu.uade.api.tpo.model.SistemaUsuarios;
 import edu.uade.api.tpo.model.Usuario;
+import edu.uade.api.tpo.controller.SistemaPublicaciones;
+import edu.uade.api.tpo.controller.SistemaUsuarios;
 
 import javax.swing.JComboBox;
 import javax.swing.JButton;
@@ -89,6 +89,7 @@ public class BajaPublicacion {
 		JButton btnNewButton = new JButton("Eliminar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				int row = 0;
 				Publicacion p = resultadoUser.get(row);
 				SistemaPublicaciones.getInstance().eliminarPublicacion(p);
@@ -128,7 +129,7 @@ public class BajaPublicacion {
 	private ArrayList<Publicacion> buscarPublicacion(String busqueda) {
 		 Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
 		 String nombreUsuario = prefs.get("USERNAME", null);
-         Usuario user = SistemaUsuarios.getInstance().buscarUsuario("nombreUsuario");
+         Usuario user = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
 		 resultadoUser =  (ArrayList<Publicacion>) user.getPublicaciones();
 		return resultadoUser;
 	}
@@ -165,9 +166,10 @@ public class BajaPublicacion {
 			        int col = tablaBusqueda.columnAtPoint(evt.getPoint());
 			        if (row >= 0 && col >= 0) {
 			        		Publicacion p = resultadoUser.get(row);
-			        		
-			        		// TODO: change this for Articulo Detail Page
-			            System.out.println("CLICKED "+ p.getArticulo().getNombre());
+			         		DetallePublicacion articuloSeleccionado = new DetallePublicacion(p);	
+			        		articuloSeleccionado.setVisible(true);
+			        		frmEliminarPublicacion.dispose();
+			   
 			        }
 			    }
 			});
