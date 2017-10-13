@@ -58,7 +58,7 @@ public class SistemaTransacciones {
             //Generar movimiento cuentaCorriente!!
             SistemaCuentaCorriente.getInstance().actualizarSaldo(transaccion);
 
-            logger.info(">>> TRANSACCION GENERADA!! <<<");
+            logger.info(">>> TRANSACCION APROBADA!! <<<");
         } catch (SQLException e) {
             logger.error("Error aprobando transaccion", e);
         }
