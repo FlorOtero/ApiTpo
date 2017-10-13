@@ -162,7 +162,8 @@ public class EstadoCuentaCorriente {
 	}
 
 	public void cargarUsuario() {
-		String nombreUsuario = prefs.get("USERNAME", null);
-		user = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
+	//	String nombreUsuario = prefs.get("USERNAME", null);
+	//	user = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
+		user = SistemaUsuarios.getInstance().buscarUsuarioById("041b9ec5-d99d-4f80-8db8-d3a69fa5b137");
 	}
 }

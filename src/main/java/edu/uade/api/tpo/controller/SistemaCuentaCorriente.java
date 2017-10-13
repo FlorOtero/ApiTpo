@@ -1,5 +1,6 @@
 package edu.uade.api.tpo.controller;
 
+import edu.uade.api.tpo.Config;
 import edu.uade.api.tpo.exceptions.BusinessException;
 import edu.uade.api.tpo.exceptions.InvalidPasswordException;
 import edu.uade.api.tpo.model.*;
@@ -34,8 +35,8 @@ public class SistemaCuentaCorriente {
 		try {
 			Usuario vendedor = SistemaUsuarios.getInstance().buscarUsuarioById(tr.getPublicacion().getUsuarioId());
 			Usuario comprador = SistemaUsuarios.getInstance().buscarUsuarioById(tr.getContraparteId());
-			// TODO setear el importe que corresponda
-			Comision comision = new Comision(123);
+			Comision comision = new Comision(tr.getPublicacion().getPrecio() * Float.parseFloat(Config.getProperty("porcentajeComision")));
+			
 			tr.setComision(comision);
 
 			// actualizamos los saldos
