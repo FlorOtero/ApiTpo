@@ -210,14 +210,7 @@ public class DetallePublicacion {
 						pagoTC.setVisible(true);
 						break;
 				}
-				
-				try {
-					SistemaPublicaciones.getInstance().ofertar(publicacion, publicacion.getPrecio(), user, datosPago);
-					JOptionPane.showConfirmDialog(null, "Compra exitosa", "Aviso", JOptionPane.PLAIN_MESSAGE);
-				}catch(BusinessException e2){
-					
-				}
-				
+				realizarOferta(datosPago);			
 			}
 		});
 		
@@ -238,5 +231,13 @@ public class DetallePublicacion {
 		frmMenuPrincipal = new MenuPrincipal();	
 		frmMenuPrincipal.setVisible(true);
 		frmDetallePublicacion.dispose();
+	}
+	private void realizarOferta(DatosPago datosPago) {
+		try {
+			SistemaPublicaciones.getInstance().ofertar(publicacion, publicacion.getPrecio(), user, datosPago);
+			JOptionPane.showConfirmDialog(null, "Compra exitosa", "Aviso", JOptionPane.PLAIN_MESSAGE);
+		}catch(BusinessException e2){
+			
+		}
 	}
 }
