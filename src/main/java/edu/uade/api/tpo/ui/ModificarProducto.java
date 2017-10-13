@@ -26,6 +26,7 @@ import javax.swing.table.DefaultTableModel;
 
 import edu.uade.api.tpo.controller.SistemaPublicaciones;
 import edu.uade.api.tpo.controller.SistemaUsuarios;
+import edu.uade.api.tpo.exceptions.BusinessException;
 import edu.uade.api.tpo.model.Articulo;
 import edu.uade.api.tpo.model.Garantia;
 import edu.uade.api.tpo.model.MedioPago;
@@ -166,6 +167,7 @@ public class ModificarProducto {
 		
 		JButton btnModificar = new JButton("Modificar");
 		btnModificar.addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
 				Producto producto = new Producto();
 				producto.setNombre(textField.toString());
@@ -199,6 +201,7 @@ public class ModificarProducto {
 				
 				
 				SistemaPublicaciones.getInstance().modificarPublicacion(p);
+
 
 				JOptionPane.showConfirmDialog(null, "Su producto se ha modificado con exito", "Aviso", JOptionPane.PLAIN_MESSAGE);
 				MenuPrincipal menuP = new MenuPrincipal();
