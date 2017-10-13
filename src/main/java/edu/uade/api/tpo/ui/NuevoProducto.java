@@ -130,12 +130,9 @@ public class NuevoProducto {
 				prod.setDescripcion(textField_1.getText());
 				prod.fromImagesTokenized(JTextField_path.toString());
 				publi.setPrecio(Float.parseFloat(textField_2.getText()));
-<<<<<<< HEAD
-//				publi.setFechaHasta(calendar.getDate());
-=======
+
 				publi.setFechaHasta(calendar.getDate());
-				
->>>>>>> ABMPublicaciones
+
 				Garantia garantia = new Garantia();
 				garantia.setCantidad(Integer.parseInt(textField_3.getText()));
 		        garantia.setTipo(TipoPeriodo.ANUAL);
@@ -156,7 +153,7 @@ public class NuevoProducto {
 					mediosPagos.add(MedioPago.TRANSFERENCIA_BANCARIA);
 				}
 
-				SistemaPublicaciones.getInstance().altaPublicacion("9ec1f480-b1a3-4605-a808-26829333e09d",
+				SistemaPublicaciones.getInstance().altaPublicacion("9cd3b14b-6737-45cb-9436-02e78892f9c7",
 						publi.getFechaHasta(), publi.getPrecio(), publi.getArticulo(), mediosPagos);
 				JOptionPane.showMessageDialog(null, "Se ha creado su Producto con exito", "Aviso",
 						JOptionPane.PLAIN_MESSAGE);
@@ -178,15 +175,13 @@ public class NuevoProducto {
 		frmNuevoProducto.getContentPane().add(btnCancelar);
 
 		calendar = new JCalendar();
-<<<<<<< HEAD
+
 		calendar.setBounds(231, 166, 198, 153);
-//		calendar.setWeekOfYearVisible(false);
-//		calendar.setTodayButtonVisible(true);
-=======
+
 		calendar.setBounds(325, 175, 198, 153);
 		calendar.setWeekOfYearVisible(false);
 		calendar.setTodayButtonVisible(true);
->>>>>>> ABMPublicaciones
+
 		frmNuevoProducto.getContentPane().add(calendar);
 
 		JButton btnAgregar = new JButton("Agregar ");

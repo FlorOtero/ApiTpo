@@ -36,6 +36,8 @@ import edu.uade.api.tpo.model.TipoPeriodo;
 import edu.uade.api.tpo.model.Usuario;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class ModificarProducto {
 	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
@@ -118,12 +120,6 @@ public class ModificarProducto {
 		
 		
 		textField = new JTextField();
-		textField.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				//producto.setNombre(textField.getText());
-			}
-		});
 		textField.setColumns(10);
 		textField.setBounds(202, 162, 139, 23);
 		frmModificarProducto.getContentPane().add(textField);
@@ -135,35 +131,16 @@ public class ModificarProducto {
 		textField_1.setColumns(10);
 		
 		textField_2 = new JTextField();
-		textField_2.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				//producto.setDescripcion(textField_2.getText());
-			}
-		});
 		textField_2.setBounds(202, 197, 139, 23);
 		frmModificarProducto.getContentPane().add(textField_2);
 		textField_2.setColumns(10);
 		
 		textField_3 = new JTextField();
-		textField_3.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-			//	p.setPrecio(Float.parseFloat(textField_4.getText()));
-			}
-		});
 		textField_3.setBounds(202, 237, 139, 23);
 		frmModificarProducto.getContentPane().add(textField_3);
 		textField_3.setColumns(10);
 		
 		textField_4 = new JTextField();
-		textField_4.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-
-
-			}
-		});
 		textField_4.setBounds(202, 284, 139, 23);
 		frmModificarProducto.getContentPane().add(textField_4);
 		textField_4.setColumns(10);
@@ -190,20 +167,23 @@ public class ModificarProducto {
 		JButton btnModificar = new JButton("Modificar");
 		btnModificar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO: mosificar el producto con los datos ingresados por parametros
-				// TODO: se hardcodeo el is del producto a modificar para probar
-				Publicacion publicacion = new Publicacion();
 				Producto producto = new Producto();
-				producto.setId("c4244652-e6e6-47a0-8fc5-e19a221bafd9");
 				producto.setNombre(textField.toString());
 				producto.setDescripcion(textField_2.toString());
 				Garantia garantia = new Garantia();
-				TipoPeriodo tipo = (TipoPeriodo) comboBox.getSelectedItem();
-				garantia.setTipo(tipo);
-				garantia.setCantidad(Integer.parseInt(textField_3.toString()));
+			//	TipoPeriodo tipo = (TipoPeriodo) comboBox.getSelectedItem();
+			//	garantia.setTipo(tipo);	
+				int cant = Integer.parseInt(textField_4.getText());
+				garantia.setCantidad(cant);
 				producto.setGarantia(garantia);
-				publicacion.setArticulo(producto);
-			//	publicacion.setFechaHasta();
+				p.setArticulo(producto);
+				SimpleDateFormat sdf = new SimpleDateFormat ("dd-mm-yy");
+				try {
+					p.setFechaHasta(sdf.parse(textField_1.getText()));
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				ArrayList<MedioPago> mediosPago = new ArrayList<MedioPago>();
 				if (chckbxEfectivo.isSelected()){
 					mediosPago.add(MedioPago.EFECTIVO);
@@ -212,11 +192,11 @@ public class ModificarProducto {
 				}if (chckbxTransferenciaBancaria.isSelected()){
 					mediosPago.add(MedioPago.TRANSFERENCIA_BANCARIA);
 				}
-				publicacion.setMediosPago(mediosPago);
-				publicacion.setPrecio(Float.parseFloat(textField_3.toString()));
+				p.setMediosPago(mediosPago);
+				p.setPrecio(Float.parseFloat(textField_3.getText()));
 				
 				
-				SistemaPublicaciones.getInstance().modificarPublicacion(publicacion);
+				SistemaPublicaciones.getInstance().modificarPublicacion(p);
 				
 				JOptionPane.showConfirmDialog(null, "Su producto se ha modificado con exito", "Aviso", JOptionPane.PLAIN_MESSAGE);
 				MenuPrincipal menuP = new MenuPrincipal();
@@ -296,11 +276,11 @@ public class ModificarProducto {
 		textField_2.setText(producto.getDescripcion());
 		textField_3.setText(String.valueOf(p.getPrecio()));
 		textField_4.setText(String.valueOf(producto.getGarantia().getCantidad()));
-		textField_1.setText(p.getFechaHasta().toString());
+		textField_1.setText(p.getFechaHasta().toString());	
+		comboBox.setSelectedItem(producto.getGarantia().getTipo());
 		System.out.println(comboBox.getSelectedItem());
-		String tipo = producto.getGarantia().getTipo().toString();
-		String selected = comboBox.getSelectedItem().toString();
-		int index = comboBox.getSelectedIndex();
+
+	/*	int index = comboBox.getSelectedIndex();
 		if(tipo == selected){
 			if(index == 0) {
 				index = 1;
@@ -308,8 +288,7 @@ public class ModificarProducto {
 				index = 0;
 			}
 		}
-		comboBox.setSelectedIndex(index);
-	//	comboBox.setSelectedItem(producto.getGarantia().getTipo());
+		comboBox.setSelectedIndex(index);  */
 		for(MedioPago mp: p.getMediosPago()) {		
 			// TODO: get from MedioPago directly, without strings switch
 			switch(mp.toString()) {
