@@ -1,6 +1,8 @@
 package edu.uade.api.tpo.controller;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +12,7 @@ import edu.uade.api.tpo.exceptions.BusinessException;
 import edu.uade.api.tpo.exceptions.InvalidPasswordException;
 import edu.uade.api.tpo.model.Comision;
 import edu.uade.api.tpo.model.EstadoTransaccion;
+import edu.uade.api.tpo.model.ItemCtaCte;
 import edu.uade.api.tpo.model.Publicacion;
 import edu.uade.api.tpo.model.Transaccion;
 import edu.uade.api.tpo.model.Usuario;
@@ -63,6 +66,56 @@ public class SistemaCuentaCorriente {
 			logger.error("Error actualizando saldo", e);
 		}
 
+	}
+	
+	public List<Comision> listarComisiones(String nombreUsuario) throws BusinessException {
+		
+		Usuario usuario = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
+		
+		if(!usuario.getCuentaCorriente().hasComisiones()) {
+			throw new BusinessException("No hay comisiones para mostrar");
+		}
+		
+		return usuario.getCuentaCorriente().getComisiones();
+		
+	}
+	
+	public List<ItemCtaCte> consultarMovimientos(String nombreUsuario) throws BusinessException{
+		
+		List<ItemCtaCte> movimientos = new ArrayList<>();
+		Usuario usuario = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
+		
+		if(!usuario.getCuentaCorriente().hasTransacciones()) {
+			throw new BusinessException("No hay movimientos en la cuenta corriente");
+		}
+		
+		for(Transaccion tr : usuario.getCuentaCorriente().getTransacciones()) {
+			
+			ItemCtaCte item = new ItemCtaCte(tr.getId());
+			//si fue una compra...
+			if(tr.getContraparte().getNombreUsuario().equals(nombreUsuario)) {
+				//no se cobra comision x compra
+				item.setComision(false);
+				//mostramos un descuento en la cuenta del comprador
+				item.setMonto(tr.getPublicacion().getPrecio() * -1);
+			}else {
+				//fue una venta, mostramos el credito en la cta del vendedor
+				item.setMonto(tr.getPublicacion().getPrecio());
+				//al ser venta hubo comision
+				item.setComision(true);
+			}
+			
+			if(item.isComision()) {
+				//si hubo comision, tenemos que reflejar el descuento
+				
+			}
+			
+			movimientos.add(item);
+			
+		}
+		
+		return movimientos;
+		
 	}
 	
 	
