@@ -165,17 +165,15 @@ public class DetallePublicacion {
 				}
 				
 				// TODO: populate datos paog
-				DatosPago datosPago = null;
-				
+				DatosPago datosPago = null;				
 				try {
 					subasta.ofertar(Float.parseFloat(txtOferta.getText()), user, datosPago);
+					JOptionPane.showConfirmDialog(null, "Has ofertado exitosamente!", "Aviso", JOptionPane.PLAIN_MESSAGE);
 				} catch (NumberFormatException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
 				} catch (BusinessException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
 				}
-				
-				JOptionPane.showMessageDialog(null, "Has ofertado exitosamente!");
 			}
 		});
 	}
@@ -194,7 +192,7 @@ public class DetallePublicacion {
 			public void actionPerformed(ActionEvent e) {
 				DatosPago datosPago = new DatosPago();	
 				MedioPago mp= null;
-				System.out.println(getSelectedButtonText(bg));
+				
 				switch(getSelectedButtonText(bg)) {
 					case "Efectivo": mp = MedioPago.EFECTIVO; 
 						datosPago.setMedioPago(mp);

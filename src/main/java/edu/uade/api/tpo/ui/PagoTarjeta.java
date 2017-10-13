@@ -62,12 +62,6 @@ public class PagoTarjeta {
 		JLabel lblMonto = new JLabel("Monto:");
 		
 		textField_3 = new JTextField();
-		textField_3.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				datosPago.setNumeroTarjeta(textField_3.getText());
-			}
-		});
 		textField_3.setColumns(10);
 		
 		textField_4 = new JTextField();
@@ -81,6 +75,7 @@ public class PagoTarjeta {
 		JButton btnConfirmarTransaccion = new JButton("Confirmar Transaccion");
 		btnConfirmarTransaccion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				datosPago.setNumeroTarjeta(textField_3.getText());
 				frmPagoConTarjeta.dispose();
 			}
 		});
