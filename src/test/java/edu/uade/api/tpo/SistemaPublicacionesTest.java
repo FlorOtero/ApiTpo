@@ -185,4 +185,19 @@ public class SistemaPublicacionesTest {
             Assert.fail("Should not throw exception");
         }
     }
+
+    @Test
+    public void test_ofertarPublicacionTarjetaCredito() {
+        Publicacion publicacion = this.sistemaPublicaciones.buscarPublicacion(PUBLICACION_ID);
+        try {
+            Usuario contraparte = UsuarioDaoImpl.getInstance().findById(CONTRAPARTE_ID);
+            DatosPago datosPago = new DatosPago();
+            datosPago.setMedioPago(MedioPago.TARJETA_CREDITO);
+            datosPago.setNumeroTarjeta("123123");
+            this.sistemaPublicaciones.ofertar(publicacion, 666, contraparte, datosPago);
+        } catch (SQLException | BusinessException e) {
+            e.printStackTrace();
+            Assert.fail("Should not throw exception");
+        }
+    }
 }
