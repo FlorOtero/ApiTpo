@@ -41,7 +41,10 @@ public class SistemaCuentaCorriente {
 			Usuario comprador = tr.getContraparte();
 			
 			// agregamos la transaccion y las comisiones a las respectivas ctas
-			vendedor.getCuentaCorriente().addComision(tr.getPublicacion().getComision());
+			Comision c = tr.getPublicacion().getComision();
+			//TODO HACER LA PERSISTENCIA DEL ID DE TRANSACCION EN LA COMISION
+			c.setIdTransaccion(tr.getId());
+			vendedor.getCuentaCorriente().addComision(c);
 			vendedor.getCuentaCorriente().addTransaccion(tr);
 			comprador.getCuentaCorriente().addTransaccion(tr);
 
@@ -61,5 +64,7 @@ public class SistemaCuentaCorriente {
 		}
 
 	}
+	
+	
 
 }

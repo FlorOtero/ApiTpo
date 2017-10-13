@@ -5,12 +5,11 @@ import java.util.Date;
 public class Comision {
 	
 	float importe;
-	Date fecha;
+	String idTransaccion;
 
 	public Comision(float importe) {
 		super();
 		this.importe = importe;
-		this.fecha = new Date();
 	}
 
 	public float getImporte() {
@@ -21,12 +20,13 @@ public class Comision {
 		this.importe = importe;
 	}
 
-	public Date getFecha() {
-		return fecha;
+	public String getIdTransaccion() {
+		return idTransaccion;
 	}
 
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
+	public void setIdTransaccion(String idTransaccion) {
+		this.idTransaccion = idTransaccion;
 	}
+
 
 }
