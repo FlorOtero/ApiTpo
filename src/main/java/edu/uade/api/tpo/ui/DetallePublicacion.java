@@ -47,7 +47,8 @@ public class DetallePublicacion {
 	public DetallePublicacion(Publicacion p){
 		this.publicacion= p;
 		this.articulo=p.getArticulo();
-		String nombreUsuario = prefs.get("USERNAME", null);
+		String nombreUsuario = "flor";
+				//prefs.get("USERNAME", null);
 		user = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
 		initialize();
 	}
@@ -191,16 +192,20 @@ public class DetallePublicacion {
 		btnOfertar.setName("Comprar");
 		btnOfertar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				DatosPago datosPago = null;	
+				DatosPago datosPago = new DatosPago();	
 				MedioPago mp= null;
 				System.out.println(getSelectedButtonText(bg));
 				switch(getSelectedButtonText(bg)) {
-					case "Efectivo": mp = MedioPago.EFECTIVO; break;
+					case "Efectivo": mp = MedioPago.EFECTIVO; 
+						datosPago.setMedioPago(mp);
+						break;
 					case "Transferencia Bancaria": mp = MedioPago.TRANSFERENCIA_BANCARIA;
+						datosPago.setMedioPago(mp);
 						PagoTransferencia pagoTB = new PagoTransferencia(datosPago, publicacion.getPrecio());
 						pagoTB.setVisible(true);
 						break;
 					case "Tarjeta de Credito": mp = MedioPago.TARJETA_CREDITO; 
+						datosPago.setMedioPago(mp);
 						PagoTarjeta pagoTC = new PagoTarjeta(datosPago, publicacion.getPrecio());	
 						pagoTC.setVisible(true);
 						break;
