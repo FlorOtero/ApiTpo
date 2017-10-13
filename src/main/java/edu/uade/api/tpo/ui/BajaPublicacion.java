@@ -127,8 +127,8 @@ public class BajaPublicacion {
 	
 	private ArrayList<Publicacion> buscarPublicacion(String busqueda) {
 		 Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
-		 //String nombreUsuario = prefs.get("USERNAME", null);
-         Usuario user = SistemaUsuarios.getInstance().buscarUsuario("flor");
+		 String nombreUsuario = prefs.get("USERNAME", null);
+         Usuario user = SistemaUsuarios.getInstance().buscarUsuario("nombreUsuario");
 		 resultadoUser =  (ArrayList<Publicacion>) user.getPublicaciones();
 		return resultadoUser;
 	}
