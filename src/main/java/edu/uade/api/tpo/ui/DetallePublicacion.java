@@ -210,6 +210,7 @@ public class DetallePublicacion {
 						pagoTC.setVisible(true);
 						break;
 				}
+				
 				try {
 					SistemaPublicaciones.getInstance().ofertar(publicacion, publicacion.getPrecio(), user, datosPago);
 					JOptionPane.showConfirmDialog(null, "Compra exitosa", "Aviso", JOptionPane.PLAIN_MESSAGE);
