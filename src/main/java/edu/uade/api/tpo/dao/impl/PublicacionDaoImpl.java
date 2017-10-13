@@ -2,7 +2,6 @@ package edu.uade.api.tpo.dao.impl;
 
 import edu.uade.api.tpo.dao.AbstractManyToOneDao;
 import edu.uade.api.tpo.dao.ManyToOneDao;
-import edu.uade.api.tpo.model.Comision;
 import edu.uade.api.tpo.model.Estado;
 import edu.uade.api.tpo.model.MedioPago;
 import edu.uade.api.tpo.model.Publicacion;
@@ -29,7 +28,7 @@ public class PublicacionDaoImpl extends AbstractManyToOneDao<Publicacion> {
 	public PreparedStatement create(Publicacion publicacion, Connection conn) throws SQLException {
 		ArticuloDaoImpl.getInstance().create(publicacion.getArticulo());
 
-		String query = "INSERT INTO " + schema + ".publicaciones VALUES(?,?,?,?,?,?,?,?)";
+		String query = "INSERT INTO " + schema + ".publicaciones VALUES(?,?,?,?,?,?,?)";
 		PreparedStatement ps = conn.prepareStatement(query);
 		ps.setString(1, publicacion.getId());
 		ps.setString(2, publicacion.getUsuarioId());
@@ -38,7 +37,6 @@ public class PublicacionDaoImpl extends AbstractManyToOneDao<Publicacion> {
 		ps.setFloat(5, publicacion.getPrecio());
 		ps.setString(6, String.valueOf(publicacion.getEstado()));
 		ps.setString(7, publicacion.getArticulo().getId());
-		ps.setFloat(8, publicacion.getComision().getImporte());
 		return ps;
 	}
 
@@ -74,7 +72,7 @@ public class PublicacionDaoImpl extends AbstractManyToOneDao<Publicacion> {
 	public PreparedStatement update(Publicacion publicacion, Connection conn) throws SQLException {
 		ArticuloDaoImpl.getInstance().update(publicacion.getArticulo());
 		String query = "UPDATE " + schema
-				+ ".publicaciones SET usuario_id = ?, fecha_desde = ?, fecha_hasta = ?, precio = ?, estado = ?, articulo_id = ?, comision = ? WHERE publicacion_id = ?";
+				+ ".publicaciones SET usuario_id = ?, fecha_desde = ?, fecha_hasta = ?, precio = ?, estado = ?, articulo_id = ? WHERE publicacion_id = ?";
 		PreparedStatement ps = conn.prepareStatement(query);
 		ps.setString(1, publicacion.getUsuarioId());
 		ps.setTimestamp(2, new Timestamp(publicacion.getFechaDesde().getTime()));
@@ -82,7 +80,6 @@ public class PublicacionDaoImpl extends AbstractManyToOneDao<Publicacion> {
 		ps.setFloat(4, publicacion.getPrecio());
 		ps.setString(5, String.valueOf(publicacion.getEstado()));
 		ps.setString(6, publicacion.getArticulo().getId());
-		ps.setFloat(7, publicacion.getComision().getImporte());
 		ps.setString(8, publicacion.getId());
 		if (publicacion.getMediosPago() != null && !publicacion.getMediosPago().isEmpty()) {
 			MedioPagoDaoImpl.getInstance().updateMediosPagoToPublicacion(publicacion.getId(),
@@ -102,10 +99,10 @@ public class PublicacionDaoImpl extends AbstractManyToOneDao<Publicacion> {
 	
 	@Override
     public PreparedStatement findManyLike(String field, String value, Connection conn) throws SQLException {
-		String query = "SELECT publicacion_id, usuario_id, fecha_desde, fecha_hasta, precio, comision, estado, articulo_id, producto_id, nombre, descripcion FROM " + schema + ".publicaciones AS publicacion, " + schema + ".productos AS producto " +
+		String query = "SELECT publicacion_id, usuario_id, fecha_desde, fecha_hasta, precio, estado, articulo_id, producto_id, nombre, descripcion FROM " + schema + ".publicaciones AS publicacion, " + schema + ".productos AS producto " +
 				"WHERE producto." + field + " LIKE ? AND publicacion.articulo_id = producto.producto_id " +
 				"UNION ALL " +
-				"SELECT publicacion_id, usuario_id, fecha_desde, fecha_hasta, precio, comision, estado, articulo_id, servicio_id, nombre, descripcion FROM " + schema + ".publicaciones AS publicacion, " + schema + ".servicios AS servicio " +
+				"SELECT publicacion_id, usuario_id, fecha_desde, fecha_hasta, precio, estado, articulo_id, servicio_id, nombre, descripcion FROM " + schema + ".publicaciones AS publicacion, " + schema + ".servicios AS servicio " +
 				"WHERE servicio." + field + " LIKE ? AND publicacion.articulo_id = servicio.servicio_id";
 		PreparedStatement ps = conn.prepareStatement(query);
 		ps.setString(1, "%" + value + "%");
@@ -131,8 +128,6 @@ public class PublicacionDaoImpl extends AbstractManyToOneDao<Publicacion> {
 		publicacion.setPrecio(rs.getFloat("precio"));
 		publicacion.setEstado(Estado.valueOf(rs.getString("estado")));
 		publicacion.setArticulo(ArticuloDaoImpl.getInstance().findById(rs.getString("articulo_id")));
-		Comision c = new Comision(rs.getFloat("comision"));
-		publicacion.setComision(c);
 		publicacion.setMediosPago(MedioPagoDaoImpl.getInstance().findByPublicacionId(publicacion.getId()));
 		return publicacion;
 	}

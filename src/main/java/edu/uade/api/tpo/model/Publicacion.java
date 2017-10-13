@@ -13,7 +13,6 @@ public class Publicacion implements Persistible {
 	private Date fechaHasta;
 	private float precio;
 	protected Estado estado;
-	private Comision comision;
 	private Articulo articulo;
 	private String usuarioId;
 	protected List<MedioPago> mediosPago;
@@ -66,14 +65,6 @@ public class Publicacion implements Persistible {
 
 	public void setPrecio(float precio) {
 		this.precio = precio;
-	}
-
-	public Comision getComision() {
-		return comision;
-	}
-
-	public void setComision(Comision comision) {
-		this.comision = comision;
 	}
 
 	public Articulo getArticulo() {
