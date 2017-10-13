@@ -20,7 +20,7 @@ public class SistemaCuentaCorriente {
 	private static final Logger logger = LoggerFactory.getLogger(SistemaCuentaCorriente.class);
 
 	private SistemaCuentaCorriente() {
-	};
+	}
 
 	public static SistemaCuentaCorriente getInstance() {
 		if (instance == null) {
@@ -31,16 +31,16 @@ public class SistemaCuentaCorriente {
 
 	public void actualizarSaldo(Transaccion tr) throws BusinessException, InvalidPasswordException {
 
+		if (!(tr.getEstado() == EstadoTransaccion.A)) {
+			throw new BusinessException("La transaccion aun no ha sido aprobada");
+		}
+		
 		try {
 
-			if (!(tr.getEstado() == EstadoTransaccion.A)) {
-				throw new BusinessException("La transaccion aun no ha sido aprobada");
-			}
-			// agregamos la transaccion y las comisiones a las respectivas cuentas
-			// corrientes
 			Usuario vendedor = SistemaUsuarios.getInstance().buscarUsuarioById(tr.getPublicacion().getUsuarioId());
 			Usuario comprador = tr.getContraparte();
-
+			
+			// agregamos la transaccion y las comisiones a las respectivas ctas
 			vendedor.getCuentaCorriente().addComision(tr.getPublicacion().getComision());
 			vendedor.getCuentaCorriente().addTransaccion(tr);
 			comprador.getCuentaCorriente().addTransaccion(tr);
