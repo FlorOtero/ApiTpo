@@ -1,35 +1,16 @@
 package edu.uade.api.tpo.ui;
 
-import java.awt.EventQueue;
-import java.awt.Font;
-
-import javax.swing.JFrame;
-
 import edu.uade.api.tpo.controller.SistemaPublicaciones;
 import edu.uade.api.tpo.controller.SistemaUsuarios;
 import edu.uade.api.tpo.exceptions.BusinessException;
-import edu.uade.api.tpo.model.Articulo;
-import edu.uade.api.tpo.model.DatosPago;
-import edu.uade.api.tpo.model.MedioPago;
-import edu.uade.api.tpo.model.Producto;
-import edu.uade.api.tpo.model.Publicacion;
-import edu.uade.api.tpo.model.Servicio;
-import edu.uade.api.tpo.model.Subasta;
-import edu.uade.api.tpo.model.TipoContratacion;
-import edu.uade.api.tpo.model.Usuario;
+import edu.uade.api.tpo.model.*;
 
-import java.awt.Color;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-import javax.swing.AbstractButton;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Enumeration;
 import java.util.prefs.Preferences;
-import java.awt.event.ActionEvent;
 
 public class DetallePublicacion {
 	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
@@ -47,8 +28,7 @@ public class DetallePublicacion {
 	public DetallePublicacion(Publicacion p){
 		this.publicacion= p;
 		this.articulo=p.getArticulo();
-		String nombreUsuario = "flor";
-				//prefs.get("USERNAME", null);
+		String nombreUsuario = prefs.get("USERNAME", null);
 		user = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
 		initialize();
 	}
