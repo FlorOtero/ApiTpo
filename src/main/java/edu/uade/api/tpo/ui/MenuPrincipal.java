@@ -172,7 +172,7 @@ public class MenuPrincipal {
 	}
 	
 	public void crearTabla() {
-		String[] columnNames = {"Nombre Articulo","Precio", "Tipo"};		
+		String[] columnNames = {"Nombre Articulo", "Precio", "Tipo"};		
 		DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 		
 		if (resultado != null) {
@@ -203,6 +203,9 @@ public class MenuPrincipal {
 			        		Publicacion p = resultado.get(row);
 			        		
 			        		// TODO: change this for Articulo Detail Page
+			        		DetallePublicacion articuloSeleccionado = new DetallePublicacion(p);	
+			        		articuloSeleccionado.setVisible(true);
+			        		frmMenuPrincipal.dispose();
 			            System.out.println("CLICKED "+ p.getArticulo().getNombre());
 			        }
 			    }

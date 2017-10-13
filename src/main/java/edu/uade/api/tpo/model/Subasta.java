@@ -2,9 +2,11 @@ package edu.uade.api.tpo.model;
 
 import edu.uade.api.tpo.controller.SistemaNotificacionSubasta;
 import edu.uade.api.tpo.controller.SistemaPublicaciones;
+import edu.uade.api.tpo.controller.SistemaTransacciones;
 import edu.uade.api.tpo.exceptions.BusinessException;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
