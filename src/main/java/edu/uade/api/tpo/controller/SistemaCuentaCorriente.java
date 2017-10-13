@@ -33,7 +33,7 @@ public class SistemaCuentaCorriente {
 
         try {
             Usuario vendedor = SistemaUsuarios.getInstance().buscarUsuarioById(tr.getPublicacion().getUsuarioId());
-            Usuario comprador = tr.getContraparte();
+            Usuario comprador = SistemaUsuarios.getInstance().buscarUsuarioById(tr.getContraparteId());
             //TODO setear el importe que corresponda
             Comision comision = new Comision(123);
             tr.setComision(comision);
@@ -72,7 +72,6 @@ public class SistemaCuentaCorriente {
 
         List<ItemCtaCte> movimientos = new ArrayList<>();
         Usuario usuario = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
-
         if (!usuario.getCuentaCorriente().hasTransacciones()) {
             throw new BusinessException("No hay movimientos en la cuenta corriente");
         }
@@ -81,7 +80,7 @@ public class SistemaCuentaCorriente {
 
             ItemCtaCte item = new ItemCtaCte(tr.getId());
             //si fue una compra...
-            if (tr.getContraparte().getNombreUsuario().equals(nombreUsuario)) {
+            if (tr.getContraparteId().equals(usuario.getId())) {
                 //no se cobra comision x compra
                 item.setComision(false);
                 //mostramos un descuento en la cuenta del comprador

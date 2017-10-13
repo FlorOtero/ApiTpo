@@ -1,13 +1,11 @@
 package edu.uade.api.tpo.controller;
 
-import edu.uade.api.tpo.dao.impl.CompraTarjetaCreditoDaoImpl;
-import edu.uade.api.tpo.dao.impl.CompraTransferenciaBancariaDaoImpl;
 import edu.uade.api.tpo.model.CompraTarjetaCredito;
 import edu.uade.api.tpo.model.CompraTransferenciaBancaria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.SQLException;
+import java.util.concurrent.TimeUnit;
 
 public class SistemaInterfazEntidadesRecaudadoras {
 
@@ -27,32 +25,30 @@ public class SistemaInterfazEntidadesRecaudadoras {
 
     public void procesarPagoTransferenciaBancaria(CompraTransferenciaBancaria compra) {
         try {
-            CompraTransferenciaBancariaDaoImpl.getInstance().create(compra);
             logger.info(">>> Autorizando pago <<<");
-            wait(APPROVAL_WAIT_TIME);
+            TimeUnit.MILLISECONDS.sleep(APPROVAL_WAIT_TIME);
             boolean approved = getRandom() != 0;
             if(approved) {
                 SistemaTransacciones.getInstance().aprobarTransaccion(compra);
             } else {
                 SistemaTransacciones.getInstance().rechazarTransaccion(compra);
             }
-        } catch (InterruptedException | SQLException e) {
+        } catch (Exception e) {
             logger.error("Error procesando el pago por transferencia bancaria", e);
         }
     }
 
     public void procesarPagoTarjetaCredito(CompraTarjetaCredito compra) {
         try {
-            CompraTarjetaCreditoDaoImpl.getInstance().create(compra);
             logger.info(">>> Autorizando pago <<<");
-            wait(APPROVAL_WAIT_TIME);
+            TimeUnit.MILLISECONDS.sleep(APPROVAL_WAIT_TIME);
             boolean approved = getRandom() != 0;
             if(approved) {
                 SistemaTransacciones.getInstance().aprobarTransaccion(compra);
             } else {
                 SistemaTransacciones.getInstance().rechazarTransaccion(compra);
             }
-        } catch (InterruptedException | SQLException e) {
+        } catch (Exception e) {
             logger.error("Error procesando el pago por transferencia bancaria", e);
         }
     }

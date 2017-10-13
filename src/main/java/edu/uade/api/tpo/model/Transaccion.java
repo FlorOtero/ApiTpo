@@ -11,7 +11,7 @@ public abstract class Transaccion implements Persistible {
 	private Publicacion publicacion;
 	private EstadoTransaccion estado;
 	private Date fecha;
-	private Usuario contraparte;
+	private String contraparteId;
 	private String cuentaCorrienteId;
 	private Comision comision;
 	
@@ -22,7 +22,7 @@ public abstract class Transaccion implements Persistible {
 		this.publicacion = publicacion;
 		this.estado = EstadoTransaccion.P;
 		this.fecha = new Date();
-		this.contraparte = contraparte;
+		this.contraparteId = contraparte.getId();
 		this.cuentaCorrienteId = contraparte.getCuentaCorriente().getId();
 	}
 
@@ -58,12 +58,12 @@ public abstract class Transaccion implements Persistible {
 		this.fecha = fecha;
 	}
 
-	public Usuario getContraparte() {
-		return contraparte;
+	public String getContraparteId() {
+		return contraparteId;
 	}
 
-	public void setContraparte(Usuario contraparte) {
-		this.contraparte = contraparte;
+	public void setContraparteId(String contraparteId) {
+		this.contraparteId = contraparteId;
 	}
 
 	public String getCuentaCorrienteId() {

@@ -193,6 +193,7 @@ public class SistemaPublicacionesTest {
             Usuario contraparte = UsuarioDaoImpl.getInstance().findById(CONTRAPARTE_ID);
             DatosPago datosPago = new DatosPago();
             datosPago.setMedioPago(MedioPago.TARJETA_CREDITO);
+            datosPago.setNumeroTarjeta("123123");
             this.sistemaPublicaciones.ofertar(publicacion, 666, contraparte, datosPago);
         } catch (SQLException | BusinessException e) {
             e.printStackTrace();

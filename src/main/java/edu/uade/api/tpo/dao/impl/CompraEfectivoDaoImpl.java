@@ -41,7 +41,7 @@ public class CompraEfectivoDaoImpl extends AbstractManyToOneDao<CompraEfectivo> 
         String query = "INSERT INTO " + schema + ".compras_efectivo VALUES(?,?,?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, compraEfectivo.getId());
-        ps.setString(2, compraEfectivo.getContraparte().getId());
+        ps.setString(2, compraEfectivo.getContraparteId());
         ps.setString(3, compraEfectivo.getPublicacion().getId());
         ps.setString(4, String.valueOf(compraEfectivo.getEstado()));
         ps.setTimestamp(5, new Timestamp(compraEfectivo.getFecha().getTime()));
@@ -56,7 +56,7 @@ public class CompraEfectivoDaoImpl extends AbstractManyToOneDao<CompraEfectivo> 
         }
         String query = "UPDATE " + schema + ".compras_efectivo SET contraparte_id = ?, publicacion_id = ?, estado = ?, fecha = ?, cuenta_corriente_id = ? where compra_efectivo_id = ?";
         PreparedStatement ps = conn.prepareStatement(query);
-        ps.setString(1, compraEfectivo.getContraparte().getId());
+        ps.setString(1, compraEfectivo.getContraparteId());
         ps.setString(2, compraEfectivo.getPublicacion().getId());
         ps.setString(3, String.valueOf(compraEfectivo.getEstado()));
         ps.setTimestamp(4, new Timestamp(compraEfectivo.getFecha().getTime()));
@@ -94,7 +94,7 @@ public class CompraEfectivoDaoImpl extends AbstractManyToOneDao<CompraEfectivo> 
     private CompraEfectivo mapRow(ResultSet rs) throws SQLException {
         CompraEfectivo compra = new CompraEfectivo();
         compra.setId(rs.getString("compra_efectivo_id"));
-        compra.setContraparte(UsuarioDaoImpl.getInstance().findById(rs.getString("contraparte_id")));
+        compra.setContraparteId(rs.getString("contraparte_id"));
         Publicacion pub = PublicacionDaoImpl.getInstance().findById(rs.getString("publicacion_id"));
         if (pub == null) {
             pub = SubastaDaoImpl.getInstance().findById(rs.getString("publicacion_id"));

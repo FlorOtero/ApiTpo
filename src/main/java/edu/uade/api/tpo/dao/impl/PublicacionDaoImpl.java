@@ -80,7 +80,7 @@ public class PublicacionDaoImpl extends AbstractManyToOneDao<Publicacion> {
 		ps.setFloat(4, publicacion.getPrecio());
 		ps.setString(5, String.valueOf(publicacion.getEstado()));
 		ps.setString(6, publicacion.getArticulo().getId());
-		ps.setString(8, publicacion.getId());
+		ps.setString(7, publicacion.getId());
 		if (publicacion.getMediosPago() != null && !publicacion.getMediosPago().isEmpty()) {
 			MedioPagoDaoImpl.getInstance().updateMediosPagoToPublicacion(publicacion.getId(),
 					publicacion.getMediosPago());
