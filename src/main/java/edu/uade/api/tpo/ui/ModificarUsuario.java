@@ -1,33 +1,26 @@
 package edu.uade.api.tpo.ui;
 
 import java.awt.EventQueue;
-import java.awt.Window;
 
 import edu.uade.api.tpo.exceptions.BusinessException;
 import edu.uade.api.tpo.exceptions.InvalidPasswordException;
 import edu.uade.api.tpo.model.Domicilio;
 import edu.uade.api.tpo.model.Password;
-import edu.uade.api.tpo.model.SistemaUsuarios;
+import edu.uade.api.tpo.controller.SistemaUsuarios;
 import edu.uade.api.tpo.model.Usuario;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-import javax.swing.JEditorPane;
-import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
-import edu.uade.api.tpo.exceptions.BusinessException;
 
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.InputMethodListener;
 import java.util.Date;
 import java.util.prefs.Preferences;
-import java.awt.event.InputMethodEvent;
 import javax.swing.JPasswordField;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;

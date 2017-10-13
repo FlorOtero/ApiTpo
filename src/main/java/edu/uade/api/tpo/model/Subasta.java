@@ -1,20 +1,23 @@
 package edu.uade.api.tpo.model;
 
+import edu.uade.api.tpo.controller.SistemaNotificacionSubasta;
+import edu.uade.api.tpo.controller.SistemaPublicaciones;
+import edu.uade.api.tpo.controller.SistemaTransacciones;
+import edu.uade.api.tpo.exceptions.BusinessException;
+
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
-import edu.uade.api.tpo.exceptions.BusinessException;
+import java.util.stream.Collectors;
 
 public class Subasta extends Publicacion {
 	private float precioMin;
 	private int diasVigencia;
 	private float precioInicial;
 	private List<Oferta> ofertas;
-	
-	public Subasta() {}
+
+	public Subasta() {
+	}
 
 	public Subasta(float precioMin, int diasVigencia, float precioInicial) {
 		super();
@@ -56,25 +59,32 @@ public class Subasta extends Publicacion {
 		this.ofertas = ofertas;
 	}
 
-	public void ofertar(float monto, Usuario usuario) throws BusinessException {
-    	
-		if(super.getEstado() == Estado.I) {
-			throw new BusinessException("La publicacion está inactiva");
-		} else {
-    	
-		Date now = new Date();
-		Oferta oferta = new Oferta(monto, now, usuario, this);
-		//creamos la oferta
+	public void ofertar(float monto, Usuario usuario, DatosPago datosPago) throws BusinessException {
+		if (estado != Estado.A) {
+			throw new BusinessException("La publicacion no está activa!");
+		}
+		if (!mediosPago.contains(datosPago.getMedioPago())) {
+			throw new BusinessException("El medio de pago elegido no está disponible en esta publicación!");
+		}
+		if(monto <= getPrecioActual()) {
+			throw new BusinessException("El monto ofertado es menor que el precio actual");
+		}
+
+		Oferta oferta = new Oferta(monto, usuario.getId(), id);
 		ofertas.add(oferta);
-		//notificamos a todos menos al usuario que hizo la oferta
-		Set<String> usuariosNotificados = new HashSet();
-		for(Oferta o : ofertas) {
-			if(!o.getUsuario().getId().equals(usuario.getId())) {
-				usuariosNotificados.add(o.getUsuario().getNombreUsuario());
-			}
-		}
-		SistemaNotificacionSubasta.getInstance().notificarUsuarios(usuariosNotificados, this);
-		}
+		SistemaPublicaciones.getInstance().modificarSubasta(this);
+
+		// notificamos a todos menos al usuario que hizo la oferta
+		ofertas.stream().filter(o -> !o.getUsuarioId().equals(usuario.getId())).map(o -> o.getUsuarioId()).collect(Collectors.toSet()).forEach(usuarioId -> {
+			SistemaNotificacionSubasta.getInstance().notificarUsuarioSubasta(usuarioId, this);
+		});
 	}
 
+	private float getPrecioActual() {
+		if(this.ofertas == null || this.ofertas.isEmpty()) {
+			return this.getPrecioInicial();
+		} else {
+			return this.ofertas.get(0).getMonto();
+		}
+	}
 }
