@@ -58,11 +58,16 @@ public abstract class Articulo implements Persistible {
     }
 
     public String toImagesTokenized() {
-        String result = "";
-        for (String imagen : this.imagenes) {
-            result = result.concat(imagen).concat(",");
-        }
-        return result.substring(0, result.lastIndexOf(","));
+    	 if(imagenes == null){
+    		 return null;
+    	 }else{
+    	 String result = ""; 
+    	 for (String imagen : this.imagenes) {
+    	            result = result.concat(imagen).concat(",");
+    	 	}
+    	    return result.substring(0, result.lastIndexOf(","));	 
+    	 }
+    	
     }
 
     public void fromImagesTokenized(String images) {

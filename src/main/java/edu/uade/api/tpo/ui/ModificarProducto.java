@@ -176,6 +176,7 @@ public class ModificarProducto {
 				int cant = Integer.parseInt(textField_4.getText());
 				garantia.setCantidad(cant);
 				producto.setGarantia(garantia);
+				producto.setImagenes(null);
 				p.setArticulo(producto);
 				SimpleDateFormat sdf = new SimpleDateFormat ("dd-mm-yy");
 				try {
@@ -184,6 +185,7 @@ public class ModificarProducto {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+
 				ArrayList<MedioPago> mediosPago = new ArrayList<MedioPago>();
 				if (chckbxEfectivo.isSelected()){
 					mediosPago.add(MedioPago.EFECTIVO);
@@ -197,7 +199,7 @@ public class ModificarProducto {
 				
 				
 				SistemaPublicaciones.getInstance().modificarPublicacion(p);
-				
+
 				JOptionPane.showConfirmDialog(null, "Su producto se ha modificado con exito", "Aviso", JOptionPane.PLAIN_MESSAGE);
 				MenuPrincipal menuP = new MenuPrincipal();
 				menuP.setVisible(true);
@@ -278,7 +280,7 @@ public class ModificarProducto {
 		textField_4.setText(String.valueOf(producto.getGarantia().getCantidad()));
 		textField_1.setText(p.getFechaHasta().toString());	
 		comboBox.setSelectedItem(producto.getGarantia().getTipo());
-		System.out.println(comboBox.getSelectedItem());
+	//	System.out.println(comboBox.getSelectedItem());
 
 	/*	int index = comboBox.getSelectedIndex();
 		if(tipo == selected){
