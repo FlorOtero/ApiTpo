@@ -35,9 +35,7 @@ public class SistemaCuentaCorriente {
             Usuario comprador = tr.getContraparte();
             //TODO setear el importe que corresponda
             Comision comision = new Comision(123);
-            vendedor.getCuentaCorriente().addComision(comision);
-            vendedor.getCuentaCorriente().addTransaccion(tr);
-            comprador.getCuentaCorriente().addTransaccion(tr);
+            tr.setComision(comision);
 
             // actualizamos los saldos
             float saldoVendedor = vendedor.getCuentaCorriente().getSaldo();
@@ -49,6 +47,9 @@ public class SistemaCuentaCorriente {
             // modificamos los usuarios para actualizar sus ctas ctes
             SistemaUsuarios.getInstance().modificarUsuario(comprador);
             SistemaUsuarios.getInstance().modificarUsuario(vendedor);
+
+            // actualizo la transaccion ya que guarde su comision
+            SistemaTransacciones.getInstance().actualizarTransaccion(tr);
 
         } catch (Exception e) {
             logger.error("Error actualizando saldo", e);

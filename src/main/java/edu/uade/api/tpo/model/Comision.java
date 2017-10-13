@@ -7,6 +7,10 @@ public class Comision implements Persistible {
 	private String id;
 	private float importe;
 
+	public Comision() {
+
+	}
+
 	public Comision(float importe) {
 		this.importe = importe;
 	}
