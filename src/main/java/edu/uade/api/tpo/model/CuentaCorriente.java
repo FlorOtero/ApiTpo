@@ -47,8 +47,8 @@ public class CuentaCorriente implements Persistible {
     public boolean hasTransaccion(Transaccion transaccion) {
         return this.transacciones.contains(transaccion);
     }
-
-    public String getId() {
+	
+	public String getId() {
         return id;
     }
 
