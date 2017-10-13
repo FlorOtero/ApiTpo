@@ -105,6 +105,7 @@ public class SistemaCuentaCorriente {
 				// lleva el mismo id de operacion que la transaccion de venta, porque
 				// corresponde a ella
 				ItemCtaCte comision = new ItemCtaCte(tr.getId());
+				comision.setEstado(tr.getEstado().getVal());
 				comision.setComision(true);
 				comision.setMonto(tr.getComision().getImporte() * -1);
 				comision.setTipo("comisión");
