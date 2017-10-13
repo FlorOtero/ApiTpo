@@ -15,5 +15,6 @@ public class CompraEfectivo extends Transaccion {
 
 	public void ejecutar() throws BusinessException, InvalidPasswordException {
 		SistemaTransacciones.getInstance().aprobarTransaccion(this);
+		
 	}
 }

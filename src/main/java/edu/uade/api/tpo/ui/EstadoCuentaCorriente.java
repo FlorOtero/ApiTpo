@@ -94,7 +94,6 @@ public class EstadoCuentaCorriente {
 		scrollPane.setViewportView(table);
 		
 		JLabel lblSaldoCuentaCorriente = new JLabel("Saldo Cuenta Corriente:");
-		
 		JLabel lblmonto = new JLabel("(monto)");
 		
 		JButton btnVolverAMenu = new JButton("Volver a menu principal");

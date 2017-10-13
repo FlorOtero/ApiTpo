@@ -13,6 +13,7 @@ public abstract class Transaccion implements Persistible {
 	private Date fecha;
 	private Usuario contraparte;
 	private String cuentaCorrienteId;
+	private Comision comision;
 	
 	public Transaccion() {}
 	
@@ -75,4 +76,11 @@ public abstract class Transaccion implements Persistible {
 
 	public abstract void ejecutar() throws BusinessException, InvalidPasswordException;
 
+	public Comision getComision() {
+		return comision;
+	}
+
+	public void setComision(Comision comision) {
+		this.comision = comision;
+	}
 }

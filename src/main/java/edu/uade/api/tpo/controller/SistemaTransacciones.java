@@ -1,6 +1,8 @@
 package edu.uade.api.tpo.controller;
 
 import edu.uade.api.tpo.dao.impl.TransaccionDaoImpl;
+import edu.uade.api.tpo.exceptions.BusinessException;
+import edu.uade.api.tpo.exceptions.InvalidPasswordException;
 import edu.uade.api.tpo.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,18 +43,20 @@ public class SistemaTransacciones {
             SistemaPublicaciones.getInstance().modificarPublicacion(publicacion);
             TransaccionDaoImpl.getInstance().create(tr);
             tr.ejecutar();
+
         } catch (Exception e) {
             logger.error("Error creando transaccion", e);
         }
     }
 
-    public void aprobarTransaccion(Transaccion transaccion) {
+    public void aprobarTransaccion(Transaccion transaccion) throws BusinessException, InvalidPasswordException {
         transaccion.setEstado(EstadoTransaccion.A);
         transaccion.getPublicacion().setEstado(Estado.I);
         try {
             SistemaPublicaciones.getInstance().modificarPublicacion(transaccion.getPublicacion());
             TransaccionDaoImpl.getInstance().update(transaccion);
             //Generar movimiento cuentaCorriente!!
+            SistemaCuentaCorriente.getInstance().actualizarSaldo(transaccion);
 
             logger.info(">>> TRANSACCION APROBADA!! <<<");
         } catch (SQLException e) {
@@ -70,6 +74,15 @@ public class SistemaTransacciones {
         } catch (SQLException e) {
             logger.error("Error rechazando transaccion", e);
         }
+    }
+
+    public void actualizarTransaccion(Transaccion transaccion) {
+        try {
+            TransaccionDaoImpl.getInstance().update(transaccion);
+        } catch (SQLException e) {
+            logger.error("Error actualizando transaccion", e);
+        }
+
     }
 
 }

@@ -3,7 +3,6 @@ package edu.uade.api.tpo.dao.impl;
 import edu.uade.api.tpo.dao.AbstractDao;
 import edu.uade.api.tpo.dao.GenericDao;
 import edu.uade.api.tpo.model.CuentaCorriente;
-import edu.uade.api.tpo.util.UUIDUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -66,9 +65,9 @@ public class CuentaCorrienteDaoImpl extends AbstractDao<CuentaCorriente> {
     public PreparedStatement findBy(String field, String value, Connection conn) throws SQLException {
         throw new UnsupportedOperationException("Find by is not supported on class CuentaCorriente!");
     }
-    
+
     @Override
     public void delete(CuentaCorriente t) throws SQLException {
-    	throw new UnsupportedOperationException("Delete is not supported on class CuentaCorriente!");
+        throw new UnsupportedOperationException("Delete is not supported on class CuentaCorriente!");
     }
 }

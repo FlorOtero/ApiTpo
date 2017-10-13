@@ -35,6 +35,9 @@ public class CompraEfectivoDaoImpl extends AbstractManyToOneDao<CompraEfectivo> 
 
     @Override
     public PreparedStatement create(CompraEfectivo compraEfectivo, Connection conn) throws SQLException {
+        if(compraEfectivo.getComision() != null) {
+            ComisionDaoImpl.getInstance().create(compraEfectivo.getComision());
+        }
         String query = "INSERT INTO " + schema + ".compras_efectivo VALUES(?,?,?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, compraEfectivo.getId());
@@ -48,6 +51,9 @@ public class CompraEfectivoDaoImpl extends AbstractManyToOneDao<CompraEfectivo> 
 
     @Override
     public PreparedStatement update(CompraEfectivo compraEfectivo, Connection conn) throws SQLException {
+        if(compraEfectivo.getComision() != null) {
+            ComisionDaoImpl.getInstance().update(compraEfectivo.getComision());
+        }
         String query = "UPDATE " + schema + ".compras_efectivo SET contraparte_id = ?, publicacion_id = ?, estado = ?, fecha = ?, cuenta_corriente_id = ? where compra_efectivo_id = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, compraEfectivo.getContraparte().getId());
@@ -97,7 +103,10 @@ public class CompraEfectivoDaoImpl extends AbstractManyToOneDao<CompraEfectivo> 
         compra.setEstado(EstadoTransaccion.valueOf(rs.getString("estado")));
         compra.setFecha(rs.getTimestamp("fecha"));
         compra.setCuentaCorrienteId(rs.getString("cuenta_corriente_id"));
-
+        String comisionId = rs.getString("comision_id");
+        if (comisionId != null && !comisionId.isEmpty()) {
+            compra.setComision(ComisionDaoImpl.getInstance().findById(comisionId));
+        }
         return compra;
     }
 
