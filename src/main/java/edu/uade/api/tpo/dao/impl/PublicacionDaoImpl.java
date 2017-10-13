@@ -111,7 +111,7 @@ public class PublicacionDaoImpl extends AbstractManyToOneDao<Publicacion> {
 				"SELECT subasta_id, usuario_id, fecha_desde, fecha_hasta, precio, estado, articulo_id, servicio_id, nombre, descripcion FROM " + schema + ".subastas AS subasta, " + schema + ".servicios AS servicio " +
 				"WHERE lower(servicio." + field + ") LIKE ? AND subasta.articulo_id = servicio.servicio_id AND subasta.estado = ?";
 		PreparedStatement ps = conn.prepareStatement(query);
-		String status = "A";
+		String status = Estado.A.toString();
 		String valueLike = "%" + value + "%";
 		ps.setString(1, valueLike);
 		ps.setString(2, status);
