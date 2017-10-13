@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class SistemaCuentaCorriente {
 
@@ -58,14 +59,12 @@ public class SistemaCuentaCorriente {
     }
 
     public List<Comision> listarComisiones(String nombreUsuario) throws BusinessException {
-
         Usuario usuario = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
-
-        if (!usuario.getCuentaCorriente().hasComisiones()) {
+        List<Comision> comisiones = usuario.getCuentaCorriente().getTransacciones().stream().filter(t -> t.getComision() != null).map(t -> t.getComision()).collect(Collectors.toList());
+        if (comisiones == null || comisiones.isEmpty()) {
             throw new BusinessException("No hay comisiones para mostrar");
         }
-
-        return usuario.getCuentaCorriente().getComisiones();
+        return comisiones;
 
     }
 
