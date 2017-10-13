@@ -35,7 +35,7 @@ public class CompraEfectivoDaoImpl extends AbstractManyToOneDao<CompraEfectivo> 
 
     @Override
     public PreparedStatement create(CompraEfectivo compraEfectivo, Connection conn) throws SQLException {
-        if(compraEfectivo.getComision() != null) {
+        if (compraEfectivo.getComision() != null) {
             ComisionDaoImpl.getInstance().create(compraEfectivo.getComision());
         }
         String query = "INSERT INTO " + schema + ".compras_efectivo VALUES(?,?,?,?,?,?)";
@@ -51,8 +51,12 @@ public class CompraEfectivoDaoImpl extends AbstractManyToOneDao<CompraEfectivo> 
 
     @Override
     public PreparedStatement update(CompraEfectivo compraEfectivo, Connection conn) throws SQLException {
-        if(compraEfectivo.getComision() != null) {
-            ComisionDaoImpl.getInstance().update(compraEfectivo.getComision());
+        if (compraEfectivo.getComision() != null) {
+            if (compraEfectivo.getComision().getId() == null) {
+                ComisionDaoImpl.getInstance().create(compraEfectivo.getComision());
+            } else {
+                ComisionDaoImpl.getInstance().update(compraEfectivo.getComision());
+            }
         }
         String query = "UPDATE " + schema + ".compras_efectivo SET contraparte_id = ?, publicacion_id = ?, estado = ?, fecha = ?, cuenta_corriente_id = ? where compra_efectivo_id = ?";
         PreparedStatement ps = conn.prepareStatement(query);
@@ -115,13 +119,13 @@ public class CompraEfectivoDaoImpl extends AbstractManyToOneDao<CompraEfectivo> 
         throw new UnsupportedOperationException("Find by is not supported on class CompraEfectivo!");
     }
 
-	@Override
-	public PreparedStatement findManyLike(String field, String value, Connection conn) throws SQLException {
-		throw new UnsupportedOperationException("Delete is not supported on class CompraEfectivo!");
-	}
-    
+    @Override
+    public PreparedStatement findManyLike(String field, String value, Connection conn) throws SQLException {
+        throw new UnsupportedOperationException("Delete is not supported on class CompraEfectivo!");
+    }
+
     @Override
     public void delete(CompraEfectivo t) throws SQLException {
-    	throw new UnsupportedOperationException("Delete is not supported on class CompraEfectivo!");
+        throw new UnsupportedOperationException("Delete is not supported on class CompraEfectivo!");
     }
 }

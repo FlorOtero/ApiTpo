@@ -57,7 +57,11 @@ public class CompraTransferenciaBancariaDaoImpl extends AbstractManyToOneDao<Com
     public PreparedStatement update(CompraTransferenciaBancaria compraTransferenciaBancaria, Connection conn)
             throws SQLException {
         if (compraTransferenciaBancaria.getComision() != null) {
-            ComisionDaoImpl.getInstance().update(compraTransferenciaBancaria.getComision());
+            if (compraTransferenciaBancaria.getComision().getId() == null) {
+                ComisionDaoImpl.getInstance().create(compraTransferenciaBancaria.getComision());
+            } else {
+                ComisionDaoImpl.getInstance().update(compraTransferenciaBancaria.getComision());
+            }
         }
         String query = "UPDATE " + schema
                 + ".compras_transf_bancaria SET contraparte_id = ?, publicacion_id = ?, estado = ?, fecha = ?, numero_cuenta = ?, cuenta_corriente_id = ? where compra_transf_bancaria_id = ?";
