@@ -72,12 +72,14 @@ public class SistemaCuentaCorriente {
 
 	public List<ItemCtaCte> consultarMovimientos(String nombreUsuario) throws BusinessException {
 
-		List<ItemCtaCte> movimientos = new ArrayList<>();
 		Usuario usuario = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
+		
 		if (!usuario.getCuentaCorriente().hasTransacciones()) {
 			throw new BusinessException("No hay movimientos en la cuenta corriente");
 		}
 
+		List<ItemCtaCte> movimientos = new ArrayList<>();
+		
 		 for (Transaccion tr : usuario.getCuentaCorriente().getTransacciones()) {
 
 			ItemCtaCte item = new ItemCtaCte(tr.getId());
@@ -109,4 +111,6 @@ public class SistemaCuentaCorriente {
 
 	}
 
+	
+	
 }
