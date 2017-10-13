@@ -30,7 +30,12 @@ public class SistemaInterfazEntidadesRecaudadoras {
             CompraTransferenciaBancariaDaoImpl.getInstance().create(compra);
             logger.info(">>> Autorizando pago <<<");
             wait(APPROVAL_WAIT_TIME);
-            boolean approved = getRandom() == 0;
+            boolean approved = getRandom() != 0;
+            if(approved) {
+                SistemaTransacciones.getInstance().aprobarTransaccion(compra);
+            } else {
+                SistemaTransacciones.getInstance().rechazarTransaccion(compra);
+            }
         } catch (InterruptedException | SQLException e) {
             logger.error("Error procesando el pago por transferencia bancaria", e);
         }
@@ -41,13 +46,18 @@ public class SistemaInterfazEntidadesRecaudadoras {
             CompraTarjetaCreditoDaoImpl.getInstance().create(compra);
             logger.info(">>> Autorizando pago <<<");
             wait(APPROVAL_WAIT_TIME);
-            boolean approved = getRandom() == 0;
+            boolean approved = getRandom() != 0;
+            if(approved) {
+                SistemaTransacciones.getInstance().aprobarTransaccion(compra);
+            } else {
+                SistemaTransacciones.getInstance().rechazarTransaccion(compra);
+            }
         } catch (InterruptedException | SQLException e) {
             logger.error("Error procesando el pago por transferencia bancaria", e);
         }
     }
 
     private int getRandom() {
-        return (int) (Math.random() * 2);
+        return (int) (Math.random() * 4);
     }
 }

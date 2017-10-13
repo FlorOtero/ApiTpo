@@ -54,7 +54,7 @@ public class SistemaTransacciones {
             TransaccionDaoImpl.getInstance().update(transaccion);
             //Generar movimiento cuentaCorriente!!
 
-            logger.info(">>> TRANSACCION GENERADA!! <<<");
+            logger.info(">>> TRANSACCION APROBADA!! <<<");
         } catch (SQLException e) {
             logger.error("Error aprobando transaccion", e);
         }
