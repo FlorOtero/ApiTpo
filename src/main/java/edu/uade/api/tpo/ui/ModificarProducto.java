@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JCheckBox;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.prefs.Preferences;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
+import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
@@ -32,6 +34,8 @@ import edu.uade.api.tpo.model.Publicacion;
 import edu.uade.api.tpo.model.Servicio;
 import edu.uade.api.tpo.model.TipoPeriodo;
 import edu.uade.api.tpo.model.Usuario;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class ModificarProducto {
 	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
@@ -46,7 +50,10 @@ public class ModificarProducto {
 	private JTable tablaBusqueda;
 	private JScrollPane scrollPane;
 	private JComboBox comboBox;
-	
+	private JCheckBox chckbxEfectivo;
+	private JCheckBox chckbxTarjetaDeCredito;
+	private JCheckBox chckbxTransferenciaBancaria;
+	private Publicacion p;
 	/**
 	 * Launch the application.
 	 */
@@ -83,6 +90,7 @@ public class ModificarProducto {
 		frmModificarProducto.getContentPane().setLayout(null);
 		buscarPublicacion();
 		crearTabla();
+
 		
 		JLabel lblNombre_1 = new JLabel("Nombre");
 		lblNombre_1.setBounds(34, 173, 88, 16);
@@ -110,6 +118,12 @@ public class ModificarProducto {
 		
 		
 		textField = new JTextField();
+		textField.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				//producto.setNombre(textField.getText());
+			}
+		});
 		textField.setColumns(10);
 		textField.setBounds(202, 162, 139, 23);
 		frmModificarProducto.getContentPane().add(textField);
@@ -121,34 +135,53 @@ public class ModificarProducto {
 		textField_1.setColumns(10);
 		
 		textField_2 = new JTextField();
+		textField_2.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				//producto.setDescripcion(textField_2.getText());
+			}
+		});
 		textField_2.setBounds(202, 197, 139, 23);
 		frmModificarProducto.getContentPane().add(textField_2);
 		textField_2.setColumns(10);
 		
 		textField_3 = new JTextField();
+		textField_3.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+			//	p.setPrecio(Float.parseFloat(textField_4.getText()));
+			}
+		});
 		textField_3.setBounds(202, 237, 139, 23);
 		frmModificarProducto.getContentPane().add(textField_3);
 		textField_3.setColumns(10);
 		
 		textField_4 = new JTextField();
+		textField_4.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+
+
+			}
+		});
 		textField_4.setBounds(202, 284, 139, 23);
 		frmModificarProducto.getContentPane().add(textField_4);
 		textField_4.setColumns(10);
 		
-		JCheckBox chckbxEfectivo = new JCheckBox("Efectivo");
+		chckbxEfectivo = new JCheckBox("Efectivo");
 		chckbxEfectivo.setBounds(202, 375, 158, 23);
 		frmModificarProducto.getContentPane().add(chckbxEfectivo);
 		
-		JCheckBox chckbxTarjetaDeCredito = new JCheckBox("Tarjeta de credito");
+		chckbxTarjetaDeCredito = new JCheckBox("Tarjeta de credito");
 		chckbxTarjetaDeCredito.setBounds(202, 410, 158, 23);
 		frmModificarProducto.getContentPane().add(chckbxTarjetaDeCredito);
 		
-		JCheckBox chckbxTransferenciaBancaria = new JCheckBox("Transferencia bancaria");
+		chckbxTransferenciaBancaria = new JCheckBox("Transferencia bancaria");
 		chckbxTransferenciaBancaria.setBounds(202, 446, 158, 23);
 		frmModificarProducto.getContentPane().add(chckbxTransferenciaBancaria);
 		
 		comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "Mensual", "Anual"}));
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"Mensual", "Anual"}));
 		comboBox.setBounds(376, 286, 95, 23);
 		frmModificarProducto.getContentPane().add(comboBox);
 		
@@ -246,8 +279,8 @@ public class ModificarProducto {
 			        int row = tablaBusqueda.rowAtPoint(evt.getPoint());
 			        int col = tablaBusqueda.columnAtPoint(evt.getPoint());
 			        if (row >= 0 && col >= 0) {
-			        		Publicacion p = resultado.get(row);		
-			        		CargarDatos(p);
+			        		p = resultado.get(row);		
+			        		CargarDatos();
 			        		// TODO: change this for Articulo Detail Page
 			            System.out.println("CLICKED "+ p.getArticulo().getNombre());
 			        }
@@ -257,14 +290,40 @@ public class ModificarProducto {
 			JOptionPane.showMessageDialog(null, "No se encontraron coincidencias");
 		}
 	}
-	private void CargarDatos(Publicacion p) {
+	private void CargarDatos() {
 		Producto producto = (Producto) p.getArticulo();
 		textField.setText(producto.getNombre());
 		textField_2.setText(producto.getDescripcion());
 		textField_3.setText(String.valueOf(p.getPrecio()));
 		textField_4.setText(String.valueOf(producto.getGarantia().getCantidad()));
 		textField_1.setText(p.getFechaHasta().toString());
-		comboBox.setSelectedItem(producto.getGarantia().getTipo());
+		System.out.println(comboBox.getSelectedItem());
+		String tipo = producto.getGarantia().getTipo().toString();
+		String selected = comboBox.getSelectedItem().toString();
+		int index = comboBox.getSelectedIndex();
+		if(tipo == selected){
+			if(index == 0) {
+				index = 1;
+			} else {
+				index = 0;
+			}
+		}
+		comboBox.setSelectedIndex(index);
+	//	comboBox.setSelectedItem(producto.getGarantia().getTipo());
+		for(MedioPago mp: p.getMediosPago()) {		
+			// TODO: get from MedioPago directly, without strings switch
+			switch(mp.toString()) {
+				case "EFECTIVO": 				
+					chckbxEfectivo.setSelected(true);
+					break;
+				case "TRANSFERENCIA_BANCARIA":
+					chckbxTarjetaDeCredito.setSelected(true);
+					break;
+				case "TARJETA_CREDITO": 	
+					chckbxTransferenciaBancaria.setSelected(true);
+			}
+		}
+		
 		
 		
 	}
