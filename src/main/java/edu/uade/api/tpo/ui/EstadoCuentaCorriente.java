@@ -96,6 +96,11 @@ public class EstadoCuentaCorriente {
 		comboBox.addItem("Todas");
 		comboBox.addItem("Sólo Confirmadas");
 		comboBox.addItem(" Sólo Canceladas");
+		comboBox.addActionListener (new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		        
+		    }
+		});
 
 		JScrollPane scrollPane = new JScrollPane();
 		table = new JTable();

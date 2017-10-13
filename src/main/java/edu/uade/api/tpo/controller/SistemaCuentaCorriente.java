@@ -70,6 +70,10 @@ public class SistemaCuentaCorriente {
 		return comisiones;
 
 	}
+	
+	public List<ItemCtaCte> filtrarMovimientos(String nombreUsuario, EstadoTransaccion filtro){
+		return null;
+		}
 
 	public List<ItemCtaCte> consultarMovimientos(String nombreUsuario) throws BusinessException {
 
@@ -86,6 +90,7 @@ public class SistemaCuentaCorriente {
 			ItemCtaCte item = new ItemCtaCte(tr.getId());
 			item.setEstado(tr.getEstado().getVal());
 			item.setComision(false);
+			
             //si fue una compra...
             if (tr.getContraparteId().equals(usuario.getId())) {
 				// no se cobra comision x compra
