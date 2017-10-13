@@ -51,10 +51,9 @@ public class PublicacionDaoImpl extends AbstractManyToOneDao<Publicacion> {
 
 	@Override
 	public PreparedStatement findById(String id, Connection conn) throws SQLException {
-		String query = "SELECT * FROM " + schema + ".publicaciones WHERE publicacion_id = ? AND estado = ?";
+		String query = "SELECT * FROM " + schema + ".publicaciones WHERE publicacion_id = ?";
 		PreparedStatement ps = conn.prepareStatement(query);
 		ps.setString(1, id);
-		ps.setString(2, Estado.A.toString());
 		return ps;
 	}
 
