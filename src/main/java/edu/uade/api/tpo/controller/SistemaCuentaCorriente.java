@@ -107,11 +107,11 @@ public class SistemaCuentaCorriente {
 			
 			if(item.isComision()) {
 				//si hubo comision, tenemos que reflejar el descuento
-				
+				ItemCtaCte com = new ItemCtaCte(tr.getId());
+				com.setMonto(tr.getPublicacion().getComision().getImporte() * -1);
+				movimientos.add(com);
 			}
-			
 			movimientos.add(item);
-			
 		}
 		
 		return movimientos;
