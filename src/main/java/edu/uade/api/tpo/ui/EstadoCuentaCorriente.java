@@ -17,6 +17,13 @@ import javax.swing.JTextArea;
 import javax.swing.JTable;
 import java.awt.Color;
 import javax.swing.table.DefaultTableModel;
+
+import edu.uade.api.tpo.controller.SistemaCuentaCorriente;
+import edu.uade.api.tpo.controller.SistemaUsuarios;
+import edu.uade.api.tpo.exceptions.BusinessException;
+import edu.uade.api.tpo.model.ItemCtaCte;
+import edu.uade.api.tpo.model.Usuario;
+
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.BevelBorder;
 import java.awt.SystemColor;
@@ -26,12 +33,16 @@ import javax.swing.JScrollPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.prefs.Preferences;
 import java.awt.event.ActionEvent;
 
 public class EstadoCuentaCorriente {
 
 	private JFrame frmEstadoDeCuenta;
 	private JTable table;
+	private Usuario user;
+	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
 
 	/**
 	 * Launch the application.
@@ -54,6 +65,8 @@ public class EstadoCuentaCorriente {
 	 */
 	public EstadoCuentaCorriente() {
 		initialize();
+		String nombreUsuario = prefs.get("USERNAME", null);				
+		user= SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
 	}
 
 	/**
@@ -87,13 +100,34 @@ public class EstadoCuentaCorriente {
 			new Object[][] {
 			},
 			new String[] {
-				"Numero Transaccion", "Monto", "Estado"
+				"Numero Transaccion", "Monto", "Estado", "Tipo"
 			}
 		));
 		table.getColumnModel().getColumn(0).setPreferredWidth(137);
+		
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		
+		try {
+			List<ItemCtaCte> movimientos = SistemaCuentaCorriente.getInstance().consultarMovimientos(user.getNombreUsuario());
+			
+			for(ItemCtaCte item : movimientos) {
+				
+				model.addRow(new Object[]{ 
+						item.getIdOperacion(),
+						item.getMonto(),
+						item.getEstado(),
+						item.getTipo()
+					});
+			}
+			
+		} catch (BusinessException e1) {
+			e1.printStackTrace();
+		}
+		
 		scrollPane.setViewportView(table);
 		
 		JLabel lblSaldoCuentaCorriente = new JLabel("Saldo Cuenta Corriente:");
+		
 		JLabel lblmonto = new JLabel("(monto)");
 		
 		JButton btnVolverAMenu = new JButton("Volver a menu principal");

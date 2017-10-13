@@ -92,30 +92,29 @@ public class SistemaCuentaCorriente {
 		for(Transaccion tr : usuario.getCuentaCorriente().getTransacciones()) {
 			
 			ItemCtaCte item = new ItemCtaCte(tr.getId());
+			item.setEstado(tr.getEstado().getVal());
+			item.setComision(false);
 			//si fue una compra...
 			if(tr.getContraparte().getNombreUsuario().equals(nombreUsuario)) {
 				//no se cobra comision x compra
-				item.setComision(false);
 				//mostramos un descuento en la cuenta del comprador
 				item.setMonto(tr.getPublicacion().getPrecio() * -1);
+				item.setTipo("compra");
 			}else {
 				//fue una venta, mostramos el credito en la cta del vendedor
 				item.setMonto(tr.getPublicacion().getPrecio());
-				//al ser venta hubo comision
-				item.setComision(true);
-			}
-			
-			if(item.isComision()) {
-				//si hubo comision, tenemos que reflejar el descuento
-				ItemCtaCte com = new ItemCtaCte(tr.getId());
-				com.setMonto(tr.getPublicacion().getComision().getImporte() * -1);
-				movimientos.add(com);
-			}
+				item.setTipo("venta");
+				//al ser venta hubo comision, tenemos que reflejar el descuento
+				//lleva el mismo id de operacion que la transaccion de venta, porque corresponde a ella
+				ItemCtaCte comision = new ItemCtaCte(tr.getId());
+				comision.setComision(true);
+				comision.setMonto(tr.getPublicacion().getComision().getImporte() * -1);
+				comision.setTipo("comisión");
+				movimientos.add(comision);
+			}	
 			movimientos.add(item);
 		}
-		
 		return movimientos;
-		
 	}
 	
 	
