@@ -26,7 +26,7 @@ public class SistemaCuentaCorriente {
 		return instance;
 	}
 
-	public void actualizarSaldo(Transaccion tr) throws BusinessException, InvalidPasswordException {
+	public void actualizarSaldo(Transaccion tr) throws BusinessException {
 
 		if (!(tr.getEstado() == EstadoTransaccion.A)) {
 			throw new BusinessException("La transaccion aun no ha sido aprobada");
