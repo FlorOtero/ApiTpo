@@ -30,10 +30,9 @@ public class SubastaDaoImpl extends AbstractManyToOneDao<Subasta> {
 
     @Override
     public PreparedStatement findById(String id, Connection conn) throws SQLException {
-        String query = "SELECT * FROM " + schema + ".subastas WHERE subasta_id = ? AND estado = ?";
+        String query = "SELECT * FROM " + schema + ".subastas WHERE subasta_id = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, id);
-        ps.setString(2, Estado.A.toString());
         return ps;
     }
 

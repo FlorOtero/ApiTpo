@@ -52,16 +52,10 @@ public class SistemaTransacciones {
     public void aprobarTransaccion(Transaccion transaccion) throws BusinessException, InvalidPasswordException {
         transaccion.setEstado(EstadoTransaccion.A);
         transaccion.getPublicacion().setEstado(Estado.I);
-        try {
-            SistemaPublicaciones.getInstance().modificarPublicacion(transaccion.getPublicacion());
-            TransaccionDaoImpl.getInstance().update(transaccion);
-            //Generar movimiento cuentaCorriente!!
-            SistemaCuentaCorriente.getInstance().actualizarSaldo(transaccion);
-
-            logger.info(">>> TRANSACCION APROBADA!! <<<");
-        } catch (SQLException e) {
-            logger.error("Error aprobando transaccion", e);
-        }
+        SistemaPublicaciones.getInstance().modificarPublicacion(transaccion.getPublicacion());
+        //Generar movimiento cuentaCorriente!!
+        SistemaCuentaCorriente.getInstance().actualizarSaldo(transaccion);
+        logger.info(">>> TRANSACCION APROBADA!! <<<");
     }
 
     public void rechazarTransaccion(Transaccion transaccion) {

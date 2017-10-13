@@ -35,10 +35,14 @@ public class CompraEfectivoDaoImpl extends AbstractManyToOneDao<CompraEfectivo> 
 
     @Override
     public PreparedStatement create(CompraEfectivo compraEfectivo, Connection conn) throws SQLException {
-        if(compraEfectivo.getComision() != null) {
-            ComisionDaoImpl.getInstance().create(compraEfectivo.getComision());
+        if (compraEfectivo.getComision() != null) {
+            if (compraEfectivo.getComision().getId() == null) {
+                ComisionDaoImpl.getInstance().create(compraEfectivo.getComision());
+            } else {
+                ComisionDaoImpl.getInstance().update(compraEfectivo.getComision());
+            }
         }
-        String query = "INSERT INTO " + schema + ".compras_efectivo VALUES(?,?,?,?,?,?)";
+        String query = "INSERT INTO " + schema + ".compras_efectivo VALUES(?,?,?,?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, compraEfectivo.getId());
         ps.setString(2, compraEfectivo.getContraparteId());
@@ -46,22 +50,28 @@ public class CompraEfectivoDaoImpl extends AbstractManyToOneDao<CompraEfectivo> 
         ps.setString(4, String.valueOf(compraEfectivo.getEstado()));
         ps.setTimestamp(5, new Timestamp(compraEfectivo.getFecha().getTime()));
         ps.setString(6, compraEfectivo.getCuentaCorrienteId());
+        ps.setString(7, compraEfectivo.getComision() == null ? null : compraEfectivo.getComision().getId());
         return ps;
     }
 
     @Override
     public PreparedStatement update(CompraEfectivo compraEfectivo, Connection conn) throws SQLException {
-        if(compraEfectivo.getComision() != null) {
-            ComisionDaoImpl.getInstance().update(compraEfectivo.getComision());
+        if (compraEfectivo.getComision() != null) {
+            if (compraEfectivo.getComision().getId() == null) {
+                ComisionDaoImpl.getInstance().create(compraEfectivo.getComision());
+            } else {
+                ComisionDaoImpl.getInstance().update(compraEfectivo.getComision());
+            }
         }
-        String query = "UPDATE " + schema + ".compras_efectivo SET contraparte_id = ?, publicacion_id = ?, estado = ?, fecha = ?, cuenta_corriente_id = ? where compra_efectivo_id = ?";
+        String query = "UPDATE " + schema + ".compras_efectivo SET contraparte_id = ?, publicacion_id = ?, estado = ?, fecha = ?, cuenta_corriente_id = ?, comision_id = ? where compra_efectivo_id = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, compraEfectivo.getContraparteId());
         ps.setString(2, compraEfectivo.getPublicacion().getId());
         ps.setString(3, String.valueOf(compraEfectivo.getEstado()));
         ps.setTimestamp(4, new Timestamp(compraEfectivo.getFecha().getTime()));
         ps.setString(5, compraEfectivo.getId());
-        ps.setString(6, compraEfectivo.getCuentaCorrienteId());
+        ps.setString(6, compraEfectivo.getComision().getId());
+        ps.setString(7, compraEfectivo.getCuentaCorrienteId());
         return ps;
     }
 
@@ -115,13 +125,13 @@ public class CompraEfectivoDaoImpl extends AbstractManyToOneDao<CompraEfectivo> 
         throw new UnsupportedOperationException("Find by is not supported on class CompraEfectivo!");
     }
 
-	@Override
-	public PreparedStatement findManyLike(String field, String value, Connection conn) throws SQLException {
-		throw new UnsupportedOperationException("Delete is not supported on class CompraEfectivo!");
-	}
-    
+    @Override
+    public PreparedStatement findManyLike(String field, String value, Connection conn) throws SQLException {
+        throw new UnsupportedOperationException("Delete is not supported on class CompraEfectivo!");
+    }
+
     @Override
     public void delete(CompraEfectivo t) throws SQLException {
-    	throw new UnsupportedOperationException("Delete is not supported on class CompraEfectivo!");
+        throw new UnsupportedOperationException("Delete is not supported on class CompraEfectivo!");
     }
 }
