@@ -2,6 +2,7 @@ package edu.uade.api.tpo.model;
 
 import edu.uade.api.tpo.db.Persistible;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Usuario implements Persistible {
@@ -20,6 +21,8 @@ public class Usuario implements Persistible {
 
     public Usuario() {
         this.cuentaCorriente = new CuentaCorriente();
+        this.publicaciones = new ArrayList<>();
+        this.calificaciones = new ArrayList<>();
         this.estado = Estado.A;
     }
 
