@@ -42,7 +42,14 @@ public class CompraEfectivoDaoImpl extends AbstractManyToOneDao<CompraEfectivo> 
                 ComisionDaoImpl.getInstance().update(compraEfectivo.getComision());
             }
         }
-        String query = "INSERT INTO " + schema + ".compras_efectivo VALUES(?,?,?,?,?,?,?)";
+        if(compraEfectivo.getCalificacion() != null) {
+            if(compraEfectivo.getCalificacion().getId() == null) {
+                CalificacionDaoImpl.getInstance().create(compraEfectivo.getCalificacion());
+            } else {
+                CalificacionDaoImpl.getInstance().update(compraEfectivo.getCalificacion());
+            }
+        }
+        String query = "INSERT INTO " + schema + ".compras_efectivo VALUES(?,?,?,?,?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, compraEfectivo.getId());
         ps.setString(2, compraEfectivo.getContraparteId());
@@ -51,6 +58,7 @@ public class CompraEfectivoDaoImpl extends AbstractManyToOneDao<CompraEfectivo> 
         ps.setTimestamp(5, new Timestamp(compraEfectivo.getFecha().getTime()));
         ps.setString(6, compraEfectivo.getCuentaCorrienteId());
         ps.setString(7, compraEfectivo.getComision() == null ? null : compraEfectivo.getComision().getId());
+        ps.setString(8, compraEfectivo.getCalificacion() == null ? null : compraEfectivo.getCalificacion().getId());
         return ps;
     }
 
@@ -63,7 +71,14 @@ public class CompraEfectivoDaoImpl extends AbstractManyToOneDao<CompraEfectivo> 
                 ComisionDaoImpl.getInstance().update(compraEfectivo.getComision());
             }
         }
-        String query = "UPDATE " + schema + ".compras_efectivo SET contraparte_id = ?, publicacion_id = ?, estado = ?, fecha = ?, cuenta_corriente_id = ?, comision_id = ? where compra_efectivo_id = ?";
+        if (compraEfectivo.getCalificacion() != null) {
+            if (compraEfectivo.getCalificacion().getId() == null) {
+                CalificacionDaoImpl.getInstance().create(compraEfectivo.getCalificacion());
+            } else {
+                CalificacionDaoImpl.getInstance().update(compraEfectivo.getCalificacion());
+            }
+        }
+        String query = "UPDATE " + schema + ".compras_efectivo SET contraparte_id = ?, publicacion_id = ?, estado = ?, fecha = ?, cuenta_corriente_id = ?, comision_id = ?, calificacion_id = ? where compra_efectivo_id = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, compraEfectivo.getContraparteId());
         ps.setString(2, compraEfectivo.getPublicacion().getId());
@@ -72,6 +87,7 @@ public class CompraEfectivoDaoImpl extends AbstractManyToOneDao<CompraEfectivo> 
         ps.setString(5, compraEfectivo.getId());
         ps.setString(6, compraEfectivo.getComision().getId());
         ps.setString(7, compraEfectivo.getCuentaCorrienteId());
+        ps.setString(8, compraEfectivo.getCalificacion() == null ? null : compraEfectivo.getCalificacion().getId());
         return ps;
     }
 
@@ -116,6 +132,10 @@ public class CompraEfectivoDaoImpl extends AbstractManyToOneDao<CompraEfectivo> 
         String comisionId = rs.getString("comision_id");
         if (comisionId != null && !comisionId.isEmpty()) {
             compra.setComision(ComisionDaoImpl.getInstance().findById(comisionId));
+        }
+        String calificacionId = rs.getString("calificacion_id");
+        if(calificacionId != null && !calificacionId.isEmpty()) {
+            compra.setCalificacion(CalificacionDaoImpl.getInstance().findById(calificacionId));
         }
         return compra;
     }
