@@ -14,6 +14,7 @@ public abstract class Transaccion implements Persistible {
 	private String contraparteId;
 	private String cuentaCorrienteId;
 	private Comision comision;
+	private Calificacion calificacion;
 	
 	public Transaccion() {}
 	
@@ -82,5 +83,13 @@ public abstract class Transaccion implements Persistible {
 
 	public void setComision(Comision comision) {
 		this.comision = comision;
+	}
+
+	public Calificacion getCalificacion() {
+		return calificacion;
+	}
+
+	public void setCalificacion(Calificacion calificacion) {
+		this.calificacion = calificacion;
 	}
 }

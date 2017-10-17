@@ -7,19 +7,12 @@ import java.util.Date;
 public class Calificacion implements Persistible {
 
     private String id;
-    private Transaccion transaccion;
     private int calificacion;
     private String observaciones;
     private Date fecha;
-    private char estado;
-    private String usuarioId;
 
-    public Transaccion getTransaccion() {
-        return transaccion;
-    }
+    public Calificacion() {
 
-    public void setTransaccion(Transaccion transaccion) {
-        this.transaccion = transaccion;
     }
 
     public int getCalificacion() {
@@ -46,22 +39,6 @@ public class Calificacion implements Persistible {
         this.fecha = fecha;
     }
 
-    public char getEstado() {
-        return estado;
-    }
-
-    public void setEstado(char estado) {
-        this.estado = estado;
-    }
-
-    public String getUsuarioId() {
-        return usuarioId;
-    }
-
-    public void setUsuarioId(String usuarioId) {
-        this.usuarioId = usuarioId;
-    }
-
     public String getId() {
         return id;
     }
@@ -69,4 +46,5 @@ public class Calificacion implements Persistible {
     public void setId(String id) {
         this.id = id;
     }
+
 }
