@@ -16,13 +16,11 @@ public class Usuario implements Persistible {
     private CuentaCorriente cuentaCorriente;
     private List<Publicacion> publicaciones;
     private String mail;
-    private List<Calificacion> calificaciones;
     private Estado estado;
 
     public Usuario() {
         this.cuentaCorriente = new CuentaCorriente();
         this.publicaciones = new ArrayList<>();
-        this.calificaciones = new ArrayList<>();
         this.estado = Estado.A;
     }
 
@@ -102,20 +100,12 @@ public class Usuario implements Persistible {
         this.id = id;
     }
 
-    public List<Calificacion> getCalificaciones() {
-        return calificaciones;
-    }
-
     public Estado getEstado() {
         return estado;
     }
 
     public void setEstado(Estado estado) {
         this.estado = estado;
-    }
-
-    public void setCalificaciones(List<Calificacion> calificaciones) {
-        this.calificaciones = calificaciones;
     }
     
     public float calcularReputacion(){
