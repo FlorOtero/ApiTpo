@@ -80,7 +80,6 @@ public class UsuarioDaoImpl extends AbstractDao<Usuario> {
             usuario.setMail(rs.getString("mail"));
             usuario.setPassword(PasswordDaoImpl.getInstance().findById(rs.getString("password_id")));
             usuario.setCuentaCorriente(CuentaCorrienteDaoImpl.getInstance().findById(rs.getString("cuenta_corriente_id")));
-            usuario.setCalificaciones(CalificacionDaoImpl.getInstance().findManyBy("usuario_id", usuario.getId()));
             List<Publicacion> publicaciones = new ArrayList<>();
             publicaciones.addAll(Collections.unmodifiableList(PublicacionDaoImpl.getInstance().findManyBy("usuario_id", usuario.getId())));
             publicaciones.addAll(Collections.unmodifiableList(SubastaDaoImpl.getInstance().findManyBy("usuario_id", usuario.getId())));

@@ -3,7 +3,6 @@ package edu.uade.api.tpo.dao.impl;
 import edu.uade.api.tpo.dao.AbstractManyToOneDao;
 import edu.uade.api.tpo.dao.ManyToOneDao;
 import edu.uade.api.tpo.model.Calificacion;
-import edu.uade.api.tpo.model.Estado;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -33,13 +32,12 @@ public class CalificacionDaoImpl extends AbstractManyToOneDao<Calificacion> {
 
 	@Override
 	public PreparedStatement create(Calificacion calificacion, Connection conn) throws SQLException {
-		String query = "INSERT INTO " + schema + ".calificaciones VALUES(?,?,?,?,?)";
+		String query = "INSERT INTO " + schema + ".calificaciones VALUES(?,?,?,?)";
 		PreparedStatement ps = conn.prepareStatement(query);
 		ps.setString(1, calificacion.getId());
 		ps.setInt(2, calificacion.getCalificacion());
 		ps.setString(3, calificacion.getObservaciones());
 		ps.setTimestamp(4, new Timestamp(calificacion.getFecha().getTime()));
-		ps.setString(5, String.valueOf(calificacion.getEstado()));
 
 		return ps;
 	}
@@ -47,13 +45,12 @@ public class CalificacionDaoImpl extends AbstractManyToOneDao<Calificacion> {
 	@Override
 	public PreparedStatement update(Calificacion calificacion, Connection conn) throws SQLException {
 		String query = "UPDATE " + schema
-				+ ".calificaciones VALUES calificacion = ?, observaciones = ?, fecha = ?, estado = ? WHERE calificacion_id = ?";
+				+ ".calificaciones VALUES calificacion = ?, observaciones = ?, fecha = ? WHERE calificacion_id = ?";
 		PreparedStatement ps = conn.prepareStatement(query);
 		ps.setInt(1, calificacion.getCalificacion());
 		ps.setString(2, calificacion.getObservaciones());
 		ps.setTimestamp(3, new Timestamp(calificacion.getFecha().getTime()));
-		ps.setString(4, String.valueOf(calificacion.getEstado()));
-		ps.setString(5, calificacion.getId());
+		ps.setString(4, calificacion.getId());
 		return ps;
 	}
 
@@ -89,7 +86,6 @@ public class CalificacionDaoImpl extends AbstractManyToOneDao<Calificacion> {
 		calificacion.setCalificacion(rs.getInt("calificacion"));
 		calificacion.setObservaciones(rs.getString("observaciones"));
 		calificacion.setFecha(rs.getTimestamp("fecha"));
-		calificacion.setEstado(Estado.valueOf(rs.getString("estado")));
 		return calificacion;
 	}
 

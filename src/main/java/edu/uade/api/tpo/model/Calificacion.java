@@ -10,7 +10,6 @@ public class Calificacion implements Persistible {
     private int calificacion;
     private String observaciones;
     private Date fecha;
-    private Estado estado;
 
     public Calificacion() {
 
@@ -48,11 +47,4 @@ public class Calificacion implements Persistible {
         this.id = id;
     }
 
-    public Estado getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Estado estado) {
-        this.estado = estado;
-    }
 }

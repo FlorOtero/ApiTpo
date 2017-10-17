@@ -119,7 +119,7 @@ public class Usuario implements Persistible {
     }
     
     public float calcularReputacion(){
-    	
+    	/*
     		float reputacion = 0;
     		int aprobadas = 0;
     	
@@ -131,6 +131,7 @@ public class Usuario implements Persistible {
     		}
     		
     		return (reputacion/aprobadas);
-    	
+    */
+    	return 0;
     }
 }
