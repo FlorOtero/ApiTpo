@@ -1,7 +1,6 @@
 package edu.uade.api.tpo.dao.impl;
 
 import edu.uade.api.tpo.dao.AbstractManyToOneDao;
-import edu.uade.api.tpo.dao.ManyToOneDao;
 import edu.uade.api.tpo.model.Estado;
 import edu.uade.api.tpo.model.MedioPago;
 import edu.uade.api.tpo.model.Publicacion;
@@ -12,12 +11,12 @@ import java.util.List;
 
 public class PublicacionDaoImpl extends AbstractManyToOneDao<Publicacion> {
 
-	private static ManyToOneDao<Publicacion> instance;
+	private static PublicacionDaoImpl instance;
 
 	private PublicacionDaoImpl() {
 	}
 
-	public static ManyToOneDao<Publicacion> getInstance() {
+	public static PublicacionDaoImpl getInstance() {
 		if (instance == null) {
 			instance = new PublicacionDaoImpl();
 		}
@@ -163,6 +162,18 @@ public class PublicacionDaoImpl extends AbstractManyToOneDao<Publicacion> {
 		String query = "DELETE FROM " + schema + ".publicaciones WHERE publicacion_id = ?";
 		PreparedStatement ps = conn.prepareStatement(query);
 		ps.setString(1, p.getId());
+		return ps;
+	}
+
+	public List<Publicacion> findAll() throws SQLException {
+		try (Connection conn = this.getConnection(); PreparedStatement ps = getFindAllStatement(conn); ResultSet rs = ps.executeQuery()) {
+			return mapMany(rs);
+		}
+	}
+
+	private PreparedStatement getFindAllStatement(Connection conn) throws SQLException {
+		PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + schema + ".publicaciones WHERE estado = ?");
+		ps.setString(1, Estado.A.toString());
 		return ps;
 	}
 }
