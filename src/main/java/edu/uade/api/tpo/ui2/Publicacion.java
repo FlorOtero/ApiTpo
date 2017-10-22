@@ -19,8 +19,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
-import org.eclipse.wb.swing.FocusTraversalOnArray;
-import java.awt.Component;
 import java.awt.FlowLayout;
 
 public class Publicacion {
@@ -96,7 +94,7 @@ public class Publicacion {
 		frmPublicacinApi.getContentPane().add(btnImagenAnterior);
 		
 		JLabel lblBreadcrumb = new JLabel("Inicio > Ver Publicación");
-		lblBreadcrumb.setBounds(10, 20, 300, 16);
+		lblBreadcrumb.setBounds(10, 20, 480, 16);
 		frmPublicacinApi.getContentPane().add(lblBreadcrumb);
 		
 		JSeparator separator = new JSeparator();
@@ -209,6 +207,12 @@ public class Publicacion {
 		lblStar.setBounds(360, 280, 16, 16);
 		frmPublicacinApi.getContentPane().add(lblStar);
 		
+		/**
+		 * El texto debe cambiar de acuerdo al tipo de publicacion
+		 * 
+		 * String txtBtnComprar = ( Es compra inmediata ) ? "Comprar" : "Ofertar";
+		 * JButton btnComprar = new JButton(txtBtnComprar);
+		 */	
 		JButton btnComprar = new JButton("Comprar");
 		btnComprar.setBounds(255, 310, 235, 30);
 		frmPublicacinApi.getContentPane().add(btnComprar);
