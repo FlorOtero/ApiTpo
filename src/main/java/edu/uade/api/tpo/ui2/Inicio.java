@@ -158,6 +158,9 @@ public class Inicio {
 				String categoria =(p.getArticulo() instanceof Producto) ? "Producto" : "Servicio";
 				String tipoPublicacion = (p instanceof Subasta) ? "Subasta" : "Compra inmediata";
 				
+				/**
+				 * TODO checkear el tema de la subasta
+				 */
 				model.addRow(new Object[]{
 						tipoPublicacion,
 						p.getArticulo().getNombre(),
