@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.prefs.Preferences;
 import java.util.regex.Pattern;
 
 public class SistemaUsuarios {
@@ -116,6 +117,20 @@ public class SistemaUsuarios {
             throw new InvalidPasswordException("La contraseña ingresada es incorrecta.\nLa misma debe tener entre 8 y 20 caracteres, al menos un número y al menos una letra mayúscula.");
         }
     }
+    
+    public static Usuario getUsuarioLoggeado() {
+		Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
+		Usuario user = new Usuario();
+		
+		String username = prefs.get("USERNAME", null);
+		if (username != null) {			
+			user = SistemaUsuarios.getInstance().buscarUsuario(username);
+		} else {
+			user.setId("9ec1f480-b1a3-4605-a808-26829333e09d");			
+		}
+		
+		return user;
+	}
 
 
 }

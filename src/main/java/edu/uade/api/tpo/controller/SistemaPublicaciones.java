@@ -31,8 +31,11 @@ public class SistemaPublicaciones {
         return instance;
     }
 
-    public Publicacion altaPublicacion(String usuarioId, Date fechaHasta, float precio, Articulo articulo,
-                                       List<MedioPago> mediosPago) {
+    public Publicacion altaPublicacion(String usuarioId, float precio, Articulo articulo, List<MedioPago> mediosPago) {
+    	
+    		int DIAS_VENCIMIENTO = 90;
+    		Date fechaHasta = new Date(new Date().getTime() + DIAS_VENCIMIENTO *24*60*60*1000);
+    		
         Publicacion p = new Publicacion();
         p.setFechaDesde(new Date());
         p.setFechaHasta(fechaHasta);

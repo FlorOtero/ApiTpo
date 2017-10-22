@@ -44,6 +44,8 @@ public class MenuPrincipal {
 	 */
 	public MenuPrincipal() {
 		initialize();
+		buscarPublicacion(buscarField.getText());
+		crearTabla();
 	}
 
 	/**
@@ -133,7 +135,7 @@ public class MenuPrincipal {
 		JMenuItem mntmNuevaPublicacin = new JMenuItem("Nueva publicación");
 		mntmNuevaPublicacin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				NuevaPublicacion nuevaPublicacion = new NuevaPublicacion();
+				CrearPublicacion nuevaPublicacion = new CrearPublicacion();
 				nuevaPublicacion.setVisible(true);
 				frmMenuPrincipal.dispose();
 			}
