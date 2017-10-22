@@ -71,7 +71,7 @@ public class AltaPublicacion implements ItemListener{
 	private void initialize() {
 		frmNuevaPublicacion = new JFrame();
 		frmNuevaPublicacion.setTitle("Nueva Publicación | API");
-		frmNuevaPublicacion.setBounds(100, 100, 780, 780);
+		frmNuevaPublicacion.setBounds(100, 100, 780, 750);
 		frmNuevaPublicacion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -153,7 +153,7 @@ public class AltaPublicacion implements ItemListener{
 		frmNuevaPublicacion.getContentPane().add(comboBoxTipoPublicacion);
 		
 		panelTipoPublicacion = new JPanel();
-		panelTipoPublicacion.setBounds(10, 410, 360, 180);
+		panelTipoPublicacion.setBounds(10, 410, 360, 150);
 		frmNuevaPublicacion.getContentPane().add(panelTipoPublicacion);
 		panelTipoPublicacion.setLayout(new CardLayout(0, 0));
 		
@@ -219,7 +219,7 @@ public class AltaPublicacion implements ItemListener{
 		
 		JSeparator separator_2 = new JSeparator();
 		separator_2.setOrientation(SwingConstants.VERTICAL);
-		separator_2.setBounds(384, 360, 12, 230);
+		separator_2.setBounds(384, 360, 12, 200);
 		frmNuevaPublicacion.getContentPane().add(separator_2);
 		
 		JLabel lblCategoria = new JLabel("Categoría");
@@ -233,7 +233,7 @@ public class AltaPublicacion implements ItemListener{
 		frmNuevaPublicacion.getContentPane().add(comboBoxCategoria);
 		
 		panelCategoria = new JPanel();
-		panelCategoria.setBounds(410, 410, 360, 180);
+		panelCategoria.setBounds(410, 410, 360, 150);
 		frmNuevaPublicacion.getContentPane().add(panelCategoria);
 		panelCategoria.setLayout(new CardLayout(0, 0));
 		
@@ -285,40 +285,47 @@ public class AltaPublicacion implements ItemListener{
 		textPaneCertificados.setText("Acá se tienen que ir mostrando los certificados cargados");
 		textPaneCertificados.setBackground(SystemColor.window);
 		textPaneCertificados.setEditable(false);
-		textPaneCertificados.setBounds(0, 110, 360, 60);
+		textPaneCertificados.setBounds(0, 110, 360, 40);
 		panelServicio.add(textPaneCertificados);
 		
 		JLabel lblMedioDePago = new JLabel("Medio de Pago aceptados:");
-		lblMedioDePago.setBounds(10, 600, 760, 16);
+		lblMedioDePago.setBounds(10, 580, 760, 16);
 		frmNuevaPublicacion.getContentPane().add(lblMedioDePago);
 		
 		JCheckBox chckbxEfectivo = new JCheckBox("Efectivo");
-		chckbxEfectivo.setBounds(10, 630, 130, 23);
+		chckbxEfectivo.setBounds(10, 600, 130, 23);
 		frmNuevaPublicacion.getContentPane().add(chckbxEfectivo);
 		
 		JCheckBox chckbxTarjetaDeCredito = new JCheckBox("Tarjeta de Crédito");
-		chckbxTarjetaDeCredito.setBounds(140, 630, 150, 23);
+		chckbxTarjetaDeCredito.setBounds(140, 600, 150, 23);
 		frmNuevaPublicacion.getContentPane().add(chckbxTarjetaDeCredito);
 		
 		JCheckBox chckbxTransferenciaBancaria = new JCheckBox("Transferencia Bancaria");
-		chckbxTransferenciaBancaria.setBounds(330, 630, 180, 23);
+		chckbxTransferenciaBancaria.setBounds(330, 600, 180, 23);
 		frmNuevaPublicacion.getContentPane().add(chckbxTransferenciaBancaria);
 		
 		JLabel lblFinPublicacion = new JLabel("Fin de la Publicación:");
-		lblFinPublicacion.setBounds(10, 670, 140, 16);
+		lblFinPublicacion.setBounds(10, 640, 140, 16);
 		frmNuevaPublicacion.getContentPane().add(lblFinPublicacion);
 		
 		JLabel lblFechaFinPublicacion = new JLabel("20-10-2017");
-		lblFechaFinPublicacion.setBounds(150, 670, 340, 16);
+		lblFechaFinPublicacion.setBounds(150, 640, 340, 16);
 		frmNuevaPublicacion.getContentPane().add(lblFechaFinPublicacion);
 		
 		JButton btnConfirmar = new JButton("Confirmar");
-		btnConfirmar.setBounds(650, 700, 120, 30);
+		btnConfirmar.setBounds(650, 670, 120, 30);
 		frmNuevaPublicacion.getContentPane().add(btnConfirmar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(530, 700, 120, 30);
+		btnCancelar.setBounds(530, 670, 120, 30);
 		frmNuevaPublicacion.getContentPane().add(btnCancelar);
+		
+		/**
+		 * Este boton solo debe aparecer en caso de modificar publicacion
+		 */
+		JButton btnEliminarPublicacion = new JButton("Eliminar Publicación");
+		btnEliminarPublicacion.setBounds(10, 670, 180, 30);
+		frmNuevaPublicacion.getContentPane().add(btnEliminarPublicacion);
 		
 	}
 
