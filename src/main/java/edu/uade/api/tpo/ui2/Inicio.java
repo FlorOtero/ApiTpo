@@ -1,6 +1,7 @@
 package edu.uade.api.tpo.ui2;
 
 import java.awt.EventQueue;
+import java.util.prefs.Preferences;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -15,6 +16,7 @@ import javax.swing.JTable;
 
 public class Inicio {
 
+	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
 	private JFrame frmInicioApi;
 	private JTextField txtBuscador;
 	private JTable table;
@@ -86,7 +88,7 @@ public class Inicio {
 		/**
 		 * HAY QUE SETEAR ESTE LABEL CON EL NOMBRE DEL USUARIO LOGUEADO!!!
 		 */
-		JLabel lblNombreDeUsuario = new JLabel("cosmefulanito!");
+		JLabel lblNombreDeUsuario = new JLabel(prefs.get("USERNAME", null)+"!");
 		lblNombreDeUsuario.setBounds(90, 20, 400, 16);
 		frmInicioApi.getContentPane().add(lblNombreDeUsuario);
 		
@@ -111,5 +113,9 @@ public class Inicio {
 		table.setBounds(10, 120, 480, 300);
 		frmInicioApi.getContentPane().add(table);
 
+	}
+	
+	public void setVisible(boolean isVisible) {
+		this.frmInicioApi.setVisible(isVisible);
 	}
 }
