@@ -1,18 +1,31 @@
 package edu.uade.api.tpo.ui2;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.prefs.Preferences;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+
+import edu.uade.api.tpo.controller.SistemaPublicaciones;
+import edu.uade.api.tpo.model.Producto;
+import edu.uade.api.tpo.model.Publicacion;
+import edu.uade.api.tpo.model.Servicio;
+import edu.uade.api.tpo.model.Subasta;
+import edu.uade.api.tpo.ui.DetallePublicacion;
+
 import javax.swing.JButton;
 import javax.swing.JTable;
+import javax.swing.JScrollPane;
 
 public class Inicio {
 
@@ -20,6 +33,7 @@ public class Inicio {
 	private JFrame frmInicioApi;
 	private JTextField txtBuscador;
 	private JTable table;
+	private ArrayList<Publicacion> resultado;
 
 	/**
 	 * Launch the application.
@@ -109,10 +123,68 @@ public class Inicio {
 		btnBuscar.setBounds(373, 80, 120, 30);
 		frmInicioApi.getContentPane().add(btnBuscar);
 		
+		btnBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				buscarPublicacion(txtBuscador.getText());
+				createTable();
+			}
+		});
+		
+		String[] columnNames = {"Tipo", "Título", "Precio", "Categoría"};
 		table = new JTable();
-		table.setBounds(10, 120, 480, 300);
-		frmInicioApi.getContentPane().add(table);
+		table.setModel(new DefaultTableModel(new Object[][] {}, columnNames));
+		table.setAutoCreateRowSorter(true);
+		
+		JScrollPane scrollPanePublicaciones = new JScrollPane(table);
+		scrollPanePublicaciones.setBounds(10, 120, 480, 300);
+		table.setFillsViewportHeight(true);
+		frmInicioApi.getContentPane().add(scrollPanePublicaciones);
 
+	}
+	
+	private ArrayList<Publicacion> buscarPublicacion(String busqueda) {
+		SistemaPublicaciones sp = SistemaPublicaciones.getInstance();
+		resultado = (ArrayList<Publicacion>) sp.filtrarPublicaciones(busqueda);
+		return resultado;
+	}
+	
+	public void createTable() {
+			
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		
+		if (resultado != null) {
+			for(Publicacion p : resultado){
+				
+				String categoria =(p.getArticulo() instanceof Producto) ? "Producto" : "Servicio";
+				String tipoPublicacion = (p instanceof Subasta) ? "Subasta" : "Compra inmediata";
+				
+				model.addRow(new Object[]{
+						tipoPublicacion,
+						p.getArticulo().getNombre(),
+						p.getPrecio(),
+						categoria
+				});
+			}				
+
+			table.addMouseListener(new java.awt.event.MouseAdapter() {
+			    @Override
+			    public void mouseClicked(java.awt.event.MouseEvent evt) {
+			        int row = table.rowAtPoint(evt.getPoint());
+			        int col = table.columnAtPoint(evt.getPoint());
+			        if (row >= 0 && col >= 0) {
+			        		Publicacion p = resultado.get(row);
+			        		
+			        		// TODO: change this for Articulo Detail Page
+			        		VerPublicacion articuloSeleccionado = new VerPublicacion(p);	
+			        		articuloSeleccionado.setVisible(true);
+			        		frmInicioApi.dispose();
+			            System.out.println("CLICKED "+ p.getArticulo().getNombre());
+			        }
+			    }
+			});
+		} else {
+			JOptionPane.showMessageDialog(null, "No se encontraron coincidencias");
+		}
 	}
 	
 	public void setVisible(boolean isVisible) {

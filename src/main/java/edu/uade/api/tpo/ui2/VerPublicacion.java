@@ -10,8 +10,15 @@ import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import java.awt.Font;
 import java.io.File;
+import java.util.prefs.Preferences;
 
 import javax.swing.SwingConstants;
+
+import edu.uade.api.tpo.controller.SistemaUsuarios;
+import edu.uade.api.tpo.model.Articulo;
+import edu.uade.api.tpo.model.Publicacion;
+import edu.uade.api.tpo.model.Usuario;
+
 import java.awt.Color;
 
 import javax.swing.BorderFactory;
@@ -21,9 +28,21 @@ import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import java.awt.FlowLayout;
 
-public class Publicacion {
+public class VerPublicacion {
 
+	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
 	private JFrame frmPublicacinApi;
+	private Articulo articulo;
+	private Publicacion publicacion;
+	private Usuario user;
+	
+	public VerPublicacion(Publicacion p){
+		this.publicacion = p;
+		this.articulo = p.getArticulo();
+		String nombreUsuario = prefs.get("USERNAME", null);
+		user = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
+		initialize();
+	}
 
 	/**
 	 * Launch the application.
@@ -32,7 +51,7 @@ public class Publicacion {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Publicacion window = new Publicacion();
+					VerPublicacion window = new VerPublicacion();
 					window.frmPublicacinApi.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -44,7 +63,7 @@ public class Publicacion {
 	/**
 	 * Create the application.
 	 */
-	public Publicacion() {
+	public VerPublicacion() {
 		initialize();
 	}
 
@@ -234,9 +253,10 @@ public class Publicacion {
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.setBounds(370, 600, 120, 30);
 		frmPublicacinApi.getContentPane().add(btnVolver);
-		
 
-		
-
+	}
+	
+	public void setVisible(boolean isVisible) {
+		this.frmPublicacinApi.setVisible(isVisible);
 	}
 }
