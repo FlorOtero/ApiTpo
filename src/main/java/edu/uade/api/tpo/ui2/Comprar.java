@@ -14,6 +14,9 @@ import javax.swing.JRadioButton;
 import javax.swing.JPanel;
 import java.awt.Font;
 import javax.swing.JTextField;
+
+import edu.uade.api.tpo.model.Subasta;
+
 import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
 import java.awt.GridLayout;
@@ -21,6 +24,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import javax.swing.JTable;
 
 public class Comprar implements ActionListener{
 
@@ -64,7 +68,7 @@ public class Comprar implements ActionListener{
 	private void initialize() {
 		frmComprarApi = new JFrame();
 		frmComprarApi.setTitle("Comprar | API");
-		frmComprarApi.setBounds(100, 100, 500, 470);
+		frmComprarApi.setBounds(100, 100, 500, 570);
 		frmComprarApi.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -103,16 +107,57 @@ public class Comprar implements ActionListener{
 		separator.setBounds(0, 40, 500, 12);
 		frmComprarApi.getContentPane().add(separator);
 		
+		/**
+		 * IMPORTANTE: el panelSubasta solo debe ser visible si la publicacion
+		 * es una SUBASTA. De lo contrario hay que ocultarlo.
+		 * 
+		 * panelSubasta.setVisible(publicacion es subasta);
+		 */	
+	    JPanel panelSubasta = new JPanel();
+	    panelSubasta.setBounds(10, 60, 480, 80);
+	    frmComprarApi.getContentPane().add(panelSubasta);
+	    
+	    JLabel lblPrecioInicial = new JLabel("Precio inicial:");
+	    lblPrecioInicial.setLocation(0, 0);
+	    lblPrecioInicial.setSize(100, 30);
+	    panelSubasta.add(lblPrecioInicial);
+	    panelSubasta.setLayout(null);
+	    lblPrecioInicial.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
+		/**
+		 * Indicar el precio inicial de la publicacion
+		 */
+	    JLabel lblPrecioInicialPublicacion = new JLabel("$1000");
+	    lblPrecioInicialPublicacion.setLocation(100, 0);
+	    lblPrecioInicialPublicacion.setSize(380, 30);
+	    panelSubasta.add(lblPrecioInicialPublicacion);
+	    lblPrecioInicialPublicacion.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
+	    
+	    JLabel lblOferta = new JLabel("Oferta:");
+	    lblOferta.setLocation(0, 40);
+	    lblOferta.setSize(50, 30);
+	    panelSubasta.add(lblOferta);
+	    
+	    txtOferta = new JTextField();
+	    txtOferta.setLocation(50, 40);
+	    txtOferta.setSize(280, 30);
+	    panelSubasta.add(txtOferta);
+	    txtOferta.setColumns(10);
+	    
+	    JLabel lblPesosArgentinos = new JLabel("pesos argentinos");
+	    lblPesosArgentinos.setLocation(340, 40);
+	    lblPesosArgentinos.setSize(140, 30);
+	    panelSubasta.add(lblPesosArgentinos);		
+		
 		JPanel panelSeleccionarMP = new JPanel();
-	    panelSeleccionarMP.setBounds(10, 60, 480, 120);
+	    panelSeleccionarMP.setBounds(10, 140, 480, 130);
 	    frmComprarApi.getContentPane().add(panelSeleccionarMP);
 	    panelSeleccionarMP.setLayout(null);
 	    
 	    JLabel lblSeleccionarMP = new JLabel("Seleccione el medio de pago:");
-	    lblSeleccionarMP.setBounds(0, 0, 480, 16);
-	    panelSeleccionarMP.add(lblSeleccionarMP);
+	    lblSeleccionarMP.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
+	    lblSeleccionarMP.setBounds(0, 0, 480, 22);
+	    panelSeleccionarMP.add(lblSeleccionarMP); 
 	    
-	    ButtonGroup group = new ButtonGroup();
 	    /**
 	     * Mostrar los radio button que se correspondan con los medios
 	     * de pago disponibles para esta publicacion
@@ -123,68 +168,38 @@ public class Comprar implements ActionListener{
 	     * 
 	     * NO OLVIDAR: panelDatosDelPago.show(panelDatosDelPago, "nombre_del_primer_medio_disponible"); => efectivo, tarjeta_credito, transferencia_bancaria.
 	     */
+	    ButtonGroup group = new ButtonGroup();
+	    
 	    JRadioButton rdbtnEfectivo = new JRadioButton("Efectivo");
 	    rdbtnEfectivo.setSelected(true);
-	    rdbtnEfectivo.setBounds(0, 20, 480, 25);
+	    rdbtnEfectivo.setBounds(0, 30, 480, 25);
 	    rdbtnEfectivo.setName("efectivo");
 	    panelSeleccionarMP.add(rdbtnEfectivo);
 	    group.add(rdbtnEfectivo);
 	    rdbtnEfectivo.addActionListener(this);
 	    
 	    JRadioButton rdbtnTarjetaDeCredito = new JRadioButton("Tarjeta de Crédito (MercadoPago)");
-	    rdbtnTarjetaDeCredito.setBounds(0, 50, 480, 25);
+	    rdbtnTarjetaDeCredito.setBounds(0, 60, 480, 25);
 	    rdbtnTarjetaDeCredito.setName("tarjeta_credito");
 	    panelSeleccionarMP.add(rdbtnTarjetaDeCredito);
 	    group.add(rdbtnTarjetaDeCredito);
 	    rdbtnTarjetaDeCredito.addActionListener(this);
 	    
 	    JRadioButton rdbtnTransferenciaBancaria = new JRadioButton("Transferencia Bancaria");
-	    rdbtnTransferenciaBancaria.setBounds(0, 80, 480, 25);
+	    rdbtnTransferenciaBancaria.setBounds(0, 90, 480, 25);
 	    rdbtnTransferenciaBancaria.setName("transferencia_bancaria");
 	    panelSeleccionarMP.add(rdbtnTransferenciaBancaria);
 	    group.add(rdbtnTransferenciaBancaria);
 	    rdbtnTransferenciaBancaria.addActionListener(this);
 		
 		panelDatosDelPago = new JPanel();
-		panelDatosDelPago.setBounds(10, 180, 480, 200);
+		panelDatosDelPago.setBounds(10, 270, 480, 200);
 		frmComprarApi.getContentPane().add(panelDatosDelPago);
 		panelDatosDelPago.setLayout(new CardLayout(0, 0));
 		
 		JPanel panelEfectivo = new JPanel();
 		panelDatosDelPago.add(panelEfectivo, "efectivo");
 		panelEfectivo.setLayout(null);
-		/**
-		 * IMPORTANTE: el panelEfectivo solo debe ser visible si la publicacion
-		 * es una SUBASTA. De lo contrario hay que ocultarlo.
-		 * 
-		 * panelEfectivo.setVisible(publicacion es subasta);
-		 */
-		
-		JLabel lblPrecioInicial = new JLabel("Precio inicial:");
-		lblPrecioInicial.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
-		lblPrecioInicial.setBounds(0, 0, 100, 22);
-		panelEfectivo.add(lblPrecioInicial);
-		
-		/**
-		 * Indicar el precio inicial de la publicacion
-		 */
-		JLabel lblPrecioInicialPublicacion = new JLabel("$1000");
-		lblPrecioInicialPublicacion.setFont(new Font("Lucida Grande", Font.PLAIN, 14));
-		lblPrecioInicialPublicacion.setBounds(100, 0, 380, 22);
-		panelEfectivo.add(lblPrecioInicialPublicacion);
-		
-		JLabel lblOferta = new JLabel("Oferta:");
-		lblOferta.setBounds(0, 30, 60, 30);
-		panelEfectivo.add(lblOferta);
-		
-		txtOferta = new JTextField();
-		txtOferta.setBounds(55, 30, 300, 30);
-		panelEfectivo.add(txtOferta);
-		txtOferta.setColumns(10);
-		
-		JLabel lblPesosArgentinos = new JLabel("pesos argentinos");
-		lblPesosArgentinos.setBounds(359, 30, 115, 30);
-		panelEfectivo.add(lblPesosArgentinos);
 		
 		JPanel panelTarjetaCredito = new JPanel();
 		panelDatosDelPago.add(panelTarjetaCredito, "tarjeta_credito");
@@ -257,13 +272,29 @@ public class Comprar implements ActionListener{
 		txtCuil.setBounds(0, 110, 480, 30);
 		panelTransferenciaBancaria.add(txtCuil);
 		txtCuil.setColumns(10);
+		
+		/**
+		 * EJEMPLO DE LA LOGICA Y FUNCIONALIDAD ESPERADA
+		 * REEMPLAZAR LA VARIABLE isSubasta POR LO QUE CORRESPONDA
+		 */
+	    boolean isSubasta = true;
+	    
+	    if(isSubasta) {
+	    		panelSubasta.setVisible(true);
+	    	    panelSeleccionarMP.setBounds(10, 140, 480, 130);
+	    	    panelDatosDelPago.setBounds(10, 270, 480, 200);
+	    } else {
+	    		panelSubasta.setVisible(false);
+	    		panelSeleccionarMP.setBounds(10, 60, 480, 130);
+	    	    panelDatosDelPago.setBounds(10, 190, 480, 200);
+	    }
 
 		JButton btnConfirmar = new JButton("Confirmar");
-	    btnConfirmar.setBounds(370, 390, 120, 30);
+	    btnConfirmar.setBounds(370, 490, 120, 30);
 	    frmComprarApi.getContentPane().add(btnConfirmar);
 	    
 	    JButton btnCancelar = new JButton("Cancelar");
-	    btnCancelar.setBounds(250, 390, 120, 30);
+	    btnCancelar.setBounds(250, 490, 120, 30);
 	    frmComprarApi.getContentPane().add(btnCancelar);
 	    
 
@@ -278,6 +309,4 @@ public class Comprar implements ActionListener{
             cl.show(panelDatosDelPago, btn.getName());
         }		
 	}
-	
-
 }
