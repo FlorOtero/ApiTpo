@@ -110,8 +110,6 @@ public class Inicio {
 		table = new JTable();
 		table.setBounds(10, 120, 480, 300);
 		frmInicioApi.getContentPane().add(table);
-		String[] columnNames = {"Tipo", "Título", "Precio", "Categoría"};		
-		DefaultTableModel model = new DefaultTableModel(columnNames, 0);
-		table.setModel(model);
+
 	}
 }
