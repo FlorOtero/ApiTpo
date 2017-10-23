@@ -80,7 +80,7 @@ public class Subasta extends Publicacion {
 		});
 	}
 
-	private float getPrecioActual() {
+	public float getPrecioActual() {
 		if(this.ofertas == null || this.ofertas.isEmpty()) {
 			return this.getPrecioInicial();
 		} else {

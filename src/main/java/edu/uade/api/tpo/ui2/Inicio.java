@@ -161,14 +161,14 @@ public class Inicio {
 				
 				String categoria =(p.getArticulo() instanceof Producto) ? "Producto" : "Servicio";
 				String tipoPublicacion = (p instanceof Subasta) ? "Subasta" : "Compra inmediata";
-				
+				String precio = (p instanceof Subasta) ? Float.toString(((Subasta) p).getPrecioActual()) : Float.toString(p.getPrecio());
 				/**
 				 * TODO checkear el tema de la subasta
 				 */
 				model.addRow(new Object[]{
 						tipoPublicacion,
 						p.getArticulo().getNombre(),
-						p.getPrecio(),
+						"$" + precio,
 						categoria
 				});
 			}				
