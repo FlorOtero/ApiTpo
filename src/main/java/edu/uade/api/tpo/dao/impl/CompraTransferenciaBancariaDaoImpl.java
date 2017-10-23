@@ -50,7 +50,7 @@ public class CompraTransferenciaBancariaDaoImpl extends AbstractManyToOneDao<Com
                 CalificacionDaoImpl.getInstance().update(compraTransferenciaBancaria.getCalificacion());
             }
         }
-        String query = "INSERT INTO " + schema + ".compras_transf_bancaria VALUES(?,?,?,?,?,?,?,?,?)";
+        String query = "INSERT INTO " + schema + ".compras_transf_bancaria VALUES(?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, compraTransferenciaBancaria.getId());
         ps.setString(2, compraTransferenciaBancaria.getContraparteId());
@@ -61,6 +61,7 @@ public class CompraTransferenciaBancariaDaoImpl extends AbstractManyToOneDao<Com
         ps.setString(7, compraTransferenciaBancaria.getCuentaCorrienteId());
         ps.setString(8, compraTransferenciaBancaria.getComision() == null ? null : compraTransferenciaBancaria.getComision().getId());
         ps.setString(9, compraTransferenciaBancaria.getCalificacion() == null ? null : compraTransferenciaBancaria.getCalificacion().getId());
+        ps.setFloat(10, compraTransferenciaBancaria.getMonto());
 
         return ps;
     }
@@ -83,18 +84,18 @@ public class CompraTransferenciaBancariaDaoImpl extends AbstractManyToOneDao<Com
             }
         }
         String query = "UPDATE " + schema
-                + ".compras_transf_bancaria SET contraparte_id = ?, publicacion_id = ?, estado = ?, fecha = ?, numero_cuenta = ?, cuenta_corriente_id = ?, comision_id = ?, calificacion_id = ? where compra_transf_bancaria_id = ?";
+                + ".compras_transf_bancaria SET contraparte_id = ?, publicacion_id = ?, estado = ?, fecha = ?, numero_cuenta = ?, cuenta_corriente_id = ?, comision_id = ?, calificacion_id = ?, monto = ? where compra_transf_bancaria_id = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, compraTransferenciaBancaria.getContraparteId());
         ps.setString(2, compraTransferenciaBancaria.getPublicacion().getId());
         ps.setString(3, String.valueOf(compraTransferenciaBancaria.getEstado()));
         ps.setTimestamp(4, new Timestamp(compraTransferenciaBancaria.getFecha().getTime()));
         ps.setString(5, compraTransferenciaBancaria.getNumeroCta());
-        ps.setString(6, compraTransferenciaBancaria.getId());
-        ps.setString(7, compraTransferenciaBancaria.getCuentaCorrienteId());
-        ps.setString(8, compraTransferenciaBancaria.getComision().getId());
-        ps.setString(9, compraTransferenciaBancaria.getId());
-        ps.setString(10, compraTransferenciaBancaria.getCalificacion().getId());
+        ps.setString(6, compraTransferenciaBancaria.getCuentaCorrienteId());
+        ps.setString(7, compraTransferenciaBancaria.getComision().getId());
+        ps.setString(8, compraTransferenciaBancaria.getId());
+        ps.setString(9, compraTransferenciaBancaria.getCalificacion().getId());
+        ps.setFloat(10, compraTransferenciaBancaria.getMonto());
         return ps;
     }
 
@@ -145,6 +146,7 @@ public class CompraTransferenciaBancariaDaoImpl extends AbstractManyToOneDao<Com
         if(calificacionId != null && !calificacionId.isEmpty()) {
             compra.setCalificacion(CalificacionDaoImpl.getInstance().findById(calificacionId));
         }
+        compra.setMonto(rs.getFloat("monto"));
         return compra;
     }
 

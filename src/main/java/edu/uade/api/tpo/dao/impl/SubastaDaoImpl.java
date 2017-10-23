@@ -41,18 +41,16 @@ public class SubastaDaoImpl extends AbstractManyToOneDao<Subasta> {
     public PreparedStatement create(Subasta subasta, Connection conn) throws SQLException {
         ArticuloDaoImpl.getInstance().create(subasta.getArticulo());
 
-        String query = "INSERT INTO " + schema + ".subastas VALUES (?,?,?,?,?,?,?,?,?,?)";
+        String query = "INSERT INTO " + schema + ".subastas VALUES (?,?,?,?,?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, subasta.getId());
         ps.setString(2, subasta.getUsuarioId());
         ps.setTimestamp(3, new Timestamp(subasta.getFechaDesde().getTime()));
-        ps.setTimestamp(4, null);
-        ps.setFloat(5, subasta.getPrecio());
-        ps.setString(6, String.valueOf(subasta.getEstado()));
-        ps.setString(7, subasta.getArticulo().getId());
-        ps.setFloat(8, subasta.getPrecioMin());
-        ps.setInt(9, subasta.getDiasVigencia());
-        ps.setFloat(10, subasta.getPrecioInicial());
+        ps.setString(4, String.valueOf(subasta.getEstado()));
+        ps.setString(5, subasta.getArticulo().getId());
+        ps.setFloat(6, subasta.getPrecioMin());
+        ps.setInt(7, subasta.getDiasVigencia());
+        ps.setFloat(8, subasta.getPrecioInicial());
         return ps;
     }
 
@@ -80,18 +78,16 @@ public class SubastaDaoImpl extends AbstractManyToOneDao<Subasta> {
         ArticuloDaoImpl.getInstance().update(subasta.getArticulo());
 
         String query = "UPDATE " + schema
-                + ".subastas SET usuario_id = ?, fecha_desde = ?, fecha_hasta = ?, precio = ?, estado = ?, articulo_id = ?, precio_min = ?, dias_vigencia = ?, precio_inicial = ? where subasta_id = ?";
+                + ".subastas SET usuario_id = ?, fecha_desde = ?, estado = ?, articulo_id = ?, precio_min = ?, dias_vigencia = ?, precio_inicial = ? where subasta_id = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, subasta.getUsuarioId());
         ps.setTimestamp(2, new Timestamp(subasta.getFechaDesde().getTime()));
-        ps.setTimestamp(3, null);
-        ps.setFloat(4, subasta.getPrecio());
-        ps.setString(5, String.valueOf(subasta.getEstado()));
-        ps.setString(6, subasta.getArticulo().getId());
-        ps.setFloat(7, subasta.getPrecioMin());
-        ps.setInt(8, subasta.getDiasVigencia());
-        ps.setFloat(9, subasta.getPrecioInicial());
-        ps.setString(10, subasta.getId());
+        ps.setString(3, String.valueOf(subasta.getEstado()));
+        ps.setString(4, subasta.getArticulo().getId());
+        ps.setFloat(5, subasta.getPrecioMin());
+        ps.setInt(6, subasta.getDiasVigencia());
+        ps.setFloat(7, subasta.getPrecioInicial());
+        ps.setString(8, subasta.getId());
         if (subasta.getMediosPago() != null && !subasta.getMediosPago().isEmpty()) {
             MedioPagoDaoImpl.getInstance().updateMediosPagoToSubasta(subasta.getId(), subasta.getMediosPago());
         }
@@ -130,8 +126,6 @@ public class SubastaDaoImpl extends AbstractManyToOneDao<Subasta> {
         subasta.setId(rs.getString("subasta_id"));
         subasta.setUsuarioId(rs.getString("usuario_id"));
         subasta.setFechaDesde(rs.getTimestamp("fecha_desde"));
-        subasta.setFechaHasta(rs.getTimestamp("fecha_hasta"));
-        subasta.setPrecio(rs.getFloat("precio"));
         subasta.setEstado(Estado.valueOf(rs.getString("estado")));
         subasta.setArticulo(ArticuloDaoImpl.getInstance().findById(rs.getString("articulo_id")));
         subasta.setPrecioMin(rs.getFloat("precio_min"));

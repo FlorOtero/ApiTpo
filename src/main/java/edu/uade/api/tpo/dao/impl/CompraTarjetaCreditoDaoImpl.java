@@ -49,7 +49,7 @@ public class CompraTarjetaCreditoDaoImpl extends AbstractManyToOneDao<CompraTarj
                 CalificacionDaoImpl.getInstance().update(compraTarjetaCredito.getCalificacion());
             }
         }
-        String query = "INSERT INTO " + schema + ".compras_tarjeta_credito VALUES(?,?,?,?,?,?,?,?,?)";
+        String query = "INSERT INTO " + schema + ".compras_tarjeta_credito VALUES(?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, compraTarjetaCredito.getId());
         ps.setString(2, compraTarjetaCredito.getContraparteId());
@@ -60,6 +60,7 @@ public class CompraTarjetaCreditoDaoImpl extends AbstractManyToOneDao<CompraTarj
         ps.setString(7, compraTarjetaCredito.getCuentaCorrienteId());
         ps.setString(8, compraTarjetaCredito.getComision() == null ? null : compraTarjetaCredito.getComision().getId());
         ps.setString(9, compraTarjetaCredito.getCalificacion() == null ? null : compraTarjetaCredito.getCalificacion().getId());
+        ps.setFloat(10, compraTarjetaCredito.getMonto());
         return ps;
     }
 
@@ -79,7 +80,7 @@ public class CompraTarjetaCreditoDaoImpl extends AbstractManyToOneDao<CompraTarj
                 CalificacionDaoImpl.getInstance().update(compraTarjetaCredito.getCalificacion());
             }
         }
-        String query = "UPDATE " + schema + ".compras_tarjeta_credito SET contraparte_id = ?, publicacion_id = ?, estado = ?, fecha = ?, numero_tarjeta = ?, cuenta_corriente_id = ?, comision_id = ?, calificacion_id = ? WHERE compra_tarjeta_credito_id = ?";
+        String query = "UPDATE " + schema + ".compras_tarjeta_credito SET contraparte_id = ?, publicacion_id = ?, estado = ?, fecha = ?, numero_tarjeta = ?, cuenta_corriente_id = ?, comision_id = ?, calificacion_id = ?, monto = ? WHERE compra_tarjeta_credito_id = ?";
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, compraTarjetaCredito.getContraparteId());
         ps.setString(2, compraTarjetaCredito.getPublicacion().getId());
@@ -90,6 +91,7 @@ public class CompraTarjetaCreditoDaoImpl extends AbstractManyToOneDao<CompraTarj
         ps.setString(7, compraTarjetaCredito.getComision().getId());
         ps.setString(8, compraTarjetaCredito.getCalificacion().getId());
         ps.setString(9, compraTarjetaCredito.getId());
+        ps.setFloat(10, compraTarjetaCredito.getMonto());
         return ps;
     }
 
@@ -140,6 +142,7 @@ public class CompraTarjetaCreditoDaoImpl extends AbstractManyToOneDao<CompraTarj
         if (calificacionId != null && !calificacionId.isEmpty()) {
             compra.setCalificacion(CalificacionDaoImpl.getInstance().findById(calificacionId));
         }
+        compra.setMonto(rs.getFloat("monto"));
         return compra;
     }
 

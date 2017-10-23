@@ -14,6 +14,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class SistemaPublicaciones {
 
@@ -220,13 +221,27 @@ public class SistemaPublicaciones {
     }
 
     /**
-     * Verifica cada 5 minutos si existen subastas pendientes de ser cerradas y las cierra
+     * Verifica cada 10 minutos si existen subastas pendientes de ser cerradas y las cierra
      */
     private void initCierreSubastaScheduler() {
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         Runnable task = () -> {
-             
+            logger.info(">>> Buscando subastas pendientes de cierre <<<");
+            List<Subasta> subastasActivas = this.subastas.stream().filter(s -> s.hasEnded()).collect(Collectors.toList());
+            subastasActivas.forEach(subastaActiva -> {
+                Oferta oferta = subastaActiva.obtenerMayorOferta();
+                if(oferta != null) {
+                    Usuario usuarioSubasta = SistemaUsuarios.getInstance().buscarUsuarioById(oferta.getUsuarioId());
+                    subastaActiva.cerrar(usuarioSubasta, oferta.getDatosPago());
+                } else {
+                    //Si no tuvo ofertas, la doy de baja
+                    subastaActiva.setEstado(Estado.I);
+                    this.modificarSubasta(subastaActiva);
+                }
+            });
         };
-        scheduler.scheduleAtFixedRate(task, 0, 5, TimeUnit.MINUTES);
+        scheduler.scheduleAtFixedRate(task, 0, 10, TimeUnit.MINUTES);
     }
+
+
 }
