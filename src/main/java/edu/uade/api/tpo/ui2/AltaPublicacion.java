@@ -102,6 +102,9 @@ public class AltaPublicacion implements ItemListener{
 		mnPublicaciones.add(mntmMisPublicaciones);
 		frmNuevaPublicacion.getContentPane().setLayout(null);
 		
+		/**
+		 * TODO cambiar Nueva por Modificar, cuando se modifique la publicacion
+		 */
 		JLabel lblBreadcrumb = new JLabel("Inicio > Publicaciones > Nueva Publicación");
 		lblBreadcrumb.setBounds(10, 20, 760, 16);
 		frmNuevaPublicacion.getContentPane().add(lblBreadcrumb);

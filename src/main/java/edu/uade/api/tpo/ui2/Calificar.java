@@ -181,6 +181,9 @@ public class Calificar {
 		lblObservaciones.setBounds(10, 230, 480, 16);
 		frmCalificarApi.getContentPane().add(lblObservaciones);
 		
+		/**
+		 * TODO cambiar el tipo del campo
+		 */
 		JTextArea textAreaObservaciones = new JTextArea();
 		textAreaObservaciones.setBounds(10, 260, 480, 150);
 		frmCalificarApi.getContentPane().add(textAreaObservaciones);

@@ -34,6 +34,7 @@ public class Inicio {
 	private JTextField txtBuscador;
 	private JTable table;
 	private ArrayList<Publicacion> resultado;
+	JButton btnBuscar;
 
 	/**
 	 * Launch the application.
@@ -56,6 +57,8 @@ public class Inicio {
 	 */
 	public Inicio() {
 		initialize();
+		buscarPublicacion("");
+		createTable();
 	}
 
 	/**
@@ -119,12 +122,13 @@ public class Inicio {
 		frmInicioApi.getContentPane().add(txtBuscador);
 		txtBuscador.setColumns(10);
 		
-		JButton btnBuscar = new JButton("Buscar");
+		btnBuscar = new JButton("Buscar");
 		btnBuscar.setBounds(373, 80, 120, 30);
 		frmInicioApi.getContentPane().add(btnBuscar);
 		
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				btnBuscar.setEnabled(false);
 				buscarPublicacion(txtBuscador.getText());
 				createTable();
 			}
@@ -188,6 +192,8 @@ public class Inicio {
 		} else {
 			JOptionPane.showMessageDialog(null, "No se encontraron coincidencias");
 		}
+		
+		btnBuscar.setEnabled(true);
 	}
 	
 	public void setVisible(boolean isVisible) {

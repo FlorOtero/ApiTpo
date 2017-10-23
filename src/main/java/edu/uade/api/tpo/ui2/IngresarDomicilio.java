@@ -54,6 +54,10 @@ public class IngresarDomicilio {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		/**
+		 * TODO que no se cierre todo cuando cierro esta ventana
+		 */
+		
 		frmIngresarDomicilio = new JFrame();
 		frmIngresarDomicilio.setTitle("Ingresar Domicilio | API");
 		frmIngresarDomicilio.setBounds(100, 100, 320, 340);

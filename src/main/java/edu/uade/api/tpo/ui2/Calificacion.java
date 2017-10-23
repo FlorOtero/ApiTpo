@@ -119,7 +119,10 @@ public class Calificacion {
 		
 		/**
 		 * Indicar las observaciones de la calificacion realizada
+		 * 
+		 * TODO armar el scrollpane + que calificacion ??
 		 */
+		
 		JTextPane textPaneObservaciones = new JTextPane();
 		textPaneObservaciones.setBounds(10, 180, 480, 150);
 		frmVerCalificacion.getContentPane().add(textPaneObservaciones);
