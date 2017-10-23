@@ -6,8 +6,9 @@ import edu.uade.api.tpo.exceptions.BusinessException;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Observable;
 
-public class Publicacion implements Persistible {
+public class Publicacion extends Observable implements Persistible {
 	protected String id;
 	private Date fechaDesde;
 	private Date fechaHasta;

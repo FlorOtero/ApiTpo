@@ -130,7 +130,7 @@ public class SistemaPublicacionesTest {
             DatosPago datosPago = new DatosPago();
             datosPago.setNumeroCuenta("12345");
             datosPago.setMedioPago(MedioPago.TRANSFERENCIA_BANCARIA);
-            this.sistemaPublicaciones.ofertar(subasta, 200, usuario, datosPago);
+            this.sistemaPublicaciones.ofertar(subasta, 310, usuario, datosPago);
         } catch (SQLException | BusinessException e) {
             Assert.fail("Should not throw exception");
         }
