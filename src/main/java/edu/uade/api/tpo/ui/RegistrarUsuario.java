@@ -128,6 +128,7 @@ public class RegistrarUsuario {
 					JOptionPane.showMessageDialog(null, "Se ha creado su usuario con exito", "Aviso", JOptionPane.PLAIN_MESSAGE);
 					OpcionIngreso ingreso = new OpcionIngreso();
 					ingreso.setVisible(true);
+					
 					frmRegistrarse.dispose();
 				} catch(BusinessException | InvalidPasswordException e1 ) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Aviso", JOptionPane.PLAIN_MESSAGE);

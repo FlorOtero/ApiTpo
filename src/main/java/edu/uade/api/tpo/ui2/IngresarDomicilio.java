@@ -1,21 +1,32 @@
 package edu.uade.api.tpo.ui2;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import edu.uade.api.tpo.model.Domicilio;
+
 import javax.swing.JButton;
 
 public class IngresarDomicilio {
 
 	private JFrame frmIngresarDomicilio;
+	private Domicilio domicilio;
 	private JTextField txtCalleNumero;
 	private JTextField txtPisoDepto;
 	private JTextField txtCodigoPostal;
 	private JTextField txtCiudad;
 	private JTextField txtProvincia;
 
+	public IngresarDomicilio(Domicilio domicilio) {
+		this();
+		this.domicilio = domicilio;
+	}
+	
 	/**
 	 * Launch the application.
 	 */
@@ -43,6 +54,10 @@ public class IngresarDomicilio {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		/**
+		 * TODO que no se cierre todo cuando cierro esta ventana
+		 */
+		
 		frmIngresarDomicilio = new JFrame();
 		frmIngresarDomicilio.setTitle("Ingresar Domicilio | API");
 		frmIngresarDomicilio.setBounds(100, 100, 320, 340);
@@ -98,9 +113,30 @@ public class IngresarDomicilio {
 		btnAceptar.setBounds(190, 280, 120, 30);
 		frmIngresarDomicilio.getContentPane().add(btnAceptar);
 		
+		btnAceptar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				domicilio.setlinea1(txtCalleNumero.getText());
+				domicilio.setlinea2(txtPisoDepto.getText());
+				domicilio.setCp(txtCodigoPostal.getText());
+				domicilio.setCiudad(txtCiudad.getText());
+				domicilio.setProvincia(txtProvincia.getText());
+				frmIngresarDomicilio.dispose();
+			}
+		});
+		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(70, 280, 120, 30);
 		frmIngresarDomicilio.getContentPane().add(btnCancelar);
+		
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmIngresarDomicilio.dispose();
+			}
+		});
+	}
+	
+	public void setVisible(boolean isVisible) {
+		this.frmIngresarDomicilio.setVisible(isVisible);
 	}
 
 }

@@ -277,7 +277,7 @@ public class Comprar implements ActionListener{
 		 * EJEMPLO DE LA LOGICA Y FUNCIONALIDAD ESPERADA
 		 * REEMPLAZAR LA VARIABLE isSubasta POR LO QUE CORRESPONDA
 		 */
-	    boolean isSubasta = true;
+	    boolean isSubasta = false;
 	    
 	    if(isSubasta) {
 	    		panelSubasta.setVisible(true);
