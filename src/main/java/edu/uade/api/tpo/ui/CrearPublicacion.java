@@ -31,15 +31,15 @@ import javax.swing.DefaultComboBoxModel;
 
 public class CrearPublicacion {
 
-	private JFrame frmCrearPublicacion;
+	private JFrame crearPublicacionFrame;
 	private JTextField nombreField;
 	private JTextField descripcionField;
 	private JTextField precioField;
 	private JTextField cantidadField;
 	private JTextField filepathField;
-	JCheckBox pagoEfectivoCheckbox;
-	JCheckBox pagoTarjetaCreditoCheckbox;
-	JCheckBox pagoTransferenciaCheckbox;
+	private JCheckBox pagoEfectivoCheckbox;
+	private JCheckBox pagoTarjetaCreditoCheckbox;
+	private JCheckBox pagoTransferenciaCheckbox;
 
 	/**
 	 * Launch the application.
@@ -49,7 +49,7 @@ public class CrearPublicacion {
 			public void run() {
 				try {
 					CrearPublicacion window = new CrearPublicacion();
-					window.frmCrearPublicacion.setVisible(true);
+					window.crearPublicacionFrame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -68,12 +68,12 @@ public class CrearPublicacion {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmCrearPublicacion = new JFrame();
-		frmCrearPublicacion.getContentPane().setBackground(new Color(255, 255, 224));
-		frmCrearPublicacion.setTitle("Nueva Publicacion");
-		frmCrearPublicacion.setBounds(100, 100, 529, 434);
-		frmCrearPublicacion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frmCrearPublicacion.getContentPane().setLayout(null);
+		crearPublicacionFrame = new JFrame();
+		crearPublicacionFrame.getContentPane().setBackground(new Color(255, 255, 224));
+		crearPublicacionFrame.setTitle("Nueva Publicacion");
+		crearPublicacionFrame.setBounds(100, 100, 529, 434);
+		crearPublicacionFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		crearPublicacionFrame.getContentPane().setLayout(null);
 
 		
 		////////////
@@ -82,23 +82,23 @@ public class CrearPublicacion {
 		
 		JLabel labelNombre = new JLabel("Nombre");
 		labelNombre.setBounds(34, 21, 61, 16);
-		frmCrearPublicacion.getContentPane().add(labelNombre);
+		crearPublicacionFrame.getContentPane().add(labelNombre);
 
 		JLabel labelDescripcion = new JLabel("Descripcion");
 		labelDescripcion.setBounds(34, 49, 88, 16);
-		frmCrearPublicacion.getContentPane().add(labelDescripcion);
+		crearPublicacionFrame.getContentPane().add(labelDescripcion);
 
 		JLabel labelPrecio = new JLabel("Precio");
 		labelPrecio.setBounds(34, 77, 61, 16);
-		frmCrearPublicacion.getContentPane().add(labelPrecio);
+		crearPublicacionFrame.getContentPane().add(labelPrecio);
 
 		JLabel labelformasDePago = new JLabel("Formas de pago");
 		labelformasDePago.setBounds(34, 261, 136, 16);
-		frmCrearPublicacion.getContentPane().add(labelformasDePago);
+		crearPublicacionFrame.getContentPane().add(labelformasDePago);
 		
 		JLabel labelGarantia = new JLabel("Garantia");
 		labelGarantia.setBounds(34, 105, 61, 16);
-		frmCrearPublicacion.getContentPane().add(labelGarantia);
+		crearPublicacionFrame.getContentPane().add(labelGarantia);
 		
 		
 		////////////
@@ -107,45 +107,45 @@ public class CrearPublicacion {
 		
 		nombreField = new JTextField();
 		nombreField.setBounds(221, 16, 130, 26);
-		frmCrearPublicacion.getContentPane().add(nombreField);
+		crearPublicacionFrame.getContentPane().add(nombreField);
 		nombreField.setColumns(10);
 
 		descripcionField = new JTextField();
 		descripcionField.setBounds(221, 44, 130, 26);
-		frmCrearPublicacion.getContentPane().add(descripcionField);
+		crearPublicacionFrame.getContentPane().add(descripcionField);
 		descripcionField.setColumns(10);
 
 		precioField = new JTextField();
 		precioField.setBounds(221, 72, 130, 26);
-		frmCrearPublicacion.getContentPane().add(precioField);
+		crearPublicacionFrame.getContentPane().add(precioField);
 		precioField.setColumns(10);
 		
 		cantidadField = new JTextField();
 		cantidadField.setBounds(221, 100, 130, 26);
-		frmCrearPublicacion.getContentPane().add(cantidadField);
+		crearPublicacionFrame.getContentPane().add(cantidadField);
 		cantidadField.setColumns(10);
 
 		filepathField = new JTextField();
 		filepathField.setBounds(149, 147, 130, 105);
 		filepathField.setColumns(10);
-		frmCrearPublicacion.getContentPane().add(filepathField);
+		crearPublicacionFrame.getContentPane().add(filepathField);
 
 		pagoEfectivoCheckbox = new JCheckBox("Efectivo");
 		pagoEfectivoCheckbox.setBounds(34, 289, 128, 23);
-		frmCrearPublicacion.getContentPane().add(pagoEfectivoCheckbox);
+		crearPublicacionFrame.getContentPane().add(pagoEfectivoCheckbox);
 
 		pagoTarjetaCreditoCheckbox = new JCheckBox("Tarjeta de credito");
 		pagoTarjetaCreditoCheckbox.setBounds(34, 314, 142, 23);
-		frmCrearPublicacion.getContentPane().add(pagoTarjetaCreditoCheckbox);
+		crearPublicacionFrame.getContentPane().add(pagoTarjetaCreditoCheckbox);
 
 		pagoTransferenciaCheckbox = new JCheckBox("Transferencia bancaria");
 		pagoTransferenciaCheckbox.setBounds(34, 342, 197, 23);
-		frmCrearPublicacion.getContentPane().add(pagoTransferenciaCheckbox);
+		crearPublicacionFrame.getContentPane().add(pagoTransferenciaCheckbox);
 		
 		JComboBox<String> comboBox = new JComboBox<String>();
 		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"ANUAL", "MENSUAL"}));
 		comboBox.setBounds(380, 101, 127, 27);
-		frmCrearPublicacion.getContentPane().add(comboBox);
+		crearPublicacionFrame.getContentPane().add(comboBox);
 
 		
 		/////////////
@@ -163,7 +163,7 @@ public class CrearPublicacion {
 			}
 		});
 		subirImagenButton.setBounds(26, 186, 117, 29);
-		frmCrearPublicacion.getContentPane().add(subirImagenButton);
+		crearPublicacionFrame.getContentPane().add(subirImagenButton);
 
 		JButton publicarButton = new JButton("Publicar");
 		publicarButton.addActionListener(new ActionListener() {
@@ -172,7 +172,7 @@ public class CrearPublicacion {
 			}
 		});
 		publicarButton.setBounds(396, 380, 89, 23);
-		frmCrearPublicacion.getContentPane().add(publicarButton);
+		crearPublicacionFrame.getContentPane().add(publicarButton);
 
 		JButton cancelarButton = new JButton("Cancelar");
 		cancelarButton.addActionListener(new ActionListener() {
@@ -181,7 +181,7 @@ public class CrearPublicacion {
 			}
 		});
 		cancelarButton.setBounds(267, 377, 117, 29);
-		frmCrearPublicacion.getContentPane().add(cancelarButton);
+		crearPublicacionFrame.getContentPane().add(cancelarButton);
 	}
 	
 	private void publicar() {
@@ -220,11 +220,11 @@ public class CrearPublicacion {
 	private void goMenuPrincipal() {
 		MenuPrincipal menuPrincipal = new MenuPrincipal();
 		menuPrincipal.setVisible(true);
-		frmCrearPublicacion.dispose();
+		crearPublicacionFrame.dispose();
 	}
 
 	public void setVisible(boolean isVisible) {
-		this.frmCrearPublicacion.setVisible(isVisible);
+		this.crearPublicacionFrame.setVisible(isVisible);
 	}
 	
 	private List<MedioPago> getMediosPago() {
