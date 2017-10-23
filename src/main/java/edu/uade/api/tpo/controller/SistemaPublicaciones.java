@@ -1,6 +1,5 @@
 package edu.uade.api.tpo.controller;
 
-import edu.uade.api.tpo.dao.ManyToOneDao;
 import edu.uade.api.tpo.dao.impl.PublicacionDaoImpl;
 import edu.uade.api.tpo.dao.impl.SubastaDaoImpl;
 import edu.uade.api.tpo.exceptions.BusinessException;
@@ -14,18 +13,28 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.*;
 
 public class SistemaPublicaciones {
 
     private static final Logger logger = LoggerFactory.getLogger(SistemaPublicaciones.class);
     private static SistemaPublicaciones instance;
-    private ManyToOneDao<Publicacion> publicacionDao;
-    private ManyToOneDao<Subasta> subastaDao;
+    private PublicacionDaoImpl publicacionDao;
+    private SubastaDaoImpl subastaDao;
+    private List<Publicacion> publicaciones;
+    private List<Subasta> subastas;
 
     private SistemaPublicaciones() {
         this.publicacionDao = PublicacionDaoImpl.getInstance();
         this.subastaDao = SubastaDaoImpl.getInstance();
         this.initCierreSubastaScheduler();
+        try {
+            this.publicaciones = publicacionDao.findAll();
+            this.subastas = subastaDao.findAll();
+            this.attachObservers();
+        } catch (Exception e) {
+            logger.error("Error obteniendo publicaciones y subastas", e);
+        }
     }
 
     public static SistemaPublicaciones getInstance() {
@@ -33,6 +42,24 @@ public class SistemaPublicaciones {
             instance = new SistemaPublicaciones();
         }
         return instance;
+    }
+
+    private void attachObservers() {
+        Map<Subasta, Set<String>> subastasUsuarios = new HashMap<>();
+        for (Subasta subasta : this.subastas) {
+            Set<String> usuariosSubasta = new HashSet<>();
+            for (Oferta oferta : subasta.getOfertas()) {
+                usuariosSubasta.add(oferta.getUsuarioId());
+            }
+            subastasUsuarios.put(subasta, usuariosSubasta);
+        }
+        for (Subasta subasta : subastasUsuarios.keySet()) {
+            Set<String> usuariosSubasta = subastasUsuarios.get(subasta);
+            for (String usuarioId : usuariosSubasta) {
+                Usuario usuario = SistemaUsuarios.getInstance().buscarUsuarioById(usuarioId);
+                subasta.addObserver(usuario);
+            }
+        }
     }
 
     public Publicacion altaPublicacion(String usuarioId, Date fechaHasta, float precio, Articulo articulo,
@@ -47,6 +74,7 @@ public class SistemaPublicaciones {
         p.setMediosPago(mediosPago);
         try {
             publicacionDao.create(p);
+            this.publicaciones.add(p);
         } catch (SQLException e) {
             logger.error("Error creando publicacion", e);
         }
@@ -57,6 +85,10 @@ public class SistemaPublicaciones {
         publicacion.setEstado(Estado.I);
         try {
             this.publicacionDao.update(publicacion);
+            Publicacion pub = this.publicaciones.stream().filter(p -> p.getId().equals(publicacion.getId())).findFirst().orElse(null);
+            if (pub != null) {
+                pub.setEstado(Estado.I);
+            }
         } catch (SQLException e) {
             logger.error("Error eliminando publicacion", e);
         }
@@ -67,14 +99,22 @@ public class SistemaPublicaciones {
         subasta.setEstado(Estado.I);
         try {
             this.subastaDao.update(subasta);
+            Subasta sub = this.subastas.stream().filter(s -> s.getId().equals(subasta.getId())).findFirst().orElse(null);
+            if (sub != null) {
+                sub.setEstado(Estado.I);
+            }
         } catch (SQLException e) {
             logger.error("Error eliminando la subasta", e);
         }
     }
 
-    public void modificarPublicacion(Publicacion p) {
+    public void modificarPublicacion(Publicacion publicacion) {
         try {
-            publicacionDao.update(p);
+            publicacionDao.update(publicacion);
+            Publicacion pub = this.publicaciones.stream().filter(p -> p.getId().equals(publicacion.getId())).findFirst().orElse(null);
+            if (pub != null) {
+                pub = publicacion;
+            }
         } catch (SQLException e) {
             logger.error("Error modificando la publicacion", e);
         }
@@ -83,6 +123,10 @@ public class SistemaPublicaciones {
     public void modificarSubasta(Subasta subasta) {
         try {
             this.subastaDao.update(subasta);
+            Subasta sub = this.subastas.stream().filter(s -> s.getId().equals(subasta.getId())).findFirst().orElse(null);
+            if (sub != null) {
+                sub = subasta;
+            }
         } catch (SQLException e) {
             logger.error("Error modificando la subasta", e);
         }
@@ -98,6 +142,7 @@ public class SistemaPublicaciones {
         s.setMediosPago(mediosPago);
         try {
             this.subastaDao.create(s);
+            this.subastas.add(s);
         } catch (SQLException e) {
             logger.error("Error creando subasta", e);
         }
@@ -118,7 +163,9 @@ public class SistemaPublicaciones {
 
         try {
             this.publicacionDao.delete(p);
+            this.publicaciones.remove(p);
             this.subastaDao.create(subasta);
+            this.subastas.add(subasta);
         } catch (SQLException e) {
             logger.error("Error convirtiendo publicacion a subasta", e);
         }
@@ -137,20 +184,30 @@ public class SistemaPublicaciones {
 
     public Publicacion buscarPublicacion(String publicacionId) {
         Publicacion publicacion = null;
-        try {
-            return publicacionDao.findById(publicacionId);
-        } catch (SQLException e) {
-            logger.error("Error buscando publicacion", e);
+        if (this.publicaciones != null && !this.publicaciones.isEmpty()) {
+            publicacion = publicaciones.stream().filter(p -> p.getId().equals(publicacionId)).findFirst().orElse(null);
+        }
+        if (publicacion == null) {
+            try {
+                return publicacionDao.findById(publicacionId);
+            } catch (SQLException e) {
+                logger.error("Error buscando publicacion", e);
+            }
         }
         return publicacion;
     }
 
     public Subasta buscarSubasta(String subastaId) {
         Subasta subasta = null;
-        try {
-            subasta = subastaDao.findById(subastaId);
-        } catch (SQLException e) {
-            logger.error("Error buscando la subasta", e);
+        if (this.subastas != null && !this.subastas.isEmpty()) {
+            subasta = subastas.stream().filter(s -> s.getId().equals(subastaId)).findFirst().orElse(null);
+        }
+        if (subasta == null) {
+            try {
+                subasta = subastaDao.findById(subastaId);
+            } catch (SQLException e) {
+                logger.error("Error buscando la subasta", e);
+            }
         }
         return subasta;
     }

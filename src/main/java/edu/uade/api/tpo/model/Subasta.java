@@ -1,14 +1,12 @@
 package edu.uade.api.tpo.model;
 
-import edu.uade.api.tpo.controller.SistemaNotificacionSubasta;
 import edu.uade.api.tpo.controller.SistemaPublicaciones;
-import edu.uade.api.tpo.controller.SistemaTransacciones;
 import edu.uade.api.tpo.exceptions.BusinessException;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Subasta extends Publicacion {
 	private float precioMin;
@@ -71,13 +69,11 @@ public class Subasta extends Publicacion {
 		}
 
 		Oferta oferta = new Oferta(monto, usuario.getId(), id);
-		ofertas.add(oferta);
+		ofertas.add(0, oferta);
 		SistemaPublicaciones.getInstance().modificarSubasta(this);
 
-		// notificamos a todos menos al usuario que hizo la oferta
-		ofertas.stream().filter(o -> !o.getUsuarioId().equals(usuario.getId())).map(o -> o.getUsuarioId()).collect(Collectors.toSet()).forEach(usuarioId -> {
-			SistemaNotificacionSubasta.getInstance().notificarUsuarioSubasta(usuarioId, this);
-		});
+		setChanged();
+		notifyObservers(oferta);
 	}
 
 	private float getPrecioActual() {
@@ -86,5 +82,16 @@ public class Subasta extends Publicacion {
 		} else {
 			return this.ofertas.get(0).getMonto();
 		}
+	}
+
+	public Oferta obtenerMayorOferta() {
+		return this.ofertas.get(0);
+	}
+
+	public boolean hasEnded() {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(this.getFechaDesde());
+		cal.add(Calendar.DAY_OF_MONTH, this.diasVigencia);
+		return cal.getTime().compareTo(new Date()) <= 0;
 	}
 }

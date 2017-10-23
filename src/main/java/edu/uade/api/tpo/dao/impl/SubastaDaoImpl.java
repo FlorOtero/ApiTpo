@@ -1,8 +1,9 @@
 package edu.uade.api.tpo.dao.impl;
 
 import edu.uade.api.tpo.dao.AbstractManyToOneDao;
-import edu.uade.api.tpo.dao.ManyToOneDao;
-import edu.uade.api.tpo.model.*;
+import edu.uade.api.tpo.model.Estado;
+import edu.uade.api.tpo.model.MedioPago;
+import edu.uade.api.tpo.model.Subasta;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,13 +16,13 @@ public class SubastaDaoImpl extends AbstractManyToOneDao<Subasta> {
 
 
     private static final Logger logger = LoggerFactory.getLogger(SubastaDaoImpl.class);
-    private static ManyToOneDao<Subasta> instance;
+    private static SubastaDaoImpl instance;
 
     private SubastaDaoImpl() {
 
     }
 
-    public static ManyToOneDao<Subasta> getInstance() {
+    public static SubastaDaoImpl getInstance() {
         if (instance == null) {
             instance = new SubastaDaoImpl();
         }
@@ -154,5 +155,17 @@ public class SubastaDaoImpl extends AbstractManyToOneDao<Subasta> {
     @Override
     public void delete(Subasta subasta) throws SQLException {
         throw new UnsupportedOperationException("Delete is not supported on Subasta");
+    }
+
+    public List<Subasta> findAll() throws SQLException {
+        try (Connection conn = this.getConnection(); PreparedStatement ps = getFindAllStatement(conn); ResultSet rs = ps.executeQuery()) {
+            return mapMany(rs);
+        }
+    }
+
+    private PreparedStatement getFindAllStatement(Connection conn) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + schema + ".subastas WHERE estado = ?");
+        ps.setString(1, Estado.A.toString());
+        return ps;
     }
 }
