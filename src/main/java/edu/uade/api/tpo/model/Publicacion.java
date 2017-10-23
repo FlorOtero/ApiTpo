@@ -32,6 +32,10 @@ public class Publicacion implements Persistible {
 		if (monto != precio) {
 			throw new BusinessException("El monto no puede ser diferente al precio de la publicacion");
 		}
+		this.cerrar(usuario, datosPago);
+	}
+
+	public void cerrar(Usuario usuario, DatosPago datosPago) {
 		SistemaTransacciones.getInstance().crearTransaccion(usuario, this, datosPago);
 	}
 

@@ -11,6 +11,9 @@ import org.slf4j.LoggerFactory;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class SistemaPublicaciones {
 
@@ -22,6 +25,7 @@ public class SistemaPublicaciones {
     private SistemaPublicaciones() {
         this.publicacionDao = PublicacionDaoImpl.getInstance();
         this.subastaDao = SubastaDaoImpl.getInstance();
+        this.initCierreSubastaScheduler();
     }
 
     public static SistemaPublicaciones getInstance() {
@@ -156,5 +160,16 @@ public class SistemaPublicaciones {
             throw new BusinessException("No se encontro la publicacion");
         }
         publicacion.ofertar(monto, contraparte, datosPago);
+    }
+
+    /**
+     * Verifica cada 5 minutos si existen subastas pendientes de ser cerradas y las cierra
+     */
+    private void initCierreSubastaScheduler() {
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+        Runnable task = () -> {
+             
+        };
+        scheduler.scheduleAtFixedRate(task, 0, 5, TimeUnit.MINUTES);
     }
 }
