@@ -55,7 +55,7 @@ public class SistemaPublicacionesTest {
         mediosPago.add(MedioPago.EFECTIVO);
         mediosPago.add(MedioPago.TARJETA_CREDITO);
 
-        this.sistemaPublicaciones.altaPublicacion(USER_ID, new Date(), 300, articulo, mediosPago);
+        this.sistemaPublicaciones.altaPublicacion(USER_ID, 300, articulo, mediosPago);
     }
 
     @Test
@@ -69,7 +69,7 @@ public class SistemaPublicacionesTest {
 
         List<MedioPago> mediosPago = new ArrayList<>();
         mediosPago.add(MedioPago.EFECTIVO);
-        this.sistemaPublicaciones.altaPublicacion(USER_ID, new Date(), 300, servicio, mediosPago);
+        this.sistemaPublicaciones.altaPublicacion(USER_ID, 300, servicio, mediosPago);
     }
 
     @Test

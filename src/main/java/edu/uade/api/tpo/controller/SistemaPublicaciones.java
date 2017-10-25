@@ -37,7 +37,7 @@ public class SistemaPublicaciones {
         }
         return instance;
     }
-
+    		
     private void attachObservers() {
         Map<Subasta, Set<String>> subastasUsuarios = new HashMap<>();
         for (Subasta subasta : this.subastas) {
@@ -55,10 +55,14 @@ public class SistemaPublicaciones {
             }
         }
     }
-
-    public Publicacion altaPublicacion(String usuarioId, Date fechaHasta, float precio, Articulo articulo,
-                                       List<MedioPago> mediosPago) {
-        Publicacion p = new Publicacion();
+    
+    public Publicacion altaPublicacion(String usuarioId, float precio, Articulo articulo, List<MedioPago> mediosPago) {
+		int DIAS_VENCIMIENTO = 90;
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DAY_OF_MONTH, DIAS_VENCIMIENTO);
+		Date fechaHasta = cal.getTime();
+		
+		Publicacion p = new Publicacion();
         p.setFechaDesde(new Date());
         p.setFechaHasta(fechaHasta);
         p.setPrecio(precio);

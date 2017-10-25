@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
@@ -16,6 +17,18 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+
+import edu.uade.api.tpo.controller.SistemaPublicaciones;
+import edu.uade.api.tpo.controller.SistemaUsuarios;
+import edu.uade.api.tpo.model.Articulo;
+import edu.uade.api.tpo.model.Garantia;
+import edu.uade.api.tpo.model.MedioPago;
+import edu.uade.api.tpo.model.Producto;
+import edu.uade.api.tpo.model.Publicacion;
+import edu.uade.api.tpo.model.TipoPeriodo;
+import edu.uade.api.tpo.model.Usuario;
+import edu.uade.api.tpo.ui.MenuPrincipal;
+
 import javax.swing.JCheckBox;
 import java.awt.CardLayout;
 import javax.swing.JTextPane;
@@ -24,6 +37,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AltaPublicacion implements ItemListener{
 
@@ -33,14 +48,19 @@ public class AltaPublicacion implements ItemListener{
 	final static String SERVICIO = "Servicio";
 	
 	private JFrame frmNuevaPublicacion;
-	private JTextField txtTitulo;
 	private JPanel panelTipoPublicacion;
 	private JPanel panelCategoria;
+	private JTextField txtTitulo;
 	private JTextField txtPrecio;
 	private JTextField txtPrecioInicial;
 	private JTextField textField;
 	private JTextField txtGarantia;
 	private JTextField txtCertificados;
+	private JTextArea textAreaDescripcion;
+	private JCheckBox pagoEfectivoCheckbox;
+	private JCheckBox pagoTarjetaCreditoCheckbox;
+	private JCheckBox pagoTransferenciaCheckbox;
+	private JComboBox<String> comboBoxCategoria;
 
 	/**
 	 * Launch the application.
@@ -126,7 +146,7 @@ public class AltaPublicacion implements ItemListener{
 		lblDescripcion.setBounds(10, 120, 760, 16);
 		frmNuevaPublicacion.getContentPane().add(lblDescripcion);
 	
-		JTextArea textAreaDescripcion = new JTextArea();
+		textAreaDescripcion = new JTextArea();
 		textAreaDescripcion.setLineWrap(true);
 		textAreaDescripcion.setWrapStyleWord(true);
 		
@@ -148,8 +168,8 @@ public class AltaPublicacion implements ItemListener{
 		lblTipoDePublicacion.setBounds(10, 360, 360, 16);
 		frmNuevaPublicacion.getContentPane().add(lblTipoDePublicacion);
 		
-		String[] tipoPublicacionStrings = { COMPRA_INMEDIATA, SUBASTA};
-		JComboBox comboBoxTipoPublicacion = new JComboBox(tipoPublicacionStrings);
+		String[] tipoPublicacionStrings = { COMPRA_INMEDIATA, SUBASTA };
+		JComboBox<String> comboBoxTipoPublicacion = new JComboBox(tipoPublicacionStrings);
 		comboBoxTipoPublicacion.setBounds(10, 380, 360, 27);
 		comboBoxTipoPublicacion.setSelectedIndex(0);
 		comboBoxTipoPublicacion.addItemListener(this);
@@ -165,16 +185,16 @@ public class AltaPublicacion implements ItemListener{
 		panelCompraInmediata.setLayout(null);
 		
 		JLabel lblPrecio = new JLabel("Precio:");
-		lblPrecio.setBounds(0, 10, 360, 16);
+		lblPrecio.setBounds(6, 6, 360, 16);
 		panelCompraInmediata.add(lblPrecio);
 		
 		txtPrecio = new JTextField();
-		txtPrecio.setBounds(0, 30, 180, 30);
+		txtPrecio.setBounds(6, 27, 180, 30);
 		panelCompraInmediata.add(txtPrecio);
 		txtPrecio.setColumns(10);
 		
-		JLabel lblPesosArgentinos = new JLabel("pesos argentinos");
-		lblPesosArgentinos.setBounds(190, 30, 170, 30);
+		JLabel lblPesosArgentinos = new JLabel("ARS");
+		lblPesosArgentinos.setBounds(198, 27, 154, 30);
 		panelCompraInmediata.add(lblPesosArgentinos);
 		
 		JPanel panelSubasta = new JPanel();
@@ -212,7 +232,7 @@ public class AltaPublicacion implements ItemListener{
 		panelSubasta.add(lblVigencia);
 		
 		String[] vigenciaStrings = { "30", "60", "90"};
-		JComboBox comboBoxVigencia = new JComboBox(vigenciaStrings);
+		JComboBox<String> comboBoxVigencia = new JComboBox(vigenciaStrings);
 		comboBoxVigencia.setBounds(100, 90, 120, 30);
 		panelSubasta.add(comboBoxVigencia);
 		
@@ -230,7 +250,7 @@ public class AltaPublicacion implements ItemListener{
 		frmNuevaPublicacion.getContentPane().add(lblCategoria);
 		
 		String[] categoriaStrings = { PRODUCTO, SERVICIO };
-		JComboBox comboBoxCategoria = new JComboBox(categoriaStrings);
+		comboBoxCategoria = new JComboBox(categoriaStrings);
 		comboBoxCategoria.setBounds(410, 380, 360, 27);
 		comboBoxCategoria.addItemListener(this);
 		frmNuevaPublicacion.getContentPane().add(comboBoxCategoria);
@@ -245,17 +265,17 @@ public class AltaPublicacion implements ItemListener{
 		panelProducto.setLayout(null);
 		
 		JLabel lblGarantia = new JLabel("Garantía:");
-		lblGarantia.setBounds(0, 10, 70, 30);
+		lblGarantia.setBounds(0, 6, 70, 30);
 		panelProducto.add(lblGarantia);
 		
 		txtGarantia = new JTextField();
-		txtGarantia.setBounds(70, 10, 110, 30);
+		txtGarantia.setBounds(0, 37, 110, 30);
 		panelProducto.add(txtGarantia);
 		txtGarantia.setColumns(10);
 		
 		String[] garantiaStrings = { "Meses", "Años"};
-		JComboBox comboBoxGarantia = new JComboBox(garantiaStrings);
-		comboBoxGarantia.setBounds(190, 11, 170, 30);
+		JComboBox<String> comboBoxGarantia = new JComboBox(garantiaStrings);
+		comboBoxGarantia.setBounds(122, 38, 170, 30);
 		panelProducto.add(comboBoxGarantia);
 		
 		JPanel panelServicio = new JPanel();
@@ -267,7 +287,7 @@ public class AltaPublicacion implements ItemListener{
 		panelServicio.add(lblTipoDeContratacion);
 		
 		String[] contratacionStrings = { "Abono", "Única"};
-		JComboBox comboBoxTipoContratacion = new JComboBox(contratacionStrings);
+		JComboBox<String> comboBoxTipoContratacion = new JComboBox(contratacionStrings);
 		comboBoxTipoContratacion.setBounds(150, 10, 210, 30);
 		panelServicio.add(comboBoxTipoContratacion);
 		
@@ -295,17 +315,17 @@ public class AltaPublicacion implements ItemListener{
 		lblMedioDePago.setBounds(10, 580, 760, 16);
 		frmNuevaPublicacion.getContentPane().add(lblMedioDePago);
 		
-		JCheckBox chckbxEfectivo = new JCheckBox("Efectivo");
-		chckbxEfectivo.setBounds(10, 600, 130, 23);
-		frmNuevaPublicacion.getContentPane().add(chckbxEfectivo);
+		pagoEfectivoCheckbox = new JCheckBox("Efectivo");
+		pagoEfectivoCheckbox.setBounds(10, 600, 130, 23);
+		frmNuevaPublicacion.getContentPane().add(pagoEfectivoCheckbox);
 		
-		JCheckBox chckbxTarjetaDeCredito = new JCheckBox("Tarjeta de Crédito");
-		chckbxTarjetaDeCredito.setBounds(140, 600, 150, 23);
-		frmNuevaPublicacion.getContentPane().add(chckbxTarjetaDeCredito);
+		pagoTarjetaCreditoCheckbox = new JCheckBox("Tarjeta de Crédito");
+		pagoTarjetaCreditoCheckbox.setBounds(140, 600, 150, 23);
+		frmNuevaPublicacion.getContentPane().add(pagoTarjetaCreditoCheckbox);
 		
-		JCheckBox chckbxTransferenciaBancaria = new JCheckBox("Transferencia Bancaria");
-		chckbxTransferenciaBancaria.setBounds(330, 600, 180, 23);
-		frmNuevaPublicacion.getContentPane().add(chckbxTransferenciaBancaria);
+		pagoTransferenciaCheckbox = new JCheckBox("Transferencia Bancaria");
+		pagoTransferenciaCheckbox.setBounds(330, 600, 180, 23);
+		frmNuevaPublicacion.getContentPane().add(pagoTransferenciaCheckbox);
 		
 		JLabel lblFinPublicacion = new JLabel("Fin de la Publicación:");
 		lblFinPublicacion.setBounds(10, 640, 140, 16);
@@ -315,12 +335,22 @@ public class AltaPublicacion implements ItemListener{
 		lblFechaFinPublicacion.setBounds(150, 640, 340, 16);
 		frmNuevaPublicacion.getContentPane().add(lblFechaFinPublicacion);
 		
-		JButton btnConfirmar = new JButton("Confirmar");
+		JButton btnConfirmar = new JButton("Publicar");
+		btnConfirmar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				publicar();
+			}
+		});
 		btnConfirmar.setBounds(650, 670, 120, 30);
 		frmNuevaPublicacion.getContentPane().add(btnConfirmar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(530, 670, 120, 30);
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				goInicio();
+			}
+		});
 		frmNuevaPublicacion.getContentPane().add(btnCancelar);
 		
 		/**
@@ -345,5 +375,64 @@ public class AltaPublicacion implements ItemListener{
 			cl = (CardLayout)(panelCategoria.getLayout());
 	        cl.show(panelCategoria, item);
 		}
+	}
+	
+	private void publicar() {
+		if (validateForm()) {
+			List<MedioPago> mediosPagos = getMediosPago();
+			
+			// TODO: Crear Producto o Servicio segun seleccionado en comboBoxCategoria
+			Articulo articulo = crearProducto();
+			Publicacion publicacion = new Publicacion();
+			publicacion.setPrecio(Float.parseFloat(txtPrecio.getText()));
+			publicacion.setArticulo(articulo);
+			
+			Usuario user = SistemaUsuarios.getUsuarioLoggeado();
+
+			SistemaPublicaciones.getInstance().altaPublicacion(user.getId(), publicacion.getPrecio(), publicacion.getArticulo(), mediosPagos);
+			JOptionPane.showMessageDialog(null, "¡Tu publicacion ha sido creada!", "Operacion Exitosa", JOptionPane.PLAIN_MESSAGE);
+			goInicio();
+		} else {
+			JOptionPane.showMessageDialog(null, "Aun tienes campos que completar", "Formulario Incompleto", JOptionPane.PLAIN_MESSAGE);
+		}
+		
+	}
+	
+	private Producto crearProducto() {
+		Producto producto = new Producto();
+		producto.setNombre(txtTitulo.getText());
+		producto.setDescripcion(textAreaDescripcion.getText());
+		// producto.fromImagesTokenized(filepathField.toString());
+		producto.fromImagesTokenized("");
+		
+		Garantia garantia = new Garantia();
+		garantia.setCantidad(Integer.parseInt(txtGarantia.getText()));
+        garantia.setTipo(TipoPeriodo.ANUAL);
+        
+		producto.setGarantia(garantia);
+		return producto;
+	}
+	
+	private void goInicio() {
+		Inicio inicio = new Inicio();
+		inicio.setVisible(true);
+		frmNuevaPublicacion.dispose();
+	}
+
+	public void setVisible(boolean isVisible) {
+		this.frmNuevaPublicacion.setVisible(isVisible);
+	}
+	
+	private List<MedioPago> getMediosPago() {
+		List<MedioPago> mediosPago = new ArrayList<MedioPago>();
+		if (pagoEfectivoCheckbox.isSelected()) { mediosPago.add(MedioPago.EFECTIVO); }
+		if (pagoTarjetaCreditoCheckbox.isSelected()) { mediosPago.add(MedioPago.TARJETA_CREDITO); }
+		if (pagoTransferenciaCheckbox.isSelected()) { mediosPago.add(MedioPago.TRANSFERENCIA_BANCARIA); }
+		return mediosPago;
+	}
+	
+	private boolean validateForm() {
+		// TODO: implement form validation
+		return true;
 	}
 }
