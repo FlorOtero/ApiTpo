@@ -1,5 +1,6 @@
 package edu.uade.api.tpo;
 
+import edu.uade.api.tpo.controller.SistemaUsuarios;
 import edu.uade.api.tpo.dao.impl.UsuarioDaoImpl;
 import edu.uade.api.tpo.exceptions.BusinessException;
 import edu.uade.api.tpo.controller.SistemaPublicaciones;
@@ -18,7 +19,7 @@ public class SistemaPublicacionesTest {
     private static final String USER_ID = "3e17502f-7761-4995-91d3-81412c57c27d";
     private static final String CONTRAPARTE_ID = "041b9ec5-d99d-4f80-8db8-d3a69fa5b137";
     private static final String PUBLICACION_ID = "1320ad84-3645-4aa4-b6b4-c103528ca71e";
-    private static final String SUBASTA_ID = "4f8dd95c-61e5-481a-8c20-2fee2fd495c3";
+    private static final String SUBASTA_ID = "418aab94-8cf6-4bce-bb3b-715d41fb8863";
     private SistemaPublicaciones sistemaPublicaciones;
 
     @Before
@@ -126,14 +127,23 @@ public class SistemaPublicacionesTest {
     public void test_ofertarSubasta() {
         Subasta subasta = this.sistemaPublicaciones.buscarSubasta(SUBASTA_ID);
         try {
-            Usuario usuario = UsuarioDaoImpl.getInstance().findById(USER_ID);
+            Usuario usuario = UsuarioDaoImpl.getInstance().findById("8d39b0c0-d8b6-42c9-9653-b80c5b29f7e5");
             DatosPago datosPago = new DatosPago();
             datosPago.setNumeroCuenta("12345");
             datosPago.setMedioPago(MedioPago.TRANSFERENCIA_BANCARIA);
-            this.sistemaPublicaciones.ofertar(subasta, 310, usuario, datosPago);
+            this.sistemaPublicaciones.ofertar(subasta, 380, usuario, datosPago);
         } catch (SQLException | BusinessException e) {
+            e.printStackTrace();
             Assert.fail("Should not throw exception");
         }
+    }
+
+    @Test
+    public void test_cerrarSubasta() {
+        String ganadorId = "8d39b0c0-d8b6-42c9-9653-b80c5b29f7e5";
+        Subasta subasta = this.sistemaPublicaciones.buscarSubasta("418aab94-8cf6-4bce-bb3b-715d41fb8863");
+        Oferta oferta = subasta.obtenerMayorOferta();
+        subasta.cerrar(SistemaUsuarios.getInstance().buscarUsuarioById(ganadorId), oferta.getDatosPago());
     }
 
     @Test

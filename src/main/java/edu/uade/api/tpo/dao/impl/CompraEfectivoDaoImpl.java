@@ -85,11 +85,11 @@ public class CompraEfectivoDaoImpl extends AbstractManyToOneDao<CompraEfectivo> 
         ps.setString(2, compraEfectivo.getPublicacion().getId());
         ps.setString(3, String.valueOf(compraEfectivo.getEstado()));
         ps.setTimestamp(4, new Timestamp(compraEfectivo.getFecha().getTime()));
-        ps.setString(5, compraEfectivo.getId());
-        ps.setString(6, compraEfectivo.getComision().getId());
-        ps.setString(7, compraEfectivo.getCuentaCorrienteId());
-        ps.setString(8, compraEfectivo.getCalificacion() == null ? null : compraEfectivo.getCalificacion().getId());
-        ps.setFloat(9, compraEfectivo.getMonto());
+        ps.setString(5, compraEfectivo.getCuentaCorrienteId());
+        ps.setString(6, compraEfectivo.getComision() == null ? null : compraEfectivo.getComision().getId());
+        ps.setString(7, compraEfectivo.getCalificacion() == null ? null : compraEfectivo.getCalificacion().getId());
+        ps.setFloat(8, compraEfectivo.getMonto());
+        ps.setString(9, compraEfectivo.getId());
         return ps;
     }
 

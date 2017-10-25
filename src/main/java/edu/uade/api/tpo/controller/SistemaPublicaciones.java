@@ -230,7 +230,7 @@ public class SistemaPublicaciones {
             List<Subasta> subastasActivas = this.subastas.stream().filter(s -> s.hasEnded()).collect(Collectors.toList());
             subastasActivas.forEach(subastaActiva -> {
                 Oferta oferta = subastaActiva.obtenerMayorOferta();
-                if(oferta != null) {
+                if(oferta != null && oferta.getMonto() >= subastaActiva.getPrecioMin()) {
                     Usuario usuarioSubasta = SistemaUsuarios.getInstance().buscarUsuarioById(oferta.getUsuarioId());
                     subastaActiva.cerrar(usuarioSubasta, oferta.getDatosPago());
                 } else {

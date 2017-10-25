@@ -92,10 +92,10 @@ public class CompraTransferenciaBancariaDaoImpl extends AbstractManyToOneDao<Com
         ps.setTimestamp(4, new Timestamp(compraTransferenciaBancaria.getFecha().getTime()));
         ps.setString(5, compraTransferenciaBancaria.getNumeroCta());
         ps.setString(6, compraTransferenciaBancaria.getCuentaCorrienteId());
-        ps.setString(7, compraTransferenciaBancaria.getComision().getId());
-        ps.setString(8, compraTransferenciaBancaria.getId());
-        ps.setString(9, compraTransferenciaBancaria.getCalificacion().getId());
-        ps.setFloat(10, compraTransferenciaBancaria.getMonto());
+        ps.setString(7, compraTransferenciaBancaria.getComision() != null ? compraTransferenciaBancaria.getComision().getId() : null);
+        ps.setString(8, compraTransferenciaBancaria.getCalificacion() != null ? compraTransferenciaBancaria.getCalificacion().getId() : null);
+        ps.setFloat(9, compraTransferenciaBancaria.getMonto());
+        ps.setString(10, compraTransferenciaBancaria.getId());
         return ps;
     }
 

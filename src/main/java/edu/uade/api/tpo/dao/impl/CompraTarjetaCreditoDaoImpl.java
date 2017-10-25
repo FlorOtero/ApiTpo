@@ -88,10 +88,10 @@ public class CompraTarjetaCreditoDaoImpl extends AbstractManyToOneDao<CompraTarj
         ps.setTimestamp(4, new Timestamp(compraTarjetaCredito.getFecha().getTime()));
         ps.setString(5, compraTarjetaCredito.getNumeroTarjeta());
         ps.setString(6, compraTarjetaCredito.getCuentaCorrienteId());
-        ps.setString(7, compraTarjetaCredito.getComision().getId());
-        ps.setString(8, compraTarjetaCredito.getCalificacion().getId());
-        ps.setString(9, compraTarjetaCredito.getId());
-        ps.setFloat(10, compraTarjetaCredito.getMonto());
+        ps.setString(7, compraTarjetaCredito.getComision() == null ? null : compraTarjetaCredito.getComision().getId());
+        ps.setString(8, compraTarjetaCredito.getCalificacion() == null ? null : compraTarjetaCredito.getCalificacion().getId());
+        ps.setFloat(9, compraTarjetaCredito.getMonto());
+        ps.setString(10, compraTarjetaCredito.getId());
         return ps;
     }
 
