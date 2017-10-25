@@ -8,7 +8,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
+import java.util.Date;
+import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class SistemaPublicaciones {
 
@@ -22,6 +28,7 @@ public class SistemaPublicaciones {
     private SistemaPublicaciones() {
         this.publicacionDao = PublicacionDaoImpl.getInstance();
         this.subastaDao = SubastaDaoImpl.getInstance();
+        this.initCierreSubastaScheduler();
         try {
             this.publicaciones = publicacionDao.findAll();
             this.subastas = subastaDao.findAll();
@@ -216,4 +223,28 @@ public class SistemaPublicaciones {
         }
         publicacion.ofertar(monto, contraparte, datosPago);
     }
+
+    /**
+     * Verifica cada 10 minutos si existen subastas pendientes de ser cerradas y las cierra
+     */
+    private void initCierreSubastaScheduler() {
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+        Runnable task = () -> {
+            logger.info(">>> Buscando subastas pendientes de cierre <<<");
+            List<Subasta> subastasActivas = this.subastas.stream().filter(s -> s.hasEnded()).collect(Collectors.toList());
+            subastasActivas.forEach(subastaActiva -> {
+                Oferta oferta = subastaActiva.obtenerMayorOferta();
+                if(oferta != null && oferta.getMonto() >= subastaActiva.getPrecioMin()) {
+                    Usuario usuarioSubasta = SistemaUsuarios.getInstance().buscarUsuarioById(oferta.getUsuarioId());
+                    subastaActiva.cerrar(usuarioSubasta, oferta.getDatosPago());
+                } else {
+                    //Si no tuvo ofertas, la doy de baja
+                    this.eliminarSubasta(subastaActiva);
+                }
+            });
+        };
+        scheduler.scheduleAtFixedRate(task, 0, 10, TimeUnit.MINUTES);
+    }
+
+
 }

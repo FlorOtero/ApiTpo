@@ -33,6 +33,13 @@ public class Publicacion extends Observable implements Persistible {
 		if (monto != precio) {
 			throw new BusinessException("El monto no puede ser diferente al precio de la publicacion");
 		}
+		if(this.getUsuarioId().equals(usuario.getId())) {
+			throw new BusinessException("El usuario no puede ofertar su propia publicacion!");
+		}
+		this.cerrar(usuario, datosPago);
+	}
+
+	public void cerrar(Usuario usuario, DatosPago datosPago) {
 		SistemaTransacciones.getInstance().crearTransaccion(usuario, this, datosPago);
 	}
 

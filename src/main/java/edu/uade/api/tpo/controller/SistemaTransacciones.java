@@ -40,7 +40,12 @@ public class SistemaTransacciones {
                 break;
         }
         try {
-            SistemaPublicaciones.getInstance().modificarPublicacion(publicacion);
+            if (publicacion instanceof Subasta) {
+                SistemaPublicaciones.getInstance().modificarSubasta((Subasta) publicacion);
+            } else {
+                SistemaPublicaciones.getInstance().modificarPublicacion(publicacion);
+            }
+
             TransaccionDaoImpl.getInstance().create(tr);
             tr.ejecutar();
 
@@ -52,7 +57,11 @@ public class SistemaTransacciones {
     public void aprobarTransaccion(Transaccion transaccion) throws BusinessException, InvalidPasswordException {
         transaccion.setEstado(EstadoTransaccion.A);
         transaccion.getPublicacion().setEstado(Estado.I);
-        SistemaPublicaciones.getInstance().modificarPublicacion(transaccion.getPublicacion());
+        if (transaccion.getPublicacion() instanceof Subasta) {
+            SistemaPublicaciones.getInstance().modificarSubasta((Subasta) transaccion.getPublicacion());
+        } else {
+            SistemaPublicaciones.getInstance().modificarPublicacion(transaccion.getPublicacion());
+        }
         //Generar movimiento cuentaCorriente!!
         SistemaCuentaCorriente.getInstance().actualizarSaldo(transaccion);
         logger.info(">>> TRANSACCION APROBADA!! <<<");
@@ -62,7 +71,11 @@ public class SistemaTransacciones {
         transaccion.setEstado(EstadoTransaccion.C);
         transaccion.getPublicacion().setEstado(Estado.A);
         try {
-            SistemaPublicaciones.getInstance().modificarPublicacion(transaccion.getPublicacion());
+            if (transaccion.getPublicacion() instanceof Subasta) {
+                SistemaPublicaciones.getInstance().modificarSubasta((Subasta) transaccion.getPublicacion());
+            } else {
+                SistemaPublicaciones.getInstance().modificarPublicacion(transaccion.getPublicacion());
+            }
             TransaccionDaoImpl.getInstance().update(transaccion);
             logger.info(">>> TRANSACCION RECHAZADA!! <<<");
         } catch (SQLException e) {
