@@ -235,8 +235,7 @@ public class SistemaPublicaciones {
                     subastaActiva.cerrar(usuarioSubasta, oferta.getDatosPago());
                 } else {
                     //Si no tuvo ofertas, la doy de baja
-                    subastaActiva.setEstado(Estado.I);
-                    this.modificarSubasta(subastaActiva);
+                    this.eliminarSubasta(subastaActiva);
                 }
             });
         };
