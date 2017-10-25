@@ -124,6 +124,7 @@ public class SistemaUsuarios {
 		if (username != null) {			
 			user = SistemaUsuarios.getInstance().buscarUsuario(username);
 		} else {
+			// TODO delete when testing is finished
 			user.setId("9ec1f480-b1a3-4605-a808-26829333e09d");			
 		}
 		

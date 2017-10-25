@@ -58,8 +58,11 @@ public class SistemaPublicaciones {
     
     public Publicacion altaPublicacion(String usuarioId, float precio, Articulo articulo, List<MedioPago> mediosPago) {
 		int DIAS_VENCIMIENTO = 90;
-		Date fechaHasta = new Date(new Date().getTime() + DIAS_VENCIMIENTO *24*60*60*1000);
-        Publicacion p = new Publicacion();
+		Calendar cal = Calendar.getInstance();
+		cal.add(Calendar.DAY_OF_MONTH, DIAS_VENCIMIENTO);
+		Date fechaHasta = cal.getTime();
+		
+		Publicacion p = new Publicacion();
         p.setFechaDesde(new Date());
         p.setFechaHasta(fechaHasta);
         p.setPrecio(precio);
