@@ -7,7 +7,7 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class VTextField extends JTextField implements FocusListener, KeyListener {
+public class VTextField extends JTextField implements FocusListener, KeyListener, Validable {
 
     private JComponent[] components;
     private final static Color RED = new Color(255, 91, 91);
@@ -54,11 +54,26 @@ public class VTextField extends JTextField implements FocusListener, KeyListener
     }
 
     private void checkContent(Component c) {
-        VTextField textField = (VTextField) c;
-        boolean enabled = textField.getText() != null && !textField.getText().isEmpty();
+        boolean enabled = hasValidContent();
+        if (enabled) {
+            Container container = this.getParent();
+            for (Component component : container.getComponents()) {
+                if (component instanceof Validable) {
+                    Validable v = (Validable) component;
+                    if (!v.hasValidContent()) {
+                        enabled = false;
+                    }
+                }
+            }
+        }
         for (Component component : components) {
             component.setEnabled(enabled);
             this.setBackground(enabled ? Color.WHITE : RED);
         }
+    }
+
+    @Override
+    public boolean hasValidContent() {
+        return this.getText() != null && !this.getText().isEmpty();
     }
 }

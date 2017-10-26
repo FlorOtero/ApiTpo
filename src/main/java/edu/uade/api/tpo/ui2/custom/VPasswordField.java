@@ -7,7 +7,7 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class VPasswordField extends JPasswordField implements FocusListener, KeyListener {
+public class VPasswordField extends JPasswordField implements FocusListener, KeyListener, Validable {
 
     private JComponent[] components;
     private final static Color RED = new Color(255, 91, 91);
@@ -54,11 +54,28 @@ public class VPasswordField extends JPasswordField implements FocusListener, Key
     }
 
     private void checkContent(Component c) {
-        VPasswordField textField = (VPasswordField) c;
-        boolean enabled = textField.getText() != null && !textField.getText().isEmpty();
+        boolean enabled = hasValidContent();
         for (Component component : components) {
             component.setEnabled(enabled);
             this.setBackground(enabled ? Color.WHITE : RED);
         }
+    }
+
+    @Override
+    public boolean hasValidContent() {
+        String value = new String(this.getPassword());
+        boolean isValid = value != null && !value.isEmpty();
+        if (isValid) {
+            Container container = this.getParent();
+            for (Component component : container.getComponents()) {
+                if (component instanceof Validable) {
+                    Validable v = (Validable) component;
+                    if (!v.hasValidContent()) {
+                        isValid = false;
+                    }
+                }
+            }
+        }
+        return isValid;
     }
 }
