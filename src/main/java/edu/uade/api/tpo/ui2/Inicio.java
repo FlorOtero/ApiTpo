@@ -23,6 +23,7 @@ import edu.uade.api.tpo.model.Servicio;
 import edu.uade.api.tpo.model.Subasta;
 import edu.uade.api.tpo.ui.DetallePublicacion;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
@@ -136,9 +137,21 @@ public class Inicio {
 		
 		String[] columnNames = {"Tipo", "Título", "Precio", "Categoría"};
 		table = new JTable();
-		table.setModel(new DefaultTableModel(new Object[][] {}, columnNames));
+		table.setModel(new DefaultTableModel(new Object[][] {}, columnNames) {
+			 @Override
+			    public Class<?> getColumnClass(int column) {
+			        switch(column) {
+			            case 0: return ImageIcon.class;
+			            default: return Object.class;
+			        }
+			    }
+		});
 		table.setAutoCreateRowSorter(true);
-		
+		table.setRowHeight(20);
+		table.getColumnModel().getColumn(0).setMaxWidth(32);
+		table.getColumnModel().getColumn(2).setMaxWidth(100);
+		table.getColumnModel().getColumn(3).setMaxWidth(100);
+
 		JScrollPane scrollPanePublicaciones = new JScrollPane(table);
 		scrollPanePublicaciones.setBounds(10, 120, 480, 300);
 		table.setFillsViewportHeight(true);
@@ -157,16 +170,18 @@ public class Inicio {
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		
 		if (resultado != null) {
+			//JLabel tipoPub = new JLabel("");
 			for(Publicacion p : resultado){
-				
+	
 				String categoria =(p.getArticulo() instanceof Producto) ? "Producto" : "Servicio";
-				String tipoPublicacion = (p instanceof Subasta) ? "Subasta" : "Compra inmediata";
+				String tipoPublicacion = (p instanceof Subasta) ? "subasta-16.png" : "compra-inmediata-16.png";
 				String precio = (p instanceof Subasta) ? Float.toString(((Subasta) p).getPrecioActual()) : Float.toString(p.getPrecio());
+				ImageIcon tipoPub = new ImageIcon("src/main/resources/"+tipoPublicacion);
 				/**
 				 * TODO checkear el tema de la subasta
 				 */
 				model.addRow(new Object[]{
-						tipoPublicacion,
+						tipoPub,
 						p.getArticulo().getNombre(),
 						"$" + precio,
 						categoria
