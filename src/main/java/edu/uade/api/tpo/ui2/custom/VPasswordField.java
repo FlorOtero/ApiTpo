@@ -55,27 +55,26 @@ public class VPasswordField extends JPasswordField implements FocusListener, Key
 
     private void checkContent(Component c) {
         boolean enabled = hasValidContent();
+        if (enabled) {
+            Container container = this.getParent();
+            for (Component component : container.getComponents()) {
+                if (component instanceof Validable) {
+                    Validable v = (Validable) component;
+                    if (!v.hasValidContent()) {
+                        enabled = false;
+                    }
+                }
+            }
+        }
         for (Component component : components) {
             component.setEnabled(enabled);
-            this.setBackground(enabled ? Color.WHITE : RED);
+            this.setBackground(hasValidContent() ? Color.WHITE : RED);
         }
     }
 
     @Override
     public boolean hasValidContent() {
         String value = new String(this.getPassword());
-        boolean isValid = value != null && !value.isEmpty();
-        if (isValid) {
-            Container container = this.getParent();
-            for (Component component : container.getComponents()) {
-                if (component instanceof Validable) {
-                    Validable v = (Validable) component;
-                    if (!v.hasValidContent()) {
-                        isValid = false;
-                    }
-                }
-            }
-        }
-        return isValid;
+        return value != null && !value.isEmpty();
     }
 }

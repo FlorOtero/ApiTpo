@@ -68,7 +68,7 @@ public class VTextField extends JTextField implements FocusListener, KeyListener
         }
         for (Component component : components) {
             component.setEnabled(enabled);
-            this.setBackground(enabled ? Color.WHITE : RED);
+            this.setBackground(hasValidContent() ? Color.WHITE : RED);
         }
     }
 
