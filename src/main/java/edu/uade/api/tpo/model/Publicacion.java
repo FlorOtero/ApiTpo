@@ -6,8 +6,9 @@ import edu.uade.api.tpo.exceptions.BusinessException;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Observable;
 
-public class Publicacion implements Persistible {
+public class Publicacion extends Observable implements Persistible {
 	protected String id;
 	private Date fechaDesde;
 	private Date fechaHasta;
@@ -32,6 +33,13 @@ public class Publicacion implements Persistible {
 		if (monto != precio) {
 			throw new BusinessException("El monto no puede ser diferente al precio de la publicacion");
 		}
+		if(this.getUsuarioId().equals(usuario.getId())) {
+			throw new BusinessException("El usuario no puede ofertar su propia publicacion!");
+		}
+		this.cerrar(usuario, datosPago);
+	}
+
+	public void cerrar(Usuario usuario, DatosPago datosPago) {
 		SistemaTransacciones.getInstance().crearTransaccion(usuario, this, datosPago);
 	}
 

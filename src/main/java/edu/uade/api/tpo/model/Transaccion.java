@@ -15,6 +15,7 @@ public abstract class Transaccion implements Persistible {
 	private String cuentaCorrienteId;
 	private Comision comision;
 	private Calificacion calificacion;
+	private float monto;
 	
 	public Transaccion() {}
 	
@@ -25,6 +26,7 @@ public abstract class Transaccion implements Persistible {
 		this.fecha = new Date();
 		this.contraparteId = contraparte.getId();
 		this.cuentaCorrienteId = contraparte.getCuentaCorriente().getId();
+		this.monto = publicacion.getPrecio();
 	}
 
 	public String getId() {
@@ -91,5 +93,13 @@ public abstract class Transaccion implements Persistible {
 
 	public void setCalificacion(Calificacion calificacion) {
 		this.calificacion = calificacion;
+	}
+
+	public float getMonto() {
+		return monto;
+	}
+
+	public void setMonto(float monto) {
+		this.monto = monto;
 	}
 }

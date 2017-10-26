@@ -11,16 +11,18 @@ public class Oferta implements Persistible, Comparable<Oferta> {
 	private Date fecha;
 	private String usuarioId;
 	private String subastaId;
+	private DatosPago datosPago;
 
 	public Oferta() {
 		this.fecha = new Date();
 	}
 
-	public Oferta(float monto, String usuarioId, String subastaId) {
+	public Oferta(float monto, String usuarioId, String subastaId, DatosPago datosPago) {
 		this();
 		this.monto = monto;
 		this.usuarioId = usuarioId;
 		this.subastaId = subastaId;
+		this.datosPago = datosPago;
 	}
 
 	public float getMonto() {
@@ -71,5 +73,13 @@ public class Oferta implements Persistible, Comparable<Oferta> {
 
 	public void setSubastaId(String subastaId) {
 		this.subastaId = subastaId;
+	}
+
+	public DatosPago getDatosPago() {
+		return datosPago;
+	}
+
+	public void setDatosPago(DatosPago datosPago) {
+		this.datosPago = datosPago;
 	}
 }
