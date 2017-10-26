@@ -1,6 +1,8 @@
 package edu.uade.api.tpo.ui2;
 
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.io.File;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -8,6 +10,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
 
@@ -83,6 +86,20 @@ public class Calificacion {
 		separator.setBounds(0, 40, 500, 12);
 		frmVerCalificacion.getContentPane().add(separator);
 		
+		JLabel lblCalificacionOtorgada = new JLabel("Calificación otorgada:");
+		lblCalificacionOtorgada.setBounds(300, 60, 145, 16);
+		frmVerCalificacion.getContentPane().add(lblCalificacionOtorgada);
+		
+		JLabel lblCalificacion = new JLabel("10");
+		lblCalificacion.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
+		lblCalificacion.setBounds(445, 57, 25, 22);
+		frmVerCalificacion.getContentPane().add(lblCalificacion);
+		
+		String starPath = new File("src/main/resources/star.png").getAbsolutePath();
+		JLabel lblStar = new JLabel(new ImageIcon(starPath));
+		lblStar.setBounds(470, 57, 16, 22);
+		frmVerCalificacion.getContentPane().add(lblStar);
+		
 		JLabel lblFecha = new JLabel("Fecha:");
 		lblFecha.setBounds(10, 60, 50, 16);
 		frmVerCalificacion.getContentPane().add(lblFecha);
@@ -91,7 +108,7 @@ public class Calificacion {
 		 * Indicar la fecha en que se realizo la calificacion
 		 */
 		JLabel lblFechaCalificacion = new JLabel("20-03-2017");
-		lblFechaCalificacion.setBounds(60, 60, 430, 16);
+		lblFechaCalificacion.setBounds(60, 60, 100, 16);
 		frmVerCalificacion.getContentPane().add(lblFechaCalificacion);
 		
 		JLabel lblUsuario = new JLabel("Usuario:");
@@ -130,6 +147,8 @@ public class Calificacion {
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.setBounds(370, 350, 120, 30);
 		frmVerCalificacion.getContentPane().add(btnVolver);
+		
+
 		
 	}
 
