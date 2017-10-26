@@ -1,45 +1,28 @@
 package edu.uade.api.tpo.ui2;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.prefs.Preferences;
-
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-
-import java.awt.FlowLayout;
-import javax.swing.SwingConstants;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import edu.uade.api.tpo.controller.SistemaUsuarios;
 import edu.uade.api.tpo.exceptions.BusinessException;
 import edu.uade.api.tpo.exceptions.ExpiredPasswordException;
 import edu.uade.api.tpo.exceptions.InvalidPasswordException;
 import edu.uade.api.tpo.ui.IniciarSesion;
-import edu.uade.api.tpo.ui.MenuPrincipal;
+import edu.uade.api.tpo.ui2.custom.VPasswordField;
+import edu.uade.api.tpo.ui2.custom.VTextField;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JPasswordField;
-import javax.swing.JSeparator;
-import javax.swing.JTextPane;
-import java.awt.SystemColor;
-import java.awt.Color;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.prefs.Preferences;
 
 public class Ingresar {
 
 	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
 	private static final Logger logger = LoggerFactory.getLogger(IniciarSesion.class);
 	private JFrame frmIngresarApi;
-	private JTextField txtNombreUsuario;
-	private JPasswordField txtContrasena;
+	private VTextField txtNombreUsuario;
+	private VPasswordField txtContrasena;
 	private JButton btnIngresar;
 
 	/**
@@ -79,8 +62,12 @@ public class Ingresar {
 		lblNombreDeUsuario.setBounds(10, 20, 300, 16);
 		lblNombreDeUsuario.setHorizontalAlignment(SwingConstants.LEFT);
 		frmIngresarApi.getContentPane().add(lblNombreDeUsuario);
+
+		btnIngresar = new JButton("Ingresar");
+		btnIngresar.setBounds(160, 142, 150, 30);
+		frmIngresarApi.getContentPane().add(btnIngresar);
 		
-		txtNombreUsuario = new JTextField();
+		txtNombreUsuario = new VTextField(btnIngresar);
 		txtNombreUsuario.setBounds(10, 40, 300, 30);
 		frmIngresarApi.getContentPane().add(txtNombreUsuario);
 		txtNombreUsuario.setColumns(10);
@@ -89,13 +76,9 @@ public class Ingresar {
 		txtNombreDeUsuario.setBounds(10, 80, 300, 16);
 		frmIngresarApi.getContentPane().add(txtNombreDeUsuario);
 		
-		txtContrasena = new JPasswordField();
+		txtContrasena = new VPasswordField(btnIngresar);
 		txtContrasena.setBounds(10, 100, 300, 30);
 		frmIngresarApi.getContentPane().add(txtContrasena);
-		
-		btnIngresar = new JButton("Ingresar");
-		btnIngresar.setBounds(160, 142, 150, 30);
-		frmIngresarApi.getContentPane().add(btnIngresar);
 		
 		btnIngresar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
