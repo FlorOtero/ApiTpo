@@ -7,39 +7,31 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import edu.uade.api.tpo.model.DatosPago;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class PagoTransferencia {
 
 	private JFrame frmPagoConTransferencia;
 	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
+	private DatosPago datosPago;
+	private float monto;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PagoTransferencia window = new PagoTransferencia();
-					window.frmPagoConTransferencia.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+
 
 	/**
 	 * Create the application.
 	 */
-	public PagoTransferencia() {
+	public PagoTransferencia(DatosPago dp, float monto) {
+		this.datosPago= dp;
+		this.monto= monto;
 		initialize();
 	}
 
@@ -59,61 +51,44 @@ public class PagoTransferencia {
 		frmPagoConTransferencia.getContentPane().add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblUsuarioOriginante = new JLabel("Usuario Originante: ");
-		lblUsuarioOriginante.setBounds(70, 36, 121, 20);
-		panel.add(lblUsuarioOriginante);
-		
-		textField = new JTextField();
-		textField.setBounds(212, 36, 118, 20);
-		panel.add(textField);
-		textField.setColumns(10);
-		
-		JLabel lblUsuarioDestinatario = new JLabel("Usuario Destinatario:");
-		lblUsuarioDestinatario.setBounds(70, 67, 121, 20);
-		panel.add(lblUsuarioDestinatario);
-		
-		textField_1 = new JTextField();
-		textField_1.setBounds(212, 67, 118, 20);
-		panel.add(textField_1);
-		textField_1.setColumns(10);
-		
 		JLabel lblMonto = new JLabel("Monto:");
-		lblMonto.setBounds(70, 98, 46, 14);
+		lblMonto.setBounds(50, 64, 46, 14);
 		panel.add(lblMonto);
-		
-		textField_2 = new JTextField();
-		textField_2.setBounds(212, 98, 118, 20);
-		panel.add(textField_2);
-		textField_2.setColumns(10);
-		
-		textField_3 = new JTextField();
-		textField_3.setEnabled(false);
-		textField_3.setBounds(212, 185, 86, 20);
-		panel.add(textField_3);
-		textField_3.setColumns(10);
 		
 		JButton btnConfirmarTransaccion = new JButton("Confirmar transaccion");
 		btnConfirmarTransaccion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				textField_3.setEnabled(true);
+				frmPagoConTransferencia.dispose();
 			}
 		});
-		btnConfirmarTransaccion.setBounds(136, 129, 174, 28);
+		btnConfirmarTransaccion.setBounds(50, 213, 174, 28);
 		panel.add(btnConfirmarTransaccion);
-		
-		JLabel lblCalificacion = new JLabel("Calificacion:");
-		lblCalificacion.setBounds(101, 188, 73, 14);
-		panel.add(lblCalificacion);
-		
-		JButton btnGuardarYVolver = new JButton("Guardar y volver");
-		btnGuardarYVolver.setBounds(51, 216, 113, 23);
-		panel.add(btnGuardarYVolver);
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(268, 216, 89, 23);
 		panel.add(btnCancelar);
 		
+		JLabel lblNumeroDeCuenta = new JLabel("Numero de cuenta:");
+		lblNumeroDeCuenta.setBounds(50, 98, 129, 16);
+		panel.add(lblNumeroDeCuenta);
 		
+		textField = new JTextField();
+		textField.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				datosPago.setNumeroCuenta(textField.getText());
+			}
+		});
+		textField.setBounds(180, 93, 130, 26);
+		panel.add(textField);
+		textField.setColumns(10);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setBounds(180, 63, 61, 16);
+		panel.add(lblNewLabel);	
 	}
-
+	
+	public void setVisible(boolean isVisible) {
+		this.frmPagoConTransferencia.setVisible(isVisible);
+	}
 }

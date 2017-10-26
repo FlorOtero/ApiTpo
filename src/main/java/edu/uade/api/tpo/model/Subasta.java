@@ -1,12 +1,12 @@
 package edu.uade.api.tpo.model;
 
-import edu.uade.api.tpo.controller.SistemaNotificacionSubasta;
 import edu.uade.api.tpo.controller.SistemaPublicaciones;
 import edu.uade.api.tpo.exceptions.BusinessException;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Subasta extends Publicacion {
 	private float precioMin;
@@ -65,24 +65,41 @@ public class Subasta extends Publicacion {
 			throw new BusinessException("El medio de pago elegido no está disponible en esta publicación!");
 		}
 		if(monto <= getPrecioActual()) {
-			throw new BusinessException("El monto ofertado es menor que el precio actual");
+			throw new BusinessException("El monto ofertado no supera el precio actual");
+		}
+		if(this.getUsuarioId().equals(usuario.getId())) {
+			throw new BusinessException("El usuario no puede ofertar su propia publicacion!");
 		}
 
-		Oferta oferta = new Oferta(monto, usuario.getId(), id);
-		ofertas.add(oferta);
+		Oferta oferta = new Oferta(monto, usuario.getId(), id, datosPago);
+		ofertas.add(0, oferta);
 		SistemaPublicaciones.getInstance().modificarSubasta(this);
 
-		// notificamos a todos menos al usuario que hizo la oferta
-		ofertas.stream().filter(o -> !o.getUsuarioId().equals(usuario.getId())).map(o -> o.getUsuarioId()).collect(Collectors.toSet()).forEach(usuarioId -> {
-			SistemaNotificacionSubasta.getInstance().notificarUsuarioSubasta(usuarioId, this);
-		});
+		setChanged();
+		notifyObservers(oferta);
 	}
 
-	private float getPrecioActual() {
+	public float getPrecioActual() {
 		if(this.ofertas == null || this.ofertas.isEmpty()) {
 			return this.getPrecioInicial();
 		} else {
 			return this.ofertas.get(0).getMonto();
 		}
+	}
+
+	public Oferta obtenerMayorOferta() {
+		return this.ofertas.get(0);
+	}
+
+	public boolean hasEnded() {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(this.getFechaDesde());
+		cal.add(Calendar.DAY_OF_MONTH, this.diasVigencia);
+		return this.estado == Estado.A && cal.getTime().compareTo(new Date()) <= 0;
+	}
+
+	@Override
+	public float getPrecio() {
+		return this.getPrecioActual();
 	}
 }

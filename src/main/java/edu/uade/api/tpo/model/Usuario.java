@@ -1,10 +1,14 @@
 package edu.uade.api.tpo.model;
 
+import edu.uade.api.tpo.controller.SistemaNotificacionSubasta;
 import edu.uade.api.tpo.db.Persistible;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
-public class Usuario implements Persistible {
+public class Usuario implements Persistible, Observer {
 
     private String id;
     private String nombreUsuario;
@@ -15,11 +19,11 @@ public class Usuario implements Persistible {
     private CuentaCorriente cuentaCorriente;
     private List<Publicacion> publicaciones;
     private String mail;
-    private List<Calificacion> calificaciones;
     private Estado estado;
 
     public Usuario() {
         this.cuentaCorriente = new CuentaCorriente();
+        this.publicaciones = new ArrayList<>();
         this.estado = Estado.A;
     }
 
@@ -99,10 +103,6 @@ public class Usuario implements Persistible {
         this.id = id;
     }
 
-    public List<Calificacion> getCalificaciones() {
-        return calificaciones;
-    }
-
     public Estado getEstado() {
         return estado;
     }
@@ -111,12 +111,8 @@ public class Usuario implements Persistible {
         this.estado = estado;
     }
 
-    public void setCalificaciones(List<Calificacion> calificaciones) {
-        this.calificaciones = calificaciones;
-    }
-    
-    public float calcularReputacion(){
-    	
+    public float calcularReputacion() {
+        /*
     		float reputacion = 0;
     		int aprobadas = 0;
     	
@@ -128,6 +124,24 @@ public class Usuario implements Persistible {
     		}
     		
     		return (reputacion/aprobadas);
-    	
+    */
+        return 0;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if (o instanceof Subasta) {
+            Subasta subasta = (Subasta) o;
+            Oferta oferta = subasta.obtenerMayorOferta();
+            if (subasta.hasEnded()) {
+                if (oferta.getUsuarioId().equals(this.getId())) {
+                    SistemaNotificacionSubasta.getInstance().notificarUsuarioGanadorSubasta(this, subasta);
+                }
+            } else {
+                if (!oferta.getUsuarioId().equals(this.getId())) {
+                    SistemaNotificacionSubasta.getInstance().notificarUsuarioPerdedorSubasta(this, subasta);
+                }
+            }
+        }
     }
 }

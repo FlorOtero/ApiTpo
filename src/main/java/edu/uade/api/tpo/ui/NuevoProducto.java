@@ -152,8 +152,7 @@ public class NuevoProducto {
 					mediosPagos.add(MedioPago.TRANSFERENCIA_BANCARIA);
 				}
 
-				SistemaPublicaciones.getInstance().altaPublicacion("9ec1f480-b1a3-4605-a808-26829333e09d",
-						publi.getFechaHasta(), publi.getPrecio(), publi.getArticulo(), mediosPagos);
+				// SistemaPublicaciones.getInstance().altaPublicacion("9ec1f480-b1a3-4605-a808-26829333e09d", publi.getFechaHasta(), publi.getPrecio(), publi.getArticulo(), mediosPagos);
 				JOptionPane.showMessageDialog(null, "Se ha creado su Producto con exito", "Aviso",
 						JOptionPane.PLAIN_MESSAGE);
 

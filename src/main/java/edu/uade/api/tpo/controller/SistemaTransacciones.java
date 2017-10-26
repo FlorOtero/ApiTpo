@@ -1,6 +1,8 @@
 package edu.uade.api.tpo.controller;
 
 import edu.uade.api.tpo.dao.impl.TransaccionDaoImpl;
+import edu.uade.api.tpo.exceptions.BusinessException;
+import edu.uade.api.tpo.exceptions.InvalidPasswordException;
 import edu.uade.api.tpo.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,38 +40,56 @@ public class SistemaTransacciones {
                 break;
         }
         try {
-            SistemaPublicaciones.getInstance().modificarPublicacion(publicacion);
+            if (publicacion instanceof Subasta) {
+                SistemaPublicaciones.getInstance().modificarSubasta((Subasta) publicacion);
+            } else {
+                SistemaPublicaciones.getInstance().modificarPublicacion(publicacion);
+            }
+
             TransaccionDaoImpl.getInstance().create(tr);
             tr.ejecutar();
+
         } catch (Exception e) {
             logger.error("Error creando transaccion", e);
         }
     }
 
-    public void aprobarTransaccion(Transaccion transaccion) {
+    public void aprobarTransaccion(Transaccion transaccion) throws BusinessException, InvalidPasswordException {
         transaccion.setEstado(EstadoTransaccion.A);
         transaccion.getPublicacion().setEstado(Estado.I);
-        try {
+        if (transaccion.getPublicacion() instanceof Subasta) {
+            SistemaPublicaciones.getInstance().modificarSubasta((Subasta) transaccion.getPublicacion());
+        } else {
             SistemaPublicaciones.getInstance().modificarPublicacion(transaccion.getPublicacion());
-            TransaccionDaoImpl.getInstance().update(transaccion);
-            //Generar movimiento cuentaCorriente!!
-
-            logger.info(">>> TRANSACCION GENERADA!! <<<");
-        } catch (SQLException e) {
-            logger.error("Error aprobando transaccion", e);
         }
+        //Generar movimiento cuentaCorriente!!
+        SistemaCuentaCorriente.getInstance().actualizarSaldo(transaccion);
+        logger.info(">>> TRANSACCION APROBADA!! <<<");
     }
 
     public void rechazarTransaccion(Transaccion transaccion) {
         transaccion.setEstado(EstadoTransaccion.C);
         transaccion.getPublicacion().setEstado(Estado.A);
         try {
-            SistemaPublicaciones.getInstance().modificarPublicacion(transaccion.getPublicacion());
+            if (transaccion.getPublicacion() instanceof Subasta) {
+                SistemaPublicaciones.getInstance().modificarSubasta((Subasta) transaccion.getPublicacion());
+            } else {
+                SistemaPublicaciones.getInstance().modificarPublicacion(transaccion.getPublicacion());
+            }
             TransaccionDaoImpl.getInstance().update(transaccion);
             logger.info(">>> TRANSACCION RECHAZADA!! <<<");
         } catch (SQLException e) {
             logger.error("Error rechazando transaccion", e);
         }
+    }
+
+    public void actualizarTransaccion(Transaccion transaccion) {
+        try {
+            TransaccionDaoImpl.getInstance().update(transaccion);
+        } catch (SQLException e) {
+            logger.error("Error actualizando transaccion", e);
+        }
+
     }
 
 }

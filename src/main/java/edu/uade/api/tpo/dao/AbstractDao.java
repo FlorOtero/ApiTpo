@@ -9,6 +9,7 @@ import javax.sql.DataSource;
 
 import edu.uade.api.tpo.db.PersistenceModule;
 import edu.uade.api.tpo.db.Persistible;
+import edu.uade.api.tpo.model.Publicacion;
 import edu.uade.api.tpo.util.UUIDUtils;
 
 public abstract class AbstractDao<T extends Persistible> implements GenericDao<T> {
@@ -70,5 +71,7 @@ public abstract class AbstractDao<T extends Persistible> implements GenericDao<T
     public abstract PreparedStatement update(T t, Connection conn) throws SQLException;
 
     public abstract PreparedStatement findBy(String field, String value, Connection conn) throws SQLException;
+
+	
 
 }

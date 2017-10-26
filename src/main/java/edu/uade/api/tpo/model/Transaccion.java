@@ -11,8 +11,11 @@ public abstract class Transaccion implements Persistible {
 	private Publicacion publicacion;
 	private EstadoTransaccion estado;
 	private Date fecha;
-	private Usuario contraparte;
+	private String contraparteId;
 	private String cuentaCorrienteId;
+	private Comision comision;
+	private Calificacion calificacion;
+	private float monto;
 	
 	public Transaccion() {}
 	
@@ -21,8 +24,9 @@ public abstract class Transaccion implements Persistible {
 		this.publicacion = publicacion;
 		this.estado = EstadoTransaccion.P;
 		this.fecha = new Date();
-		this.contraparte = contraparte;
+		this.contraparteId = contraparte.getId();
 		this.cuentaCorrienteId = contraparte.getCuentaCorriente().getId();
+		this.monto = publicacion.getPrecio();
 	}
 
 	public String getId() {
@@ -57,12 +61,12 @@ public abstract class Transaccion implements Persistible {
 		this.fecha = fecha;
 	}
 
-	public Usuario getContraparte() {
-		return contraparte;
+	public String getContraparteId() {
+		return contraparteId;
 	}
 
-	public void setContraparte(Usuario contraparte) {
-		this.contraparte = contraparte;
+	public void setContraparteId(String contraparteId) {
+		this.contraparteId = contraparteId;
 	}
 
 	public String getCuentaCorrienteId() {
@@ -75,4 +79,27 @@ public abstract class Transaccion implements Persistible {
 
 	public abstract void ejecutar() throws BusinessException, InvalidPasswordException;
 
+	public Comision getComision() {
+		return comision;
+	}
+
+	public void setComision(Comision comision) {
+		this.comision = comision;
+	}
+
+	public Calificacion getCalificacion() {
+		return calificacion;
+	}
+
+	public void setCalificacion(Calificacion calificacion) {
+		this.calificacion = calificacion;
+	}
+
+	public float getMonto() {
+		return monto;
+	}
+
+	public void setMonto(float monto) {
+		this.monto = monto;
+	}
 }
