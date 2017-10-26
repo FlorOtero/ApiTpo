@@ -1,32 +1,17 @@
 package edu.uade.api.tpo.ui2;
 
-import java.awt.EventQueue;
+import edu.uade.api.tpo.controller.SistemaPublicaciones;
+import edu.uade.api.tpo.model.Producto;
+import edu.uade.api.tpo.model.Publicacion;
+import edu.uade.api.tpo.model.Subasta;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.prefs.Preferences;
-
-import javax.swing.JFrame;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JLabel;
-import javax.swing.JSeparator;
-import javax.swing.JTextField;
-import javax.swing.table.DefaultTableModel;
-
-import edu.uade.api.tpo.controller.SistemaPublicaciones;
-import edu.uade.api.tpo.model.Producto;
-import edu.uade.api.tpo.model.Publicacion;
-import edu.uade.api.tpo.model.Servicio;
-import edu.uade.api.tpo.model.Subasta;
-import edu.uade.api.tpo.ui.DetallePublicacion;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
 
 public class Inicio {
 
@@ -175,7 +160,7 @@ public class Inicio {
 	
 				String categoria =(p.getArticulo() instanceof Producto) ? "Producto" : "Servicio";
 				String tipoPublicacion = (p instanceof Subasta) ? "subasta-16.png" : "compra-inmediata-16.png";
-				String precio = (p instanceof Subasta) ? Float.toString(((Subasta) p).getPrecioActual()) : Float.toString(p.getPrecio());
+				String precio = Float.toString(p.getPrecio());
 				ImageIcon tipoPub = new ImageIcon("src/main/resources/"+tipoPublicacion);
 				/**
 				 * TODO checkear el tema de la subasta
