@@ -143,7 +143,19 @@ public class SubastaDaoImpl extends AbstractManyToOneDao<Subasta> {
 
     @Override
     public PreparedStatement findManyLike(String field, String value, Connection conn) throws SQLException {
-        throw new UnsupportedOperationException("Find Many Like is not supported on class Subasta");
+        String query = "SELECT subasta_id, usuario_id, fecha_desde, precio_min, dias_vigencia, precio_inicial, estado, articulo_id, producto_id, nombre, descripcion FROM " + schema + ".subastas AS subasta, " + schema + ".productos AS producto " +
+                "WHERE lower(producto." + field + ") LIKE ? AND subasta.articulo_id = producto.producto_id AND subasta.estado = ? " +
+                "UNION ALL " +
+                "SELECT subasta_id, usuario_id, fecha_desde, precio_min, dias_vigencia, precio_inicial, estado, articulo_id, servicio_id, nombre, descripcion FROM " + schema + ".subastas AS subasta, " + schema + ".servicios AS servicio " +
+                "WHERE lower(servicio." + field + ") LIKE ? AND subasta.articulo_id = servicio.servicio_id AND subasta.estado = ?";
+        PreparedStatement ps = conn.prepareStatement(query);
+        String status = Estado.A.toString();
+        String valueLike = "%" + value + "%";
+        ps.setString(1, valueLike);
+        ps.setString(2, status);
+        ps.setString(3, valueLike);
+        ps.setString(4, status);
+        return ps;
     }
 
     @Override
