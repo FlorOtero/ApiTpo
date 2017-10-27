@@ -15,6 +15,7 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
@@ -37,6 +38,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -156,7 +158,15 @@ public class AltaPublicacion implements ItemListener{
 		scrollPaneDescripcion.setPreferredSize(new Dimension(760, 150));
 		frmNuevaPublicacion.getContentPane().add(scrollPaneDescripcion);
 		
+		
 		JButton btnCargarImagenes = new JButton("Cargar imágenes");
+		btnCargarImagenes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.showOpenDialog(null);
+			
+			}
+		});
 		btnCargarImagenes.setBounds(570, 305, 200, 30);
 		frmNuevaPublicacion.getContentPane().add(btnCargarImagenes);
 		
