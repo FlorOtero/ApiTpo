@@ -1,6 +1,8 @@
 package edu.uade.api.tpo.ui2;
 
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.swing.ButtonGroup;
@@ -54,30 +56,91 @@ public class Calificar {
 		JMenuBar menuBar = new JMenuBar();
 		frmCalificarApi.setJMenuBar(menuBar);
 		
+		JButton btnInicio = new JButton("");
+		String homePath = new File("src/main/resources/house.png").getAbsolutePath();
+		btnInicio.setIcon(new ImageIcon(homePath));
+		menuBar.add(btnInicio);
+		
+		btnInicio.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Inicio inicio = new Inicio();
+				inicio.setVisible(true);
+				frmCalificarApi.dispose();
+			}
+		});
+		
 		JMenu mnMiCuenta = new JMenu("Mi Cuenta");
 		menuBar.add(mnMiCuenta);
 		
 		JMenuItem mntmCuentaCorriente = new JMenuItem("Cuenta Corriente");
 		mnMiCuenta.add(mntmCuentaCorriente);
+		mntmCuentaCorriente.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				CuentaCorriente cc = new CuentaCorriente();
+				cc.setVisible(true);
+				frmCalificarApi.dispose();
+			}
+		});
 		
 		JMenuItem mntmMiReputacion = new JMenuItem("Mi Reputación");
 		mnMiCuenta.add(mntmMiReputacion);
+		mntmMiReputacion.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Reputacion reputacion = new Reputacion();
+				reputacion.setVisible(true);
+				frmCalificarApi.dispose();
+			}
+		});
 		
 		JMenuItem mntmMiUsuario = new JMenuItem("Mi Usuario");
 		mnMiCuenta.add(mntmMiUsuario);
+		mntmMiUsuario.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MiUsuario miUsuario = new MiUsuario();
+				miUsuario.setVisible(true);
+				frmCalificarApi.dispose();
+			}
+		});
 		
 		JMenuItem mntmCerrarSesion = new JMenuItem("Cerrar sesión");
 		mnMiCuenta.add(mntmCerrarSesion);
+		mntmCerrarSesion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Ingresar ingreso = new Ingresar();
+				ingreso.setVisible(true);
+				frmCalificarApi.dispose();
+			}
+		});
 		
 		JMenu mnPublicaciones = new JMenu("Publicaciones");
 		menuBar.add(mnPublicaciones);
 		
 		JMenuItem mntmNuevaPublicacion = new JMenuItem("Nueva Publicación");
 		mnPublicaciones.add(mntmNuevaPublicacion);
+		mntmNuevaPublicacion.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				AltaPublicacion altaPublicacion = new AltaPublicacion();
+				altaPublicacion.setVisible(true);
+				frmCalificarApi.dispose();
+			}
+		});
 		
 		JMenuItem mntmMisPublicaciones = new JMenuItem("Mis Publicaciones");
 		mnPublicaciones.add(mntmMisPublicaciones);
 		frmCalificarApi.getContentPane().setLayout(null);
+		mntmMisPublicaciones.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MisPublicaciones misPublicaciones = new MisPublicaciones();
+				misPublicaciones.setVisible(true);
+				frmCalificarApi.dispose();
+			}
+		});
 		
 		JLabel lblBreadcrumb = new JLabel("Inicio > Mi Cuenta > Calificar");
 		lblBreadcrumb.setBounds(10, 20, 480, 16);

@@ -130,6 +130,15 @@ public class MiUsuario {
 		btnCancelar.setBounds(70, 460, 120, 30);
 		frmRegistrarseApi.getContentPane().add(btnCancelar);
 		
+		btnCancelar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Inicio inicio = new Inicio();
+				inicio.setVisible(true);
+				frmRegistrarseApi.dispose();
+			}
+		});
+		
 		JSeparator separator = new JSeparator();
 		separator.setBounds(0, 500, 320, 12);
 		frmRegistrarseApi.getContentPane().add(separator);
@@ -141,5 +150,9 @@ public class MiUsuario {
 		JButton btnCerrarCuentaDe = new JButton("Cerrar cuenta de usuario");
 		btnCerrarCuentaDe.setBounds(10, 540, 300, 30);
 		frmRegistrarseApi.getContentPane().add(btnCerrarCuentaDe);
+	}
+	
+	public void setVisible(boolean isVisible) {
+		this.frmRegistrarseApi.setVisible(isVisible);
 	}
 }

@@ -4,12 +4,14 @@ import edu.uade.api.tpo.controller.SistemaPublicaciones;
 import edu.uade.api.tpo.model.Producto;
 import edu.uade.api.tpo.model.Publicacion;
 import edu.uade.api.tpo.model.Subasta;
+import edu.uade.api.tpo.ui.OpcionIngreso;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.prefs.Preferences;
 
@@ -59,30 +61,83 @@ public class Inicio {
 		JMenuBar menuBar = new JMenuBar();
 		frmInicioApi.setJMenuBar(menuBar);
 		
+		JButton btnInicio = new JButton("");
+		String homePath = new File("src/main/resources/house.png").getAbsolutePath();
+		btnInicio.setIcon(new ImageIcon(homePath));
+		btnInicio.setEnabled(false);
+		menuBar.add(btnInicio);
+		
 		JMenu mnMiCuenta = new JMenu("Mi Cuenta");
 		menuBar.add(mnMiCuenta);
 		
 		JMenuItem mntmCuentaCorriente = new JMenuItem("Cuenta Corriente");
 		mnMiCuenta.add(mntmCuentaCorriente);
+		mntmCuentaCorriente.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				CuentaCorriente cc = new CuentaCorriente();
+				cc.setVisible(true);
+				frmInicioApi.dispose();
+			}
+		});
 		
 		JMenuItem mntmMiReputacion = new JMenuItem("Mi Reputación");
 		mnMiCuenta.add(mntmMiReputacion);
+		mntmMiReputacion.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Reputacion reputacion = new Reputacion();
+				reputacion.setVisible(true);
+				frmInicioApi.dispose();
+			}
+		});
 		
 		JMenuItem mntmMiUsuario = new JMenuItem("Mi Usuario");
 		mnMiCuenta.add(mntmMiUsuario);
+		mntmMiUsuario.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MiUsuario miUsuario = new MiUsuario();
+				miUsuario.setVisible(true);
+				frmInicioApi.dispose();
+			}
+		});
 		
 		JMenuItem mntmCerrarSesion = new JMenuItem("Cerrar sesión");
 		mnMiCuenta.add(mntmCerrarSesion);
+		mntmCerrarSesion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Ingresar ingreso = new Ingresar();
+				ingreso.setVisible(true);
+				frmInicioApi.dispose();
+			}
+		});
 		
 		JMenu mnPublicaciones = new JMenu("Publicaciones");
 		menuBar.add(mnPublicaciones);
 		
 		JMenuItem mntmNuevaPublicacion = new JMenuItem("Nueva Publicación");
 		mnPublicaciones.add(mntmNuevaPublicacion);
+		mntmNuevaPublicacion.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				AltaPublicacion altaPublicacion = new AltaPublicacion();
+				altaPublicacion.setVisible(true);
+				frmInicioApi.dispose();
+			}
+		});
 		
 		JMenuItem mntmMisPublicaciones = new JMenuItem("Mis Publicaciones");
 		mnPublicaciones.add(mntmMisPublicaciones);
 		frmInicioApi.getContentPane().setLayout(null);
+		mntmMisPublicaciones.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MisPublicaciones misPublicaciones = new MisPublicaciones();
+				misPublicaciones.setVisible(true);
+				frmInicioApi.dispose();
+			}
+		});
 		
 		JLabel lblBienvenido = new JLabel("Bienvenid@");
 		lblBienvenido.setBounds(10, 20, 80, 16);
@@ -114,8 +169,8 @@ public class Inicio {
 		
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btnBuscar.setEnabled(false);
 				buscarPublicacion(txtBuscador.getText());
+				System.out.println("Buscando "+txtBuscador.getText());
 				createTable();
 			}
 		});
@@ -147,6 +202,7 @@ public class Inicio {
 	private ArrayList<Publicacion> buscarPublicacion(String busqueda) {
 		SistemaPublicaciones sp = SistemaPublicaciones.getInstance();
 		resultado = (ArrayList<Publicacion>) sp.filtrarPublicaciones(busqueda);
+		System.out.println("resultado: " +resultado);
 		return resultado;
 	}
 	
@@ -155,7 +211,7 @@ public class Inicio {
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		
 		if (resultado != null) {
-			//JLabel tipoPub = new JLabel("");
+
 			for(Publicacion p : resultado){
 	
 				String categoria =(p.getArticulo() instanceof Producto) ? "Producto" : "Servicio";
