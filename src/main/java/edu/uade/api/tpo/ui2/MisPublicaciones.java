@@ -143,7 +143,7 @@ public class MisPublicaciones {
 		for(Publicacion p : publicaciones) {
 			String categoria = (p.getArticulo() instanceof Producto) ? "Producto" : "Servicio";
 			String tipoPublicacion = (p instanceof Subasta) ? "subasta-16.png" : "compra-inmediata-16.png";
-			String precio = Float.toString(p.getPrecio());
+			String precio = (p instanceof Subasta) ? Float.toString(((Subasta)p).getPrecioActual()) : Float.toString(p.getPrecio());
 			ImageIcon tipoPub = new ImageIcon("src/main/resources/"+tipoPublicacion);
 			String fecha = format.format(p.getFechaDesde());
 			
@@ -165,7 +165,7 @@ public class MisPublicaciones {
 		        		Publicacion p = publicaciones.get(row);
 		        		VerPublicacion publicacion = new VerPublicacion(p);	
 		        		publicacion.setVisible(true);
-		        		frmMisPublicaciones.dispose();
+		        		//frmMisPublicaciones.dispose();
 		            System.out.println("CLICKED "+ p.getArticulo().getNombre());
 		        }
 		    }
