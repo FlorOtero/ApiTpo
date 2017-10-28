@@ -16,7 +16,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
 
-public class Calificacion {
+public class VerCalificacion {
 
 	private JFrame frmVerCalificacion;
 
@@ -27,7 +27,7 @@ public class Calificacion {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Calificacion window = new Calificacion();
+					VerCalificacion window = new VerCalificacion();
 					window.frmVerCalificacion.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -39,7 +39,7 @@ public class Calificacion {
 	/**
 	 * Create the application.
 	 */
-	public Calificacion() {
+	public VerCalificacion() {
 		initialize();
 	}
 
