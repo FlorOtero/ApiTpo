@@ -31,6 +31,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import java.awt.FlowLayout;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class VerPublicacion {
 
@@ -78,7 +80,7 @@ public class VerPublicacion {
 		frmPublicacinApi = new JFrame();
 		frmPublicacinApi.setTitle("Publicación | API");
 		frmPublicacinApi.setBounds(100, 100, 500, 680);
-		frmPublicacinApi.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmPublicacinApi.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		JMenuBar menuBar = new JMenuBar();
 		frmPublicacinApi.setJMenuBar(menuBar);
@@ -266,6 +268,13 @@ public class VerPublicacion {
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.setBounds(370, 600, 120, 30);
 		frmPublicacinApi.getContentPane().add(btnVolver);
+		
+		btnVolver.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frmPublicacinApi.dispose();
+			}
+		});
 
 	}
 	
