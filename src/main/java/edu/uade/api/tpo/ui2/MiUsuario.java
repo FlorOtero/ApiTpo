@@ -4,15 +4,24 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+
+import edu.uade.api.tpo.controller.SistemaUsuarios;
+import edu.uade.api.tpo.exceptions.BusinessException;
+import edu.uade.api.tpo.exceptions.InvalidPasswordException;
+import edu.uade.api.tpo.model.Password;
+import edu.uade.api.tpo.model.Usuario;
+
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 import javax.swing.JSeparator;
 
 public class MiUsuario {
-
+	private Usuario user = SistemaUsuarios.getUsuarioLoggeado();
 	private JFrame frmRegistrarseApi;
 	private JTextField txtNombreDeUsuario;
 	private JPasswordField txtContrasena;
@@ -42,6 +51,7 @@ public class MiUsuario {
 	 */
 	public MiUsuario() {
 		initialize();
+		mostrarDatosUsuario();
 	}
 
 	/**
@@ -59,7 +69,7 @@ public class MiUsuario {
 		frmRegistrarseApi.getContentPane().add(lblNombreDeUsuario);
 		
 		txtNombreDeUsuario = new JTextField();
-		txtNombreDeUsuario.setText("cosmefulanito"); //NO OLVIDAR SETEAR EL NOMBRE DE USUARIO!!!
+		txtNombreDeUsuario.setText(user.getNombreUsuario());
 		txtNombreDeUsuario.setEditable(false);
 		txtNombreDeUsuario.setEnabled(false);
 		txtNombreDeUsuario.setBounds(10, 40, 300, 30);
@@ -125,10 +135,41 @@ public class MiUsuario {
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.setBounds(190, 460, 120, 30);
 		frmRegistrarseApi.getContentPane().add(btnAceptar);
+		btnAceptar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					user.setNombre(txtNombre.getText());
+					user.setApellido(txtApellido.getText());
+					user.setMail(txtEmail.getText());
+					Password pw = new Password();	
+					pw.setValor(new String(txtContrasena.getPassword()));
+					user.setPassword(pw);
+					System.out.println(user.getApellido());
+					System.out.println(user.getPassword().getValor());
+					SistemaUsuarios.getInstance().modificarUsuario(user);
+					JOptionPane.showConfirmDialog(null,"Su usuario se ha modificado con exito","Confirmacion",JOptionPane.PLAIN_MESSAGE);
+					Inicio inicio = new Inicio();
+					inicio.setVisible(true);
+					frmRegistrarseApi.dispose();
+					
+				} catch(BusinessException | InvalidPasswordException e1) {
+					//TODO Manejar la exception y mostrar un mensaje de error cuando existe el usuario
+				}
+			}
+		});
+		
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(70, 460, 120, 30);
 		frmRegistrarseApi.getContentPane().add(btnCancelar);
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Inicio inicio = new Inicio();
+				inicio.setVisible(true);
+				frmRegistrarseApi.dispose();
+			}
+		});
+		
 		
 		JSeparator separator = new JSeparator();
 		separator.setBounds(0, 500, 320, 12);
@@ -140,6 +181,26 @@ public class MiUsuario {
 		
 		JButton btnCerrarCuentaDe = new JButton("Cerrar cuenta de usuario");
 		btnCerrarCuentaDe.setBounds(10, 540, 300, 30);
+		btnCerrarCuentaDe.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					SistemaUsuarios.getInstance().eliminarUsuario(user.getNombre());
+					JOptionPane.showConfirmDialog(null,"Su usuario se ha eliminado con exito","Confirmacion",JOptionPane.PLAIN_MESSAGE);
+				} catch (BusinessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 		frmRegistrarseApi.getContentPane().add(btnCerrarCuentaDe);
 	}
+	
+	private void mostrarDatosUsuario(){
+		Password password = user.getPassword();					
+		txtContrasena.setText(password.getValor());
+		txtEmail.setText(user.getMail());
+		txtNombre.setText(user.getNombre());
+		txtApellido.setText(user.getApellido());
+	}
+	
 }
