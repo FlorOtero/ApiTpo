@@ -247,7 +247,6 @@ public class MiCuentaCorriente {
 		txtMensajes.setBackground(SystemColor.window);
 		txtMensajes.setBounds(10, 490, 760, 40);
 		frmCuentaCorriente.getContentPane().add(txtMensajes);
-		// {"Fecha", "Título", "Estado", "Tipo", "Monto", "Calificación"};
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 
 		try {
@@ -301,7 +300,7 @@ public class MiCuentaCorriente {
 		this.frmCuentaCorriente.setVisible(isVisible);
 	}
 
-	public void loadUser() {
+	private void loadUser() {
 		String nombreUsuario = prefs.get("USERNAME", null);
 		// user = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
 		user = SistemaUsuarios.getInstance().buscarUsuario("erikannunez");

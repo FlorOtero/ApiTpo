@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.prefs.Preferences;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -13,14 +14,23 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 
+import edu.uade.api.tpo.controller.SistemaTransacciones;
+import edu.uade.api.tpo.controller.SistemaUsuarios;
+import edu.uade.api.tpo.model.Transaccion;
+import edu.uade.api.tpo.model.Usuario;
+
 public class Calificar {
 
+	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
 	private JFrame frmCalificarApi;
-	protected String trid;
+	private String trid;
+	private Transaccion tr;
+	private Usuario user;
 
 	/**
 	 * Launch the application.
@@ -43,6 +53,11 @@ public class Calificar {
 	 */
 	public Calificar(String trid) {
 		this.trid = trid;
+		loadUser();
+		initialize();
+	}
+
+	public Calificar() {
 		initialize();
 	}
 
@@ -273,5 +288,19 @@ public class Calificar {
 	
 	public void setVisible(boolean isVisible) {
 		this.frmCalificarApi.setVisible(isVisible);
+	}
+	
+	private void loadUser() {
+		String nombreUsuario = prefs.get("USERNAME", null);
+		// user = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
+		user = SistemaUsuarios.getInstance().buscarUsuario("erikannunez");
+	}
+	
+	private void loadTransaccion() {
+		try {
+			tr = SistemaTransacciones.getInstance().buscarTransaccionById(trid);
+		}catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.PLAIN_MESSAGE);
+		}
 	}
 }

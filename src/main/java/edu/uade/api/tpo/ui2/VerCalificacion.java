@@ -44,6 +44,10 @@ public class VerCalificacion {
 		this.trid = trid;
 		initialize();
 	}
+	
+	public VerCalificacion() {
+		initialize();
+	}
 
 	/**
 	 * Initialize the contents of the frame.
