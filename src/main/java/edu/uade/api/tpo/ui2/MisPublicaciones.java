@@ -134,8 +134,8 @@ public class MisPublicaciones {
 	}
 	
 	private void loadUserData() {
-		//user = SistemaUsuarios.getUsuarioLoggeado();
-		user = SistemaUsuarios.getInstance().buscarUsuario("flor");
+		user = SistemaUsuarios.getUsuarioLoggeado();
+
 		List<Publicacion> publicaciones = user.getPublicaciones();
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
