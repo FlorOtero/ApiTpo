@@ -165,8 +165,7 @@ public class MisPublicaciones {
 		        		Publicacion p = publicaciones.get(row);
 		        		VerPublicacion publicacion = new VerPublicacion(p);	
 		        		publicacion.setVisible(true);
-		        		//frmMisPublicaciones.dispose();
-		            System.out.println("CLICKED "+ p.getArticulo().getNombre());
+		        		frmMisPublicaciones.dispose();
 		        }
 		    }
 		});
