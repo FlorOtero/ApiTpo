@@ -26,6 +26,9 @@ import edu.uade.api.tpo.model.Garantia;
 import edu.uade.api.tpo.model.MedioPago;
 import edu.uade.api.tpo.model.Producto;
 import edu.uade.api.tpo.model.Publicacion;
+import edu.uade.api.tpo.model.Servicio;
+import edu.uade.api.tpo.model.Subasta;
+import edu.uade.api.tpo.model.TipoContratacion;
 import edu.uade.api.tpo.model.TipoPeriodo;
 import edu.uade.api.tpo.model.Usuario;
 import edu.uade.api.tpo.ui.MenuPrincipal;
@@ -55,7 +58,7 @@ public class AltaPublicacion implements ItemListener{
 	private JTextField txtTitulo;
 	private JTextField txtPrecio;
 	private JTextField txtPrecioInicial;
-	private JTextField textField;
+	private JTextField txtPrecioMinimo;
 	private JTextField txtGarantia;
 	private JTextField txtCertificados;
 	private JTextArea textAreaDescripcion;
@@ -63,6 +66,9 @@ public class AltaPublicacion implements ItemListener{
 	private JCheckBox pagoTarjetaCreditoCheckbox;
 	private JCheckBox pagoTransferenciaCheckbox;
 	private JComboBox<String> comboBoxCategoria;
+	private JComboBox<String> comboBoxTipoPublicacion; 
+	private JComboBox<String> comboBoxTipoContratacion;
+	private JComboBox<String> comboBoxVigencia;
 
 	/**
 	 * Launch the application.
@@ -179,7 +185,7 @@ public class AltaPublicacion implements ItemListener{
 		frmNuevaPublicacion.getContentPane().add(lblTipoDePublicacion);
 		
 		String[] tipoPublicacionStrings = { COMPRA_INMEDIATA, SUBASTA };
-		JComboBox<String> comboBoxTipoPublicacion = new JComboBox(tipoPublicacionStrings);
+		comboBoxTipoPublicacion = new JComboBox(tipoPublicacionStrings);
 		comboBoxTipoPublicacion.setBounds(10, 380, 360, 27);
 		comboBoxTipoPublicacion.setSelectedIndex(0);
 		comboBoxTipoPublicacion.addItemListener(this);
@@ -228,10 +234,10 @@ public class AltaPublicacion implements ItemListener{
 		lblPrecioMinimo.setBounds(0, 50, 100, 30);
 		panelSubasta.add(lblPrecioMinimo);
 		
-		textField = new JTextField();
-		textField.setBounds(100, 50, 120, 30);
-		panelSubasta.add(textField);
-		textField.setColumns(10);
+		txtPrecioMinimo = new JTextField();
+		txtPrecioMinimo.setBounds(100, 50, 120, 30);
+		panelSubasta.add(txtPrecioMinimo);
+		txtPrecioMinimo.setColumns(10);
 		
 		JLabel lblPesosArgentinos_2 = new JLabel("pesos argentinos");
 		lblPesosArgentinos_2.setBounds(225, 50, 130, 30);
@@ -242,7 +248,7 @@ public class AltaPublicacion implements ItemListener{
 		panelSubasta.add(lblVigencia);
 		
 		String[] vigenciaStrings = { "30", "60", "90"};
-		JComboBox<String> comboBoxVigencia = new JComboBox(vigenciaStrings);
+		comboBoxVigencia = new JComboBox(vigenciaStrings);
 		comboBoxVigencia.setBounds(100, 90, 120, 30);
 		panelSubasta.add(comboBoxVigencia);
 		
@@ -297,29 +303,31 @@ public class AltaPublicacion implements ItemListener{
 		panelServicio.add(lblTipoDeContratacion);
 		
 		String[] contratacionStrings = { "Abono", "Única"};
-		JComboBox<String> comboBoxTipoContratacion = new JComboBox(contratacionStrings);
+		comboBoxTipoContratacion = new JComboBox(contratacionStrings);
 		comboBoxTipoContratacion.setBounds(150, 10, 210, 30);
 		panelServicio.add(comboBoxTipoContratacion);
 		
-		JLabel lblCertificados = new JLabel("Certificados:");
-		lblCertificados.setBounds(0, 50, 360, 16);
-		panelServicio.add(lblCertificados);
-		
-		txtCertificados = new JTextField();
-		txtCertificados.setBounds(0, 70, 200, 30);
-		panelServicio.add(txtCertificados);
-		txtCertificados.setColumns(10);
-		
-		JButton btnCargarCertificado = new JButton("Cargar certificado");
-		btnCargarCertificado.setBounds(210, 70, 150, 30);
-		panelServicio.add(btnCargarCertificado);
-		
-		JTextPane textPaneCertificados = new JTextPane();
-		textPaneCertificados.setText("Acá se tienen que ir mostrando los certificados cargados");
-		textPaneCertificados.setBackground(SystemColor.window);
-		textPaneCertificados.setEditable(false);
-		textPaneCertificados.setBounds(0, 110, 360, 40);
-		panelServicio.add(textPaneCertificados);
+// 		TODO: Decidir que son y como mostrar certificados
+//
+//		JLabel lblCertificados = new JLabel("Certificados:");
+//		lblCertificados.setBounds(0, 50, 360, 16);
+//		panelServicio.add(lblCertificados);
+//		
+//		txtCertificados = new JTextField();
+//		txtCertificados.setBounds(0, 70, 200, 30);
+//		panelServicio.add(txtCertificados);
+//		txtCertificados.setColumns(10);
+//		
+//		JButton btnCargarCertificado = new JButton("Cargar certificado");
+//		btnCargarCertificado.setBounds(210, 70, 150, 30);
+//		panelServicio.add(btnCargarCertificado);
+//		
+//		JTextPane textPaneCertificados = new JTextPane();
+//		textPaneCertificados.setText("Acá se tienen que ir mostrando los certificados cargados");
+//		textPaneCertificados.setBackground(SystemColor.window);
+//		textPaneCertificados.setEditable(false);
+//		textPaneCertificados.setBounds(0, 110, 360, 40);
+//		panelServicio.add(textPaneCertificados);
 		
 		JLabel lblMedioDePago = new JLabel("Medio de Pago aceptados:");
 		lblMedioDePago.setBounds(10, 580, 760, 16);
@@ -389,19 +397,35 @@ public class AltaPublicacion implements ItemListener{
 	
 	private void publicar() {
 		if (validateForm()) {
-			List<MedioPago> mediosPagos = getMediosPago();
-			
-			// TODO: Crear Producto o Servicio segun seleccionado en comboBoxCategoria
-			Articulo articulo = crearProducto();
-			Publicacion publicacion = new Publicacion();
-			publicacion.setPrecio(Float.parseFloat(txtPrecio.getText()));
-			publicacion.setArticulo(articulo);
-			
 			Usuario user = SistemaUsuarios.getUsuarioLoggeado();
-
-			SistemaPublicaciones.getInstance().altaPublicacion(user.getId(), publicacion.getPrecio(), publicacion.getArticulo(), mediosPagos);
-			JOptionPane.showMessageDialog(null, "¡Tu publicacion ha sido creada!", "Operacion Exitosa", JOptionPane.PLAIN_MESSAGE);
-			goInicio();
+			List<MedioPago> mediosPagos = getMediosPago();
+			Articulo articulo;
+			
+			if (comboBoxCategoria.getSelectedItem().toString() == PRODUCTO) {				
+				articulo = crearProducto();
+			} else {
+				articulo = crearServicio();
+			}
+			
+			try {
+				if (comboBoxTipoPublicacion.getSelectedItem().toString() == SUBASTA) {	
+					Subasta subasta = new Subasta();
+					subasta.setPrecioInicial(Float.parseFloat(txtPrecioInicial.getText()));
+					subasta.setPrecioInicial(Float.parseFloat(txtPrecioMinimo.getText()));
+					subasta.setDiasVigencia(Integer.parseInt(comboBoxVigencia.getSelectedItem().toString()));
+					SistemaPublicaciones.getInstance().altaSubasta(user.getId(), subasta.getArticulo(), subasta.getPrecioMin(), subasta.getDiasVigencia(),
+							subasta.getPrecioInicial(), mediosPagos);
+				} else {				
+					Publicacion publicacion = new Publicacion();
+					publicacion.setPrecio(Float.parseFloat(txtPrecio.getText()));
+					publicacion.setArticulo(articulo);
+					SistemaPublicaciones.getInstance().altaPublicacion(user.getId(), publicacion.getPrecio(), publicacion.getArticulo(), mediosPagos);
+				}
+				JOptionPane.showMessageDialog(null, "¡Tu publicacion ha sido creada!", "Operacion Exitosa", JOptionPane.PLAIN_MESSAGE);
+				goInicio();
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.PLAIN_MESSAGE);
+			}
 		} else {
 			JOptionPane.showMessageDialog(null, "Aun tienes campos que completar", "Formulario Incompleto", JOptionPane.PLAIN_MESSAGE);
 		}
@@ -421,6 +445,28 @@ public class AltaPublicacion implements ItemListener{
         
 		producto.setGarantia(garantia);
 		return producto;
+	}
+	
+	private Servicio crearServicio() {
+		Servicio servicio = new Servicio();
+		servicio.setNombre(txtTitulo.getText());
+		servicio.setDescripcion(textAreaDescripcion.getText());
+		// producto.fromImagesTokenized(filepathField.toString());
+		servicio.fromImagesTokenized("");
+		
+		Garantia garantia = new Garantia();
+		garantia.setCantidad(Integer.parseInt(txtGarantia.getText()));
+        garantia.setTipo(TipoPeriodo.ANUAL);
+        
+        TipoContratacion tipoContratacion = null;
+        if (comboBoxTipoContratacion.getSelectedItem().toString() == "Abono") {
+        	tipoContratacion = TipoContratacion.ABONO;
+        } else {
+        	tipoContratacion = TipoContratacion.UNICA;
+        }
+		servicio.setContratacion(tipoContratacion);
+		
+		return servicio;
 	}
 	
 	private void goInicio() {
