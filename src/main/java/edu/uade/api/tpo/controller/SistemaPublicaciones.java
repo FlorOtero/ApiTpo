@@ -181,6 +181,7 @@ public class SistemaPublicaciones {
         List<Publicacion> resultado = null;
         try {
             resultado = publicacionDao.findManyLike("nombre", busqueda);
+            resultado.addAll(subastaDao.findManyLike("nombre", busqueda));
         } catch (Exception e) {
             logger.error("Error filtrando publicaciones", e);
         }
