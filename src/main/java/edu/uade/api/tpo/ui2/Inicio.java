@@ -22,7 +22,7 @@ public class Inicio {
 	private JTextField txtBuscador;
 	private JTable table;
 	private ArrayList<Publicacion> resultado;
-	JButton btnBuscar;
+	private JButton btnBuscar;
 
 	/**
 	 * Launch the application.
@@ -75,7 +75,7 @@ public class Inicio {
 		mntmCuentaCorriente.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				CuentaCorriente cc = new CuentaCorriente();
+				MiCuentaCorriente cc = new MiCuentaCorriente();
 				cc.setVisible(true);
 				frmInicioApi.dispose();
 			}

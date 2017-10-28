@@ -98,7 +98,7 @@ public class Comprar implements ActionListener{
 		mntmCuentaCorriente.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				CuentaCorriente cc = new CuentaCorriente();
+				MiCuentaCorriente cc = new MiCuentaCorriente();
 				cc.setVisible(true);
 				frmComprarApi.dispose();
 			}

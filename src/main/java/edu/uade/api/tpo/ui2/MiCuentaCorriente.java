@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import java.awt.Font;
 import javax.swing.JComboBox;
@@ -14,17 +15,27 @@ import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.table.DefaultTableModel;
 
+import edu.uade.api.tpo.controller.SistemaCuentaCorriente;
+import edu.uade.api.tpo.controller.SistemaUsuarios;
+import edu.uade.api.tpo.exceptions.BusinessException;
+import edu.uade.api.tpo.model.ItemCtaCte;
+import edu.uade.api.tpo.model.Usuario;
+
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.List;
+import java.util.prefs.Preferences;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 
-public class CuentaCorriente {
+public class MiCuentaCorriente {
 
+	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
+	private Usuario user;
 	private JFrame frmCuentaCorriente;
 	private JTable table;
 
@@ -35,7 +46,7 @@ public class CuentaCorriente {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CuentaCorriente window = new CuentaCorriente();
+					MiCuentaCorriente window = new MiCuentaCorriente();
 					window.frmCuentaCorriente.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -47,7 +58,8 @@ public class CuentaCorriente {
 	/**
 	 * Create the application.
 	 */
-	public CuentaCorriente() {
+	public MiCuentaCorriente() {
+		loadUser();
 		initialize();
 	}
 
@@ -189,7 +201,7 @@ public class CuentaCorriente {
 		lblSaldo.setBounds(10, 460, 190, 16);
 		frmCuentaCorriente.getContentPane().add(lblSaldo);
 		
-		JLabel lblSaldoCtaCte = new JLabel("$1000");
+		JLabel lblSaldoCtaCte = new JLabel("$"+Float.toString(user.getCuentaCorriente().getSaldo()));
 		lblSaldoCtaCte.setBounds(200, 460, 570, 16);
 		frmCuentaCorriente.getContentPane().add(lblSaldoCtaCte);
 		
@@ -198,6 +210,26 @@ public class CuentaCorriente {
 		txtMensajes.setBackground(SystemColor.window);
 		txtMensajes.setBounds(10, 490, 760, 40);
 		frmCuentaCorriente.getContentPane().add(txtMensajes);
+		//{"Fecha", "Título", "Estado", "Tipo", "Monto", "Calificación"};
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
+
+		try {
+			List<ItemCtaCte> movimientos = SistemaCuentaCorriente.getInstance().consultarMovimientos(user.getNombreUsuario());
+			for (ItemCtaCte item : movimientos) {
+				model.addRow(new Object[] { 
+						item.getIdOperacion(),//fecha
+						item.getMonto(), //titulo
+						item.getEstado(), //estado
+						item.getTipo(), //tipo
+						item.getMonto(), //monto
+						item //calificacion
+						});
+			}
+			
+		} catch (BusinessException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.ERROR_MESSAGE);
+
+		}
 		
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.setBounds(650, 540, 120, 30);
@@ -215,5 +247,10 @@ public class CuentaCorriente {
 	
 	public void setVisible(boolean isVisible) {
 		this.frmCuentaCorriente.setVisible(isVisible);
+	}
+	
+	public void loadUser() {
+		String nombreUsuario = prefs.get("USERNAME", null);
+		user = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
 	}
 }
