@@ -20,6 +20,7 @@ import javax.swing.JTextArea;
 public class Calificar {
 
 	private JFrame frmCalificarApi;
+	protected String trid;
 
 	/**
 	 * Launch the application.
@@ -28,7 +29,7 @@ public class Calificar {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Calificar window = new Calificar();
+					Calificar window = new Calificar("");
 					window.frmCalificarApi.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -40,7 +41,8 @@ public class Calificar {
 	/**
 	 * Create the application.
 	 */
-	public Calificar() {
+	public Calificar(String trid) {
+		this.trid = trid;
 		initialize();
 	}
 
@@ -258,5 +260,18 @@ public class Calificar {
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(250, 420, 120, 30);
 		frmCalificarApi.getContentPane().add(btnCancelar);
+		
+		btnCancelar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MiCuentaCorriente mcc = new MiCuentaCorriente();
+				mcc.setVisible(true);
+				frmCalificarApi.dispose();
+			}
+		});
+	}
+	
+	public void setVisible(boolean isVisible) {
+		this.frmCalificarApi.setVisible(isVisible);
 	}
 }

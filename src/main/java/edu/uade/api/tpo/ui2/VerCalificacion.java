@@ -19,6 +19,7 @@ import javax.swing.JTextPane;
 public class VerCalificacion {
 
 	private JFrame frmVerCalificacion;
+	protected String trid;
 
 	/**
 	 * Launch the application.
@@ -27,7 +28,7 @@ public class VerCalificacion {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VerCalificacion window = new VerCalificacion();
+					VerCalificacion window = new VerCalificacion("");
 					window.frmVerCalificacion.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -39,7 +40,8 @@ public class VerCalificacion {
 	/**
 	 * Create the application.
 	 */
-	public VerCalificacion() {
+	public VerCalificacion(String trid) {
+		this.trid = trid;
 		initialize();
 	}
 
@@ -211,8 +213,20 @@ public class VerCalificacion {
 		btnVolver.setBounds(370, 350, 120, 30);
 		frmVerCalificacion.getContentPane().add(btnVolver);
 		
+		btnVolver.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MiCuentaCorriente mcc = new MiCuentaCorriente();
+				mcc.setVisible(true);
+				frmVerCalificacion.dispose();
+			}
+		});
 
 		
+	}
+	
+	public void setVisible(boolean isVisible) {
+		this.frmVerCalificacion.setVisible(isVisible);
 	}
 
 }

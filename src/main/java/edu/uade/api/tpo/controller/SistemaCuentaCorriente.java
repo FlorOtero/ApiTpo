@@ -7,6 +7,7 @@ import edu.uade.api.tpo.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -84,12 +85,17 @@ public class SistemaCuentaCorriente {
 		}
 
 		List<ItemCtaCte> movimientos = new ArrayList<>();
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 		
 		 for (Transaccion tr : usuario.getCuentaCorriente().getTransacciones()) {
 
 			ItemCtaCte item = new ItemCtaCte(tr.getId());
-			item.setEstado(tr.getEstado().getVal());
+			item.setEstado(tr.getEstado().toString());
 			item.setComision(false);
+			String fecha = format.format(tr.getFecha());
+			item.setFecha(fecha);
+			item.setTitulo(tr.getPublicacion().getArticulo().getNombre());
+			item.setCalificada(tr.getCalificacion() != null);
 			
             //si fue una compra...
             if (tr.getContraparteId().equals(usuario.getId())) {
@@ -105,7 +111,7 @@ public class SistemaCuentaCorriente {
 				// lleva el mismo id de operacion que la transaccion de venta, porque
 				// corresponde a ella
 				ItemCtaCte comision = new ItemCtaCte(tr.getId());
-				comision.setEstado(tr.getEstado().getVal());
+				comision.setEstado(tr.getEstado().toString());
 				comision.setComision(true);
 				comision.setMonto(tr.getComision().getImporte() * -1);
 				comision.setTipo("comisión");
