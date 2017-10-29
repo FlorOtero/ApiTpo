@@ -5,21 +5,32 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.prefs.Preferences;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
 
+import edu.uade.api.tpo.controller.SistemaTransacciones;
+import edu.uade.api.tpo.controller.SistemaUsuarios;
+import edu.uade.api.tpo.model.Transaccion;
+import edu.uade.api.tpo.model.Usuario;
+
 public class VerCalificacion {
 
+	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
 	private JFrame frmVerCalificacion;
 	protected String trid;
+	private Transaccion tr;
+	private Usuario user;
 
 	/**
 	 * Launch the application.
@@ -42,6 +53,8 @@ public class VerCalificacion {
 	 */
 	public VerCalificacion(String trid) {
 		this.trid = trid;
+		loadUser();
+		loadTransaccion();
 		initialize();
 	}
 	
@@ -159,7 +172,7 @@ public class VerCalificacion {
 		lblCalificacionOtorgada.setBounds(300, 60, 145, 16);
 		frmVerCalificacion.getContentPane().add(lblCalificacionOtorgada);
 		
-		JLabel lblCalificacion = new JLabel("10");
+		JLabel lblCalificacion = new JLabel(String.valueOf(tr.getCalificacion().getCalificacion()));
 		lblCalificacion.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
 		lblCalificacion.setBounds(445, 57, 25, 22);
 		frmVerCalificacion.getContentPane().add(lblCalificacion);
@@ -176,7 +189,8 @@ public class VerCalificacion {
 		/**
 		 * Indicar la fecha en que se realizo la calificacion
 		 */
-		JLabel lblFechaCalificacion = new JLabel("20-03-2017");
+		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+		JLabel lblFechaCalificacion = new JLabel(format.format(tr.getCalificacion().getFecha()));
 		lblFechaCalificacion.setBounds(60, 60, 100, 16);
 		frmVerCalificacion.getContentPane().add(lblFechaCalificacion);
 		
@@ -187,7 +201,8 @@ public class VerCalificacion {
 		/**
 		 * Indicar el nombre del usuario que califico
 		 */
-		JLabel lblUsuarioCalificador = new JLabel("cosmefulanito");
+		Usuario calificador = SistemaUsuarios.getInstance().buscarUsuarioById(tr.getContraparteId());
+		JLabel lblUsuarioCalificador = new JLabel(calificador.getNombreUsuario());
 		lblUsuarioCalificador.setBounds(70, 90, 420, 16);
 		frmVerCalificacion.getContentPane().add(lblUsuarioCalificador);
 		
@@ -198,6 +213,13 @@ public class VerCalificacion {
 		JButton btnVerPublicacion = new JButton("Ver Publicación");
 		btnVerPublicacion.setBounds(95, 114, 140, 30);
 		frmVerCalificacion.getContentPane().add(btnVerPublicacion);
+		btnVerPublicacion.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				VerPublicacion publicacion = new VerPublicacion(tr.getPublicacion());
+				publicacion.setVisible(true);
+			}
+		});
 		
 		JLabel lblObservaciones = new JLabel("Observaciones:");
 		lblObservaciones.setBounds(10, 150, 480, 16);
@@ -212,6 +234,7 @@ public class VerCalificacion {
 		JTextPane textPaneObservaciones = new JTextPane();
 		textPaneObservaciones.setBounds(10, 180, 480, 150);
 		frmVerCalificacion.getContentPane().add(textPaneObservaciones);
+		textPaneObservaciones.setText(tr.getCalificacion().getObservaciones());
 		
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.setBounds(370, 350, 120, 30);
@@ -231,6 +254,20 @@ public class VerCalificacion {
 	
 	public void setVisible(boolean isVisible) {
 		this.frmVerCalificacion.setVisible(isVisible);
+	}
+	
+	private void loadUser() {
+		String nombreUsuario = prefs.get("USERNAME", null);
+		// user = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
+		user = SistemaUsuarios.getInstance().buscarUsuario("erikannunez");
+	}
+	
+	private void loadTransaccion() {
+		try {
+			tr = SistemaTransacciones.getInstance().buscarTransaccionById(trid);
+		}catch (Exception e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.PLAIN_MESSAGE);
+		}
 	}
 
 }

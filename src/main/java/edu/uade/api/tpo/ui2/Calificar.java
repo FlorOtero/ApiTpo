@@ -207,52 +207,62 @@ public class Calificar {
 		
 		ButtonGroup group = new ButtonGroup();
 		JRadioButton rate_1 = new JRadioButton("1");
+		rate_1.setActionCommand("1");
 		rate_1.setBounds(10, 150, 48, 25);
 		group.add(rate_1);
 		frmCalificarApi.getContentPane().add(rate_1);
 		
 		JRadioButton rate_2 = new JRadioButton("2");
+		rate_2.setActionCommand("2");
 		rate_2.setBounds(58, 150, 48, 23);
 		group.add(rate_2);
 		frmCalificarApi.getContentPane().add(rate_2);
 		
 		JRadioButton rate_3 = new JRadioButton("3");
+		rate_3.setActionCommand("3");
 		rate_3.setBounds(106, 150, 48, 23);
 		group.add(rate_3);
 		frmCalificarApi.getContentPane().add(rate_3);
 		
 		JRadioButton rate_4 = new JRadioButton("4");
+		rate_4.setActionCommand("4");
 		rate_4.setBounds(154, 150, 48, 23);
 		group.add(rate_4);
 		frmCalificarApi.getContentPane().add(rate_4);
 		
 		JRadioButton rate_5 = new JRadioButton("5");
+		rate_5.setActionCommand("5");;
 		rate_5.setBounds(202, 150, 48, 23);
 		rate_5.setSelected(true);
 		group.add(rate_5);
 		frmCalificarApi.getContentPane().add(rate_5);
 		
 		JRadioButton rate_6 = new JRadioButton("6");
+		rate_6.setActionCommand("6");
 		rate_6.setBounds(250, 150, 48, 23);
 		group.add(rate_6);
 		frmCalificarApi.getContentPane().add(rate_6);
 		
 		JRadioButton rate_7 = new JRadioButton("7");
+		rate_7.setActionCommand("7");
 		rate_7.setBounds(298, 150, 48, 23);
 		group.add(rate_7);
 		frmCalificarApi.getContentPane().add(rate_7);
 		
 		JRadioButton rate_8 = new JRadioButton("8");
+		rate_8.setActionCommand("8");
 		rate_8.setBounds(346, 150, 48, 23);
 		group.add(rate_8);
 		frmCalificarApi.getContentPane().add(rate_8);
 		
 		JRadioButton rate_9 = new JRadioButton("9");
+		rate_9.setActionCommand("9");
 		rate_9.setBounds(394, 150, 48, 23);
 		group.add(rate_9);
 		frmCalificarApi.getContentPane().add(rate_9);
 		
 		JRadioButton rate_10 = new JRadioButton("10");
+		rate_10.setActionCommand("10");
 		rate_10.setBounds(442, 150, 48, 23);
 		group.add(rate_10);
 		frmCalificarApi.getContentPane().add(rate_10);
@@ -276,9 +286,6 @@ public class Calificar {
 		lblObservaciones.setBounds(10, 230, 480, 16);
 		frmCalificarApi.getContentPane().add(lblObservaciones);
 		
-		/**
-		 * TODO cambiar el tipo del campo
-		 */
 		JTextArea textAreaObservaciones = new JTextArea();
 		textAreaObservaciones.setLineWrap(true);
 		textAreaObservaciones.setWrapStyleWord(true);
@@ -296,12 +303,14 @@ public class Calificar {
 		btnEnviar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO validar que no este vacio el textarea
+	
 				try {
 					int valor = Integer.parseInt(group.getSelection().getActionCommand());
 					String obs = textAreaObservaciones.getText();
-					System.out.println(valor +" "+ obs);
 					SistemaCalificaciones.getInstance().calificarTransaccion(tr, valor, obs);
+					MiCuentaCorriente mcc = new MiCuentaCorriente();
+					mcc.setVisible(true);
+					frmCalificarApi.dispose();
 				} catch (BusinessException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
 				}
