@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.prefs.Preferences;
 
 public class Inicio {
@@ -19,7 +20,7 @@ public class Inicio {
 	private JFrame frmInicioApi;
 	private JTextField txtBuscador;
 	private JTable table;
-	private ArrayList<Publicacion> resultado;
+	private List<Publicacion> resultado;
 	JButton btnBuscar;
 
 	/**
@@ -144,15 +145,16 @@ public class Inicio {
 
 	}
 	
-	private ArrayList<Publicacion> buscarPublicacion(String busqueda) {
+	private List<Publicacion> buscarPublicacion(String busqueda) {
 		SistemaPublicaciones sp = SistemaPublicaciones.getInstance();
-		resultado = (ArrayList<Publicacion>) sp.filtrarPublicaciones(busqueda);
+		this.resultado = new ArrayList<>(sp.filtrarPublicaciones(busqueda));
 		return resultado;
 	}
 	
 	public void createTable() {
 			
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		model.setRowCount(0);
 		
 		if (resultado != null) {
 			//JLabel tipoPub = new JLabel("");
