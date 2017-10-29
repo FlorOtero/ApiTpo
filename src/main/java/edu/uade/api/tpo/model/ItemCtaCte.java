@@ -2,11 +2,15 @@ package edu.uade.api.tpo.model;
 
 public class ItemCtaCte {
 	
+	//{"Fecha", "Título", "Estado", "Tipo", "Monto", "Calificación"};
 	private String idOperacion;
 	private float monto;
 	private boolean comision;
-	private char estado;
+	private String estado;
 	private String tipo;
+	private String titulo;
+	private String fecha;
+	private boolean calificada;
 	
 	public ItemCtaCte(String idOperacion) {
 		super();
@@ -30,10 +34,10 @@ public class ItemCtaCte {
 	public void setComision(boolean comision) {
 		this.comision = comision;
 	}
-	public char getEstado() {
+	public String getEstado() {
 		return estado;
 	}
-	public void setEstado(char estado) {
+	public void setEstado(String estado) {
 		this.estado = estado;
 	}
 	public String getTipo() {
@@ -42,6 +46,23 @@ public class ItemCtaCte {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	
+	public String getFecha() {
+		return fecha;
+	}
+	public void setFecha(String fecha) {
+		this.fecha = fecha;
+	}
+	public String getTitulo() {
+		return titulo;
+	}
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+	public boolean isCalificada() {
+		return calificada;
+	}
+	public void setCalificada(boolean calificada) {
+		this.calificada = calificada;
+	}
 
 }

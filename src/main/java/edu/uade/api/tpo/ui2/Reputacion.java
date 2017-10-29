@@ -10,6 +10,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -56,30 +58,84 @@ public class Reputacion {
 		JMenuBar menuBar = new JMenuBar();
 		frmMiReputacion.setJMenuBar(menuBar);
 		
+		JButton btnInicio = new JButton("");
+		String homePath = new File("src/main/resources/house.png").getAbsolutePath();
+		btnInicio.setIcon(new ImageIcon(homePath));
+		menuBar.add(btnInicio);
+		
+		btnInicio.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Inicio inicio = new Inicio();
+				inicio.setVisible(true);
+				frmMiReputacion.dispose();
+			}
+		});
+		
 		JMenu mnMiCuenta = new JMenu("Mi Cuenta");
 		menuBar.add(mnMiCuenta);
 		
 		JMenuItem mntmCuentaCorriente = new JMenuItem("Cuenta Corriente");
 		mnMiCuenta.add(mntmCuentaCorriente);
+		mntmCuentaCorriente.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MiCuentaCorriente cc = new MiCuentaCorriente();
+				cc.setVisible(true);
+				frmMiReputacion.dispose();
+			}
+		});
 		
 		JMenuItem mntmMiReputacion = new JMenuItem("Mi Reputación");
 		mnMiCuenta.add(mntmMiReputacion);
+		mntmMiReputacion.setEnabled(false);
 		
 		JMenuItem mntmMiUsuario = new JMenuItem("Mi Usuario");
 		mnMiCuenta.add(mntmMiUsuario);
+		mntmMiUsuario.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MiUsuario miUsuario = new MiUsuario();
+				miUsuario.setVisible(true);
+				frmMiReputacion.dispose();
+			}
+		});
 		
 		JMenuItem mntmCerrarSesion = new JMenuItem("Cerrar sesión");
 		mnMiCuenta.add(mntmCerrarSesion);
+		mntmCerrarSesion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Ingresar ingreso = new Ingresar();
+				ingreso.setVisible(true);
+				frmMiReputacion.dispose();
+			}
+		});
 		
 		JMenu mnPublicaciones = new JMenu("Publicaciones");
 		menuBar.add(mnPublicaciones);
 		
 		JMenuItem mntmNuevaPublicacion = new JMenuItem("Nueva Publicación");
 		mnPublicaciones.add(mntmNuevaPublicacion);
+		mntmNuevaPublicacion.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				AltaPublicacion altaPublicacion = new AltaPublicacion();
+				altaPublicacion.setVisible(true);
+				frmMiReputacion.dispose();
+			}
+		});
 		
 		JMenuItem mntmMisPublicaciones = new JMenuItem("Mis Publicaciones");
 		mnPublicaciones.add(mntmMisPublicaciones);
 		frmMiReputacion.getContentPane().setLayout(null);
+		mntmMisPublicaciones.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MisPublicaciones misPublicaciones = new MisPublicaciones();
+				misPublicaciones.setVisible(true);
+				frmMiReputacion.dispose();
+			}
+		});
 		
 		JLabel lblBreadcrumb = new JLabel("Inicio > Mi Cuenta > Mi Reputación");
 		lblBreadcrumb.setBounds(10, 20, 480, 16);
@@ -121,8 +177,19 @@ public class Reputacion {
 		btnVolver.setBounds(370, 300, 120, 30);
 		frmMiReputacion.getContentPane().add(btnVolver);
 		
+		btnVolver.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Inicio inicio = new Inicio();
+				inicio.setVisible(true);
+				frmMiReputacion.dispose();
+			}
+		});
 		
-		
+	}
+	
+	public void setVisible(boolean isVisible) {
+		this.frmMiReputacion.setVisible(isVisible);
 	}
 
 }

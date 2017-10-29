@@ -91,5 +91,15 @@ public class SistemaTransacciones {
         }
 
     }
+    
+    public Transaccion buscarTransaccionById(String transaccion) {
+    		Transaccion tr = null;
+        try {
+        		tr = TransaccionDaoImpl.getInstance().findById(transaccion);
+        } catch (SQLException e) {
+            logger.error("Error buscando transaccion", e);
+        }
+        return tr;
+    }
 
 }
