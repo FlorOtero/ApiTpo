@@ -13,7 +13,9 @@ import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JTextPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +31,8 @@ import edu.uade.api.tpo.ui2.custom.ButtonColumn;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.File;
 import java.util.List;
 import java.util.prefs.Preferences;
@@ -43,10 +47,11 @@ import javax.swing.JScrollPane;
 public class MiCuentaCorriente {
 
 	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
-    private static final Logger logger = LoggerFactory.getLogger(MiCuentaCorriente.class);
+	private static final Logger logger = LoggerFactory.getLogger(MiCuentaCorriente.class);
 	private Usuario user;
 	private JFrame frmCuentaCorriente;
 	private JTable table;
+	private TableRowSorter<DefaultTableModel> sorter;
 
 	/**
 	 * Launch the application.
@@ -200,23 +205,81 @@ public class MiCuentaCorriente {
 		table = new JTable();
 		table.setModel(new DefaultTableModel(new Object[][] {}, columnNames));
 		table.setAutoCreateRowSorter(true);
+
 		table.getColumnModel().getColumn(0).setMinWidth(90);
 		table.getColumnModel().getColumn(0).setMaxWidth(90);
 		table.getColumnModel().getColumn(2).setMaxWidth(50);
 		table.getColumnModel().getColumn(3).setMaxWidth(80);
 		table.getColumnModel().getColumn(4).setMaxWidth(120);
 		table.getColumnModel().getColumn(5).setMaxWidth(80);
-		//Ocultamos la columna con el id de operacion
+		// Ocultamos la columna con el id de operacion
 		table.removeColumn(table.getColumnModel().getColumn(6));
+
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		sorter = new TableRowSorter<DefaultTableModel>(model);
+		table.setRowSorter(sorter);
+
+		comboTipo.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					Object item = e.getItem();
+					String filtro;
+
+					switch (item.toString()) {
+					case "Compras":
+						filtro = "compra";
+						break;
+					case "Ventas":
+						filtro = "venta";
+						break;
+					case "Comisiones":
+						filtro = "comisión";
+						break;
+					default:
+						filtro = "";
+						break;
+					}
+					System.out.println(item);
+					RowFilter<DefaultTableModel, Object> rf = RowFilter.regexFilter(filtro, 3);
+					sorter.setRowFilter(rf);
+				}
+			}
+		});
+
+		comboEstado.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					Object item = e.getItem();
+					String filtro;
+
+					switch (item.toString()) {
+					case "Aprobadas":
+						filtro = "A";
+						break;
+					case "Canceladas":
+						filtro = "C";
+						break;
+					default:
+						filtro = "";
+						break;
+					}
+					System.out.println(item);
+					RowFilter<DefaultTableModel, Object> rf = RowFilter.regexFilter(filtro, 2);
+					sorter.setRowFilter(rf);
+				}
+			}
+		});
 
 		Action showCalificacion = new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
 				JTable table = (JTable) e.getSource();
-			//	int modelRow = Integer.valueOf(e.getActionCommand());
-				String trid = (String) table.getModel().getValueAt(table.getSelectedRow(),6);
-				String action = (String) table.getModel().getValueAt(table.getSelectedRow(),5);
-				
-				switch(action) {
+				// int modelRow = Integer.valueOf(e.getActionCommand());
+				String trid = (String) table.getModel().getValueAt(table.getSelectedRow(), 6);
+				String action = (String) table.getModel().getValueAt(table.getSelectedRow(), 5);
+
+				switch (action) {
 				case "ver":
 					VerCalificacion verCalificacion = new VerCalificacion(trid);
 					verCalificacion.setVisible(true);
@@ -231,7 +294,7 @@ public class MiCuentaCorriente {
 			}
 		};
 
-		//Hacemos que la columna de calificación tenga un botón
+		// Hacemos que la columna de calificación tenga un botón
 		ButtonColumn buttonColumn = new ButtonColumn(table, showCalificacion, 5);
 
 		JScrollPane scrollPane = new JScrollPane(table);
@@ -252,7 +315,6 @@ public class MiCuentaCorriente {
 		txtMensajes.setBackground(SystemColor.window);
 		txtMensajes.setBounds(10, 490, 760, 40);
 		frmCuentaCorriente.getContentPane().add(txtMensajes);
-		DefaultTableModel model = (DefaultTableModel) table.getModel();
 
 		try {
 			List<ItemCtaCte> movimientos = SistemaCuentaCorriente.getInstance()
@@ -271,15 +333,13 @@ public class MiCuentaCorriente {
 					}
 				}
 
-				model.addRow(new Object[] { 
-						item.getFecha(), // fecha
+				model.addRow(new Object[] { item.getFecha(), // fecha
 						item.getTitulo(), // titulo
 						item.getEstado(), // estado
 						item.getTipo(), // tipo
 						item.getMonto(), // monto
-						calificacion,
-						item.getIdOperacion() // hidden
-						});
+						calificacion, item.getIdOperacion() // hidden
+				});
 			}
 
 		} catch (BusinessException e) {
