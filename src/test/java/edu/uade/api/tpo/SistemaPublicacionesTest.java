@@ -1,9 +1,9 @@
 package edu.uade.api.tpo;
 
+import edu.uade.api.tpo.controller.SistemaPublicaciones;
 import edu.uade.api.tpo.controller.SistemaUsuarios;
 import edu.uade.api.tpo.dao.impl.UsuarioDaoImpl;
 import edu.uade.api.tpo.exceptions.BusinessException;
-import edu.uade.api.tpo.controller.SistemaPublicaciones;
 import edu.uade.api.tpo.model.*;
 import org.junit.Assert;
 import org.junit.Before;
@@ -11,7 +11,6 @@ import org.junit.Test;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class SistemaPublicacionesTest {
@@ -184,9 +183,9 @@ public class SistemaPublicacionesTest {
 
     @Test
     public void test_ofertarPublicacionEfectivo() {
-        Publicacion publicacion = this.sistemaPublicaciones.buscarPublicacion(PUBLICACION_ID);
+        Publicacion publicacion = this.sistemaPublicaciones.buscarPublicacion("1320ad84-3645-4aa4-b6b4-c103528ca71e");
         try {
-            Usuario contraparte = UsuarioDaoImpl.getInstance().findById(CONTRAPARTE_ID);
+            Usuario contraparte = UsuarioDaoImpl.getInstance().findById("bcb8dd0a-599a-4204-9827-fa8cd3ac21bb");
             DatosPago datosPago = new DatosPago();
             datosPago.setMedioPago(MedioPago.EFECTIVO);
             this.sistemaPublicaciones.ofertar(publicacion, 666, contraparte, datosPago);

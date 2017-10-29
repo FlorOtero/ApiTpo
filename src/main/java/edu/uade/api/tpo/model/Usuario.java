@@ -22,7 +22,6 @@ public class Usuario implements Persistible, Observer {
     private Estado estado;
 
     public Usuario() {
-        this.cuentaCorriente = new CuentaCorriente();
         this.publicaciones = new ArrayList<>();
         this.estado = Estado.A;
     }
