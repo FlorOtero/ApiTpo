@@ -1,9 +1,11 @@
 package edu.uade.api.tpo.ui2;
 
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.Date;
 import java.util.prefs.Preferences;
 
 import javax.swing.ButtonGroup;
@@ -17,10 +19,14 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JSeparator;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import edu.uade.api.tpo.controller.SistemaCalificaciones;
 import edu.uade.api.tpo.controller.SistemaTransacciones;
 import edu.uade.api.tpo.controller.SistemaUsuarios;
+import edu.uade.api.tpo.exceptions.BusinessException;
+import edu.uade.api.tpo.model.Calificacion;
 import edu.uade.api.tpo.model.Transaccion;
 import edu.uade.api.tpo.model.Usuario;
 
@@ -54,6 +60,7 @@ public class Calificar {
 	public Calificar(String trid) {
 		this.trid = trid;
 		loadUser();
+		loadTransaccion();
 		initialize();
 	}
 
@@ -174,7 +181,8 @@ public class Calificar {
 		/**
 		 * Indicar el nombre del usuario vendedor
 		 */
-		JLabel lblUsuarioVendedor = new JLabel("cosmefulanito");
+		Usuario vendedor = SistemaUsuarios.getInstance().buscarUsuarioById(tr.getPublicacion().getUsuarioId());
+		JLabel lblUsuarioVendedor = new JLabel(vendedor.getNombreUsuario());
 		lblUsuarioVendedor.setBounds(70, 60, 420, 16);
 		frmCalificarApi.getContentPane().add(lblUsuarioVendedor);
 		
@@ -185,6 +193,13 @@ public class Calificar {
 		JButton btnVerPublicacion = new JButton("Ver Publicación");
 		btnVerPublicacion.setBounds(95, 84, 140, 30);
 		frmCalificarApi.getContentPane().add(btnVerPublicacion);
+		btnVerPublicacion.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				VerPublicacion publicacion = new VerPublicacion(tr.getPublicacion());
+				publicacion.setVisible(true);
+			}
+		});
 		
 		JLabel lblCalificacion = new JLabel("Calificación:");
 		lblCalificacion.setBounds(10, 120, 480, 16);
@@ -265,12 +280,34 @@ public class Calificar {
 		 * TODO cambiar el tipo del campo
 		 */
 		JTextArea textAreaObservaciones = new JTextArea();
-		textAreaObservaciones.setBounds(10, 260, 480, 150);
-		frmCalificarApi.getContentPane().add(textAreaObservaciones);
+		textAreaObservaciones.setLineWrap(true);
+		textAreaObservaciones.setWrapStyleWord(true);
+		
+		JScrollPane scrollPaneDescripcion = new JScrollPane(textAreaObservaciones);
+		scrollPaneDescripcion.setBounds(10, 260, 480, 150);
+		scrollPaneDescripcion.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPaneDescripcion.setPreferredSize(new Dimension(480, 150));
+		frmCalificarApi.getContentPane().add(scrollPaneDescripcion);
 		
 		JButton btnEnviar = new JButton("Enviar");
 		btnEnviar.setBounds(370, 420, 120, 30);
 		frmCalificarApi.getContentPane().add(btnEnviar);
+		
+		btnEnviar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO validar que no este vacio el textarea
+				try {
+					int valor = Integer.parseInt(group.getSelection().getActionCommand());
+					String obs = textAreaObservaciones.getText();
+					System.out.println(valor +" "+ obs);
+					SistemaCalificaciones.getInstance().calificarTransaccion(tr, valor, obs);
+				} catch (BusinessException e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
+				}
+				
+			}
+		});
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setBounds(250, 420, 120, 30);
