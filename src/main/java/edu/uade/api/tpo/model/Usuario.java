@@ -117,13 +117,15 @@ public class Usuario implements Persistible, Observer {
     		int aprobadas = 0;
     	
     		for(Transaccion tr : cuentaCorriente.getTransacciones()){
-    			if(tr.getEstado() == EstadoTransaccion.A && tr.getCalificacion() != null) {
+    			//si esta aprobada, el vendedor es el mismo usuario y fue calificado
+    			if(tr.getEstado() == EstadoTransaccion.A && tr.getPublicacion().getUsuarioId().equals(id) && tr.getCalificacion() != null) {
     				reputacion += tr.getCalificacion().getCalificacion();
     				aprobadas++;
     			}
     		}
     		
-    		return (aprobadas == 0) ? 0 : (reputacion/aprobadas);
+    		//si no hay devolvemos 5 neutral
+    		return (aprobadas == 0) ? 5 : (reputacion/aprobadas);
     
     }
 
