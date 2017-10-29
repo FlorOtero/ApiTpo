@@ -48,6 +48,7 @@ public class Reputacion {
 					Reputacion window = new Reputacion();
 					window.frmMiReputacion.setVisible(true);
 				} catch (Exception e) {
+					e.printStackTrace();
 					logger.error(e.getMessage());
 				}
 			}
@@ -194,15 +195,17 @@ public class Reputacion {
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
 		
 		for(Transaccion tr : transacciones) {
-			if(!tr.getContraparteId().equals(user.getId())){
+			//si fue una venta de mi usuario
+			if(tr.getPublicacion().getUsuarioId().equals(user.getId())){
 				
 				Usuario contraparte = SistemaUsuarios.getInstance().buscarUsuarioById(tr.getContraparteId());
+				String c = (tr.getCalificacion()!=null) ? String.valueOf(tr.getCalificacion().getCalificacion()) : "-";
 				
 				model.addRow(new Object[] {
 						format.format(tr.getFecha()),
 						tr.getPublicacion().getArticulo().getNombre(),
 						contraparte.getNombreUsuario(),
-						tr.getCalificacion().getCalificacion()
+						c
 				});
 			}
 		}

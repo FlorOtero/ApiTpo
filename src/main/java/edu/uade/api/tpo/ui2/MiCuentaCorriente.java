@@ -307,6 +307,6 @@ public class MiCuentaCorriente {
 
 	private void loadUser() {
 		String nombreUsuario = prefs.get("USERNAME", null);
-		user = SistemaUsuarios.getInstance().buscarUsuario("flor");
+		user = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
 	}
 }
