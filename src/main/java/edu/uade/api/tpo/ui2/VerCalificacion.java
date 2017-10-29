@@ -22,6 +22,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import edu.uade.api.tpo.controller.SistemaTransacciones;
 import edu.uade.api.tpo.controller.SistemaUsuarios;
 import edu.uade.api.tpo.model.Transaccion;
@@ -31,6 +34,7 @@ import java.awt.SystemColor;
 public class VerCalificacion {
 
 	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
+    private static final Logger logger = LoggerFactory.getLogger(MiCuentaCorriente.class);
 	private JFrame frmVerCalificacion;
 	protected String trid;
 	private Transaccion tr;
@@ -46,7 +50,7 @@ public class VerCalificacion {
 					VerCalificacion window = new VerCalificacion("");
 					window.frmVerCalificacion.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error(e.getMessage());
 				}
 			}
 		});
@@ -205,7 +209,13 @@ public class VerCalificacion {
 		/**
 		 * Indicar el nombre del usuario que califico
 		 */
-		Usuario calificador = SistemaUsuarios.getInstance().buscarUsuarioById(tr.getContraparteId());
+		String idCalificador;
+		if(tr.getPublicacion().getUsuarioId().equals(user.getId())) {
+			idCalificador = tr.getContraparteId();
+		} else {
+			idCalificador = tr.getPublicacion().getUsuarioId();
+		}
+		Usuario calificador = SistemaUsuarios.getInstance().buscarUsuarioById(idCalificador);
 		JLabel lblUsuarioCalificador = new JLabel(calificador.getNombreUsuario());
 		lblUsuarioCalificador.setBounds(70, 90, 420, 16);
 		frmVerCalificacion.getContentPane().add(lblUsuarioCalificador);

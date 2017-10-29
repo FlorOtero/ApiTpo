@@ -112,20 +112,19 @@ public class Usuario implements Persistible, Observer {
     }
 
     public float calcularReputacion() {
-        /*
+        
     		float reputacion = 0;
     		int aprobadas = 0;
     	
-    		for(Calificacion c : calificaciones){
-    			if(c.getTransaccion().getEstado() == EstadoTransaccion.A) {
-    				reputacion += c.getCalificacion();
+    		for(Transaccion tr : cuentaCorriente.getTransacciones()){
+    			if(tr.getEstado() == EstadoTransaccion.A && tr.getCalificacion() != null) {
+    				reputacion += tr.getCalificacion().getCalificacion();
     				aprobadas++;
     			}
     		}
     		
-    		return (reputacion/aprobadas);
-    */
-        return 0;
+    		return (aprobadas == 0) ? 0 : (reputacion/aprobadas);
+    
     }
 
     @Override

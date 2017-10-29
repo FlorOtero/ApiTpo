@@ -22,6 +22,9 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import edu.uade.api.tpo.controller.SistemaCalificaciones;
 import edu.uade.api.tpo.controller.SistemaTransacciones;
 import edu.uade.api.tpo.controller.SistemaUsuarios;
@@ -33,6 +36,7 @@ import edu.uade.api.tpo.model.Usuario;
 public class Calificar {
 
 	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
+    private static final Logger logger = LoggerFactory.getLogger(MiCuentaCorriente.class);
 	private JFrame frmCalificarApi;
 	private String trid;
 	private Transaccion tr;
@@ -48,7 +52,7 @@ public class Calificar {
 					Calificar window = new Calificar("");
 					window.frmCalificarApi.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error(e.getMessage());
 				}
 			}
 		});

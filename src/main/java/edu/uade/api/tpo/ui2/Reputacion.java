@@ -13,13 +13,28 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.prefs.Preferences;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.uade.api.tpo.controller.SistemaUsuarios;
+import edu.uade.api.tpo.model.Transaccion;
+import edu.uade.api.tpo.model.Usuario;
+
 import javax.swing.JButton;
 
 public class Reputacion {
 
+	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
+    private static final Logger logger = LoggerFactory.getLogger(MiCuentaCorriente.class);
+	private Usuario user;
 	private JFrame frmMiReputacion;
 	private JTable table;
 
@@ -33,7 +48,7 @@ public class Reputacion {
 					Reputacion window = new Reputacion();
 					window.frmMiReputacion.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error(e.getMessage());
 				}
 			}
 		});
@@ -43,6 +58,7 @@ public class Reputacion {
 	 * Create the application.
 	 */
 	public Reputacion() {
+		loadUser();
 		initialize();
 	}
 
@@ -153,14 +169,14 @@ public class Reputacion {
 		/**
 		 * Indicar la reputacion
 		 */
-		JLabel lblReputacionNumero = new JLabel("10");
+		JLabel lblReputacionNumero = new JLabel(Float.toString(user.calcularReputacion()));
 		lblReputacionNumero.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
-		lblReputacionNumero.setBounds(110, 60, 25, 22);
+		lblReputacionNumero.setBounds(110, 60, 30, 22);
 		frmMiReputacion.getContentPane().add(lblReputacionNumero);
 		
 		String starPath = new File("src/main/resources/star.png").getAbsolutePath();
 		JLabel lblStar = new JLabel(new ImageIcon(starPath));
-		lblStar.setBounds(135, 60, 16, 22);
+		lblStar.setBounds(140, 60, 16, 22);
 		frmMiReputacion.getContentPane().add(lblStar);
 		
 		String[] columnNames = {"Fecha", "Título", "Usuario", "Calificación"};
@@ -172,6 +188,24 @@ public class Reputacion {
 		scrollPane.setBounds(10, 90, 480, 200);
 		table.setFillsViewportHeight(true);
 		frmMiReputacion.getContentPane().add(scrollPane);
+		
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		List<Transaccion> transacciones = user.getCuentaCorriente().getTransacciones();
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		
+		for(Transaccion tr : transacciones) {
+			if(!tr.getContraparteId().equals(user.getId())){
+				
+				Usuario contraparte = SistemaUsuarios.getInstance().buscarUsuarioById(tr.getContraparteId());
+				
+				model.addRow(new Object[] {
+						format.format(tr.getFecha()),
+						tr.getPublicacion().getArticulo().getNombre(),
+						contraparte.getNombreUsuario(),
+						tr.getCalificacion().getCalificacion()
+				});
+			}
+		}
 		
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.setBounds(370, 300, 120, 30);
@@ -190,6 +224,11 @@ public class Reputacion {
 	
 	public void setVisible(boolean isVisible) {
 		this.frmMiReputacion.setVisible(isVisible);
+	}
+	
+	private void loadUser() {
+		String nombreUsuario = prefs.get("USERNAME", null);
+		user = SistemaUsuarios.getInstance().buscarUsuario("flor");
 	}
 
 }
