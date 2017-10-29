@@ -178,13 +178,9 @@ public class SistemaPublicaciones {
     }
 
     public List<Publicacion> filtrarPublicaciones(String busqueda) {
-        List<Publicacion> resultado = null;
-        try {
-            resultado = publicacionDao.findManyLike("nombre", busqueda);
-            resultado.addAll(subastaDao.findManyLike("nombre", busqueda));
-        } catch (Exception e) {
-            logger.error("Error filtrando publicaciones", e);
-        }
+        List<Publicacion> resultado = new ArrayList<>();
+        resultado.addAll(this.publicaciones.stream().filter(p -> p.getArticulo().getNombre().toLowerCase().contains(busqueda.toLowerCase()) || p.getArticulo().getDescripcion().toLowerCase().contains(busqueda.toLowerCase())).collect(Collectors.toList()));
+        resultado.addAll(this.subastas.stream().filter(p -> p.getArticulo().getNombre().toLowerCase().contains(busqueda.toLowerCase()) || p.getArticulo().getDescripcion().toLowerCase().contains(busqueda.toLowerCase())).collect(Collectors.toList()));
         return resultado;
     }
 
