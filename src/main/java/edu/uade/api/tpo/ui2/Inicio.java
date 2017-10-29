@@ -170,7 +170,6 @@ public class Inicio {
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				buscarPublicacion(txtBuscador.getText());
-				System.out.println("Buscando "+txtBuscador.getText());
 				createTable();
 			}
 		});
@@ -236,12 +235,10 @@ public class Inicio {
 			        int col = table.columnAtPoint(evt.getPoint());
 			        if (row >= 0 && col >= 0) {
 			        		Publicacion p = resultado.get(row);
-			        		
-			        		// TODO: change this for Articulo Detail Page
+
 			        		VerPublicacion articuloSeleccionado = new VerPublicacion(p);	
 			        		articuloSeleccionado.setVisible(true);
 			        		frmInicioApi.dispose();
-			            System.out.println("CLICKED "+ p.getArticulo().getNombre());
 			        }
 			    }
 			});

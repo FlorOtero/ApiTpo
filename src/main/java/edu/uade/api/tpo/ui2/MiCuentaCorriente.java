@@ -15,11 +15,15 @@ import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.table.DefaultTableModel;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import edu.uade.api.tpo.controller.SistemaCuentaCorriente;
 import edu.uade.api.tpo.controller.SistemaUsuarios;
 import edu.uade.api.tpo.exceptions.BusinessException;
 import edu.uade.api.tpo.model.ItemCtaCte;
 import edu.uade.api.tpo.model.Usuario;
+import edu.uade.api.tpo.ui.IniciarSesion;
 import edu.uade.api.tpo.ui2.custom.ButtonColumn;
 
 import java.awt.SystemColor;
@@ -39,6 +43,7 @@ import javax.swing.JScrollPane;
 public class MiCuentaCorriente {
 
 	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
+    private static final Logger logger = LoggerFactory.getLogger(MiCuentaCorriente.class);
 	private Usuario user;
 	private JFrame frmCuentaCorriente;
 	private JTable table;
@@ -53,7 +58,7 @@ public class MiCuentaCorriente {
 					MiCuentaCorriente window = new MiCuentaCorriente();
 					window.frmCuentaCorriente.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();
+					logger.error(e.getMessage());
 				}
 			}
 		});
