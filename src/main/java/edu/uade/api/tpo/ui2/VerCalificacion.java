@@ -1,5 +1,6 @@
 package edu.uade.api.tpo.ui2;
 
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -14,7 +15,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.JTextArea;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextPane;
@@ -23,6 +26,7 @@ import edu.uade.api.tpo.controller.SistemaTransacciones;
 import edu.uade.api.tpo.controller.SistemaUsuarios;
 import edu.uade.api.tpo.model.Transaccion;
 import edu.uade.api.tpo.model.Usuario;
+import java.awt.SystemColor;
 
 public class VerCalificacion {
 
@@ -230,11 +234,22 @@ public class VerCalificacion {
 		 * 
 		 * TODO armar el scrollpane + que calificacion ??
 		 */
+		JTextArea textAreaObservaciones = new JTextArea(tr.getCalificacion().getObservaciones());
+		textAreaObservaciones.setBackground(SystemColor.window);
+		textAreaObservaciones.setLineWrap(true);
+		textAreaObservaciones.setWrapStyleWord(true);
+		textAreaObservaciones.setEditable(false);
 		
-		JTextPane textPaneObservaciones = new JTextPane();
+		JScrollPane scrollPaneDescripcion = new JScrollPane(textAreaObservaciones);
+		scrollPaneDescripcion.setBounds(10, 180, 480, 150);
+		scrollPaneDescripcion.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPaneDescripcion.setPreferredSize(new Dimension(480, 150));
+		frmVerCalificacion.getContentPane().add(scrollPaneDescripcion);
+		
+	/*	JTextPane textPaneObservaciones = new JTextPane();
 		textPaneObservaciones.setBounds(10, 180, 480, 150);
 		frmVerCalificacion.getContentPane().add(textPaneObservaciones);
-		textPaneObservaciones.setText(tr.getCalificacion().getObservaciones());
+		textPaneObservaciones.setText(tr.getCalificacion().getObservaciones());*/
 		
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.setBounds(370, 350, 120, 30);
