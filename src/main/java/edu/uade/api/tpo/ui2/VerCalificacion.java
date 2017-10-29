@@ -246,11 +246,6 @@ public class VerCalificacion {
 		scrollPaneDescripcion.setPreferredSize(new Dimension(480, 150));
 		frmVerCalificacion.getContentPane().add(scrollPaneDescripcion);
 		
-	/*	JTextPane textPaneObservaciones = new JTextPane();
-		textPaneObservaciones.setBounds(10, 180, 480, 150);
-		frmVerCalificacion.getContentPane().add(textPaneObservaciones);
-		textPaneObservaciones.setText(tr.getCalificacion().getObservaciones());*/
-		
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.setBounds(370, 350, 120, 30);
 		frmVerCalificacion.getContentPane().add(btnVolver);
@@ -263,7 +258,6 @@ public class VerCalificacion {
 				frmVerCalificacion.dispose();
 			}
 		});
-
 		
 	}
 	
@@ -273,8 +267,7 @@ public class VerCalificacion {
 	
 	private void loadUser() {
 		String nombreUsuario = prefs.get("USERNAME", null);
-		// user = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
-		user = SistemaUsuarios.getInstance().buscarUsuario("erikannunez");
+		user = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
 	}
 	
 	private void loadTransaccion() {

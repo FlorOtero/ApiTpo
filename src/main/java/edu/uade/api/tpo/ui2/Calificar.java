@@ -338,8 +338,7 @@ public class Calificar {
 	
 	private void loadUser() {
 		String nombreUsuario = prefs.get("USERNAME", null);
-		// user = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
-		user = SistemaUsuarios.getInstance().buscarUsuario("erikannunez");
+		user = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
 	}
 	
 	private void loadTransaccion() {
