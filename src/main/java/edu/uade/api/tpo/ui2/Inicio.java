@@ -4,7 +4,6 @@ import edu.uade.api.tpo.controller.SistemaPublicaciones;
 import edu.uade.api.tpo.model.Producto;
 import edu.uade.api.tpo.model.Publicacion;
 import edu.uade.api.tpo.model.Subasta;
-import edu.uade.api.tpo.ui.OpcionIngreso;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -13,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.prefs.Preferences;
 
 public class Inicio {
@@ -21,8 +21,8 @@ public class Inicio {
 	private JFrame frmInicioApi;
 	private JTextField txtBuscador;
 	private JTable table;
-	private ArrayList<Publicacion> resultado;
 	private JButton btnBuscar;
+	private List<Publicacion> resultado;
 
 	/**
 	 * Launch the application.
@@ -199,16 +199,16 @@ public class Inicio {
 
 	}
 	
-	private ArrayList<Publicacion> buscarPublicacion(String busqueda) {
+	private List<Publicacion> buscarPublicacion(String busqueda) {
 		SistemaPublicaciones sp = SistemaPublicaciones.getInstance();
-		resultado = (ArrayList<Publicacion>) sp.filtrarPublicaciones(busqueda);
-		System.out.println("resultado: " +resultado);
+		this.resultado = new ArrayList<>(sp.filtrarPublicaciones(busqueda));
 		return resultado;
 	}
 	
 	public void createTable() {
 			
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		model.setRowCount(0);
 		
 		if (resultado != null) {
 
