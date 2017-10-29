@@ -12,8 +12,8 @@ public class CompraTransferenciaBancaria extends Transaccion {
 		this.entidadRecaudadora = new Banco();
 	}
 
-	public CompraTransferenciaBancaria(Publicacion publicacion, Usuario contraparte, String numeroCta) {
-		super(publicacion, contraparte);
+	public CompraTransferenciaBancaria(Publicacion publicacion, Usuario contraparte, String numeroCta, Usuario usuarioPublicacion) {
+		super(publicacion, contraparte, usuarioPublicacion);
 		this.numeroCta = numeroCta;
 		this.entidadRecaudadora = new Banco();
 	}

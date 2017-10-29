@@ -11,8 +11,8 @@ public class CompraTarjetaCredito extends Transaccion {
         this.entidadRecaudadora = new MercadoPago();
     }
 
-    public CompraTarjetaCredito(Publicacion publicacion, Usuario contraparte, String numeroTarjeta) {
-		super(publicacion, contraparte);
+    public CompraTarjetaCredito(Publicacion publicacion, Usuario contraparte, String numeroTarjeta, Usuario usuarioPublicacion) {
+		super(publicacion, contraparte, usuarioPublicacion);
         this.numeroTarjeta = numeroTarjeta;
         this.entidadRecaudadora = new MercadoPago();
 	}
