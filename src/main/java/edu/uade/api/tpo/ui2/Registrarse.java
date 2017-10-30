@@ -127,14 +127,10 @@ public class Registrarse {
 		frmRegistrarseApi.getContentPane().add(lblDomicilio);
 
 		JButton btnIngresarDomicilio = new JButton("Ingresar Domicilio");
-		btnIngresarDomicilio.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		btnIngresarDomicilio.setBounds(10, 400, 300, 30);
 		frmRegistrarseApi.getContentPane().add(btnIngresarDomicilio);
-
-		/*
+		
+		/* TODO
 		 * Se tiene que clickear una sola vez y luego habilitarlo si cerro la otra
 		 * ventana
 		 */
