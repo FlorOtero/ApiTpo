@@ -217,7 +217,7 @@ public class MisPublicaciones {
 
 	private void loadUserData() {
 		String nombreUsuario = prefs.get("USERNAME", null);
-		user = SistemaUsuarios.getInstance().buscarUsuario("flor");
+		user = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
 	}
 
 	private void loadPublicaciones() {
