@@ -3,17 +3,24 @@ package edu.uade.api.tpo.ui2;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import edu.uade.api.tpo.controller.SistemaUsuarios;
+import edu.uade.api.tpo.exceptions.BusinessException;
+import edu.uade.api.tpo.exceptions.InvalidPasswordException;
 import edu.uade.api.tpo.model.Domicilio;
+import edu.uade.api.tpo.model.Usuario;
 
 import javax.swing.JButton;
 
 public class IngresarDomicilio {
-
+	private Usuario user = SistemaUsuarios.getUsuarioLoggeado();
 	private JFrame frmIngresarDomicilio;
 	private Domicilio domicilio;
 	private JTextField txtCalleNumero;
@@ -47,7 +54,7 @@ public class IngresarDomicilio {
 	 * Create the application.
 	 */
 	public IngresarDomicilio() {
-		initialize();
+			initialize();
 	}
 
 	/**
@@ -109,18 +116,74 @@ public class IngresarDomicilio {
 		frmIngresarDomicilio.getContentPane().add(txtProvincia);
 		txtProvincia.setColumns(10);
 		
+		if (user != null){
+			Domicilio domicilioAnterior = user.getDomicilio();
+			txtCalleNumero.setText(domicilioAnterior.getlinea1());
+			txtPisoDepto.setText(domicilioAnterior.getlinea2());
+			txtCodigoPostal.setText(domicilioAnterior.getCp());
+			txtCiudad.setText(domicilioAnterior.getCiudad());
+			txtProvincia.setText(domicilioAnterior.getProvincia());	
+	}
+		
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.setBounds(190, 280, 120, 30);
 		frmIngresarDomicilio.getContentPane().add(btnAceptar);
 		
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+		/*		txtCalleNumero.addFocusListener(new FocusAdapter() {
+					public void focusLost(FocusEvent e) {
+						domicilio.setlinea1(txtCalleNumero.getText());
+					}
+				});
+				txtPisoDepto.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusLost(FocusEvent e) {
+						domicilio.setlinea2(txtPisoDepto.getText());
+					}
+				});
+				txtCodigoPostal.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusLost(FocusEvent e) {
+						domicilio.setCp(txtCodigoPostal.getText());
+					}
+				});
+				txtCiudad.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusLost(FocusEvent e) {
+						domicilio.setCiudad(txtCiudad.getText());
+					}
+				});
+				txtProvincia.addFocusListener(new FocusAdapter() {
+					@Override
+					public void focusLost(FocusEvent e) {
+						domicilio.setProvincia(txtProvincia.getText());
+					}
+				});
+				*/
 				domicilio.setlinea1(txtCalleNumero.getText());
 				domicilio.setlinea2(txtPisoDepto.getText());
 				domicilio.setCp(txtCodigoPostal.getText());
 				domicilio.setCiudad(txtCiudad.getText());
 				domicilio.setProvincia(txtProvincia.getText());
 				frmIngresarDomicilio.dispose();
+				if (user != null){
+					try {
+						user.setDomicilio(domicilio);
+						System.out.println(domicilio.getlinea1());
+						System.out.println(domicilio.getlinea2());
+						System.out.println(domicilio.getCiudad());
+						System.out.println(domicilio.getCp());
+						System.out.println(domicilio.getProvincia());
+						SistemaUsuarios.getInstance().modificarUsuario(user);
+						JOptionPane.showConfirmDialog(null,"Su usuario se ha modificado con exito","Confirmacion",JOptionPane.PLAIN_MESSAGE);
+						Inicio inicio = new Inicio();
+						inicio.setVisible(true);
+						frmIngresarDomicilio.dispose();
+					} catch(BusinessException | InvalidPasswordException e1) {
+						//TODO Manejar la exception y mostrar un mensaje de error cuando existe el usuario
+					}
+				}
 			}
 		});
 		
@@ -133,6 +196,9 @@ public class IngresarDomicilio {
 				frmIngresarDomicilio.dispose();
 			}
 		});
+		frmIngresarDomicilio.getContentPane().add(btnCancelar);
+		frmIngresarDomicilio.setBounds(100, 100, 497, 431);
+		frmIngresarDomicilio.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 	public void setVisible(boolean isVisible) {

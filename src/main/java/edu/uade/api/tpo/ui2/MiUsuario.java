@@ -127,6 +127,8 @@ public class MiUsuario {
 		JButton btnIngresarDomicilio = new JButton("Ingresar Domicilio");
 		btnIngresarDomicilio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				IngresarDomicilio ingresarDomicilio = new IngresarDomicilio();
+				ingresarDomicilio.setVisible(true);
 			}
 		});
 		btnIngresarDomicilio.setBounds(10, 400, 300, 30);
@@ -144,8 +146,8 @@ public class MiUsuario {
 					Password pw = new Password();	
 					pw.setValor(new String(txtContrasena.getPassword()));
 					user.setPassword(pw);
-					System.out.println(user.getApellido());
-					System.out.println(user.getPassword().getValor());
+				//	System.out.println(user.getApellido());
+				//	System.out.println(user.getPassword().getValor());
 					SistemaUsuarios.getInstance().modificarUsuario(user);
 					JOptionPane.showConfirmDialog(null,"Su usuario se ha modificado con exito","Confirmacion",JOptionPane.PLAIN_MESSAGE);
 					Inicio inicio = new Inicio();
