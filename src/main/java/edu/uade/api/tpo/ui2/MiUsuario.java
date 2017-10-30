@@ -5,6 +5,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import edu.uade.api.tpo.ui2.custom.VPasswordField;
+import edu.uade.api.tpo.ui2.custom.VTextField;
+
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -14,12 +18,12 @@ import javax.swing.JSeparator;
 public class MiUsuario {
 
 	private JFrame frmRegistrarseApi;
-	private JTextField txtNombreDeUsuario;
-	private JPasswordField txtContrasena;
-	private JPasswordField txtConfirmarContrasena;
-	private JTextField txtEmail;
-	private JTextField txtNombre;
-	private JTextField txtApellido;
+	private VTextField txtNombreDeUsuario;
+	private VPasswordField txtContrasena;
+	private VPasswordField txtConfirmarContrasena;
+	private VTextField txtEmail;
+	private VTextField txtNombre;
+	private VTextField txtApellido;
 
 	/**
 	 * Launch the application.
@@ -58,7 +62,7 @@ public class MiUsuario {
 		lblNombreDeUsuario.setBounds(10, 20, 300, 16);
 		frmRegistrarseApi.getContentPane().add(lblNombreDeUsuario);
 		
-		txtNombreDeUsuario = new JTextField();
+		txtNombreDeUsuario = new VTextField();
 		txtNombreDeUsuario.setText("cosmefulanito"); //NO OLVIDAR SETEAR EL NOMBRE DE USUARIO!!!
 		txtNombreDeUsuario.setEditable(false);
 		txtNombreDeUsuario.setEnabled(false);
@@ -70,7 +74,7 @@ public class MiUsuario {
 		lblContrasena.setBounds(10, 80, 300, 16);
 		frmRegistrarseApi.getContentPane().add(lblContrasena);
 		
-		txtContrasena = new JPasswordField();
+		txtContrasena = new VPasswordField();
 		txtContrasena.setBounds(10, 100, 300, 30);
 		frmRegistrarseApi.getContentPane().add(txtContrasena);
 		
@@ -78,7 +82,7 @@ public class MiUsuario {
 		lblConfirmarContrasena.setBounds(10, 140, 300, 16);
 		frmRegistrarseApi.getContentPane().add(lblConfirmarContrasena);
 		
-		txtConfirmarContrasena = new JPasswordField();
+		txtConfirmarContrasena = new VPasswordField();
 		txtConfirmarContrasena.setBounds(10, 160, 300, 30);
 		frmRegistrarseApi.getContentPane().add(txtConfirmarContrasena);
 		
@@ -86,7 +90,7 @@ public class MiUsuario {
 		lblEmail.setBounds(10, 200, 300, 16);
 		frmRegistrarseApi.getContentPane().add(lblEmail);
 		
-		txtEmail = new JTextField();
+		txtEmail = new VTextField();
 		txtEmail.setToolTipText("usuario@example.com");
 		txtEmail.setBounds(10, 220, 300, 30);
 		frmRegistrarseApi.getContentPane().add(txtEmail);
@@ -96,7 +100,7 @@ public class MiUsuario {
 		lblNombre.setBounds(10, 260, 300, 16);
 		frmRegistrarseApi.getContentPane().add(lblNombre);
 		
-		txtNombre = new JTextField();
+		txtNombre = new VTextField();
 		txtNombre.setBounds(10, 280, 300, 30);
 		frmRegistrarseApi.getContentPane().add(txtNombre);
 		txtNombre.setColumns(10);
@@ -105,7 +109,7 @@ public class MiUsuario {
 		lblApellido.setBounds(10, 320, 300, 16);
 		frmRegistrarseApi.getContentPane().add(lblApellido);
 		
-		txtApellido = new JTextField();
+		txtApellido = new VTextField();
 		txtApellido.setBounds(10, 340, 300, 30);
 		frmRegistrarseApi.getContentPane().add(txtApellido);
 		txtApellido.setColumns(10);
