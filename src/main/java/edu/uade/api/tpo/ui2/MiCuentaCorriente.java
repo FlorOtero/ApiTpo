@@ -281,7 +281,7 @@ public class MiCuentaCorriente {
 
 				switch (action) {
 				case "ver":
-					VerCalificacion verCalificacion = new VerCalificacion(trid);
+					VerCalificacion verCalificacion = new VerCalificacion(trid, "cuenta-corriente");
 					verCalificacion.setVisible(true);
 					frmCuentaCorriente.dispose();
 					break;
