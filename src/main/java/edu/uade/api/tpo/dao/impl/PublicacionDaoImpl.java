@@ -36,7 +36,7 @@ public class PublicacionDaoImpl extends AbstractManyToOneDao<Publicacion> {
 		ps.setFloat(5, publicacion.getPrecio());
 		ps.setString(6, String.valueOf(publicacion.getEstado()));
 		ps.setString(7, publicacion.getArticulo().getId());
-		ps.setFloat(8, 10f); // TODO: is comicion anywhere
+		ps.setFloat(8, 10f); // TODO: is comision anywhere
 		return ps;
 	}
 
