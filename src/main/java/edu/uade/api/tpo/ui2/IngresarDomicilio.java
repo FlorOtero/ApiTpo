@@ -22,14 +22,14 @@ import javax.swing.JButton;
 public class IngresarDomicilio {
 	private Usuario user = SistemaUsuarios.getUsuarioLoggeado();
 	private JFrame frmIngresarDomicilio;
-	private Domicilio domicilio;
+	private Domicilio domicilio = new Domicilio();
 	private JTextField txtCalleNumero;
 	private JTextField txtPisoDepto;
 	private JTextField txtCodigoPostal;
 	private JTextField txtCiudad;
 	private JTextField txtProvincia;
 
-	public IngresarDomicilio(Domicilio domicilio) {
+	/*public IngresarDomicilio(Domicilio domicilio) {
 		this();
 		this.domicilio = domicilio;
 	}
@@ -123,7 +123,7 @@ public class IngresarDomicilio {
 			txtCodigoPostal.setText(domicilioAnterior.getCp());
 			txtCiudad.setText(domicilioAnterior.getCiudad());
 			txtProvincia.setText(domicilioAnterior.getProvincia());	
-	}
+		}
 		
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.setBounds(190, 280, 120, 30);
@@ -162,14 +162,14 @@ public class IngresarDomicilio {
 					}
 				});
 				
-			/*	
+				/*	
 			  	domicilio.setlinea1(txtCalleNumero.getText());
 				domicilio.setlinea2(txtPisoDepto.getText());
 				domicilio.setCp(txtCodigoPostal.getText());
 				domicilio.setCiudad(txtCiudad.getText());
 				domicilio.setProvincia(txtProvincia.getText());
 				*/
-				frmIngresarDomicilio.dispose();
+				//frmIngresarDomicilio.dispose();
 				if (user != null){
 					try {	
 						user.setDomicilio(domicilio);
