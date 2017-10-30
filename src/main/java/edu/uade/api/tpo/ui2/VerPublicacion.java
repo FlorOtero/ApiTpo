@@ -9,14 +9,19 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.List;
 import java.util.prefs.Preferences;
 
 import javax.swing.SwingConstants;
 
 import edu.uade.api.tpo.controller.SistemaUsuarios;
 import edu.uade.api.tpo.model.Articulo;
+import edu.uade.api.tpo.model.MedioPago;
 import edu.uade.api.tpo.model.Publicacion;
+import edu.uade.api.tpo.model.Subasta;
 import edu.uade.api.tpo.model.Usuario;
 
 import java.awt.Color;
@@ -27,6 +32,9 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import java.awt.FlowLayout;
+import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class VerPublicacion {
 
@@ -74,35 +82,96 @@ public class VerPublicacion {
 		frmPublicacinApi = new JFrame();
 		frmPublicacinApi.setTitle("Publicación | API");
 		frmPublicacinApi.setBounds(100, 100, 500, 680);
-		frmPublicacinApi.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmPublicacinApi.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		JMenuBar menuBar = new JMenuBar();
 		frmPublicacinApi.setJMenuBar(menuBar);
+		
+		JButton btnInicio = new JButton("");
+		String homePath = new File("src/main/resources/house.png").getAbsolutePath();
+		btnInicio.setIcon(new ImageIcon(homePath));
+		menuBar.add(btnInicio);
+		
+		btnInicio.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Inicio inicio = new Inicio();
+				inicio.setVisible(true);
+				frmPublicacinApi.dispose();
+			}
+		});
 		
 		JMenu mnMiCuenta = new JMenu("Mi Cuenta");
 		menuBar.add(mnMiCuenta);
 		
 		JMenuItem mntmCuentaCorriente = new JMenuItem("Cuenta Corriente");
 		mnMiCuenta.add(mntmCuentaCorriente);
+		mntmCuentaCorriente.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MiCuentaCorriente cc = new MiCuentaCorriente();
+				cc.setVisible(true);
+				frmPublicacinApi.dispose();
+			}
+		});
 		
 		JMenuItem mntmMiReputacion = new JMenuItem("Mi Reputación");
 		mnMiCuenta.add(mntmMiReputacion);
+		mntmMiReputacion.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Reputacion reputacion = new Reputacion();
+				reputacion.setVisible(true);
+				frmPublicacinApi.dispose();
+			}
+		});
 		
 		JMenuItem mntmMiUsuario = new JMenuItem("Mi Usuario");
 		mnMiCuenta.add(mntmMiUsuario);
+		mntmMiUsuario.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MiUsuario miUsuario = new MiUsuario();
+				miUsuario.setVisible(true);
+				frmPublicacinApi.dispose();
+			}
+		});
 		
 		JMenuItem mntmCerrarSesion = new JMenuItem("Cerrar sesión");
 		mnMiCuenta.add(mntmCerrarSesion);
+		mntmCerrarSesion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Ingresar ingreso = new Ingresar();
+				ingreso.setVisible(true);
+				frmPublicacinApi.dispose();
+			}
+		});
 		
 		JMenu mnPublicaciones = new JMenu("Publicaciones");
 		menuBar.add(mnPublicaciones);
 		
 		JMenuItem mntmNuevaPublicacion = new JMenuItem("Nueva Publicación");
 		mnPublicaciones.add(mntmNuevaPublicacion);
+		mntmNuevaPublicacion.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				AltaPublicacion altaPublicacion = new AltaPublicacion();
+				altaPublicacion.setVisible(true);
+				frmPublicacinApi.dispose();
+			}
+		});
 		
 		JMenuItem mntmMisPublicaciones = new JMenuItem("Mis Publicaciones");
 		mnPublicaciones.add(mntmMisPublicaciones);
 		frmPublicacinApi.getContentPane().setLayout(null);
+		mntmMisPublicaciones.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MisPublicaciones misPublicaciones = new MisPublicaciones();
+				misPublicaciones.setVisible(true);
+				frmPublicacinApi.dispose();
+			}
+		});
 		
 		JButton btnImagenSiguiente = new JButton(">");
 		btnImagenSiguiente.setBounds(210, 300, 30, 30);
@@ -123,7 +192,7 @@ public class VerPublicacion {
 		/**
 		 * Reemplazar el texto del label con el título de la publicación (nombre de artículo)
 		 */
-		JLabel lblTituloPublicacion = new JLabel("Título de la Publicación");
+		JLabel lblTituloPublicacion = new JLabel(articulo.getNombre());
 		lblTituloPublicacion.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
 		lblTituloPublicacion.setBounds(10, 60, 480, 30);
 		frmPublicacinApi.getContentPane().add(lblTituloPublicacion);
@@ -143,7 +212,8 @@ public class VerPublicacion {
 		/**
 		 * Indicar el precio de la publicación. No olvidar el signo pesos!
 		 */
-		JLabel lblPrecio = new JLabel("$1000");
+		String precio = (publicacion instanceof Subasta) ? Float.toString(((Subasta)publicacion).getPrecioActual()) : Float.toString(publicacion.getPrecio());
+		JLabel lblPrecio = new JLabel("$"+precio);
 		lblPrecio.setFont(new Font("Lucida Grande", Font.PLAIN, 22));
 		lblPrecio.setBounds(255, 100, 200, 32);
 		frmPublicacinApi.getContentPane().add(lblPrecio);
@@ -151,7 +221,8 @@ public class VerPublicacion {
 		/**
 		 * Indicar si es compra inmediata o subasta
 		 */
-		JLabel lblTipoPublicacion = new JLabel("Compra inmediata");
+		String tipoPublicacion = (publicacion instanceof Subasta) ? "Subasta" : "Compra inmediata";
+		JLabel lblTipoPublicacion = new JLabel(tipoPublicacion);
 		lblTipoPublicacion.setBounds(255, 140, 235, 16);
 		frmPublicacinApi.getContentPane().add(lblTipoPublicacion);
 		
@@ -163,7 +234,8 @@ public class VerPublicacion {
 		/**
 		 * Hay que pasarle como parametro el icono que queremos mostrar: compraInmediataPath o subastaPath
 		 */
-		JLabel lblTipoPublicacionIcon = new JLabel(new ImageIcon(compraInmediataPath));
+		String tipoPath = (publicacion instanceof Subasta) ? subastaPath : compraInmediataPath;
+		JLabel lblTipoPublicacionIcon = new JLabel(new ImageIcon(tipoPath));
 		lblTipoPublicacionIcon.setBounds(455, 100, 32, 32);
 		frmPublicacinApi.getContentPane().add(lblTipoPublicacionIcon);
 		
@@ -185,18 +257,20 @@ public class VerPublicacion {
 		 * Hay que ocultar/mostrar los lblEfectivo, lblTarjeta y lblTransferencia de acuerdo
 		 * a los medios de pago disponibles
 		 */
-		
 		String efvoPath = new File("src/main/resources/cash.png").getAbsolutePath();
 		JLabel lblEfectivo = new JLabel(new ImageIcon(efvoPath));
 		panelMediosDePago.add(lblEfectivo);
+		lblEfectivo.setVisible(publicacion.getMediosPago().contains(MedioPago.EFECTIVO));
 		
 		String tarjetaPath = new File("src/main/resources/credit-card.png").getAbsolutePath();
 		JLabel lblTarjeta = new JLabel(new ImageIcon(tarjetaPath));
 		panelMediosDePago.add(lblTarjeta);
+		lblTarjeta.setVisible(publicacion.getMediosPago().contains(MedioPago.TARJETA_CREDITO));
 		
 		String transferenciaPath = new File("src/main/resources/money-transfer.png").getAbsolutePath();
 		JLabel lblTransferencia = new JLabel(new ImageIcon(transferenciaPath));
 		panelMediosDePago.add(lblTransferencia);
+		lblTransferencia.setVisible(publicacion.getMediosPago().contains(MedioPago.TRANSFERENCIA_BANCARIA));
 		
 		JSeparator separator_2 = new JSeparator();
 		separator_2.setBounds(255, 230, 235, 12);
@@ -209,7 +283,8 @@ public class VerPublicacion {
 		/**
 		 * Indicar el nombre del vendedor
 		 */
-		JLabel lblNombreVendedor = new JLabel("cosmefulanito");
+		Usuario vendedor = SistemaUsuarios.getInstance().buscarUsuarioById(publicacion.getUsuarioId());
+		JLabel lblNombreVendedor = new JLabel(vendedor.getNombreUsuario());
 		lblNombreVendedor.setBounds(330, 250, 160, 16);
 		frmPublicacinApi.getContentPane().add(lblNombreVendedor);
 		
@@ -217,13 +292,13 @@ public class VerPublicacion {
 		lblReputacion.setBounds(255, 280, 80, 16);
 		frmPublicacinApi.getContentPane().add(lblReputacion);
 		
-		JLabel lblReputacionVendedor = new JLabel("10");
-		lblReputacionVendedor.setBounds(340, 280, 20, 16);
+		JLabel lblReputacionVendedor = new JLabel(Float.toString(vendedor.calcularReputacion()));
+		lblReputacionVendedor.setBounds(340, 280, 25, 16);
 		frmPublicacinApi.getContentPane().add(lblReputacionVendedor);
 		
 		String starPath = new File("src/main/resources/star.png").getAbsolutePath();
 		JLabel lblStar = new JLabel(new ImageIcon(starPath));
-		lblStar.setBounds(360, 280, 16, 16);
+		lblStar.setBounds(365, 280, 16, 16);
 		frmPublicacinApi.getContentPane().add(lblStar);
 		
 		/**
@@ -232,6 +307,7 @@ public class VerPublicacion {
 		 * String txtBtnComprar = ( Es compra inmediata ) ? "Comprar" : "Ofertar";
 		 * JButton btnComprar = new JButton(txtBtnComprar);
 		 */	
+		String txtBtnComprar = (publicacion instanceof Subasta) ? "Ofertar" : "Comprar";
 		JButton btnComprar = new JButton("Comprar");
 		btnComprar.setBounds(255, 310, 235, 30);
 		frmPublicacinApi.getContentPane().add(btnComprar);
@@ -246,13 +322,22 @@ public class VerPublicacion {
 		frmPublicacinApi.getContentPane().add(lblDescripcion);
 		
 		JTextPane txtpnDescripcion = new JTextPane();
-		txtpnDescripcion.setText("Descripción de la publicacion");
+		txtpnDescripcion.setBackground(SystemColor.window);
+		txtpnDescripcion.setEditable(false);
+		txtpnDescripcion.setText(articulo.getDescripcion());
 		txtpnDescripcion.setBounds(10, 410, 480, 170);
 		frmPublicacinApi.getContentPane().add(txtpnDescripcion);
 		
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.setBounds(370, 600, 120, 30);
 		frmPublicacinApi.getContentPane().add(btnVolver);
+		
+		btnVolver.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frmPublicacinApi.dispose();
+			}
+		});
 
 	}
 	

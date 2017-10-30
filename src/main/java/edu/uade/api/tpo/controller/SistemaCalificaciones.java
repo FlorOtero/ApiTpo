@@ -25,7 +25,7 @@ public class SistemaCalificaciones {
     public void calificarTransaccion(Transaccion transaccion, int valor, String obs) throws BusinessException {
 
         if(transaccion.getEstado() != EstadoTransaccion.A) {
-            throw new BusinessException("El estado de la transaccion debe estar activa");
+            throw new BusinessException("El estado de la transaccion debe ser aprobada");
         }
 
         Calificacion calificacion = new Calificacion();

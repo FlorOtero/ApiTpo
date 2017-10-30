@@ -3,6 +3,7 @@ package edu.uade.api.tpo.ui2;
 import java.awt.EventQueue;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,6 +23,7 @@ import javax.swing.BoxLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import javax.swing.JTable;
@@ -74,30 +76,91 @@ public class Comprar implements ActionListener{
 		JMenuBar menuBar = new JMenuBar();
 		frmComprarApi.setJMenuBar(menuBar);
 		
+		JButton btnInicio = new JButton("");
+		String homePath = new File("src/main/resources/house.png").getAbsolutePath();
+		btnInicio.setIcon(new ImageIcon(homePath));
+		menuBar.add(btnInicio);
+		
+		btnInicio.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Inicio inicio = new Inicio();
+				inicio.setVisible(true);
+				frmComprarApi.dispose();
+			}
+		});
+		
 		JMenu mnMiCuenta = new JMenu("Mi Cuenta");
 		menuBar.add(mnMiCuenta);
 		
 		JMenuItem mntmCuentaCorriente = new JMenuItem("Cuenta Corriente");
 		mnMiCuenta.add(mntmCuentaCorriente);
+		mntmCuentaCorriente.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MiCuentaCorriente cc = new MiCuentaCorriente();
+				cc.setVisible(true);
+				frmComprarApi.dispose();
+			}
+		});
 		
 		JMenuItem mntmMiReputacion = new JMenuItem("Mi Reputación");
 		mnMiCuenta.add(mntmMiReputacion);
+		mntmMiReputacion.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Reputacion reputacion = new Reputacion();
+				reputacion.setVisible(true);
+				frmComprarApi.dispose();
+			}
+		});
 		
 		JMenuItem mntmMiUsuario = new JMenuItem("Mi Usuario");
 		mnMiCuenta.add(mntmMiUsuario);
+		mntmMiUsuario.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MiUsuario miUsuario = new MiUsuario();
+				miUsuario.setVisible(true);
+				frmComprarApi.dispose();
+			}
+		});
 		
 		JMenuItem mntmCerrarSesion = new JMenuItem("Cerrar sesión");
 		mnMiCuenta.add(mntmCerrarSesion);
+		mntmCerrarSesion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Ingresar ingreso = new Ingresar();
+				ingreso.setVisible(true);
+				frmComprarApi.dispose();
+			}
+		});
 		
 		JMenu mnPublicaciones = new JMenu("Publicaciones");
 		menuBar.add(mnPublicaciones);
 		
 		JMenuItem mntmNuevaPublicacion = new JMenuItem("Nueva Publicación");
 		mnPublicaciones.add(mntmNuevaPublicacion);
+		mntmNuevaPublicacion.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				AltaPublicacion altaPublicacion = new AltaPublicacion();
+				altaPublicacion.setVisible(true);
+				frmComprarApi.dispose();
+			}
+		});
 		
 		JMenuItem mntmMisPublicaciones = new JMenuItem("Mis Publicaciones");
 		mnPublicaciones.add(mntmMisPublicaciones);
 		frmComprarApi.getContentPane().setLayout(null);
+		mntmMisPublicaciones.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MisPublicaciones misPublicaciones = new MisPublicaciones();
+				misPublicaciones.setVisible(true);
+				frmComprarApi.dispose();
+			}
+		});
 		
 		JLabel lblBreadcrumb = new JLabel("Inicio > Publicación > Comprar > Medio de Pago");
 		lblBreadcrumb.setBounds(10, 20, 480, 16);

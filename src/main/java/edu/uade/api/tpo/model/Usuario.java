@@ -22,7 +22,6 @@ public class Usuario implements Persistible, Observer {
     private Estado estado;
 
     public Usuario() {
-        this.cuentaCorriente = new CuentaCorriente();
         this.publicaciones = new ArrayList<>();
         this.estado = Estado.A;
     }
@@ -112,20 +111,21 @@ public class Usuario implements Persistible, Observer {
     }
 
     public float calcularReputacion() {
-        /*
+        
     		float reputacion = 0;
     		int aprobadas = 0;
     	
-    		for(Calificacion c : calificaciones){
-    			if(c.getTransaccion().getEstado() == EstadoTransaccion.A) {
-    				reputacion += c.getCalificacion();
+    		for(Transaccion tr : cuentaCorriente.getTransacciones()){
+    			//si esta aprobada, el vendedor es el mismo usuario y fue calificado
+    			if(tr.getEstado() == EstadoTransaccion.A && tr.getPublicacion().getUsuarioId().equals(id) && tr.getCalificacion() != null) {
+    				reputacion += tr.getCalificacion().getCalificacion();
     				aprobadas++;
     			}
     		}
     		
-    		return (reputacion/aprobadas);
-    */
-        return 0;
+    		//si no hay devolvemos 5 neutral
+    		return (aprobadas == 0) ? 5 : (reputacion/aprobadas);
+    
     }
 
     @Override

@@ -25,18 +25,19 @@ public class SistemaTransacciones {
 
     public void crearTransaccion(Usuario contraparte, Publicacion publicacion, DatosPago datosPago) {
         Transaccion tr = null;
+        Usuario usuarioPublicacion = SistemaUsuarios.getInstance().buscarUsuarioById(publicacion.getUsuarioId());
         switch (datosPago.getMedioPago()) {
             case EFECTIVO:
                 publicacion.setEstado(Estado.I);
-                tr = new CompraEfectivo(publicacion, contraparte);
+                tr = new CompraEfectivo(publicacion, contraparte, usuarioPublicacion);
                 break;
             case TRANSFERENCIA_BANCARIA:
                 publicacion.setEstado(Estado.P);
-                tr = new CompraTransferenciaBancaria(publicacion, contraparte, datosPago.getNumeroCuenta());
+                tr = new CompraTransferenciaBancaria(publicacion, contraparte, datosPago.getNumeroCuenta(), usuarioPublicacion);
                 break;
             case TARJETA_CREDITO:
                 publicacion.setEstado(Estado.P);
-                tr = new CompraTarjetaCredito(publicacion, contraparte, datosPago.getNumeroTarjeta());
+                tr = new CompraTarjetaCredito(publicacion, contraparte, datosPago.getNumeroTarjeta(), usuarioPublicacion);
                 break;
         }
         try {
@@ -90,6 +91,16 @@ public class SistemaTransacciones {
             logger.error("Error actualizando transaccion", e);
         }
 
+    }
+    
+    public Transaccion buscarTransaccionById(String transaccion) {
+    		Transaccion tr = null;
+        try {
+        		tr = TransaccionDaoImpl.getInstance().findById(transaccion);
+        } catch (SQLException e) {
+            logger.error("Error buscando transaccion", e);
+        }
+        return tr;
     }
 
 }
