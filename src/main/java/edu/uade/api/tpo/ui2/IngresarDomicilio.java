@@ -131,7 +131,8 @@ public class IngresarDomicilio {
 		
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-		/*		txtCalleNumero.addFocusListener(new FocusAdapter() {
+				
+		 	txtCalleNumero.addFocusListener(new FocusAdapter() {
 					public void focusLost(FocusEvent e) {
 						domicilio.setlinea1(txtCalleNumero.getText());
 					}
@@ -160,21 +161,18 @@ public class IngresarDomicilio {
 						domicilio.setProvincia(txtProvincia.getText());
 					}
 				});
-				*/
-				domicilio.setlinea1(txtCalleNumero.getText());
+				
+			/*	
+			  	domicilio.setlinea1(txtCalleNumero.getText());
 				domicilio.setlinea2(txtPisoDepto.getText());
 				domicilio.setCp(txtCodigoPostal.getText());
 				domicilio.setCiudad(txtCiudad.getText());
 				domicilio.setProvincia(txtProvincia.getText());
+				*/
 				frmIngresarDomicilio.dispose();
 				if (user != null){
-					try {
+					try {	
 						user.setDomicilio(domicilio);
-						System.out.println(domicilio.getlinea1());
-						System.out.println(domicilio.getlinea2());
-						System.out.println(domicilio.getCiudad());
-						System.out.println(domicilio.getCp());
-						System.out.println(domicilio.getProvincia());
 						SistemaUsuarios.getInstance().modificarUsuario(user);
 						JOptionPane.showConfirmDialog(null,"Su usuario se ha modificado con exito","Confirmacion",JOptionPane.PLAIN_MESSAGE);
 						Inicio inicio = new Inicio();
