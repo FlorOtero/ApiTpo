@@ -44,7 +44,7 @@ public class SistemaPublicaciones {
         }
         return instance;
     }
-    		
+
     private void attachObservers() {
         Map<Subasta, Set<String>> subastasUsuarios = new HashMap<>();
         for (Subasta subasta : this.subastas) {
@@ -62,14 +62,14 @@ public class SistemaPublicaciones {
             }
         }
     }
-    
+
     public Publicacion altaPublicacion(String usuarioId, float precio, Articulo articulo, List<MedioPago> mediosPago) {
-		int DIAS_VENCIMIENTO = 90;
-		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.DAY_OF_MONTH, DIAS_VENCIMIENTO);
-		Date fechaHasta = cal.getTime();
-		
-		Publicacion p = new Publicacion();
+        int DIAS_VENCIMIENTO = 90;
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_MONTH, DIAS_VENCIMIENTO);
+        Date fechaHasta = cal.getTime();
+
+        Publicacion p = new Publicacion();
         p.setFechaDesde(new Date());
         p.setFechaHasta(fechaHasta);
         p.setPrecio(precio);
@@ -90,10 +90,13 @@ public class SistemaPublicaciones {
         publicacion.setEstado(Estado.I);
         try {
             this.publicacionDao.update(publicacion);
-            Publicacion pub = this.publicaciones.stream().filter(p -> p.getId().equals(publicacion.getId())).findFirst().orElse(null);
-            if (pub != null) {
-                pub.setEstado(Estado.I);
+            for (Iterator<Publicacion> it = publicaciones.iterator(); it.hasNext(); ) {
+                Publicacion p = it.next();
+                if (p.equals(publicacion)) {
+                    it.remove();
+                }
             }
+            SistemaUsuarios.getInstance().eliminarPublicacionUsuario(publicacion);
         } catch (SQLException e) {
             logger.error("Error eliminando publicacion", e);
         }
@@ -104,10 +107,13 @@ public class SistemaPublicaciones {
         subasta.setEstado(Estado.I);
         try {
             this.subastaDao.update(subasta);
-            Subasta sub = this.subastas.stream().filter(s -> s.getId().equals(subasta.getId())).findFirst().orElse(null);
-            if (sub != null) {
-                sub.setEstado(Estado.I);
+            for (Iterator<Subasta> it = subastas.iterator(); it.hasNext(); ) {
+                Subasta s = it.next();
+                if (s.equals(subasta)) {
+                    it.remove();
+                }
             }
+            SistemaUsuarios.getInstance().eliminarPublicacionUsuario(subasta);
         } catch (SQLException e) {
             logger.error("Error eliminando la subasta", e);
         }
@@ -231,7 +237,7 @@ public class SistemaPublicaciones {
             List<Subasta> subastasActivas = this.subastas.stream().filter(s -> s.hasEnded()).collect(Collectors.toList());
             subastasActivas.forEach(subastaActiva -> {
                 Oferta oferta = subastaActiva.obtenerMayorOferta();
-                if(oferta != null && oferta.getMonto() >= subastaActiva.getPrecioMin()) {
+                if (oferta != null && oferta.getMonto() >= subastaActiva.getPrecioMin()) {
                     Usuario usuarioSubasta = SistemaUsuarios.getInstance().buscarUsuarioById(oferta.getUsuarioId());
                     subastaActiva.cerrar(usuarioSubasta, oferta.getDatosPago());
                 } else {

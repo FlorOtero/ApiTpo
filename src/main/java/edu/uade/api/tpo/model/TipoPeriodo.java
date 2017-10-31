@@ -1,17 +1,25 @@
 package edu.uade.api.tpo.model;
 
 public enum TipoPeriodo {
-    MENSUAL, ANUAL;
+    MENSUAL("Meses"), ANUAL("Años");
 
-private String val;
+    private String val;
 
-TipoPeriodo() {}
+    TipoPeriodo(String val) {
+        this.val = val;
+    }
 
-TipoPeriodo(String val) {
-    this.val = val;
-}
+    public String getVal() {
+        return val;
+    }
 
-public String getVal() {
-    return val;
-}
+    public static TipoPeriodo findByValue(String value){
+        for(TipoPeriodo t : values()){
+            if( t.val.equals(value)){
+                return t;
+            }
+        }
+        return null;
+    }
+
 }

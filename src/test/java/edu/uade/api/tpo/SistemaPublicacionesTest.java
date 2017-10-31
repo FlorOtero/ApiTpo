@@ -95,7 +95,7 @@ public class SistemaPublicacionesTest {
     @Test
     public void test_altaSubasta() {
         Servicio servicio = new Servicio();
-        servicio.setNombre("Un servicio test");
+        servicio.setNombre("subasta de flor");
         servicio.setDescripcion("Descripcion del servicio test");
         servicio.setContratacion(TipoContratacion.ABONO);
         servicio.fromCertificadosTokenized("asd,eewqe");
@@ -104,6 +104,7 @@ public class SistemaPublicacionesTest {
         List<MedioPago> mediosPago = new ArrayList<MedioPago>();
         mediosPago.add(MedioPago.EFECTIVO);
         mediosPago.add(MedioPago.TRANSFERENCIA_BANCARIA);
+        mediosPago.add(MedioPago.TARJETA_CREDITO);
 
         Subasta s = this.sistemaPublicaciones.altaSubasta(USER_ID, servicio, 500, 15, 200, mediosPago);
         Assert.assertNotNull(s);

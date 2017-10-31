@@ -106,4 +106,13 @@ public class Publicacion extends Observable implements Persistible {
 	public void setEstado(Estado estado) {
 		this.estado = estado;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Publicacion) {
+			Publicacion p = (Publicacion) obj;
+			return p.getId().equals(id);
+		}
+		return false;
+	}
 }
