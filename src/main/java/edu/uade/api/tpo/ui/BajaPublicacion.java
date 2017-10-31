@@ -24,7 +24,6 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.prefs.Preferences;
 import java.awt.event.ActionEvent;
 
 public class BajaPublicacion {
@@ -127,9 +126,7 @@ public class BajaPublicacion {
 	}
 	
 	private ArrayList<Publicacion> buscarPublicacion(String busqueda) {
-		 Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
-		 String nombreUsuario = prefs.get("USERNAME", null);
-         Usuario user = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
+         Usuario user = SistemaUsuarios.getInstance().getUsuarioActivo();
 		 resultadoUser =  (ArrayList<Publicacion>) user.getPublicaciones();
 		return resultadoUser;
 	}

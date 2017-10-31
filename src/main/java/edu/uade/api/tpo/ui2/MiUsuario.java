@@ -1,38 +1,25 @@
 package edu.uade.api.tpo.ui2;
 
-import java.awt.EventQueue;
-import java.awt.JobAttributes;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import edu.uade.api.tpo.controller.SistemaUsuarios;
 import edu.uade.api.tpo.exceptions.BusinessException;
 import edu.uade.api.tpo.exceptions.InvalidPasswordException;
 import edu.uade.api.tpo.model.Domicilio;
 import edu.uade.api.tpo.model.Password;
 import edu.uade.api.tpo.model.Usuario;
-import edu.uade.api.tpo.ui.MenuPrincipal;
 import edu.uade.api.tpo.ui2.custom.VPasswordField;
 import edu.uade.api.tpo.ui2.custom.VTextField;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.swing.JPasswordField;
-import javax.swing.JButton;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.prefs.Preferences;
-import java.awt.event.ActionEvent;
-import javax.swing.JSeparator;
 
 public class MiUsuario {
 
-	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
 	private static final Logger logger = LoggerFactory.getLogger(MiCuentaCorriente.class);
 	private Usuario user;
 	private Domicilio domicilio;
@@ -243,8 +230,7 @@ public class MiUsuario {
 	}
 
 	private void loadUser() {
-		String nombreUsuario = prefs.get("USERNAME", null);
-		user = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
+		user = SistemaUsuarios.getInstance().getUsuarioActivo();
 		domicilio = user.getDomicilio();
 	}
 }

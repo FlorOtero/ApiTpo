@@ -1,39 +1,11 @@
 package edu.uade.api.tpo.ui2;
 
-import java.awt.Dimension;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JSeparator;
-import javax.swing.JTextField;
-import javax.swing.JTextArea;
-import javax.swing.JScrollPane;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-
 import edu.uade.api.tpo.controller.SistemaPublicaciones;
 import edu.uade.api.tpo.controller.SistemaUsuarios;
-import edu.uade.api.tpo.model.Articulo;
-import edu.uade.api.tpo.model.Garantia;
-import edu.uade.api.tpo.model.MedioPago;
-import edu.uade.api.tpo.model.Producto;
-import edu.uade.api.tpo.model.Publicacion;
-import edu.uade.api.tpo.model.TipoPeriodo;
-import edu.uade.api.tpo.model.Usuario;
-import edu.uade.api.tpo.ui.MenuPrincipal;
+import edu.uade.api.tpo.model.*;
 
-import javax.swing.JCheckBox;
-import java.awt.CardLayout;
-import javax.swing.JTextPane;
-import java.awt.SystemColor;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -443,7 +415,7 @@ public class AltaPublicacion implements ItemListener{
 			publicacion.setPrecio(Float.parseFloat(txtPrecio.getText()));
 			publicacion.setArticulo(articulo);
 			
-			Usuario user = SistemaUsuarios.getUsuarioLoggeado();
+			Usuario user = SistemaUsuarios.getInstance().getUsuarioActivo();
 
 			SistemaPublicaciones.getInstance().altaPublicacion(user.getId(), publicacion.getPrecio(), publicacion.getArticulo(), mediosPagos);
 			JOptionPane.showMessageDialog(null, "¡Tu publicacion ha sido creada!", "Operacion Exitosa", JOptionPane.PLAIN_MESSAGE);

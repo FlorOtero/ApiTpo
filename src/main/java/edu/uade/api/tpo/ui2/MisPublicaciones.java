@@ -7,7 +7,6 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.prefs.Preferences;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -36,7 +35,6 @@ import edu.uade.api.tpo.ui.IniciarSesion;
 
 public class MisPublicaciones {
 
-	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
 	private static final Logger logger = LoggerFactory.getLogger(IniciarSesion.class);
 	private JFrame frmMisPublicaciones;
 	private JTable table;
@@ -216,8 +214,7 @@ public class MisPublicaciones {
 	}
 
 	private void loadUserData() {
-		String nombreUsuario = prefs.get("USERNAME", null);
-		user = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
+		user = SistemaUsuarios.getInstance().getUsuarioActivo();
 	}
 
 	private void loadPublicaciones() {

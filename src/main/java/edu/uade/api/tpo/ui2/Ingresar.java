@@ -14,11 +14,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.prefs.Preferences;
 
 public class Ingresar {
 
-	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
 	private static final Logger logger = LoggerFactory.getLogger(IniciarSesion.class);
 	private JFrame frmIngresarApi;
 	private VTextField txtNombreUsuario;
@@ -45,8 +43,10 @@ public class Ingresar {
 	 * Create the application.
 	 */
 	public Ingresar() {
+
 		initialize();
 	}
+
 
 	/**
 	 * Initialize the contents of the frame.
@@ -122,8 +122,7 @@ public class Ingresar {
 		System.out.println("Trying to login with credentials: " + nombreUsuario);
 		
 		try {
-			su.login(nombreUsuario, password).getNombre();
-			prefs.put("USERNAME", nombreUsuario);
+			su.login(nombreUsuario, password);
 			return true;
 		} catch (BusinessException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
