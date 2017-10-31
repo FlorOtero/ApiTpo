@@ -27,7 +27,7 @@ public class PublicacionDaoImpl extends AbstractManyToOneDao<Publicacion> {
 	public PreparedStatement create(Publicacion publicacion, Connection conn) throws SQLException {
 		ArticuloDaoImpl.getInstance().create(publicacion.getArticulo());
 
-		String query = "INSERT INTO " + schema + ".publicaciones VALUES(?,?,?,?,?,?,?,?)";
+		String query = "INSERT INTO " + schema + ".publicaciones VALUES(?,?,?,?,?,?,?)";
 		PreparedStatement ps = conn.prepareStatement(query);
 		ps.setString(1, publicacion.getId());
 		ps.setString(2, publicacion.getUsuarioId());
@@ -36,7 +36,6 @@ public class PublicacionDaoImpl extends AbstractManyToOneDao<Publicacion> {
 		ps.setFloat(5, publicacion.getPrecio());
 		ps.setString(6, String.valueOf(publicacion.getEstado()));
 		ps.setString(7, publicacion.getArticulo().getId());
-		ps.setFloat(8, 10f); // TODO: is comision anywhere
 		return ps;
 	}
 

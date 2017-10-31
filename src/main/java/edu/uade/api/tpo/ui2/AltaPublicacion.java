@@ -1,49 +1,18 @@
 package edu.uade.api.tpo.ui2;
 
-import java.awt.Dimension;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JSeparator;
-import javax.swing.JTextField;
-import javax.swing.JTextArea;
-import javax.swing.JScrollPane;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-
 import edu.uade.api.tpo.controller.SistemaPublicaciones;
 import edu.uade.api.tpo.controller.SistemaUsuarios;
-import edu.uade.api.tpo.model.Articulo;
-import edu.uade.api.tpo.model.Garantia;
-import edu.uade.api.tpo.model.MedioPago;
-import edu.uade.api.tpo.model.Producto;
-import edu.uade.api.tpo.model.Publicacion;
-import edu.uade.api.tpo.model.Servicio;
-import edu.uade.api.tpo.model.Subasta;
-import edu.uade.api.tpo.model.TipoContratacion;
-import edu.uade.api.tpo.model.TipoPeriodo;
-import edu.uade.api.tpo.model.Usuario;
-import edu.uade.api.tpo.ui.MenuPrincipal;
+import edu.uade.api.tpo.model.*;
 
-import javax.swing.JCheckBox;
-import java.awt.CardLayout;
-import javax.swing.JTextPane;
-import java.awt.SystemColor;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class AltaPublicacion implements ItemListener{
@@ -70,6 +39,7 @@ public class AltaPublicacion implements ItemListener{
 	private JComboBox<String> comboBoxTipoPublicacion; 
 	private JComboBox<String> comboBoxTipoContratacion;
 	private JComboBox<String> comboBoxVigencia;
+	private JComboBox<String> comboBoxGarantia;
 
 	/**
 	 * Launch the application.
@@ -343,9 +313,7 @@ public class AltaPublicacion implements ItemListener{
 		txtGarantia.setBounds(0, 37, 110, 30);
 		panelProducto.add(txtGarantia);
 		txtGarantia.setColumns(10);
-		
-		String[] garantiaStrings = { "Meses", "Años"};
-		JComboBox<String> comboBoxGarantia = new JComboBox(garantiaStrings);
+		comboBoxGarantia = new JComboBox(Arrays.stream(TipoPeriodo.values()).map(t -> t.getVal()).toArray());
 		comboBoxGarantia.setBounds(122, 38, 170, 30);
 		panelProducto.add(comboBoxGarantia);
 		
@@ -356,33 +324,30 @@ public class AltaPublicacion implements ItemListener{
 		JLabel lblTipoDeContratacion = new JLabel("Tipo de Contratación:");
 		lblTipoDeContratacion.setBounds(0, 10, 140, 30);
 		panelServicio.add(lblTipoDeContratacion);
-		
-		String[] contratacionStrings = { "Abono", "Única"};
-		comboBoxTipoContratacion = new JComboBox(contratacionStrings);
+
+		comboBoxTipoContratacion = new JComboBox(Arrays.stream(TipoContratacion.values()).map(t -> t.getVal()).toArray());
 		comboBoxTipoContratacion.setBounds(150, 10, 210, 30);
 		panelServicio.add(comboBoxTipoContratacion);
-		
-// 		TODO: Decidir que son y como mostrar certificados
-//
-//		JLabel lblCertificados = new JLabel("Certificados:");
-//		lblCertificados.setBounds(0, 50, 360, 16);
-//		panelServicio.add(lblCertificados);
-//		
-//		txtCertificados = new JTextField();
-//		txtCertificados.setBounds(0, 70, 200, 30);
-//		panelServicio.add(txtCertificados);
-//		txtCertificados.setColumns(10);
-//		
-//		JButton btnCargarCertificado = new JButton("Cargar certificado");
-//		btnCargarCertificado.setBounds(210, 70, 150, 30);
-//		panelServicio.add(btnCargarCertificado);
-//		
-//		JTextPane textPaneCertificados = new JTextPane();
-//		textPaneCertificados.setText("Acá se tienen que ir mostrando los certificados cargados");
-//		textPaneCertificados.setBackground(SystemColor.window);
-//		textPaneCertificados.setEditable(false);
-//		textPaneCertificados.setBounds(0, 110, 360, 40);
-//		panelServicio.add(textPaneCertificados);
+
+		JLabel lblCertificados = new JLabel("Certificados:");
+		lblCertificados.setBounds(0, 50, 360, 16);
+		panelServicio.add(lblCertificados);
+
+		txtCertificados = new JTextField();
+		txtCertificados.setBounds(0, 70, 200, 30);
+		panelServicio.add(txtCertificados);
+		txtCertificados.setColumns(10);
+
+		JButton btnCargarCertificado = new JButton("Cargar certificado");
+		btnCargarCertificado.setBounds(210, 70, 150, 30);
+		panelServicio.add(btnCargarCertificado);
+
+		JTextPane textPaneCertificados = new JTextPane();
+		textPaneCertificados.setText("Acá se tienen que ir mostrando los certificados cargados");
+		textPaneCertificados.setBackground(SystemColor.window);
+		textPaneCertificados.setEditable(false);
+		textPaneCertificados.setBounds(0, 110, 360, 40);
+		panelServicio.add(textPaneCertificados);
 		
 		JLabel lblMedioDePago = new JLabel("Medio de Pago aceptados:");
 		lblMedioDePago.setBounds(10, 580, 760, 16);
@@ -497,7 +462,7 @@ public class AltaPublicacion implements ItemListener{
 		
 		Garantia garantia = new Garantia();
 		garantia.setCantidad(Integer.parseInt(txtGarantia.getText()));
-        garantia.setTipo(TipoPeriodo.ANUAL);
+        garantia.setTipo(TipoPeriodo.findByValue(comboBoxGarantia.getSelectedItem().toString()));
         
 		producto.setGarantia(garantia);
 		return producto;
@@ -509,19 +474,8 @@ public class AltaPublicacion implements ItemListener{
 		servicio.setDescripcion(textAreaDescripcion.getText());
 		// producto.fromImagesTokenized(filepathField.toString());
 		servicio.fromImagesTokenized("");
-		
-		Garantia garantia = new Garantia();
-		garantia.setCantidad(Integer.parseInt(txtGarantia.getText()));
-        garantia.setTipo(TipoPeriodo.ANUAL);
-        
-        TipoContratacion tipoContratacion = null;
-        if (comboBoxTipoContratacion.getSelectedItem().toString() == "Abono") {
-        	tipoContratacion = TipoContratacion.ABONO;
-        } else {
-        	tipoContratacion = TipoContratacion.UNICA;
-        }
-		servicio.setContratacion(tipoContratacion);
-		
+		servicio.setCertificados(new ArrayList<>());
+		servicio.setContratacion(TipoContratacion.findByValue(comboBoxTipoContratacion.getSelectedItem().toString()));
 		return servicio;
 	}
 	
