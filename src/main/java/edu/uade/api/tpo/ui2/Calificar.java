@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.Date;
-import java.util.prefs.Preferences;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -35,7 +34,6 @@ import edu.uade.api.tpo.model.Usuario;
 
 public class Calificar {
 
-	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
     private static final Logger logger = LoggerFactory.getLogger(MiCuentaCorriente.class);
 	private JFrame frmCalificarApi;
 	private String trid;
@@ -341,8 +339,7 @@ public class Calificar {
 	}
 	
 	private void loadUser() {
-		String nombreUsuario = prefs.get("USERNAME", null);
-		user = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
+		user = SistemaUsuarios.getInstance().getUsuarioActivo();
 	}
 	
 	private void loadTransaccion() {

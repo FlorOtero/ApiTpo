@@ -1,6 +1,7 @@
 package edu.uade.api.tpo.ui2;
 
 import edu.uade.api.tpo.controller.SistemaPublicaciones;
+import edu.uade.api.tpo.controller.SistemaUsuarios;
 import edu.uade.api.tpo.model.Producto;
 import edu.uade.api.tpo.model.Publicacion;
 import edu.uade.api.tpo.model.Subasta;
@@ -13,11 +14,9 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.prefs.Preferences;
 
 public class Inicio {
 
-	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
 	private JFrame frmInicioApi;
 	private JTextField txtBuscador;
 	private JTable table;
@@ -142,11 +141,8 @@ public class Inicio {
 		JLabel lblBienvenido = new JLabel("Bienvenid@");
 		lblBienvenido.setBounds(10, 20, 80, 16);
 		frmInicioApi.getContentPane().add(lblBienvenido);
-		
-		/**
-		 * HAY QUE SETEAR ESTE LABEL CON EL NOMBRE DEL USUARIO LOGUEADO!!!
-		 */
-		JLabel lblNombreDeUsuario = new JLabel(prefs.get("USERNAME", null)+"!");
+
+		JLabel lblNombreDeUsuario = new JLabel(SistemaUsuarios.getInstance().getUsuarioActivo().getNombreUsuario() + "!");
 		lblNombreDeUsuario.setBounds(90, 20, 400, 16);
 		frmInicioApi.getContentPane().add(lblNombreDeUsuario);
 		

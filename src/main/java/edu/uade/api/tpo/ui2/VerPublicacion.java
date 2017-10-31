@@ -1,44 +1,16 @@
 package edu.uade.api.tpo.ui2;
 
-import java.awt.EventQueue;
+import edu.uade.api.tpo.controller.SistemaUsuarios;
+import edu.uade.api.tpo.model.*;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JSeparator;
-import java.awt.Font;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.List;
-import java.util.prefs.Preferences;
-
-import javax.swing.SwingConstants;
-
-import edu.uade.api.tpo.controller.SistemaUsuarios;
-import edu.uade.api.tpo.model.Articulo;
-import edu.uade.api.tpo.model.MedioPago;
-import edu.uade.api.tpo.model.Publicacion;
-import edu.uade.api.tpo.model.Subasta;
-import edu.uade.api.tpo.model.Usuario;
-
-import java.awt.Color;
-
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JTextPane;
-import java.awt.FlowLayout;
-import java.awt.SystemColor;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class VerPublicacion {
 
-	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
 	private JFrame frmPublicacinApi;
 	private Articulo articulo;
 	private Publicacion publicacion;
@@ -47,8 +19,7 @@ public class VerPublicacion {
 	public VerPublicacion(Publicacion p){
 		this.publicacion = p;
 		this.articulo = p.getArticulo();
-		String nombreUsuario = prefs.get("USERNAME", null);
-		user = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
+		user = SistemaUsuarios.getInstance().getUsuarioActivo();
 		initialize();
 	}
 
