@@ -356,29 +356,17 @@ public class Comprar implements ActionListener{
 		JButton btnConfirmar = new JButton("Confirmar");
 		btnConfirmar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(publicacion instanceof Subasta) {
-					try {
-						SistemaPublicaciones.getInstance().ofertar(publicacion, Float.parseFloat(txtOferta.getText()) , user, datoPago);
-						JOptionPane.showConfirmDialog(null, "Su oferta se ha realizado con éxito", "Aviso", JOptionPane.PLAIN_MESSAGE);
-						frmComprarApi.dispose();
-						Inicio inicio= new Inicio();
-						inicio.setVisible(true);
-					}catch(BusinessException e2){
-						//TODO eliminar esta linea
-						e2.printStackTrace();
-					}
-				}else {
-					try {
-						SistemaPublicaciones.getInstance().ofertar(publicacion, publicacion.getPrecio(), user, datoPago);
-						JOptionPane.showConfirmDialog(null, "Compra exitosa", "Aviso", JOptionPane.PLAIN_MESSAGE);
-						frmComprarApi.dispose();
-						Inicio inicio= new Inicio();
-						inicio.setVisible(true);
-					}catch(BusinessException e2){
-						//TODO eliminar esta linea
-						e2.printStackTrace();
-					}
-				
+				Float precio= (publicacion instanceof Subasta) ?  Float.parseFloat(txtOferta.getText()) : publicacion.getPrecio();
+				String mensaje= (publicacion instanceof Subasta) ? "Su oferta se ha realizado con exito": "Compra exitosa";
+				try {
+					SistemaPublicaciones.getInstance().ofertar(publicacion, precio , user, datoPago);
+					JOptionPane.showConfirmDialog(null, mensaje , "Aviso", JOptionPane.PLAIN_MESSAGE);
+					frmComprarApi.dispose();
+					Inicio inicio= new Inicio();
+					inicio.setVisible(true);
+				}catch(BusinessException e2){
+					//TODO eliminar esta linea
+					e2.printStackTrace();
 				}
 			}
 		});
@@ -430,13 +418,7 @@ public class Comprar implements ActionListener{
 	    txtOferta.setSize(280, 30);
 	    panelSubasta.add(txtOferta);
 	    txtOferta.setColumns(10);
-	/*    txtOferta.addFocusListener(new FocusAdapter() {
-		public void focusLost(FocusEvent e) {
-				publicacion.setPrecio(Float.parseFloat(txtOferta.getText()));
-				
-			}
-		});*/
-	    
+
 	    JLabel lblPesosArgentinos = new JLabel("pesos argentinos");
 	    lblPesosArgentinos.setLocation(340, 40);
 	    lblPesosArgentinos.setSize(140, 30);
