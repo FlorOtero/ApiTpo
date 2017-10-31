@@ -280,6 +280,13 @@ public class VerPublicacion {
 		 */	
 		String txtBtnComprar = (publicacion instanceof Subasta) ? "Ofertar" : "Comprar";
 		JButton btnComprar = new JButton("Comprar");
+		btnComprar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Comprar comprar = new Comprar(publicacion);
+				comprar.setVisible(true);
+				frmPublicacinApi.dispose();
+			}
+		});
 		btnComprar.setBounds(255, 310, 235, 30);
 		frmPublicacinApi.getContentPane().add(btnComprar);
 		
@@ -307,6 +314,8 @@ public class VerPublicacion {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				frmPublicacinApi.dispose();
+				Inicio inicio = new Inicio();
+				inicio.setVisible(true);
 			}
 		});
 
