@@ -1,6 +1,7 @@
 package edu.uade.api.tpo.ui2;
 
 import java.awt.EventQueue;
+import java.awt.JobAttributes;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -214,9 +215,27 @@ public class MiUsuario {
 		lblCerrarCuenta.setBounds(10, 520, 300, 16);
 		frmMiUsuarioApi.getContentPane().add(lblCerrarCuenta);
 
-		JButton btnCerrarCuentaDe = new JButton("Cerrar cuenta de usuario");
-		btnCerrarCuentaDe.setBounds(10, 540, 300, 30);
-		frmMiUsuarioApi.getContentPane().add(btnCerrarCuentaDe);
+		JButton btnCerrarCuentaDeUsuario = new JButton("Cerrar cuenta de usuario");
+		btnCerrarCuentaDeUsuario.setBounds(10, 540, 300, 30);
+		frmMiUsuarioApi.getContentPane().add(btnCerrarCuentaDeUsuario);
+		
+		btnCerrarCuentaDeUsuario.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea cerrar su cuenta de usuario?\n¡Esta acción no se puede deshacer!", "Alerta", JOptionPane.WARNING_MESSAGE);
+				if(opcion == JOptionPane.YES_OPTION){
+					try {
+						SistemaUsuarios.getInstance().eliminarUsuario(user.getNombreUsuario());
+						JOptionPane.showMessageDialog(null, "Su usuario se ha eliminado exitosamente!", "Aviso", JOptionPane.PLAIN_MESSAGE);
+						Ingresar ingreso = new Ingresar();
+						ingreso.setVisible(true);
+						frmMiUsuarioApi.dispose();
+					}catch (Exception deleteUserException) {
+						JOptionPane.showMessageDialog(null, deleteUserException, "Error", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			}
+		});
 	}
 
 	public void setVisible(boolean isVisible) {

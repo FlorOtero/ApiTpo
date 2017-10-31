@@ -214,7 +214,6 @@ public class Registrarse {
 				Ingresar ingreso = new Ingresar();
 				ingreso.setVisible(true);
 				frmRegistrarseApi.dispose();
-
 			}
 		});
 	}
