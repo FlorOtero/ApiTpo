@@ -34,11 +34,12 @@ import java.awt.SystemColor;
 public class VerCalificacion {
 
 	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
-    private static final Logger logger = LoggerFactory.getLogger(MiCuentaCorriente.class);
+	private static final Logger logger = LoggerFactory.getLogger(MiCuentaCorriente.class);
 	private JFrame frmVerCalificacion;
 	protected String trid;
 	private Transaccion tr;
 	private Usuario user;
+	private String origen;
 
 	/**
 	 * Launch the application.
@@ -47,7 +48,7 @@ public class VerCalificacion {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VerCalificacion window = new VerCalificacion("");
+					VerCalificacion window = new VerCalificacion();
 					window.frmVerCalificacion.setVisible(true);
 				} catch (Exception e) {
 					logger.error(e.getMessage());
@@ -59,13 +60,14 @@ public class VerCalificacion {
 	/**
 	 * Create the application.
 	 */
-	public VerCalificacion(String trid) {
+	public VerCalificacion(String trid, String origen) {
 		this.trid = trid;
+		this.origen = origen;
 		loadUser();
 		loadTransaccion();
 		initialize();
 	}
-	
+
 	public VerCalificacion() {
 		initialize();
 	}
@@ -78,15 +80,15 @@ public class VerCalificacion {
 		frmVerCalificacion.setTitle("Ver Calificación | API");
 		frmVerCalificacion.setBounds(100, 100, 500, 430);
 		frmVerCalificacion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	
+
 		JMenuBar menuBar = new JMenuBar();
 		frmVerCalificacion.setJMenuBar(menuBar);
-		
+
 		JButton btnInicio = new JButton("");
 		String homePath = new File("src/main/resources/house.png").getAbsolutePath();
 		btnInicio.setIcon(new ImageIcon(homePath));
 		menuBar.add(btnInicio);
-		
+
 		btnInicio.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -95,10 +97,10 @@ public class VerCalificacion {
 				frmVerCalificacion.dispose();
 			}
 		});
-		
+
 		JMenu mnMiCuenta = new JMenu("Mi Cuenta");
 		menuBar.add(mnMiCuenta);
-		
+
 		JMenuItem mntmCuentaCorriente = new JMenuItem("Cuenta Corriente");
 		mnMiCuenta.add(mntmCuentaCorriente);
 		mntmCuentaCorriente.addActionListener(new ActionListener() {
@@ -109,7 +111,7 @@ public class VerCalificacion {
 				frmVerCalificacion.dispose();
 			}
 		});
-		
+
 		JMenuItem mntmMiReputacion = new JMenuItem("Mi Reputación");
 		mnMiCuenta.add(mntmMiReputacion);
 		mntmMiReputacion.addActionListener(new ActionListener() {
@@ -120,7 +122,7 @@ public class VerCalificacion {
 				frmVerCalificacion.dispose();
 			}
 		});
-		
+
 		JMenuItem mntmMiUsuario = new JMenuItem("Mi Usuario");
 		mnMiCuenta.add(mntmMiUsuario);
 		mntmMiUsuario.addActionListener(new ActionListener() {
@@ -131,7 +133,7 @@ public class VerCalificacion {
 				frmVerCalificacion.dispose();
 			}
 		});
-		
+
 		JMenuItem mntmCerrarSesion = new JMenuItem("Cerrar sesión");
 		mnMiCuenta.add(mntmCerrarSesion);
 		mntmCerrarSesion.addActionListener(new ActionListener() {
@@ -141,10 +143,10 @@ public class VerCalificacion {
 				frmVerCalificacion.dispose();
 			}
 		});
-		
+
 		JMenu mnPublicaciones = new JMenu("Publicaciones");
 		menuBar.add(mnPublicaciones);
-		
+
 		JMenuItem mntmNuevaPublicacion = new JMenuItem("Nueva Publicación");
 		mnPublicaciones.add(mntmNuevaPublicacion);
 		mntmNuevaPublicacion.addActionListener(new ActionListener() {
@@ -155,7 +157,7 @@ public class VerCalificacion {
 				frmVerCalificacion.dispose();
 			}
 		});
-		
+
 		JMenuItem mntmMisPublicaciones = new JMenuItem("Mis Publicaciones");
 		mnPublicaciones.add(mntmMisPublicaciones);
 		frmVerCalificacion.getContentPane().setLayout(null);
@@ -167,33 +169,33 @@ public class VerCalificacion {
 				frmVerCalificacion.dispose();
 			}
 		});
-		
+
 		JLabel lblBreadcrumb = new JLabel("Inicio > Mi Cuenta > Ver Calificación");
 		lblBreadcrumb.setBounds(10, 20, 480, 16);
 		frmVerCalificacion.getContentPane().add(lblBreadcrumb);
-		
+
 		JSeparator separator = new JSeparator();
 		separator.setBounds(0, 40, 500, 12);
 		frmVerCalificacion.getContentPane().add(separator);
-		
+
 		JLabel lblCalificacionOtorgada = new JLabel("Calificación otorgada:");
 		lblCalificacionOtorgada.setBounds(300, 60, 145, 16);
 		frmVerCalificacion.getContentPane().add(lblCalificacionOtorgada);
-		
+
 		JLabel lblCalificacion = new JLabel(String.valueOf(tr.getCalificacion().getCalificacion()));
 		lblCalificacion.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
 		lblCalificacion.setBounds(445, 57, 25, 22);
 		frmVerCalificacion.getContentPane().add(lblCalificacion);
-		
+
 		String starPath = new File("src/main/resources/star.png").getAbsolutePath();
 		JLabel lblStar = new JLabel(new ImageIcon(starPath));
 		lblStar.setBounds(470, 57, 16, 22);
 		frmVerCalificacion.getContentPane().add(lblStar);
-		
+
 		JLabel lblFecha = new JLabel("Fecha:");
 		lblFecha.setBounds(10, 60, 50, 16);
 		frmVerCalificacion.getContentPane().add(lblFecha);
-		
+
 		/**
 		 * Indicar la fecha en que se realizo la calificacion
 		 */
@@ -201,16 +203,16 @@ public class VerCalificacion {
 		JLabel lblFechaCalificacion = new JLabel(format.format(tr.getCalificacion().getFecha()));
 		lblFechaCalificacion.setBounds(60, 60, 100, 16);
 		frmVerCalificacion.getContentPane().add(lblFechaCalificacion);
-		
+
 		JLabel lblUsuario = new JLabel("Usuario:");
 		lblUsuario.setBounds(10, 90, 60, 16);
 		frmVerCalificacion.getContentPane().add(lblUsuario);
-		
+
 		/**
 		 * Indicar el nombre del usuario que califico
 		 */
 		String idCalificador;
-		if(tr.getPublicacion().getUsuarioId().equals(user.getId())) {
+		if (tr.getPublicacion().getUsuarioId().equals(user.getId())) {
 			idCalificador = tr.getContraparteId();
 		} else {
 			idCalificador = tr.getPublicacion().getUsuarioId();
@@ -219,11 +221,11 @@ public class VerCalificacion {
 		JLabel lblUsuarioCalificador = new JLabel(calificador.getNombreUsuario());
 		lblUsuarioCalificador.setBounds(70, 90, 420, 16);
 		frmVerCalificacion.getContentPane().add(lblUsuarioCalificador);
-		
+
 		JLabel lblPublicacion = new JLabel("Publicación:");
 		lblPublicacion.setBounds(10, 120, 85, 16);
 		frmVerCalificacion.getContentPane().add(lblPublicacion);
-		
+
 		JButton btnVerPublicacion = new JButton("Ver Publicación");
 		btnVerPublicacion.setBounds(95, 114, 140, 30);
 		frmVerCalificacion.getContentPane().add(btnVerPublicacion);
@@ -234,11 +236,11 @@ public class VerCalificacion {
 				publicacion.setVisible(true);
 			}
 		});
-		
+
 		JLabel lblObservaciones = new JLabel("Observaciones:");
 		lblObservaciones.setBounds(10, 150, 480, 16);
 		frmVerCalificacion.getContentPane().add(lblObservaciones);
-		
+
 		/**
 		 * Indicar las observaciones de la calificacion realizada
 		 * 
@@ -249,41 +251,46 @@ public class VerCalificacion {
 		textAreaObservaciones.setLineWrap(true);
 		textAreaObservaciones.setWrapStyleWord(true);
 		textAreaObservaciones.setEditable(false);
-		
+
 		JScrollPane scrollPaneDescripcion = new JScrollPane(textAreaObservaciones);
 		scrollPaneDescripcion.setBounds(10, 180, 480, 150);
 		scrollPaneDescripcion.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPaneDescripcion.setPreferredSize(new Dimension(480, 150));
 		frmVerCalificacion.getContentPane().add(scrollPaneDescripcion);
-		
+
 		JButton btnVolver = new JButton("Volver");
 		btnVolver.setBounds(370, 350, 120, 30);
 		frmVerCalificacion.getContentPane().add(btnVolver);
-		
+
 		btnVolver.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				MiCuentaCorriente mcc = new MiCuentaCorriente();
-				mcc.setVisible(true);
+				if (origen.equals("cuenta-corriente")) {
+					MiCuentaCorriente mcc = new MiCuentaCorriente();
+					mcc.setVisible(true);
+				} else if (origen.equals("reputacion")) {
+					Reputacion reputacion = new Reputacion();
+					reputacion.setVisible(true);
+				}
 				frmVerCalificacion.dispose();
 			}
 		});
-		
+
 	}
-	
+
 	public void setVisible(boolean isVisible) {
 		this.frmVerCalificacion.setVisible(isVisible);
 	}
-	
+
 	private void loadUser() {
 		String nombreUsuario = prefs.get("USERNAME", null);
 		user = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
 	}
-	
+
 	private void loadTransaccion() {
 		try {
 			tr = SistemaTransacciones.getInstance().buscarTransaccionById(trid);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.PLAIN_MESSAGE);
 		}
 	}

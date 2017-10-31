@@ -14,6 +14,8 @@ import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JTextPane;
 import javax.swing.RowFilter;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -34,6 +36,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.prefs.Preferences;
 
@@ -205,7 +208,6 @@ public class MiCuentaCorriente {
 		table = new JTable();
 		table.setModel(new DefaultTableModel(new Object[][] {}, columnNames));
 		table.setAutoCreateRowSorter(true);
-
 		table.getColumnModel().getColumn(0).setMinWidth(90);
 		table.getColumnModel().getColumn(0).setMaxWidth(90);
 		table.getColumnModel().getColumn(2).setMaxWidth(50);
@@ -218,6 +220,11 @@ public class MiCuentaCorriente {
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		sorter = new TableRowSorter<DefaultTableModel>(model);
 		table.setRowSorter(sorter);
+		//Por default ordenamos la tabla por fecha
+		List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+		sortKeys.add(new RowSorter.SortKey(0, SortOrder.DESCENDING));
+		sorter.setSortKeys(sortKeys);
+		sorter.sort();
 
 		comboTipo.addItemListener(new ItemListener() {
 			@Override
@@ -281,7 +288,7 @@ public class MiCuentaCorriente {
 
 				switch (action) {
 				case "ver":
-					VerCalificacion verCalificacion = new VerCalificacion(trid);
+					VerCalificacion verCalificacion = new VerCalificacion(trid, "cuenta-corriente");
 					verCalificacion.setVisible(true);
 					frmCuentaCorriente.dispose();
 					break;
