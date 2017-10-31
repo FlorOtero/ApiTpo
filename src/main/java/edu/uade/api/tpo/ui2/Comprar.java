@@ -347,7 +347,10 @@ public class Comprar implements ActionListener{
 		 */
 	    
 	    if(publicacion instanceof Subasta) {
-	    		manageSubasta();	    		
+	    		manageSubasta();	
+	    		panelSeleccionarMP.setBounds(10, 140, 480, 130);
+	    		panelDatosDelPago.setBounds(10, 270, 480, 200);
+	    		
 	    } else {
 	    		panelSeleccionarMP.setBounds(10, 60, 480, 130);
 	    	    panelDatosDelPago.setBounds(10, 190, 480, 200);
@@ -423,11 +426,7 @@ public class Comprar implements ActionListener{
 	    lblPesosArgentinos.setLocation(340, 40);
 	    lblPesosArgentinos.setSize(140, 30);
 	    panelSubasta.add(lblPesosArgentinos);	
-	   
-	    panelSubasta.setVisible(true);
-	  // panelSeleccionarMP.setBounds(10, 140, 480, 130);
-	    panelDatosDelPago.setBounds(10, 270, 480, 200);
-		
+	    panelSubasta.setVisible(true);	
 	}
 	
 	public void actionPerformed(ActionEvent e) {
