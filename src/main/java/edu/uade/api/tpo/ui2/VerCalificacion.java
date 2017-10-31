@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.prefs.Preferences;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -33,7 +32,6 @@ import java.awt.SystemColor;
 
 public class VerCalificacion {
 
-	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
     private static final Logger logger = LoggerFactory.getLogger(MiCuentaCorriente.class);
 	private JFrame frmVerCalificacion;
 	protected String trid;
@@ -276,8 +274,7 @@ public class VerCalificacion {
 	}
 	
 	private void loadUser() {
-		String nombreUsuario = prefs.get("USERNAME", null);
-		user = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
+		user = SistemaUsuarios.getInstance().getUsuarioActivo();
 	}
 	
 	private void loadTransaccion() {

@@ -20,7 +20,6 @@ import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.Date;
-import java.util.prefs.Preferences;
 import javax.swing.JPasswordField;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -36,7 +35,6 @@ public class ModificarUsuario {
 	private Usuario user;
 	private Domicilio domicilio;
 	private Password password;
-	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
 	
 	/**
 	 * Launch the application.
@@ -202,8 +200,7 @@ public class ModificarUsuario {
 		this.frmModificarUsuario.setVisible(isVisible);
 	}
 	public void cargarUsuario(){
-		String nombreUsuario = prefs.get("USERNAME", null);				
-		user= SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
+		user= SistemaUsuarios.getInstance().getUsuarioActivo();
 		textField_1.setText(user.getNombre());
 		textField_2.setText(user.getApellido());
 		textField_3.setText(user.getMail());

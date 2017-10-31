@@ -1,12 +1,5 @@
 package edu.uade.api.tpo.ui2;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-
 import edu.uade.api.tpo.controller.SistemaUsuarios;
 import edu.uade.api.tpo.exceptions.BusinessException;
 import edu.uade.api.tpo.exceptions.ExpiredPasswordException;
@@ -14,19 +7,15 @@ import edu.uade.api.tpo.exceptions.InvalidPasswordException;
 import edu.uade.api.tpo.model.Domicilio;
 import edu.uade.api.tpo.model.Password;
 import edu.uade.api.tpo.model.Usuario;
-import edu.uade.api.tpo.ui.CargarDomicilio;
-import edu.uade.api.tpo.ui.OpcionIngreso;
 
-import javax.swing.JPasswordField;
-import javax.swing.JButton;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
-import java.util.prefs.Preferences;
-import java.awt.event.ActionEvent;
 
 public class Registrarse {
 
-	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
 	private JFrame frmRegistrarseApi;
 	private Domicilio domicilio;
 	private JTextField txtNombreDeUsuario;
@@ -176,8 +165,8 @@ public class Registrarse {
 					 */
 					SistemaUsuarios su = SistemaUsuarios.getInstance();
 					System.out.println("Trying to login with credentials: " + user.getNombreUsuario());
-					su.login(user.getNombreUsuario(), new String(txtContrasena.getPassword())).getNombre();
-					prefs.put("USERNAME", user.getNombreUsuario());
+					Usuario u = su.login(user.getNombreUsuario(), new String(txtContrasena.getPassword()));
+					SistemaUsuarios.getInstance().setUsuarioActivo(u);
 					Inicio inicio = new Inicio();
 					inicio.setVisible(true);
 					

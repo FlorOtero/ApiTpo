@@ -1,33 +1,16 @@
 package edu.uade.api.tpo.ui;
 
-import java.awt.EventQueue;
+import edu.uade.api.tpo.controller.SistemaPublicaciones;
+import edu.uade.api.tpo.controller.SistemaUsuarios;
+import edu.uade.api.tpo.model.*;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.JCheckBox;
-import javax.swing.JButton;
-import java.awt.Color;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.awt.event.ActionEvent;
-
-import edu.uade.api.tpo.model.Articulo;
-import edu.uade.api.tpo.model.Garantia;
-import edu.uade.api.tpo.model.MedioPago;
-import edu.uade.api.tpo.model.Producto;
-import edu.uade.api.tpo.model.Publicacion;
-import edu.uade.api.tpo.controller.SistemaPublicaciones;
-import edu.uade.api.tpo.controller.SistemaUsuarios;
-import edu.uade.api.tpo.model.TipoPeriodo;
-import edu.uade.api.tpo.model.Usuario;
-
-import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
-import javax.swing.DefaultComboBoxModel;
 
 public class CrearPublicacion {
 
@@ -192,7 +175,7 @@ public class CrearPublicacion {
 			publicacion.setPrecio(Float.parseFloat(precioField.getText()));
 			publicacion.setArticulo(articulo);
 			
-			Usuario user = SistemaUsuarios.getUsuarioLoggeado();
+			Usuario user = SistemaUsuarios.getInstance().getUsuarioActivo();
 
 			SistemaPublicaciones.getInstance().altaPublicacion(user.getId(), publicacion.getPrecio(), publicacion.getArticulo(), mediosPagos);
 			JOptionPane.showMessageDialog(null, "¡Tu publicacion ha sido creada!", "Operacion Exitosa", JOptionPane.PLAIN_MESSAGE);

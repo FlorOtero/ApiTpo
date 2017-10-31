@@ -35,7 +35,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
 import java.util.List;
-import java.util.prefs.Preferences;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -46,7 +45,6 @@ import javax.swing.JScrollPane;
 
 public class MiCuentaCorriente {
 
-	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
 	private static final Logger logger = LoggerFactory.getLogger(MiCuentaCorriente.class);
 	private Usuario user;
 	private JFrame frmCuentaCorriente;
@@ -366,7 +364,6 @@ public class MiCuentaCorriente {
 	}
 
 	private void loadUser() {
-		String nombreUsuario = prefs.get("USERNAME", null);
-		user = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
+		user = SistemaUsuarios.getInstance().getUsuarioActivo();
 	}
 }

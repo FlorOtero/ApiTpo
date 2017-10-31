@@ -4,6 +4,7 @@ import edu.uade.api.tpo.controller.SistemaUsuarios;
 import edu.uade.api.tpo.exceptions.BusinessException;
 import edu.uade.api.tpo.exceptions.ExpiredPasswordException;
 import edu.uade.api.tpo.exceptions.InvalidPasswordException;
+import edu.uade.api.tpo.model.Usuario;
 import edu.uade.api.tpo.ui.IniciarSesion;
 import edu.uade.api.tpo.ui2.custom.VPasswordField;
 import edu.uade.api.tpo.ui2.custom.VTextField;
@@ -14,11 +15,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.prefs.Preferences;
 
 public class Ingresar {
 
-	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
 	private static final Logger logger = LoggerFactory.getLogger(IniciarSesion.class);
 	private JFrame frmIngresarApi;
 	private VTextField txtNombreUsuario;
@@ -122,8 +121,8 @@ public class Ingresar {
 		System.out.println("Trying to login with credentials: " + nombreUsuario);
 		
 		try {
-			su.login(nombreUsuario, password).getNombre();
-			prefs.put("USERNAME", nombreUsuario);
+			Usuario u = su.login(nombreUsuario, password);
+			SistemaUsuarios.getInstance().setUsuarioActivo(u);
 			return true;
 		} catch (BusinessException e) {
 			JOptionPane.showMessageDialog(null, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);

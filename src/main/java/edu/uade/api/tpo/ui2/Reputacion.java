@@ -1,38 +1,22 @@
 package edu.uade.api.tpo.ui2;
 
-import java.awt.EventQueue;
+import edu.uade.api.tpo.controller.SistemaUsuarios;
+import edu.uade.api.tpo.model.Transaccion;
+import edu.uade.api.tpo.model.Usuario;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JSeparator;
-import java.awt.Font;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.prefs.Preferences;
-
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import edu.uade.api.tpo.controller.SistemaUsuarios;
-import edu.uade.api.tpo.model.Transaccion;
-import edu.uade.api.tpo.model.Usuario;
-
-import javax.swing.JButton;
 
 public class Reputacion {
 
-	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
     private static final Logger logger = LoggerFactory.getLogger(MiCuentaCorriente.class);
 	private Usuario user;
 	private JFrame frmMiReputacion;
@@ -230,8 +214,7 @@ public class Reputacion {
 	}
 	
 	private void loadUser() {
-		String nombreUsuario = prefs.get("USERNAME", null);
-		user = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
+		user = SistemaUsuarios.getInstance().getUsuarioActivo();
 	}
 
 }

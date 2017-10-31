@@ -34,7 +34,6 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.List;
-import java.util.prefs.Preferences;
 import java.awt.event.ActionEvent;
 
 public class EstadoCuentaCorriente {
@@ -43,7 +42,6 @@ public class EstadoCuentaCorriente {
 	private JTable table;
 	private Usuario user;
 	private JLabel notification;
-	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
 
 	/**
 	 * Launch the application.
@@ -167,7 +165,6 @@ public class EstadoCuentaCorriente {
 	}
 
 	public void cargarUsuario() {
-		String nombreUsuario = prefs.get("USERNAME", null);
-		user = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
+		user = SistemaUsuarios.getInstance().getUsuarioActivo();
 	}
 }
