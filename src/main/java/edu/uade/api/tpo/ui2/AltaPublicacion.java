@@ -466,7 +466,7 @@ public class AltaPublicacion implements ItemListener {
 
     private void publicar() {
         if (validateForm()) {
-            Usuario user = SistemaUsuarios.getUsuarioLoggeado();
+            Usuario user = SistemaUsuarios.getInstance().getUsuarioActivo();
             List<MedioPago> mediosPagos = getMediosPago();
             Articulo articulo;
 

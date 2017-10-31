@@ -10,10 +10,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Enumeration;
-import java.util.prefs.Preferences;
 
 public class DetallePublicacion {
-	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
 	private JFrame frmDetallePublicacion;
 	private MenuPrincipal frmMenuPrincipal;
 	private Articulo articulo;
@@ -28,8 +26,7 @@ public class DetallePublicacion {
 	public DetallePublicacion(Publicacion p){
 		this.publicacion= p;
 		this.articulo=p.getArticulo();
-		String nombreUsuario = prefs.get("USERNAME", null);
-		user = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
+		user = SistemaUsuarios.getInstance().getUsuarioActivo();
 		initialize();
 	}
 

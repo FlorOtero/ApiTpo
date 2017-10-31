@@ -1,52 +1,28 @@
 package edu.uade.api.tpo.ui2;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JSeparator;
-import java.awt.Font;
-import javax.swing.JComboBox;
-import javax.swing.JTable;
-import javax.swing.JTextPane;
-import javax.swing.RowFilter;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import edu.uade.api.tpo.controller.SistemaCuentaCorriente;
 import edu.uade.api.tpo.controller.SistemaUsuarios;
 import edu.uade.api.tpo.exceptions.BusinessException;
 import edu.uade.api.tpo.model.ItemCtaCte;
 import edu.uade.api.tpo.model.Usuario;
-import edu.uade.api.tpo.ui.IniciarSesion;
 import edu.uade.api.tpo.ui2.custom.ButtonColumn;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.awt.SystemColor;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.prefs.Preferences;
-
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JScrollPane;
 
 public class MiCuentaCorriente {
 
-	Preferences prefs = Preferences.userNodeForPackage(edu.uade.api.tpo.util.Prefs.class);
 	private static final Logger logger = LoggerFactory.getLogger(MiCuentaCorriente.class);
 	private Usuario user;
 	private JFrame frmCuentaCorriente;
@@ -205,7 +181,6 @@ public class MiCuentaCorriente {
 		table = new JTable();
 		table.setModel(new DefaultTableModel(new Object[][] {}, columnNames));
 		table.setAutoCreateRowSorter(true);
-
 		table.getColumnModel().getColumn(0).setMinWidth(90);
 		table.getColumnModel().getColumn(0).setMaxWidth(90);
 		table.getColumnModel().getColumn(2).setMaxWidth(50);
@@ -218,6 +193,11 @@ public class MiCuentaCorriente {
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		sorter = new TableRowSorter<DefaultTableModel>(model);
 		table.setRowSorter(sorter);
+		//Por default ordenamos la tabla por fecha
+		List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+		sortKeys.add(new RowSorter.SortKey(0, SortOrder.DESCENDING));
+		sorter.setSortKeys(sortKeys);
+		sorter.sort();
 
 		comboTipo.addItemListener(new ItemListener() {
 			@Override
@@ -281,7 +261,7 @@ public class MiCuentaCorriente {
 
 				switch (action) {
 				case "ver":
-					VerCalificacion verCalificacion = new VerCalificacion(trid);
+					VerCalificacion verCalificacion = new VerCalificacion(trid, "cuenta-corriente");
 					verCalificacion.setVisible(true);
 					frmCuentaCorriente.dispose();
 					break;
@@ -366,7 +346,6 @@ public class MiCuentaCorriente {
 	}
 
 	private void loadUser() {
-		String nombreUsuario = prefs.get("USERNAME", null);
-		user = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
+		user = SistemaUsuarios.getInstance().getUsuarioActivo();
 	}
 }
