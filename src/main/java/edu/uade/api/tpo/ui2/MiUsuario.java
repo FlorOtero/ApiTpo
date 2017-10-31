@@ -225,7 +225,7 @@ public class MiUsuario {
 
 	private void loadUser() {
 		String nombreUsuario = prefs.get("USERNAME", null);
-		user = SistemaUsuarios.getInstance().buscarUsuario("erikannunez");
+		user = SistemaUsuarios.getInstance().buscarUsuario(nombreUsuario);
 		domicilio = user.getDomicilio();
 	}
 }
