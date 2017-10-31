@@ -11,8 +11,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.List;
 
 public class AltaPublicacion implements ItemListener{
@@ -40,6 +40,7 @@ public class AltaPublicacion implements ItemListener{
 	private JComboBox<String> comboBoxTipoContratacion;
 	private JComboBox<String> comboBoxVigencia;
 	private JComboBox<String> comboBoxGarantia;
+	private JLabel lblFechaFinPublicacion;
 
 	/**
 	 * Launch the application.
@@ -275,6 +276,11 @@ public class AltaPublicacion implements ItemListener{
 		String[] vigenciaStrings = { "30", "60", "90"};
 		comboBoxVigencia = new JComboBox(vigenciaStrings);
 		comboBoxVigencia.setBounds(100, 90, 120, 30);
+		comboBoxVigencia.addActionListener (new ActionListener () {
+			public void actionPerformed(ActionEvent e) {
+				setFechaHastaPublicacion();
+			}
+		});
 		panelSubasta.add(comboBoxVigencia);
 		
 		JLabel lblDias = new JLabel("días");
@@ -343,7 +349,7 @@ public class AltaPublicacion implements ItemListener{
 		panelServicio.add(btnCargarCertificado);
 
 		JTextPane textPaneCertificados = new JTextPane();
-		textPaneCertificados.setText("Acá se tienen que ir mostrando los certificados cargados");
+		//textPaneCertificados.setText("Acá se tienen que ir mostrando los certificados cargados");
 		textPaneCertificados.setBackground(SystemColor.window);
 		textPaneCertificados.setEditable(false);
 		textPaneCertificados.setBounds(0, 110, 360, 40);
@@ -369,9 +375,10 @@ public class AltaPublicacion implements ItemListener{
 		lblFinPublicacion.setBounds(10, 640, 140, 16);
 		frmNuevaPublicacion.getContentPane().add(lblFinPublicacion);
 		
-		JLabel lblFechaFinPublicacion = new JLabel("20-10-2017");
+		lblFechaFinPublicacion = new JLabel();
 		lblFechaFinPublicacion.setBounds(150, 640, 340, 16);
 		frmNuevaPublicacion.getContentPane().add(lblFechaFinPublicacion);
+		setFechaHastaPublicacion();
 		
 		JButton btnConfirmar = new JButton("Publicar");
 		btnConfirmar.addActionListener(new ActionListener() {
@@ -400,6 +407,17 @@ public class AltaPublicacion implements ItemListener{
 		
 	}
 
+	private void setFechaHastaPublicacion() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		Calendar cal = Calendar.getInstance();
+		if(this.comboBoxTipoPublicacion.getSelectedItem().toString().equals(COMPRA_INMEDIATA)) {
+			cal.add(Calendar.DAY_OF_MONTH, 90);
+		} else {
+			cal.add(Calendar.DAY_OF_MONTH, Integer.parseInt(comboBoxVigencia.getSelectedItem().toString()));
+		}
+		lblFechaFinPublicacion.setText(sdf.format(cal.getTime()));
+	}
+
 	@Override
 	public void itemStateChanged(ItemEvent e) {
 		
@@ -413,6 +431,7 @@ public class AltaPublicacion implements ItemListener{
 			cl = (CardLayout)(panelCategoria.getLayout());
 	        cl.show(panelCategoria, item);
 		}
+		setFechaHastaPublicacion();
 	}
 	
 	private void publicar() {
