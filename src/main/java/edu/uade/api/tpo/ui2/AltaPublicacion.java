@@ -41,28 +41,14 @@ public class AltaPublicacion implements ItemListener{
 	private JComboBox<String> comboBoxVigencia;
 	private JComboBox<String> comboBoxGarantia;
 	private JLabel lblFechaFinPublicacion;
+	private Publicacion publicacion;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AltaPublicacion window = new AltaPublicacion();
-					window.frmNuevaPublicacion.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the application.
-	 */
 	public AltaPublicacion() {
 		initialize();
+	}
+
+	public AltaPublicacion(Publicacion publicacion) {
+		this.publicacion = publicacion;
 	}
 
 	/**
@@ -155,11 +141,14 @@ public class AltaPublicacion implements ItemListener{
 				frmNuevaPublicacion.dispose();
 			}
 		});
-		
-		/**
-		 * TODO cambiar Nueva por Modificar, cuando se modifique la publicacion
-		 */
-		JLabel lblBreadcrumb = new JLabel("Inicio > Publicaciones > Nueva Publicación");
+
+		JLabel lblBreadcrumb = null;
+		if(this.publicacion == null) {
+			lblBreadcrumb = new JLabel("Inicio > Publicaciones > Nueva Publicación");
+		} else {
+			lblBreadcrumb = new JLabel("Inicio > Publicaciones > Modificar Publicación");
+		}
+
 		lblBreadcrumb.setBounds(10, 20, 760, 16);
 		frmNuevaPublicacion.getContentPane().add(lblBreadcrumb);
 		
@@ -173,6 +162,9 @@ public class AltaPublicacion implements ItemListener{
 		
 		txtTitulo = new JTextField();
 		txtTitulo.setBounds(10, 80, 760, 30);
+		if(publicacion != null) {
+			txtTitulo.setText(publicacion.getArticulo().getNombre());
+		}
 		frmNuevaPublicacion.getContentPane().add(txtTitulo);
 		txtTitulo.setColumns(10);
 		
@@ -183,14 +175,15 @@ public class AltaPublicacion implements ItemListener{
 		textAreaDescripcion = new JTextArea();
 		textAreaDescripcion.setLineWrap(true);
 		textAreaDescripcion.setWrapStyleWord(true);
-		
+		if(publicacion != null) {
+			textAreaDescripcion.setText(publicacion.getArticulo().getDescripcion());
+		}
 		JScrollPane scrollPaneDescripcion = new JScrollPane(textAreaDescripcion);
 		scrollPaneDescripcion.setBounds(10, 145, 760, 150);
 		scrollPaneDescripcion.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPaneDescripcion.setPreferredSize(new Dimension(760, 150));
 		frmNuevaPublicacion.getContentPane().add(scrollPaneDescripcion);
-		
-		
+
 		JButton btnCargarImagenes = new JButton("Cargar imágenes");
 		btnCargarImagenes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -213,7 +206,11 @@ public class AltaPublicacion implements ItemListener{
 		String[] tipoPublicacionStrings = { COMPRA_INMEDIATA, SUBASTA };
 		comboBoxTipoPublicacion = new JComboBox(tipoPublicacionStrings);
 		comboBoxTipoPublicacion.setBounds(10, 380, 360, 27);
-		comboBoxTipoPublicacion.setSelectedIndex(0);
+		if(this.publicacion != null && this.publicacion instanceof Subasta) {
+			comboBoxTipoPublicacion.setSelectedIndex(1);
+		} else {
+			comboBoxTipoPublicacion.setSelectedIndex(0);
+		}
 		comboBoxTipoPublicacion.addItemListener(this);
 		frmNuevaPublicacion.getContentPane().add(comboBoxTipoPublicacion);
 		
@@ -232,6 +229,9 @@ public class AltaPublicacion implements ItemListener{
 		
 		txtPrecio = new JTextField();
 		txtPrecio.setBounds(6, 27, 180, 30);
+		if(this.publicacion != null && publicacion instanceof Publicacion) {
+			txtPrecio.setText(new Float(publicacion.getPrecio()).toString());
+		}
 		panelCompraInmediata.add(txtPrecio);
 		txtPrecio.setColumns(10);
 		
@@ -249,6 +249,9 @@ public class AltaPublicacion implements ItemListener{
 		
 		txtPrecioInicial = new JTextField();
 		txtPrecioInicial.setBounds(100, 10, 120, 30);
+		if(publicacion != null && publicacion instanceof Subasta) {
+			txtPrecioInicial.setText(new Float(((Subasta) publicacion).getPrecioInicial()).toString());
+		}
 		panelSubasta.add(txtPrecioInicial);
 		txtPrecioInicial.setColumns(10);
 		
@@ -262,6 +265,9 @@ public class AltaPublicacion implements ItemListener{
 		
 		txtPrecioMinimo = new JTextField();
 		txtPrecioMinimo.setBounds(100, 50, 120, 30);
+		if (publicacion != null && publicacion instanceof Subasta) {
+			txtPrecioMinimo.setText(new Float(((Subasta) publicacion).getPrecioMin()).toString());
+		}
 		panelSubasta.add(txtPrecioMinimo);
 		txtPrecioMinimo.setColumns(10);
 		
@@ -281,6 +287,9 @@ public class AltaPublicacion implements ItemListener{
 				setFechaHastaPublicacion();
 			}
 		});
+		if(publicacion != null && publicacion instanceof Subasta) {
+			comboBoxVigencia.setSelectedIndex((((Subasta) publicacion).getDiasVigencia() / 30) - 1);
+		}
 		panelSubasta.add(comboBoxVigencia);
 		
 		JLabel lblDias = new JLabel("días");
@@ -300,6 +309,9 @@ public class AltaPublicacion implements ItemListener{
 		comboBoxCategoria = new JComboBox(categoriaStrings);
 		comboBoxCategoria.setBounds(410, 380, 360, 27);
 		comboBoxCategoria.addItemListener(this);
+		if (publicacion != null) {
+			comboBoxCategoria.setSelectedIndex(publicacion.getArticulo() instanceof Servicio ? 1 : 0);
+		}
 		frmNuevaPublicacion.getContentPane().add(comboBoxCategoria);
 		
 		panelCategoria = new JPanel();
@@ -321,6 +333,9 @@ public class AltaPublicacion implements ItemListener{
 		txtGarantia.setColumns(10);
 		comboBoxGarantia = new JComboBox(Arrays.stream(TipoPeriodo.values()).map(t -> t.getVal()).toArray());
 		comboBoxGarantia.setBounds(122, 38, 170, 30);
+		if(publicacion != null && publicacion.getArticulo() != null && publicacion.getArticulo() instanceof Producto) {
+			comboBoxGarantia.setSelectedIndex(((Producto) publicacion.getArticulo()).getGarantia().getTipo() == TipoPeriodo.MENSUAL ? 0 : 1);
+		}
 		panelProducto.add(comboBoxGarantia);
 		
 		JPanel panelServicio = new JPanel();

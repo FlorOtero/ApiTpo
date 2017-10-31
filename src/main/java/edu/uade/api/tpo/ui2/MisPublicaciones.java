@@ -1,34 +1,23 @@
 package edu.uade.api.tpo.ui2;
 
-import java.awt.EventQueue;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.prefs.Preferences;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JSeparator;
-import javax.swing.JScrollPane;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import edu.uade.api.tpo.controller.SistemaUsuarios;
 import edu.uade.api.tpo.model.Producto;
 import edu.uade.api.tpo.model.Publicacion;
 import edu.uade.api.tpo.model.Subasta;
 import edu.uade.api.tpo.model.Usuario;
 import edu.uade.api.tpo.ui.IniciarSesion;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.prefs.Preferences;
 
 public class MisPublicaciones {
 
@@ -232,7 +221,7 @@ public class MisPublicaciones {
 				int col = table.columnAtPoint(evt.getPoint());
 				if (row >= 0 && col >= 0) {
 					Publicacion p = publicaciones.get(row);
-					VerPublicacion publicacion = new VerPublicacion(p);
+					AltaPublicacion publicacion = new AltaPublicacion(p);
 					publicacion.setVisible(true);
 					frmMisPublicaciones.dispose();
 				}
