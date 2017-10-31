@@ -231,14 +231,14 @@ public class Comprar implements ActionListener{
 	    
 	    // habilitar solo los botones para medios de pago disponibles 
 		for(MedioPago mp: publicacion.getMediosPago()) {
-			switch(mp.toString()) {
-			case "EFECTIVO": 
+			switch(mp) {
+			case EFECTIVO: 
 				rdbtnEfectivo.setEnabled(true);
 				break;
-			case "TRANSFERENCIA_BANCARIA": 	
+			case TRANSFERENCIA_BANCARIA: 	
 				rdbtnTransferenciaBancaria.setEnabled(true);
 				break;
-			case "TARJETA_CREDITO": 
+			case TARJETA_CREDITO: 
 				rdbtnTarjetaDeCredito.setEnabled(true);
 				break;
 			}
