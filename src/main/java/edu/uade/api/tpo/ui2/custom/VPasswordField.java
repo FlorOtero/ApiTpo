@@ -68,7 +68,7 @@ public class VPasswordField extends JPasswordField implements FocusListener, Key
         }
         for (Component component : components) {
             component.setEnabled(enabled);
-            this.setBackground(hasValidContent() ? Color.WHITE : RED);
+            //this.setBackground(hasValidContent() ? Color.WHITE : RED);
         }
     }
 

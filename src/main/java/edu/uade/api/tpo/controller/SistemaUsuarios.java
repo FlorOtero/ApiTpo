@@ -91,6 +91,7 @@ public class SistemaUsuarios {
     }
 
     public Usuario login(String nombreUsuario, String password) throws BusinessException, ExpiredPasswordException {
+        this.setUsuarioActivo(null);
         Usuario usuario = this.buscarUsuario(nombreUsuario);
         if (usuario == null) {
             throw new BusinessException("El usuario no existe");
@@ -106,6 +107,7 @@ public class SistemaUsuarios {
                 }
             }
         }
+        this.setUsuarioActivo(usuario);
         return usuario;
     }
 

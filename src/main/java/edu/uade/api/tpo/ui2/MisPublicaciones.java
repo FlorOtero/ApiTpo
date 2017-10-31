@@ -1,28 +1,44 @@
 package edu.uade.api.tpo.ui2;
 
+import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JSeparator;
+import javax.swing.JScrollPane;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JTable;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import edu.uade.api.tpo.controller.SistemaUsuarios;
 import edu.uade.api.tpo.model.Producto;
 import edu.uade.api.tpo.model.Publicacion;
 import edu.uade.api.tpo.model.Subasta;
 import edu.uade.api.tpo.model.Usuario;
 import edu.uade.api.tpo.ui.IniciarSesion;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.List;
 
 public class MisPublicaciones {
 
 	private static final Logger logger = LoggerFactory.getLogger(IniciarSesion.class);
 	private JFrame frmMisPublicaciones;
 	private JTable table;
+	private TableRowSorter<DefaultTableModel> sorter;
 	private Usuario user;
 
 	/**
@@ -170,7 +186,14 @@ public class MisPublicaciones {
 		table.getColumnModel().getColumn(1).setMaxWidth(90);
 		table.getColumnModel().getColumn(3).setMaxWidth(100);
 		table.getColumnModel().getColumn(4).setMaxWidth(100);
-
+		
+		List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+		sortKeys.add(new RowSorter.SortKey(1, SortOrder.DESCENDING));
+		sorter = new TableRowSorter<DefaultTableModel>((DefaultTableModel) table.getModel());
+		sorter.setSortKeys(sortKeys);
+		sorter.sort();
+		table.setRowSorter(sorter);
+	
 		JScrollPane scrollPanePublicaciones = new JScrollPane(table);
 		scrollPanePublicaciones.setBounds(10, 60, 480, 300);
 		table.setFillsViewportHeight(true);
@@ -193,9 +216,9 @@ public class MisPublicaciones {
 	private void loadUserData() {
 		user = SistemaUsuarios.getInstance().getUsuarioActivo();
 	}
-	
+
 	private void loadPublicaciones() {
-		
+
 		List<Publicacion> publicaciones = user.getPublicaciones();
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -210,7 +233,7 @@ public class MisPublicaciones {
 
 			model.addRow(new Object[] { tipoPub, fecha, p.getArticulo().getNombre(), "$" + precio, categoria });
 		}
-
+		
 		table.addMouseListener(new java.awt.event.MouseAdapter() {
 			@Override
 			public void mouseClicked(java.awt.event.MouseEvent evt) {

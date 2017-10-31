@@ -142,7 +142,7 @@ public class Inicio {
 		lblBienvenido.setBounds(10, 20, 80, 16);
 		frmInicioApi.getContentPane().add(lblBienvenido);
 
-		JLabel lblNombreDeUsuario = new JLabel(SistemaUsuarios.getInstance().getUsuarioActivo() + "!");
+		JLabel lblNombreDeUsuario = new JLabel(SistemaUsuarios.getInstance().getUsuarioActivo().getNombreUsuario() + "!");
 		lblNombreDeUsuario.setBounds(90, 20, 400, 16);
 		frmInicioApi.getContentPane().add(lblNombreDeUsuario);
 		

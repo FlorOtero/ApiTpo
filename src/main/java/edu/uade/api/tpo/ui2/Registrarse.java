@@ -12,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.util.Date;
 
 public class Registrarse {
@@ -45,6 +46,7 @@ public class Registrarse {
 	 * Create the application.
 	 */
 	public Registrarse() {
+		this.domicilio = new Domicilio();
 		initialize();
 	}
 
@@ -116,21 +118,16 @@ public class Registrarse {
 		frmRegistrarseApi.getContentPane().add(lblDomicilio);
 
 		JButton btnIngresarDomicilio = new JButton("Ingresar Domicilio");
-		btnIngresarDomicilio.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		btnIngresarDomicilio.setBounds(10, 400, 300, 30);
 		frmRegistrarseApi.getContentPane().add(btnIngresarDomicilio);
 
 		/*
-		 * Se tiene que clickear una sola vez y luego habilitarlo si cerro la otra
+		 * TODO Se tiene que clickear una sola vez y luego habilitarlo si cerro la otra
 		 * ventana
 		 */
 		btnIngresarDomicilio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// btnIngresarDomicilio.setEnabled(false);
-				domicilio = new Domicilio();
 				IngresarDomicilio domicilioUser = new IngresarDomicilio(domicilio);
 				domicilioUser.setVisible(true);
 			}
@@ -142,46 +139,55 @@ public class Registrarse {
 
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Usuario user = new Usuario();
-				Password password = new Password();
-				user.setNombre(txtNombre.getText());
-				user.setApellido(txtApellido.getText());
-				user.setDomicilio(domicilio);
-				user.setMail(txtEmail.getText());
-				/**
-				 * TODO checkear que las contraseñas coincidan
-				 */
-				password.setValor(new String(txtContrasena.getPassword()));
-				password.setFechaModificacion(new Date());
-				user.setPassword(password);
-				user.setNombreUsuario(txtNombreDeUsuario.getText());
 
 				try {
+					Usuario user = new Usuario();
+					user.setNombre(txtNombre.getText());
+					user.setApellido(txtApellido.getText());
+					user.setDomicilio(domicilio);
+					user.setMail(txtEmail.getText());
+					user.setNombreUsuario(txtNombreDeUsuario.getText());
+
+					if (Arrays.equals(txtContrasena.getPassword(), txtConfirmarContrasena.getPassword())) {
+						Password pwd = new Password();
+						pwd.setFechaModificacion(new Date());
+						pwd.setValor(new String(txtContrasena.getPassword()));
+						user.setPassword(pwd);
+					} else {
+						throw new BusinessException("Las contraseñas no coinciden. Verifique, por favor.");
+					}
+
 					SistemaUsuarios.getInstance().altaUsuario(user);
 					JOptionPane.showMessageDialog(null, "Se ha creado su usuario con exito", "Aviso",
 							JOptionPane.PLAIN_MESSAGE);
 					/**
 					 * Tratamos de loguear automaticamente al usuario
 					 */
-					SistemaUsuarios su = SistemaUsuarios.getInstance();
-					System.out.println("Trying to login with credentials: " + user.getNombreUsuario());
-					Usuario u = su.login(user.getNombreUsuario(), new String(txtContrasena.getPassword()));
-					SistemaUsuarios.getInstance().setUsuarioActivo(u);
-					Inicio inicio = new Inicio();
-					inicio.setVisible(true);
-					
+					try {
+						SistemaUsuarios su = SistemaUsuarios.getInstance();
+						System.out.println("Trying to login with credentials: " + user.getNombreUsuario());
+						su.login(user.getNombreUsuario(), new String(txtContrasena.getPassword()));
+						Inicio inicio = new Inicio();
+						inicio.setVisible(true);
 
-				} catch (BusinessException | InvalidPasswordException | ExpiredPasswordException e1) {
+					} catch (Exception loginException) {
+						/**
+						 * Si no se pudo loguear lo mandamos a iniciar sesion
+						 */
+						JOptionPane.showMessageDialog(null, loginException.getMessage(), "Aviso",
+								JOptionPane.ERROR_MESSAGE);
+						Ingresar ingreso = new Ingresar();
+						ingreso.setVisible(true);
+						
+					}
+					
+					frmRegistrarseApi.dispose();
+
+				} catch (BusinessException | InvalidPasswordException e1) {
 					// TODO Manejar la exception y mostrar un mensaje de error cuando existe el
 					// usuario
-					JOptionPane.showMessageDialog(null, e1.getMessage(), "Aviso", JOptionPane.PLAIN_MESSAGE);
-					/**
-					 * Si no se pudo loguear lo mandamos a iniciar sesion
-					 */
-					Ingresar ingreso = new Ingresar();
-					ingreso.setVisible(true);
+					JOptionPane.showMessageDialog(null, e1.getMessage(), "Aviso", JOptionPane.ERROR_MESSAGE);
 				}
-				frmRegistrarseApi.dispose();
 
 			}
 		});
@@ -196,7 +202,6 @@ public class Registrarse {
 				Ingresar ingreso = new Ingresar();
 				ingreso.setVisible(true);
 				frmRegistrarseApi.dispose();
-
 			}
 		});
 	}
