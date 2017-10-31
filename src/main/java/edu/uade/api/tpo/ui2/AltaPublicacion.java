@@ -208,10 +208,13 @@ public class AltaPublicacion implements ItemListener {
         String[] tipoPublicacionStrings = {COMPRA_INMEDIATA, SUBASTA};
         comboBoxTipoPublicacion = new JComboBox(tipoPublicacionStrings);
         comboBoxTipoPublicacion.setBounds(10, 380, 360, 27);
-        if (this.publicacion != null && this.publicacion instanceof Subasta) {
-            comboBoxTipoPublicacion.setSelectedIndex(1);
-        } else {
-            comboBoxTipoPublicacion.setSelectedIndex(0);
+        if (this.publicacion != null) {
+            if (this.publicacion instanceof Subasta) {
+                comboBoxTipoPublicacion.setSelectedIndex(1);
+            } else {
+                comboBoxTipoPublicacion.setSelectedIndex(0);
+            }
+            comboBoxTipoPublicacion.setEnabled(false);
         }
         comboBoxTipoPublicacion.addItemListener(this);
         frmNuevaPublicacion.getContentPane().add(comboBoxTipoPublicacion);
@@ -313,6 +316,7 @@ public class AltaPublicacion implements ItemListener {
         comboBoxCategoria.addItemListener(this);
         if (publicacion != null) {
             comboBoxCategoria.setSelectedIndex(publicacion.getArticulo() instanceof Servicio ? 1 : 0);
+            comboBoxCategoria.setEnabled(false);
         }
         frmNuevaPublicacion.getContentPane().add(comboBoxCategoria);
 
@@ -404,12 +408,22 @@ public class AltaPublicacion implements ItemListener {
         frmNuevaPublicacion.getContentPane().add(lblFechaFinPublicacion);
         setFechaHastaPublicacion();
 
-        JButton btnConfirmar = new JButton("Publicar");
-        btnConfirmar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                publicar();
-            }
-        });
+        JButton btnConfirmar = null;
+        if(publicacion != null) {
+            btnConfirmar = new JButton("Guardar");
+            btnConfirmar.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    modificar();
+                }
+            });
+        } else {
+            btnConfirmar = new JButton("Publicar");
+            btnConfirmar.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    publicar();
+                }
+            });
+        }
         btnConfirmar.setBounds(650, 670, 120, 30);
         frmNuevaPublicacion.getContentPane().add(btnConfirmar);
 
@@ -422,12 +436,21 @@ public class AltaPublicacion implements ItemListener {
         });
         frmNuevaPublicacion.getContentPane().add(btnCancelar);
 
-        if(publicacion != null) {
+        if (publicacion != null) {
             JButton btnEliminarPublicacion = new JButton("Eliminar Publicación");
             btnEliminarPublicacion.setBounds(10, 670, 180, 30);
             btnEliminarPublicacion.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-
+                    int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar su publicación?\n¡Esta acción no se puede deshacer!", "Alerta", JOptionPane.WARNING_MESSAGE);
+                    if (opcion == JOptionPane.YES_OPTION) {
+                        if (publicacion instanceof Subasta) {
+                            SistemaPublicaciones.getInstance().eliminarSubasta((Subasta) publicacion);
+                        } else {
+                            SistemaPublicaciones.getInstance().eliminarPublicacion(publicacion);
+                        }
+                        JOptionPane.showMessageDialog(null, "Su usuario se ha eliminado exitosamente!", "Aviso", JOptionPane.PLAIN_MESSAGE);
+                        //TODO Volver a la pantalla anterior
+                    }
                 }
             });
             frmNuevaPublicacion.getContentPane().add(btnEliminarPublicacion);
@@ -468,8 +491,7 @@ public class AltaPublicacion implements ItemListener {
         if (validateForm()) {
             Usuario user = SistemaUsuarios.getInstance().getUsuarioActivo();
             List<MedioPago> mediosPagos = getMediosPago();
-            Articulo articulo;
-
+            Articulo articulo = null;
             if (comboBoxCategoria.getSelectedItem().toString() == PRODUCTO) {
                 articulo = crearProducto();
             } else {
@@ -500,6 +522,45 @@ public class AltaPublicacion implements ItemListener {
             JOptionPane.showMessageDialog(null, "Aun tienes campos que completar", "Formulario Incompleto", JOptionPane.PLAIN_MESSAGE);
         }
 
+    }
+
+    private void modificar() {
+        if(validateForm()) {
+            this.publicacion.setMediosPago(getMediosPago());
+            //Campos genéricos
+            if (comboBoxCategoria.getSelectedItem().toString() == PRODUCTO) {
+                Producto prod = (Producto) publicacion.getArticulo();
+                prod.setNombre(txtTitulo.getText());
+                prod.setDescripcion(textAreaDescripcion.getText());
+                prod.fromImagesTokenized("");
+                Garantia garantia = prod.getGarantia();
+                garantia.setCantidad(Integer.parseInt(txtGarantia.getText()));
+                garantia.setTipo(TipoPeriodo.findByValue(comboBoxGarantia.getSelectedItem().toString()));
+            } else {
+                Servicio servicio = (Servicio) publicacion.getArticulo();
+                servicio.setNombre(txtTitulo.getText());
+                servicio.setDescripcion(textAreaDescripcion.getText());
+                servicio.fromImagesTokenized("");
+                servicio.setCertificados(new ArrayList<>());
+                servicio.setContratacion(TipoContratacion.findByValue(comboBoxTipoContratacion.getSelectedItem().toString()));
+            }
+
+            //campos específicos
+            if (comboBoxTipoPublicacion.getSelectedItem().toString() == SUBASTA) {
+                Subasta subasta = (Subasta) publicacion;
+                subasta.setPrecioInicial(Float.parseFloat(txtPrecioInicial.getText()));
+                subasta.setPrecioMin(Float.parseFloat(txtPrecioMinimo.getText()));
+                subasta.setDiasVigencia(Integer.parseInt(comboBoxVigencia.getSelectedItem().toString()));
+                SistemaPublicaciones.getInstance().modificarSubasta(subasta);
+            } else {
+                publicacion.setPrecio(Float.parseFloat(txtPrecio.getText()));
+                SistemaPublicaciones.getInstance().modificarPublicacion(publicacion);
+            }
+            JOptionPane.showMessageDialog(null, "¡Los datos fueron modificados!", "Operacion Exitosa", JOptionPane.PLAIN_MESSAGE);
+            goInicio();
+        } else {
+            JOptionPane.showMessageDialog(null, "Aun tienes campos que completar", "Formulario Incompleto", JOptionPane.PLAIN_MESSAGE);
+        }
     }
 
     private Producto crearProducto() {
