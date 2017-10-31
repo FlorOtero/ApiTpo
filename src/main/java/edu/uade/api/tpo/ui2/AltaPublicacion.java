@@ -51,6 +51,7 @@ public class AltaPublicacion implements ItemListener {
 
     public AltaPublicacion(Publicacion publicacion) {
         this.publicacion = publicacion;
+        initialize();
     }
 
     /**
@@ -58,7 +59,11 @@ public class AltaPublicacion implements ItemListener {
      */
     private void initialize() {
         frmNuevaPublicacion = new JFrame();
-        frmNuevaPublicacion.setTitle("Nueva Publicación | API");
+        if (this.publicacion != null) {
+            frmNuevaPublicacion.setTitle("Modificar Publicación | API");
+        } else {
+            frmNuevaPublicacion.setTitle("Nueva Publicación | API");
+        }
         frmNuevaPublicacion.setBounds(100, 100, 780, 750);
         frmNuevaPublicacion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -208,6 +213,13 @@ public class AltaPublicacion implements ItemListener {
         String[] tipoPublicacionStrings = {COMPRA_INMEDIATA, SUBASTA};
         comboBoxTipoPublicacion = new JComboBox(tipoPublicacionStrings);
         comboBoxTipoPublicacion.setBounds(10, 380, 360, 27);
+        frmNuevaPublicacion.getContentPane().add(comboBoxTipoPublicacion);
+
+        panelTipoPublicacion = new JPanel();
+        panelTipoPublicacion.setBounds(10, 410, 360, 150);
+        frmNuevaPublicacion.getContentPane().add(panelTipoPublicacion);
+        panelTipoPublicacion.setLayout(new CardLayout(0, 0));
+
         if (this.publicacion != null) {
             if (this.publicacion instanceof Subasta) {
                 comboBoxTipoPublicacion.setSelectedIndex(1);
@@ -217,12 +229,6 @@ public class AltaPublicacion implements ItemListener {
             comboBoxTipoPublicacion.setEnabled(false);
         }
         comboBoxTipoPublicacion.addItemListener(this);
-        frmNuevaPublicacion.getContentPane().add(comboBoxTipoPublicacion);
-
-        panelTipoPublicacion = new JPanel();
-        panelTipoPublicacion.setBounds(10, 410, 360, 150);
-        frmNuevaPublicacion.getContentPane().add(panelTipoPublicacion);
-        panelTipoPublicacion.setLayout(new CardLayout(0, 0));
 
         JPanel panelCompraInmediata = new JPanel();
         panelTipoPublicacion.add(panelCompraInmediata, COMPRA_INMEDIATA);
@@ -231,6 +237,11 @@ public class AltaPublicacion implements ItemListener {
         JLabel lblPrecio = new JLabel("Precio:");
         lblPrecio.setBounds(6, 6, 360, 16);
         panelCompraInmediata.add(lblPrecio);
+
+        lblFechaFinPublicacion = new JLabel();
+        lblFechaFinPublicacion.setBounds(150, 640, 340, 16);
+        frmNuevaPublicacion.getContentPane().add(lblFechaFinPublicacion);
+        setFechaHastaPublicacion();
 
         txtPrecio = new JTextField();
         txtPrecio.setBounds(6, 27, 180, 30);
@@ -313,17 +324,18 @@ public class AltaPublicacion implements ItemListener {
         String[] categoriaStrings = {PRODUCTO, SERVICIO};
         comboBoxCategoria = new JComboBox(categoriaStrings);
         comboBoxCategoria.setBounds(410, 380, 360, 27);
-        comboBoxCategoria.addItemListener(this);
-        if (publicacion != null) {
-            comboBoxCategoria.setSelectedIndex(publicacion.getArticulo() instanceof Servicio ? 1 : 0);
-            comboBoxCategoria.setEnabled(false);
-        }
         frmNuevaPublicacion.getContentPane().add(comboBoxCategoria);
 
         panelCategoria = new JPanel();
         panelCategoria.setBounds(410, 410, 360, 150);
         frmNuevaPublicacion.getContentPane().add(panelCategoria);
         panelCategoria.setLayout(new CardLayout(0, 0));
+
+        comboBoxCategoria.addItemListener(this);
+        if (publicacion != null) {
+            comboBoxCategoria.setSelectedIndex(publicacion.getArticulo() instanceof Servicio ? 1 : 0);
+            comboBoxCategoria.setEnabled(false);
+        }
 
         JPanel panelProducto = new JPanel();
         panelCategoria.add(panelProducto, PRODUCTO);
@@ -403,11 +415,6 @@ public class AltaPublicacion implements ItemListener {
         lblFinPublicacion.setBounds(10, 640, 140, 16);
         frmNuevaPublicacion.getContentPane().add(lblFinPublicacion);
 
-        lblFechaFinPublicacion = new JLabel();
-        lblFechaFinPublicacion.setBounds(150, 640, 340, 16);
-        frmNuevaPublicacion.getContentPane().add(lblFechaFinPublicacion);
-        setFechaHastaPublicacion();
-
         JButton btnConfirmar = null;
         if(publicacion != null) {
             btnConfirmar = new JButton("Guardar");
@@ -449,7 +456,7 @@ public class AltaPublicacion implements ItemListener {
                             SistemaPublicaciones.getInstance().eliminarPublicacion(publicacion);
                         }
                         JOptionPane.showMessageDialog(null, "Su usuario se ha eliminado exitosamente!", "Aviso", JOptionPane.PLAIN_MESSAGE);
-                        //TODO Volver a la pantalla anterior
+                        goInicio();
                     }
                 }
             });

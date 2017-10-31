@@ -102,4 +102,13 @@ public class Subasta extends Publicacion {
 	public float getPrecio() {
 		return this.getPrecioActual();
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Subasta) {
+			Subasta p = (Subasta) obj;
+			return p.getId().equals(id);
+		}
+		return false;
+	}
 }

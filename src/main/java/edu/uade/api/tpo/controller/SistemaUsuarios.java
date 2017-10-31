@@ -7,12 +7,14 @@ import edu.uade.api.tpo.exceptions.ExpiredPasswordException;
 import edu.uade.api.tpo.exceptions.InvalidPasswordException;
 import edu.uade.api.tpo.model.Estado;
 import edu.uade.api.tpo.model.Password;
+import edu.uade.api.tpo.model.Publicacion;
 import edu.uade.api.tpo.model.Usuario;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.SQLException;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.regex.Pattern;
 
 public class SistemaUsuarios {
@@ -91,7 +93,6 @@ public class SistemaUsuarios {
     }
 
     public Usuario login(String nombreUsuario, String password) throws BusinessException, ExpiredPasswordException {
-        this.setUsuarioActivo(null);
         Usuario usuario = this.buscarUsuario(nombreUsuario);
         if (usuario == null) {
             throw new BusinessException("El usuario no existe");
@@ -116,6 +117,15 @@ public class SistemaUsuarios {
         String regex = "(?=.*[A-Z])(?=.*\\d)[\\w\\d]{8,20}";
         if (!Pattern.matches(regex, password)) {
             throw new InvalidPasswordException("La contraseña ingresada es incorrecta.\nLa misma debe tener entre 8 y 20 caracteres, al menos un número y al menos una letra mayúscula.");
+        }
+    }
+
+    public void eliminarPublicacionUsuario(Publicacion publicacion) {
+        for(Iterator<Publicacion> it = this.getUsuarioActivo().getPublicaciones().iterator(); it.hasNext();) {
+            Publicacion p = it.next();
+            if(p.equals(publicacion)) {
+                it.remove();
+            }
         }
     }
 
