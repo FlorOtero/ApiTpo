@@ -431,7 +431,7 @@ public class AltaPublicacion implements ItemListener{
 				if (comboBoxTipoPublicacion.getSelectedItem().toString() == SUBASTA) {	
 					Subasta subasta = new Subasta();
 					subasta.setPrecioInicial(Float.parseFloat(txtPrecioInicial.getText()));
-					subasta.setPrecioInicial(Float.parseFloat(txtPrecioMinimo.getText()));
+					subasta.setPrecioMin(Float.parseFloat(txtPrecioMinimo.getText()));
 					subasta.setDiasVigencia(Integer.parseInt(comboBoxVigencia.getSelectedItem().toString()));
 					subasta.setArticulo(articulo);
 					SistemaPublicaciones.getInstance().altaSubasta(user.getId(), subasta.getArticulo(), subasta.getPrecioMin(), subasta.getDiasVigencia(),
