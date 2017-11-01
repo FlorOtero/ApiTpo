@@ -1,4 +1,4 @@
-package edu.uade.api.tpo.ui2;
+package edu.uade.api.tpo.ui;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import edu.uade.api.tpo.model.Domicilio;
-import edu.uade.api.tpo.ui2.custom.VTextField;
+import edu.uade.api.tpo.ui.custom.VTextField;
 
 import javax.swing.JButton;
 

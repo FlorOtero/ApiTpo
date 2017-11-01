@@ -1,11 +1,10 @@
-package edu.uade.api.tpo.ui2;
+package edu.uade.api.tpo.ui;
 
 import edu.uade.api.tpo.controller.SistemaUsuarios;
 import edu.uade.api.tpo.model.Producto;
 import edu.uade.api.tpo.model.Publicacion;
 import edu.uade.api.tpo.model.Subasta;
 import edu.uade.api.tpo.model.Usuario;
-import edu.uade.api.tpo.ui.IniciarSesion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +21,7 @@ import java.util.List;
 
 public class MisPublicaciones {
 
-	private static final Logger logger = LoggerFactory.getLogger(IniciarSesion.class);
+	private static final Logger logger = LoggerFactory.getLogger(Ingresar.class);
 	private JFrame frmMisPublicaciones;
 	private JTable table;
 	private TableRowSorter<DefaultTableModel> sorter;

@@ -1,4 +1,4 @@
-package edu.uade.api.tpo.ui2.custom;
+package edu.uade.api.tpo.ui.custom;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,12 +7,12 @@ import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class VTextField extends JTextField implements FocusListener, KeyListener, Validable {
+public class VPasswordField extends JPasswordField implements FocusListener, KeyListener, Validable {
 
     private JComponent[] components;
     private final static Color RED = new Color(255, 91, 91);
 
-    public VTextField(JComponent... components) {
+    public VPasswordField(JComponent... components) {
         super();
         this.components = components;
         for (Component c : components) {
@@ -24,7 +24,7 @@ public class VTextField extends JTextField implements FocusListener, KeyListener
         this.addKeyListener(this);
     }
 
-    public VTextField() {
+    public VPasswordField() {
         super();
     }
 
@@ -74,6 +74,7 @@ public class VTextField extends JTextField implements FocusListener, KeyListener
 
     @Override
     public boolean hasValidContent() {
-        return this.getText() != null && !this.getText().isEmpty();
+        String value = new String(this.getPassword());
+        return value != null && !value.isEmpty();
     }
 }

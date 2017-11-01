@@ -1,12 +1,12 @@
-package edu.uade.api.tpo.ui2;
+package edu.uade.api.tpo.ui;
 
 import edu.uade.api.tpo.controller.SistemaUsuarios;
 import edu.uade.api.tpo.exceptions.BusinessException;
 import edu.uade.api.tpo.exceptions.ExpiredPasswordException;
 import edu.uade.api.tpo.exceptions.InvalidPasswordException;
-import edu.uade.api.tpo.ui.IniciarSesion;
-import edu.uade.api.tpo.ui2.custom.VPasswordField;
-import edu.uade.api.tpo.ui2.custom.VTextField;
+import edu.uade.api.tpo.ui.custom.VPasswordField;
+import edu.uade.api.tpo.ui.custom.VTextField;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +17,7 @@ import java.awt.event.ActionListener;
 
 public class Ingresar {
 
-	private static final Logger logger = LoggerFactory.getLogger(IniciarSesion.class);
+	private static final Logger logger = LoggerFactory.getLogger(Ingresar.class);
 	private JFrame frmIngresarApi;
 	private VTextField txtNombreUsuario;
 	private VPasswordField txtContrasena;

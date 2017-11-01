@@ -1,11 +1,12 @@
-package edu.uade.api.tpo.ui2;
+package edu.uade.api.tpo.ui;
 
 import edu.uade.api.tpo.controller.SistemaCuentaCorriente;
 import edu.uade.api.tpo.controller.SistemaUsuarios;
 import edu.uade.api.tpo.exceptions.BusinessException;
 import edu.uade.api.tpo.model.ItemCtaCte;
 import edu.uade.api.tpo.model.Usuario;
-import edu.uade.api.tpo.ui2.custom.ButtonColumn;
+import edu.uade.api.tpo.ui.custom.ButtonColumn;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
