@@ -1,4 +1,4 @@
-package edu.uade.api.tpo.ui2;
+package edu.uade.api.tpo.ui;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;

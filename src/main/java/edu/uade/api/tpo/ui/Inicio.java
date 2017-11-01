@@ -1,4 +1,4 @@
-package edu.uade.api.tpo.ui2;
+package edu.uade.api.tpo.ui;
 
 import edu.uade.api.tpo.controller.SistemaPublicaciones;
 import edu.uade.api.tpo.controller.SistemaUsuarios;

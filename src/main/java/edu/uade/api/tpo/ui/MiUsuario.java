@@ -1,4 +1,4 @@
-package edu.uade.api.tpo.ui2;
+package edu.uade.api.tpo.ui;
 
 import edu.uade.api.tpo.controller.SistemaUsuarios;
 import edu.uade.api.tpo.exceptions.BusinessException;
@@ -6,8 +6,9 @@ import edu.uade.api.tpo.exceptions.InvalidPasswordException;
 import edu.uade.api.tpo.model.Domicilio;
 import edu.uade.api.tpo.model.Password;
 import edu.uade.api.tpo.model.Usuario;
-import edu.uade.api.tpo.ui2.custom.VPasswordField;
-import edu.uade.api.tpo.ui2.custom.VTextField;
+import edu.uade.api.tpo.ui.custom.VPasswordField;
+import edu.uade.api.tpo.ui.custom.VTextField;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

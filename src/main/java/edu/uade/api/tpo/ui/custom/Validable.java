@@ -1,4 +1,4 @@
-package edu.uade.api.tpo.ui2.custom;
+package edu.uade.api.tpo.ui.custom;
 
 public interface Validable {
 
