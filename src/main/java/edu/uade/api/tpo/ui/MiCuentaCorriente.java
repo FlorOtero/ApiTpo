@@ -195,11 +195,11 @@ public class MiCuentaCorriente {
 		sorter = new TableRowSorter<DefaultTableModel>(model);
 		table.setRowSorter(sorter);
 		//Por default ordenamos la tabla por fecha
-		List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+	/*	List<RowSorter.SortKey> sortKeys = new ArrayList<>();
 		sortKeys.add(new RowSorter.SortKey(0, SortOrder.DESCENDING));
 		sorter.setSortKeys(sortKeys);
 		sorter.sort();
-
+*/
 		comboTipo.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -256,7 +256,6 @@ public class MiCuentaCorriente {
 		Action showCalificacion = new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
 				JTable table = (JTable) e.getSource();
-				// int modelRow = Integer.valueOf(e.getActionCommand());
 				String trid = (String) table.getModel().getValueAt(table.getSelectedRow(), 6);
 				String action = (String) table.getModel().getValueAt(table.getSelectedRow(), 5);
 
@@ -304,7 +303,7 @@ public class MiCuentaCorriente {
 
 				String calificacion = "-";
 
-				if (!item.isComision()) {
+				if (!item.isComision() && item.getEstado().equals("A")) {
 					if (item.isCalificada()) {
 						calificacion = "ver";
 					} else {
@@ -319,7 +318,8 @@ public class MiCuentaCorriente {
 						item.getEstado(), // estado
 						item.getTipo(), // tipo
 						item.getMonto(), // monto
-						calificacion, item.getIdOperacion() // hidden
+						calificacion, 
+						item.getIdOperacion() // hidden
 				});
 			}
 

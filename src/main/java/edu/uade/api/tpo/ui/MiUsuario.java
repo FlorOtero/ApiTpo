@@ -133,10 +133,6 @@ public class MiUsuario {
 		btnIngresarDomicilio.setBounds(10, 400, 300, 30);
 		frmMiUsuarioApi.getContentPane().add(btnIngresarDomicilio);
 
-		/*
-		 * TODO Se tiene que clickear una sola vez y luego habilitarlo si cerro la otra
-		 * ventana
-		 */
 		btnIngresarDomicilio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				IngresarDomicilio domicilioUser = new IngresarDomicilio(domicilio);
@@ -167,14 +163,19 @@ public class MiUsuario {
 					user.setApellido(txtApellido.getText());
 					user.setDomicilio(domicilio);
 
-					SistemaUsuarios.getInstance().modificarUsuario(user);
-					Inicio inicio = new Inicio();
-					JOptionPane.showConfirmDialog(null, "Su usuario se ha modificado con exito", "Confirmacion", JOptionPane.PLAIN_MESSAGE);
-					inicio.setVisible(true);
-					frmMiUsuarioApi.dispose();
-				} catch (BusinessException | InvalidPasswordException e1) {
-					// TODO Manejar la exception y mostrar un mensaje de error cuando existe el
-					// usuario
+					try {
+						SistemaUsuarios.getInstance().modificarUsuario(user);
+						Inicio inicio = new Inicio();
+						JOptionPane.showConfirmDialog(null, "Su usuario se ha modificado con exito", "Confirmacion",
+								JOptionPane.PLAIN_MESSAGE);
+						inicio.setVisible(true);
+						frmMiUsuarioApi.dispose();
+					} catch (Exception modificarUserException) {
+						JOptionPane.showMessageDialog(null, modificarUserException.getMessage(), "Error",
+								JOptionPane.ERROR_MESSAGE);
+					}
+					
+				} catch (BusinessException e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 					logger.error(e1.getMessage());
 				}
@@ -206,19 +207,22 @@ public class MiUsuario {
 		JButton btnCerrarCuentaDeUsuario = new JButton("Cerrar cuenta de usuario");
 		btnCerrarCuentaDeUsuario.setBounds(10, 540, 300, 30);
 		frmMiUsuarioApi.getContentPane().add(btnCerrarCuentaDeUsuario);
-		
+
 		btnCerrarCuentaDeUsuario.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea cerrar su cuenta de usuario?\n¡Esta acción no se puede deshacer!", "Alerta", JOptionPane.WARNING_MESSAGE);
-				if(opcion == JOptionPane.YES_OPTION){
+				int opcion = JOptionPane.showConfirmDialog(null,
+						"¿Está seguro que desea cerrar su cuenta de usuario?\n¡Esta acción no se puede deshacer!",
+						"Alerta", JOptionPane.WARNING_MESSAGE);
+				if (opcion == JOptionPane.YES_OPTION) {
 					try {
 						SistemaUsuarios.getInstance().eliminarUsuario(user.getNombreUsuario());
-						JOptionPane.showMessageDialog(null, "Su usuario se ha eliminado exitosamente!", "Aviso", JOptionPane.PLAIN_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Su usuario se ha eliminado exitosamente!", "Aviso",
+								JOptionPane.PLAIN_MESSAGE);
 						Ingresar ingreso = new Ingresar();
 						ingreso.setVisible(true);
 						frmMiUsuarioApi.dispose();
-					}catch (Exception deleteUserException) {
+					} catch (Exception deleteUserException) {
 						JOptionPane.showMessageDialog(null, deleteUserException, "Error", JOptionPane.ERROR_MESSAGE);
 					}
 				}

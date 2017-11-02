@@ -455,7 +455,7 @@ public class AltaPublicacion implements ItemListener {
                         } else {
                             SistemaPublicaciones.getInstance().eliminarPublicacion(publicacion);
                         }
-                        JOptionPane.showMessageDialog(null, "Su usuario se ha eliminado exitosamente!", "Aviso", JOptionPane.PLAIN_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "La publicación se ha eliminado exitosamente!", "Aviso", JOptionPane.PLAIN_MESSAGE);
                         goInicio();
                     }
                 }
