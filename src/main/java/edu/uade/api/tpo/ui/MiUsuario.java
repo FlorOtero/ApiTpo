@@ -150,7 +150,7 @@ public class MiUsuario {
 				try {
 					if (txtContrasena.getPassword().toString().length() > 0) {
 						if (Arrays.equals(txtContrasena.getPassword(), txtConfirmarContrasena.getPassword())) {
-							Password pwd = new Password();
+							Password pwd = user.getPassword();
 							pwd.setFechaModificacion(new Date());
 							pwd.setValor(new String(txtContrasena.getPassword()));
 							user.setPassword(pwd);
