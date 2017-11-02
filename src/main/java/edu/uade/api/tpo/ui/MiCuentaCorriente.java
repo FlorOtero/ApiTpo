@@ -11,7 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,7 +21,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MiCuentaCorriente {
@@ -188,18 +192,32 @@ public class MiCuentaCorriente {
 		table.getColumnModel().getColumn(3).setMaxWidth(80);
 		table.getColumnModel().getColumn(4).setMaxWidth(120);
 		table.getColumnModel().getColumn(5).setMaxWidth(80);
-		// Ocultamos la columna con el id de operacion
-		table.removeColumn(table.getColumnModel().getColumn(6));
+
+		TableCellRenderer tableCellRenderer = new DefaultTableCellRenderer() {
+			SimpleDateFormat f = new SimpleDateFormat("dd-MM-yyyy");
+
+			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
+					boolean hasFocus, int row, int column) {
+				if (value instanceof Date) {
+					value = f.format(value);
+				}
+				return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+			}
+		};
+
+		table.getColumnModel().getColumn(0).setCellRenderer(tableCellRenderer);
 
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
 		sorter = new TableRowSorter<DefaultTableModel>(model);
 		table.setRowSorter(sorter);
-		//Por default ordenamos la tabla por fecha
-	/*	List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+		// Por default ordenamos la tabla por fecha
+		List<RowSorter.SortKey> sortKeys = new ArrayList<>();
 		sortKeys.add(new RowSorter.SortKey(0, SortOrder.DESCENDING));
 		sorter.setSortKeys(sortKeys);
-		sorter.sort();
-*/
+
+		// Ocultamos la columna con el id de operacion
+		//table.removeColumn(table.getColumnModel().getColumn(6));
+
 		comboTipo.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -318,8 +336,7 @@ public class MiCuentaCorriente {
 						item.getEstado(), // estado
 						item.getTipo(), // tipo
 						item.getMonto(), // monto
-						calificacion, 
-						item.getIdOperacion() // hidden
+						calificacion, item.getIdOperacion() // hidden
 				});
 			}
 
@@ -347,6 +364,7 @@ public class MiCuentaCorriente {
 	}
 
 	private void loadUser() {
+		 //user = SistemaUsuarios.getInstance().buscarUsuario("erikannunez");
 		user = SistemaUsuarios.getInstance().getUsuarioActivo();
 	}
 }
