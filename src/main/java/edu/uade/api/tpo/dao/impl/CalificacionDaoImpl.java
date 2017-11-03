@@ -3,7 +3,6 @@ package edu.uade.api.tpo.dao.impl;
 import edu.uade.api.tpo.dao.AbstractManyToOneDao;
 import edu.uade.api.tpo.dao.ManyToOneDao;
 import edu.uade.api.tpo.model.Calificacion;
-import edu.uade.api.tpo.util.UUIDUtils;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -33,15 +32,12 @@ public class CalificacionDaoImpl extends AbstractManyToOneDao<Calificacion> {
 
 	@Override
 	public PreparedStatement create(Calificacion calificacion, Connection conn) throws SQLException {
-		String query = "INSERT INTO " + schema + ".calificaciones VALUES(?,?,?,?,?,?,?)";
+		String query = "INSERT INTO " + schema + ".calificaciones VALUES(?,?,?,?)";
 		PreparedStatement ps = conn.prepareStatement(query);
 		ps.setString(1, calificacion.getId());
 		ps.setInt(2, calificacion.getCalificacion());
 		ps.setString(3, calificacion.getObservaciones());
 		ps.setTimestamp(4, new Timestamp(calificacion.getFecha().getTime()));
-		ps.setString(5, String.valueOf(calificacion.getEstado()));
-		ps.setString(6, calificacion.getTransaccion().getId());
-		ps.setString(7, calificacion.getUsuarioId());
 
 		return ps;
 	}
@@ -49,16 +45,13 @@ public class CalificacionDaoImpl extends AbstractManyToOneDao<Calificacion> {
 	@Override
 	public PreparedStatement update(Calificacion calificacion, Connection conn) throws SQLException {
 		String query = "UPDATE " + schema
-				+ ".calificaciones VALUES calificacion = ?, observaciones = ?, fecha = ?, estado = ?, transaccion_id = ?, usuario_id = ? WHERE calificacion_id = ?";
+				+ ".calificaciones VALUES calificacion = ?, observaciones = ?, fecha = ? WHERE calificacion_id = ?";
 		PreparedStatement ps = conn.prepareStatement(query);
 		ps.setInt(1, calificacion.getCalificacion());
 		ps.setString(2, calificacion.getObservaciones());
 		ps.setTimestamp(3, new Timestamp(calificacion.getFecha().getTime()));
-		ps.setString(4, String.valueOf(calificacion.getEstado()));
-		ps.setString(5, calificacion.getTransaccion().getId());
-		ps.setString(6, calificacion.getUsuarioId());
-		ps.setString(7, calificacion.getId());
-		return null;
+		ps.setString(4, calificacion.getId());
+		return ps;
 	}
 
 	@Override
@@ -93,9 +86,6 @@ public class CalificacionDaoImpl extends AbstractManyToOneDao<Calificacion> {
 		calificacion.setCalificacion(rs.getInt("calificacion"));
 		calificacion.setObservaciones(rs.getString("observaciones"));
 		calificacion.setFecha(rs.getTimestamp("fecha"));
-		calificacion.setEstado(rs.getString("estado").charAt(0));
-		calificacion.setTransaccion(TransaccionDaoImpl.getInstance().findById(rs.getString("transaccion_id")));
-		calificacion.setUsuarioId(rs.getString("usuario_id"));
 		return calificacion;
 	}
 
@@ -106,6 +96,11 @@ public class CalificacionDaoImpl extends AbstractManyToOneDao<Calificacion> {
 
 	@Override
 	public void delete(Calificacion t) throws SQLException {
+		throw new UnsupportedOperationException("Delete is not supported on class Calificacion!");
+	}
+
+	@Override
+	public PreparedStatement findManyLike(String field, String value, Connection conn) throws SQLException {
 		throw new UnsupportedOperationException("Delete is not supported on class Calificacion!");
 	}
 }

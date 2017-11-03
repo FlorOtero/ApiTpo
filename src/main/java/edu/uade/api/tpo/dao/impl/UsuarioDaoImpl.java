@@ -2,6 +2,7 @@ package edu.uade.api.tpo.dao.impl;
 
 import edu.uade.api.tpo.dao.AbstractDao;
 import edu.uade.api.tpo.dao.GenericDao;
+import edu.uade.api.tpo.model.CuentaCorriente;
 import edu.uade.api.tpo.model.Estado;
 import edu.uade.api.tpo.model.Publicacion;
 import edu.uade.api.tpo.model.Usuario;
@@ -51,7 +52,6 @@ public class UsuarioDaoImpl extends AbstractDao<Usuario> {
         //Cascade domicilio & password before create user
         DomicilioDaoImpl.getInstance().create(usuario.getDomicilio());
         PasswordDaoImpl.getInstance().create(usuario.getPassword());
-        CuentaCorrienteDaoImpl.getInstance().create(usuario.getCuentaCorriente());
 
         String query = "INSERT INTO " + schema + ".usuarios VALUES(?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps = conn.prepareStatement(query);
@@ -62,9 +62,18 @@ public class UsuarioDaoImpl extends AbstractDao<Usuario> {
         ps.setString(5, usuario.getDomicilio().getId());
         ps.setString(6, usuario.getMail());
         ps.setString(7, usuario.getPassword().getId());
-        ps.setString(8, usuario.getCuentaCorriente().getId());
+        ps.setString(8, null);
         ps.setString(9, usuario.getEstado().toString());
         return ps;
+    }
+
+    @Override
+    public void doAfterCreate(Usuario usuario) throws SQLException {
+        CuentaCorriente cc = new CuentaCorriente(usuario.getId());
+        CuentaCorrienteDaoImpl.getInstance().create(cc);
+
+        usuario.setCuentaCorriente(cc);
+        this.update(usuario);
     }
 
     @Override
@@ -80,7 +89,6 @@ public class UsuarioDaoImpl extends AbstractDao<Usuario> {
             usuario.setMail(rs.getString("mail"));
             usuario.setPassword(PasswordDaoImpl.getInstance().findById(rs.getString("password_id")));
             usuario.setCuentaCorriente(CuentaCorrienteDaoImpl.getInstance().findById(rs.getString("cuenta_corriente_id")));
-            usuario.setCalificaciones(CalificacionDaoImpl.getInstance().findManyBy("usuario_id", usuario.getId()));
             List<Publicacion> publicaciones = new ArrayList<>();
             publicaciones.addAll(Collections.unmodifiableList(PublicacionDaoImpl.getInstance().findManyBy("usuario_id", usuario.getId())));
             publicaciones.addAll(Collections.unmodifiableList(SubastaDaoImpl.getInstance().findManyBy("usuario_id", usuario.getId())));

@@ -13,6 +13,7 @@ import java.util.List;
 public class TransaccionDaoImpl {
 
     private static final String CTA_CTE_FIELD_NAME = "cuenta_corriente_id";
+    private static final String CONTRAPARTE_ID = "contraparte_id";
 
     private static TransaccionDaoImpl instance;
 
@@ -62,6 +63,14 @@ public class TransaccionDaoImpl {
         result.addAll(Collections.unmodifiableList(CompraEfectivoDaoImpl.getInstance().findManyBy(CTA_CTE_FIELD_NAME, cuentaCorrienteId)));
         result.addAll(Collections.unmodifiableList(CompraTarjetaCreditoDaoImpl.getInstance().findManyBy(CTA_CTE_FIELD_NAME, cuentaCorrienteId)));
         result.addAll(Collections.unmodifiableList(CompraTransferenciaBancariaDaoImpl.getInstance().findManyBy(CTA_CTE_FIELD_NAME, cuentaCorrienteId)));
+        return result;
+    }
+
+    public List<Transaccion> findByContraparte(String contraparteId) throws SQLException {
+        List<Transaccion> result = new ArrayList<>();
+        result.addAll(Collections.unmodifiableList(CompraEfectivoDaoImpl.getInstance().findManyBy(CONTRAPARTE_ID, contraparteId)));
+        result.addAll(Collections.unmodifiableList(CompraTarjetaCreditoDaoImpl.getInstance().findManyBy(CONTRAPARTE_ID, contraparteId)));
+        result.addAll(Collections.unmodifiableList(CompraTransferenciaBancariaDaoImpl.getInstance().findManyBy(CONTRAPARTE_ID, contraparteId)));
         return result;
     }
 }

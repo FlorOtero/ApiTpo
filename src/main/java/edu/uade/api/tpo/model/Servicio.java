@@ -38,11 +38,7 @@ public class Servicio extends Articulo {
     }
 
     public String toCertificadosTokenized() {
-        String result = "";
-        for (String certificado : this.certificados) {
-            result = result.concat(certificado).concat(",");
-        }
-        return result.substring(0, result.lastIndexOf(","));
+        return "";
     }
 
     public void fromCertificadosTokenized(String certificados) {

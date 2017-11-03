@@ -1,20 +1,21 @@
 package edu.uade.api.tpo.model;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
+import edu.uade.api.tpo.controller.SistemaPublicaciones;
 import edu.uade.api.tpo.exceptions.BusinessException;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 public class Subasta extends Publicacion {
 	private float precioMin;
 	private int diasVigencia;
 	private float precioInicial;
 	private List<Oferta> ofertas;
-	
-	public Subasta() {}
+
+	public Subasta() {
+	}
 
 	public Subasta(float precioMin, int diasVigencia, float precioInicial) {
 		super();
@@ -56,25 +57,58 @@ public class Subasta extends Publicacion {
 		this.ofertas = ofertas;
 	}
 
-	public void ofertar(float monto, Usuario usuario) throws BusinessException {
-    	
-		if(super.getEstado() == Estado.I) {
-			throw new BusinessException("La publicacion está inactiva");
-		} else {
-    	
-		Date now = new Date();
-		Oferta oferta = new Oferta(monto, now, usuario, this);
-		//creamos la oferta
-		ofertas.add(oferta);
-		//notificamos a todos menos al usuario que hizo la oferta
-		Set<String> usuariosNotificados = new HashSet();
-		for(Oferta o : ofertas) {
-			if(!o.getUsuario().getId().equals(usuario.getId())) {
-				usuariosNotificados.add(o.getUsuario().getNombreUsuario());
-			}
+	public void ofertar(float monto, Usuario usuario, DatosPago datosPago) throws BusinessException {
+		if (estado != Estado.A) {
+			throw new BusinessException("La publicacion no está activa!");
 		}
-		SistemaNotificacionSubasta.getInstance().notificarUsuarios(usuariosNotificados, this);
+		if (!mediosPago.contains(datosPago.getMedioPago())) {
+			throw new BusinessException("El medio de pago elegido no está disponible en esta publicación!");
+		}
+		if(monto <= getPrecioActual()) {
+			throw new BusinessException("El monto ofertado no supera el precio actual");
+		}
+		if(this.getUsuarioId().equals(usuario.getId())) {
+			throw new BusinessException("El usuario no puede ofertar su propia publicacion!");
+		}
+
+		Oferta oferta = new Oferta(monto, usuario.getId(), id, datosPago);
+		ofertas.add(0, oferta);
+		SistemaPublicaciones.getInstance().modificarSubasta(this);
+
+		setChanged();
+		notifyObservers(oferta);
+	}
+
+	public float getPrecioActual() {
+		if(this.ofertas == null || this.ofertas.isEmpty()) {
+			return this.getPrecioInicial();
+		} else {
+			return this.ofertas.get(0).getMonto();
 		}
 	}
 
+	public Oferta obtenerMayorOferta() {
+		return this.ofertas.get(0);
+	}
+
+	public boolean hasEnded() {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(this.getFechaDesde());
+		cal.add(Calendar.DAY_OF_MONTH, this.diasVigencia);
+		return this.estado == Estado.A && cal.getTime().compareTo(new Date()) <= 0;
+	}
+
+	@Override
+	public float getPrecio() {
+		return this.getPrecioActual();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Subasta) {
+			Subasta p = (Subasta) obj;
+			return p.getId().equals(id);
+		}
+		return false;
+	}
 }

@@ -4,23 +4,25 @@ import edu.uade.api.tpo.db.Persistible;
 
 import java.util.Date;
 
-public class Oferta implements Persistible {
+public class Oferta implements Persistible, Comparable<Oferta> {
 
 	private String id;
 	private float monto;
 	private Date fecha;
-	private Usuario usuario;
-	private Subasta subasta;
+	private String usuarioId;
+	private String subastaId;
+	private DatosPago datosPago;
 
 	public Oferta() {
+		this.fecha = new Date();
 	}
 
-	public Oferta(float monto, Date fecha, Usuario usuario, Subasta subasta) {
-		super();
+	public Oferta(float monto, String usuarioId, String subastaId, DatosPago datosPago) {
+		this();
 		this.monto = monto;
-		this.fecha = fecha;
-		this.usuario = usuario;
-		this.subasta = subasta;
+		this.usuarioId = usuarioId;
+		this.subastaId = subastaId;
+		this.datosPago = datosPago;
 	}
 
 	public float getMonto() {
@@ -39,12 +41,12 @@ public class Oferta implements Persistible {
 		this.fecha = fecha;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public String getUsuarioId() {
+		return usuarioId;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setUsuarioId(String usuarioId) {
+		this.usuarioId = usuarioId;
 	}
 
 	public String getId() {
@@ -55,12 +57,29 @@ public class Oferta implements Persistible {
 		this.id = id;
 	}
 
-	public Subasta getSubasta() {
-		return subasta;
+	@Override
+	public int compareTo(Oferta o) {
+		if (this.monto > o.getMonto()) {
+			return 1;
+		} else if (this.monto < o.getMonto()) {
+			return -1;
+		}
+		return 0;
 	}
 
-	public void setSubasta(Subasta subasta) {
-		this.subasta = subasta;
+	public String getSubastaId() {
+		return subastaId;
 	}
 
+	public void setSubastaId(String subastaId) {
+		this.subastaId = subastaId;
+	}
+
+	public DatosPago getDatosPago() {
+		return datosPago;
+	}
+
+	public void setDatosPago(DatosPago datosPago) {
+		this.datosPago = datosPago;
+	}
 }

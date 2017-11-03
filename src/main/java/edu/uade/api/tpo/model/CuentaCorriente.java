@@ -10,10 +10,12 @@ public class CuentaCorriente implements Persistible {
     private String id;
     private float saldo;
     private List<Transaccion> transacciones;
+    private String usuarioId;
 
-    public CuentaCorriente() {
+    public CuentaCorriente(String usuarioId) {
         this.saldo = 0;
         this.transacciones = new ArrayList<>();
+        this.usuarioId = usuarioId;
     }
 
     public float getSaldo() {
@@ -47,12 +49,20 @@ public class CuentaCorriente implements Persistible {
     public boolean hasTransaccion(Transaccion transaccion) {
         return this.transacciones.contains(transaccion);
     }
-
-    public String getId() {
+	
+	public String getId() {
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(String usuarioId) {
+        this.usuarioId = usuarioId;
     }
 }

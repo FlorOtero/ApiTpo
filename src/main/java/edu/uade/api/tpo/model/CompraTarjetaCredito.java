@@ -3,22 +3,22 @@ package edu.uade.api.tpo.model;
 import edu.uade.api.tpo.exceptions.BusinessException;
 
 public class CompraTarjetaCredito extends Transaccion {
-    private EntidadRecaudadora entidad;
+
+    private EntidadRecaudadora entidadRecaudadora;
     private String numeroTarjeta;
     
-    public CompraTarjetaCredito() {}
-
-    public CompraTarjetaCredito(Publicacion publicacion, Usuario contraparte) {
-		super(publicacion, contraparte);
-		// TODO Auto-generated constructor stub
-	}
-
-	public EntidadRecaudadora getEntidad() {
-        return entidad;
+    public CompraTarjetaCredito() {
+        this.entidadRecaudadora = new MercadoPago();
     }
 
-    public void setEntidad(EntidadRecaudadora entidad) {
-        this.entidad = entidad;
+    public CompraTarjetaCredito(Publicacion publicacion, Usuario contraparte, String numeroTarjeta, Usuario usuarioPublicacion) {
+		super(publicacion, contraparte, usuarioPublicacion);
+        this.numeroTarjeta = numeroTarjeta;
+        this.entidadRecaudadora = new MercadoPago();
+	}
+
+    public void ejecutar() throws BusinessException{
+        this.entidadRecaudadora.informarPago(this);
     }
 
     public String getNumeroTarjeta() {
@@ -29,7 +29,11 @@ public class CompraTarjetaCredito extends Transaccion {
         this.numeroTarjeta = numeroTarjeta;
     }
 
-    public void pagar() throws BusinessException{
+    public void setEntidadRecaudadora(EntidadRecaudadora entidadRecaudadora) {
+        this.entidadRecaudadora = entidadRecaudadora;
+    }
 
+    public EntidadRecaudadora getEntidadRecaudadora() {
+        return entidadRecaudadora;
     }
 }

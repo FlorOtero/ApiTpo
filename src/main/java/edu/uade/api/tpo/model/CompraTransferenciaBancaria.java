@@ -1,35 +1,41 @@
 package edu.uade.api.tpo.model;
 
 import edu.uade.api.tpo.exceptions.BusinessException;
+import edu.uade.api.tpo.exceptions.InvalidPasswordException;
 
 public class CompraTransferenciaBancaria extends Transaccion {
-	private EntidadRecaudadora entidad;
+
+	private EntidadRecaudadora entidadRecaudadora;
 	private String numeroCta;
 	
-	public CompraTransferenciaBancaria() {}
-
-	public CompraTransferenciaBancaria(Publicacion publicacion, Usuario contraparte) {
-		super(publicacion, contraparte);
-		// TODO Auto-generated constructor stub
+	public CompraTransferenciaBancaria() {
+		this.entidadRecaudadora = new Banco();
 	}
 
-	public EntidadRecaudadora getEntidad() {
-		return entidad;
+	public CompraTransferenciaBancaria(Publicacion publicacion, Usuario contraparte, String numeroCta, Usuario usuarioPublicacion) {
+		super(publicacion, contraparte, usuarioPublicacion);
+		this.numeroCta = numeroCta;
+		this.entidadRecaudadora = new Banco();
 	}
 
-	public void setEntidad(EntidadRecaudadora entidad) {
-		this.entidad = entidad;
+	@Override
+	public void ejecutar() throws BusinessException, InvalidPasswordException {
+		entidadRecaudadora.informarPago(this);
 	}
 
 	public String getNumeroCta() {
 		return numeroCta;
 	}
 
-	public void setNumeroCta(String numeroCta) {
-		this.numeroCta = numeroCta;
+	public EntidadRecaudadora getEntidadRecaudadora() {
+		return entidadRecaudadora;
 	}
 
-	public void pagar() throws BusinessException{
+	public void setEntidadRecaudadora(EntidadRecaudadora entidadRecaudadora) {
+		this.entidadRecaudadora = entidadRecaudadora;
+	}
 
+	public void setNumeroCta(String numeroCta) {
+		this.numeroCta = numeroCta;
 	}
 }
