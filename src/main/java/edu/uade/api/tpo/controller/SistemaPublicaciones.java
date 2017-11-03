@@ -80,6 +80,7 @@ public class SistemaPublicaciones {
         try {
             publicacionDao.create(p);
             this.publicaciones.add(p);
+            SistemaUsuarios.getInstance().getUsuarioActivo().getPublicaciones().add(p);
         } catch (SQLException e) {
             logger.error("Error creando publicacion", e);
         }
@@ -154,6 +155,7 @@ public class SistemaPublicaciones {
         try {
             this.subastaDao.create(s);
             this.subastas.add(s);
+            SistemaUsuarios.getInstance().getUsuarioActivo().getPublicaciones().add(s);
         } catch (SQLException e) {
             logger.error("Error creando subasta", e);
         }

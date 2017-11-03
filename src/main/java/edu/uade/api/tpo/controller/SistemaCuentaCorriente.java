@@ -92,8 +92,7 @@ public class SistemaCuentaCorriente {
 			ItemCtaCte item = new ItemCtaCte(tr.getId());
 			item.setEstado(tr.getEstado().toString());
 			item.setComision(false);
-			String fecha = format.format(tr.getFecha());
-			item.setFecha(fecha);
+			item.setFecha(tr.getFecha());
 			item.setTitulo(tr.getPublicacion().getArticulo().getNombre());
 			item.setCalificada(tr.getCalificacion() != null);
 			
@@ -111,7 +110,7 @@ public class SistemaCuentaCorriente {
 				// lleva el mismo id de operacion que la transaccion de venta, porque
 				// corresponde a ella
 				ItemCtaCte comision = new ItemCtaCte(tr.getId());
-				comision.setFecha(fecha);
+				comision.setFecha(tr.getFecha());
 				comision.setTitulo(tr.getPublicacion().getArticulo().getNombre()+" (comisión)");
 				comision.setEstado(tr.getEstado().toString());
 				comision.setComision(true);

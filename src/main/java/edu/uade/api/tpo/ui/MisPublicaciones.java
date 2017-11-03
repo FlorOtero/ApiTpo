@@ -178,13 +178,13 @@ public class MisPublicaciones {
 		table.getColumnModel().getColumn(1).setMaxWidth(90);
 		table.getColumnModel().getColumn(3).setMaxWidth(100);
 		table.getColumnModel().getColumn(4).setMaxWidth(100);
-		
+		/*
 		List<RowSorter.SortKey> sortKeys = new ArrayList<>();
 		sortKeys.add(new RowSorter.SortKey(1, SortOrder.DESCENDING));
 		sorter = new TableRowSorter<DefaultTableModel>((DefaultTableModel) table.getModel());
 		sorter.setSortKeys(sortKeys);
 		sorter.sort();
-		table.setRowSorter(sorter);
+		table.setRowSorter(sorter);*/
 	
 		JScrollPane scrollPanePublicaciones = new JScrollPane(table);
 		scrollPanePublicaciones.setBounds(10, 60, 480, 300);
@@ -222,7 +222,6 @@ public class MisPublicaciones {
 					: Float.toString(p.getPrecio());
 			ImageIcon tipoPub = new ImageIcon("src/main/resources/" + tipoPublicacion);
 			String fecha = format.format(p.getFechaDesde());
-
 			model.addRow(new Object[] { tipoPub, fecha, p.getArticulo().getNombre(), "$" + precio, categoria });
 		}
 		

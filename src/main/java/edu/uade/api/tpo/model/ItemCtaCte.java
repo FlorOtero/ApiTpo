@@ -1,5 +1,7 @@
 package edu.uade.api.tpo.model;
 
+import java.util.Date;
+
 public class ItemCtaCte {
 	
 	//{"Fecha", "Título", "Estado", "Tipo", "Monto", "Calificación"};
@@ -9,7 +11,7 @@ public class ItemCtaCte {
 	private String estado;
 	private String tipo;
 	private String titulo;
-	private String fecha;
+	private Date fecha;
 	private boolean calificada;
 	
 	public ItemCtaCte(String idOperacion) {
@@ -46,10 +48,10 @@ public class ItemCtaCte {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	public String getFecha() {
+	public Date getFecha() {
 		return fecha;
 	}
-	public void setFecha(String fecha) {
+	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
 	public String getTitulo() {

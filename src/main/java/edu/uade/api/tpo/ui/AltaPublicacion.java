@@ -353,6 +353,7 @@ public class AltaPublicacion implements ItemListener {
         comboBoxGarantia.setBounds(122, 38, 170, 30);
         if (publicacion != null && publicacion.getArticulo() != null && publicacion.getArticulo() instanceof Producto) {
             comboBoxGarantia.setSelectedIndex(((Producto) publicacion.getArticulo()).getGarantia().getTipo() == TipoPeriodo.MENSUAL ? 0 : 1);
+            txtGarantia.setText(new Integer(((Producto) publicacion.getArticulo()).getGarantia().getCantidad()).toString());
         }
         panelProducto.add(comboBoxGarantia);
 
@@ -455,7 +456,7 @@ public class AltaPublicacion implements ItemListener {
                         } else {
                             SistemaPublicaciones.getInstance().eliminarPublicacion(publicacion);
                         }
-                        JOptionPane.showMessageDialog(null, "Su usuario se ha eliminado exitosamente!", "Aviso", JOptionPane.PLAIN_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "La publicación se ha eliminado exitosamente!", "Aviso", JOptionPane.PLAIN_MESSAGE);
                         goInicio();
                     }
                 }
