@@ -185,7 +185,7 @@ public class MiCuentaCorriente {
 		String[] columnNames = { "Fecha", "Título", "Estado", "Tipo", "Monto", "Calificación", "id" };
 		table = new JTable();
 		table.setModel(new DefaultTableModel(new Object[][] {}, columnNames));
-		table.setAutoCreateRowSorter(true);
+		//table.setAutoCreateRowSorter(true);
 		table.getColumnModel().getColumn(0).setMinWidth(90);
 		table.getColumnModel().getColumn(0).setMaxWidth(90);
 		table.getColumnModel().getColumn(2).setMaxWidth(50);
@@ -208,15 +208,18 @@ public class MiCuentaCorriente {
 		table.getColumnModel().getColumn(0).setCellRenderer(tableCellRenderer);
 
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
-		sorter = new TableRowSorter<DefaultTableModel>(model);
-		table.setRowSorter(sorter);
-		// Por default ordenamos la tabla por fecha
-		List<RowSorter.SortKey> sortKeys = new ArrayList<>();
-		sortKeys.add(new RowSorter.SortKey(0, SortOrder.DESCENDING));
-		sorter.setSortKeys(sortKeys);
+		
+// 	    Sorter disabled due conflict with click bind
+		
+//		sorter = new TableRowSorter<DefaultTableModel>(model);
+//		table.setRowSorter(sorter);
+//		// Por default ordenamos la tabla por fecha
+//		List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+//		sortKeys.add(new RowSorter.SortKey(0, SortOrder.DESCENDING));
+//		sorter.setSortKeys(sortKeys);
 
 		// Ocultamos la columna con el id de operacion
-		//table.removeColumn(table.getColumnModel().getColumn(6));
+		table.removeColumn(table.getColumnModel().getColumn(6));
 
 		comboTipo.addItemListener(new ItemListener() {
 			@Override
@@ -241,7 +244,7 @@ public class MiCuentaCorriente {
 					}
 					System.out.println(item);
 					RowFilter<DefaultTableModel, Object> rf = RowFilter.regexFilter(filtro, 3);
-					sorter.setRowFilter(rf);
+					//sorter.setRowFilter(rf);
 				}
 			}
 		});
@@ -266,7 +269,7 @@ public class MiCuentaCorriente {
 					}
 					System.out.println(item);
 					RowFilter<DefaultTableModel, Object> rf = RowFilter.regexFilter(filtro, 2);
-					sorter.setRowFilter(rf);
+					//sorter.setRowFilter(rf);
 				}
 			}
 		});
@@ -276,7 +279,7 @@ public class MiCuentaCorriente {
 				JTable table = (JTable) e.getSource();
 				String trid = (String) table.getModel().getValueAt(table.getSelectedRow(), 6);
 				String action = (String) table.getModel().getValueAt(table.getSelectedRow(), 5);
-
+				
 				switch (action) {
 				case "ver":
 					VerCalificacion verCalificacion = new VerCalificacion(trid, "cuenta-corriente");
@@ -319,30 +322,29 @@ public class MiCuentaCorriente {
 					.consultarMovimientos(user.getNombreUsuario());
 			for (ItemCtaCte item : movimientos) {
 
-				String calificacion = "-";
+				String calificacion = "no disp.";
 
 				if (!item.isComision() && item.getEstado().equals("A")) {
 					if (item.isCalificada()) {
 						calificacion = "ver";
 					} else {
-						if (item.getTipo().equals("compra")) {
-							calificacion = "calificar";
-						}
+						calificacion = "calificar";
 					}
 				}
 
-				model.addRow(new Object[] { item.getFecha(), // fecha
-						item.getTitulo(), // titulo
-						item.getEstado(), // estado
-						item.getTipo(), // tipo
-						item.getMonto(), // monto
-						calificacion, item.getIdOperacion() // hidden
+				model.addRow(new Object[] { 
+					item.getFecha(), // fecha
+					item.getTitulo(), // titulo
+					item.getEstado(), // estado
+					item.getTipo(), // tipo
+					item.getMonto(), // monto
+					calificacion, // boton label
+					item.getIdOperacion() // hidden
 				});
 			}
 
 		} catch (BusinessException e) {
 			txtMensajes.setText(e.getMessage());
-
 		}
 
 		JButton btnVolver = new JButton("Volver");
@@ -364,7 +366,6 @@ public class MiCuentaCorriente {
 	}
 
 	private void loadUser() {
-		 //user = SistemaUsuarios.getInstance().buscarUsuario("erikannunez");
 		user = SistemaUsuarios.getInstance().getUsuarioActivo();
 	}
 }
